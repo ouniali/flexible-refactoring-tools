@@ -10,6 +10,7 @@ public class ProjectHistory {
 	
 	private ArrayList<CompilationUnit> trees;
 	private ArrayList<Date> timeStamps;
+	private static final int MAXIMUM_LOOK_BACK_COUNT = 10;
 	
 	public ProjectHistory()
 	{
@@ -23,28 +24,54 @@ public class ProjectHistory {
 	}
 	public ASTChangeInformation getMostRecentASTChange()
 	{
-		String newASTPath;
-		String oldASTPath;
-		
 		CompilationUnit newAST = trees.get(trees.size()-1);
 		CompilationUnit oldAST = null;
 		
-		newASTPath = newAST.getJavaElement().getPath().toString();
-		for(int i = trees.size()-2; i>=0; i--)
-		{
-			oldASTPath = trees.get(i).getJavaElement().getPath().toString();
-			if(oldASTPath.equals(newASTPath))
-			{	
-				oldAST = trees.get(i);
-				break;	
-			}
-		}
-		if(oldAST == null)
+		ArrayList<CompilationUnit> history = getASTHistory(newAST);
+		if(history.size()<=1)
 			return null;
+		oldAST = history.get(history.size()-2);
 		ASTChangeInformation change = ASTree.getChangedASTInformation(oldAST, newAST);
 		return change;
 	}
-
+	
+	private ArrayList<CompilationUnit> getASTHistory(CompilationUnit unit)
+	{
+		ArrayList<CompilationUnit> history = new ArrayList<CompilationUnit>();
+		String unitPath = unit.getJavaElement().getPath().toString();
+		
+		for (CompilationUnit current: trees)
+		{
+			String currentPath = current.getJavaElement().getPath().toString();
+			if(unitPath.equals(currentPath))
+				history.add(current);
+		}
+		
+		return history;
+	}
+	public ASTChangeInformation LookingBackForDetectingRenameChange()
+	{
+		if(trees.size()<=1)
+			return null;
+		CompilationUnit latest = trees.get(trees.size()-1);
+		ArrayList<CompilationUnit> history = getASTHistory(latest);
+		
+		int lookBackCount = Math.min(history.size()-1, MAXIMUM_LOOK_BACK_COUNT);
+		CompilationUnit unit;
+		
+		for(int i = 1; i<= lookBackCount; i++)
+		{
+			int index = history.size()-1-i;
+			unit = trees.get(index);
+			ASTChangeInformation change = new ASTChangeInformation(unit,latest);
+			if(change.nameChangeType != NameChange.NOT_NAME_CHANGE)
+				return change;
+		}
+		
+		return null;
+	}
+	
+	
 
 	
 }
