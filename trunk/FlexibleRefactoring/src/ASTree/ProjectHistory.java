@@ -60,7 +60,6 @@ public class ProjectHistory {
 			return null;
 		
 		int lookBackCount = Math.min(history.size()-1, MAXIMUM_LOOK_BACK_COUNT);
-		System.out.println(lookBackCount);
 		CompilationUnit oldUnit;
 		
 		for(int i = 1; i<= lookBackCount; i++)
