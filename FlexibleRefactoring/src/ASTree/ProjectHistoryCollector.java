@@ -37,11 +37,10 @@ public class ProjectHistoryCollector {
 		else
 		{	
 			history.addAST(tree);
-			ASTChangeInformation change = history.getMostRecentASTChange();
+			ASTChangeInformation change = history.LookingBackForDetectingRenameChange();
 			if(change == null)
-				return;
-			ASTFileSaver.saveFullAST(tree);		
-			ASTFileSaver.saveConciseAST(change);
+				return;		
+			System.out.println(change.getNameChangeTypeDescription());
 		}
 	}
 	

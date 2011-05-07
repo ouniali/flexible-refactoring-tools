@@ -51,20 +51,24 @@ public class ProjectHistory {
 	}
 	public ASTChangeInformation LookingBackForDetectingRenameChange()
 	{
-		if(trees.size()<=1)
+		if(trees.size() == 0)
 			return null;
 		CompilationUnit latest = trees.get(trees.size()-1);
 		ArrayList<CompilationUnit> history = getASTHistory(latest);
 		
+		if(history.size()<=1)
+			return null;
+		
 		int lookBackCount = Math.min(history.size()-1, MAXIMUM_LOOK_BACK_COUNT);
-		CompilationUnit unit;
+		System.out.println(lookBackCount);
+		CompilationUnit oldUnit;
 		
 		for(int i = 1; i<= lookBackCount; i++)
 		{
 			int index = history.size()-1-i;
-			unit = trees.get(index);
-			ASTChangeInformation change = new ASTChangeInformation(unit,latest);
-			if(change.nameChangeType != NameChange.NOT_NAME_CHANGE)
+			oldUnit = trees.get(index);	
+			ASTChangeInformation change = ASTree.getChangedASTInformation(oldUnit,latest);
+			if(change.getNameChangeType() != NameChange.NOT_NAME_CHANGE)
 				return change;
 		}
 		
