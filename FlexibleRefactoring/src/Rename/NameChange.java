@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 public class NameChange {
 	
 	public static final int NOT_NAME_CHANGE = -1;
+	
 	public static final int VARIABLE_NAME_CHANGE_REFERENCE=0;
 	public static final int VARIABLE_NAME_CHANGE_DECLARATION = 1;
 	public static final int METHOD_NAME_CHANGE_INVOCATION=2;
