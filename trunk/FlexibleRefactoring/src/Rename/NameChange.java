@@ -10,7 +10,12 @@ public class NameChange {
 	public static final int VARIABLE_NAME_CHANGE_DECLARATION = 1;
 	public static final int METHOD_NAME_CHANGE_INVOCATION=2;
 	public static final int METHOD_NAME_CHANGE_DECLARATION=3;
-	public static final int UNCERTAIN_NAME_CHANGE = 4;
+	public static final int TYPE_NAME_CHANGE_REFERENCE = 4;
+	public static final int TYPE_NAME_CHANGE_DECLARATION = 5;
+	public static final int PACKAGE_NAME_CHANGE_REFERENCE = 6;
+	public static final int PACKAGE_NAME_CHANGE_DECLARATION = 7;
+		
+	public static final int UNCERTAIN_NAME_CHANGE = 8;
 	
 	public static String getNameChangeTypeDescription(int nameChangeType)
 	{
@@ -24,6 +29,14 @@ public class NameChange {
 			return "METHOD_NAME_CHANGE_INVOCATION";
 		case METHOD_NAME_CHANGE_DECLARATION:
 			return "METHOD_NAME_CHANGE_DECLARATION";
+		case TYPE_NAME_CHANGE_REFERENCE:
+			return "TYPE_NAME_CHANGE_REFERENCE";
+		case TYPE_NAME_CHANGE_DECLARATION:
+			return "TYPE_NAME_CHANGE_DECLARATION";
+		case PACKAGE_NAME_CHANGE_REFERENCE:
+			return "PACKAGE_NAME_CHANGE_REFERENCE";
+		case PACKAGE_NAME_CHANGE_DECLARATION:
+			return "PACKAGE_NAME_CHANGE_DECLARATION";
 		case UNCERTAIN_NAME_CHANGE:
 			return "UNCERTAIN_NAME_CHANGE";
 		default:
@@ -51,6 +64,14 @@ public class NameChange {
 			nameChangeType = METHOD_NAME_CHANGE_INVOCATION;
 		else if(NameChange.isDeclaredMethodNameChange(rootOne, rootTwo))
 			nameChangeType = METHOD_NAME_CHANGE_DECLARATION;
+		else if (NameChange.isReferencedTypeNameChange(rootOne, rootTwo))
+			nameChangeType = TYPE_NAME_CHANGE_REFERENCE; 
+		else if(NameChange.isDeclaredTypeNameChange(rootOne, rootTwo))
+			nameChangeType = TYPE_NAME_CHANGE_DECLARATION;
+		else if (NameChange.isReferencedPackageNameChange(rootOne, rootTwo))
+			nameChangeType = PACKAGE_NAME_CHANGE_REFERENCE;
+		else if (NameChange.isDeclaredPackageNameChange(rootOne, rootTwo))
+			nameChangeType = PACKAGE_NAME_CHANGE_DECLARATION;
 		else if(NameChange.isUncertainNameChange(rootOne, rootTwo))
 			nameChangeType = UNCERTAIN_NAME_CHANGE;
 		else
@@ -62,6 +83,58 @@ public class NameChange {
 		return rootOne instanceof SimpleName && rootTwo instanceof SimpleName;
 	}
 	
+	public static boolean isReferencedTypeNameChange(ASTNode rootOne, ASTNode rootTwo)
+	{
+		if(rootOne instanceof SimpleName && rootTwo instanceof SimpleName)
+		{
+			SimpleName name1 = (SimpleName)rootOne;
+			IBinding bind1 = name1.resolveBinding();
+			if(bind1 == null)
+				return false;
+			if(bind1.getKind() == IBinding.TYPE && !name1.isDeclaration())
+				return true;
+		}
+		return false;
+	}
+	public static boolean isDeclaredTypeNameChange(ASTNode rootOne, ASTNode rootTwo)
+	{
+		if(rootOne instanceof SimpleName && rootTwo instanceof SimpleName)
+		{
+			SimpleName name1 = (SimpleName)rootOne;
+			IBinding bind1 = name1.resolveBinding();
+			if(bind1 == null)
+				return false;
+			if(bind1.getKind() == IBinding.TYPE && name1.isDeclaration())
+				return true;
+		}
+		return false;
+	}
+	public static boolean isReferencedPackageNameChange(ASTNode rootOne, ASTNode rootTwo)
+	{
+		if(rootOne instanceof SimpleName && rootTwo instanceof SimpleName)
+		{
+			SimpleName name1 = (SimpleName)rootOne;
+			IBinding bind1 = name1.resolveBinding();
+			if(bind1 == null)
+				return false;
+			if(bind1.getKind() == IBinding.PACKAGE && !name1.isDeclaration())
+				return true;
+		}
+		return false;
+	}
+	public static boolean isDeclaredPackageNameChange(ASTNode rootOne, ASTNode rootTwo)
+	{
+		if(rootOne instanceof SimpleName && rootTwo instanceof SimpleName)
+		{
+			SimpleName name1 = (SimpleName)rootOne;
+			IBinding bind1 = name1.resolveBinding();
+			if(bind1 == null)
+				return false;
+			if(bind1.getKind() == IBinding.PACKAGE && name1.isDeclaration())
+				return true;
+		}
+		return false;
+	}
 	
 	public static boolean isReferencedVraibleNameChange(ASTNode rootOne, ASTNode rootTwo)
 	{
