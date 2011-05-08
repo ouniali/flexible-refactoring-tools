@@ -38,6 +38,7 @@ public class ProjectHistoryCollector {
 		{	
 			history.addAST(tree);
 			ASTChangeInformation change = history.LookingBackForDetectingRenameChange();
+			
 			if(change == null)
 				return;		
 			System.out.println(change.getNameChangeTypeDescription());

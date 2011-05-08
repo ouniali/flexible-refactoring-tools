@@ -22,7 +22,6 @@ public class GetVariableNamesVisitor extends ASTVisitor {
 		
 		if(binding == null)
 			return true;
-		
 		if(binding.getKind() == IBinding.VARIABLE)
 		{
 			list = Variables.get(binding);

@@ -17,6 +17,8 @@ public class VariableNames {
 	}
 	public ArrayList<SimpleName> getTheVariablesOfBinding(IBinding bind)
 	{
+		if(bind == null)
+			return null;
 		return map.get(bind);
 	}
 }
