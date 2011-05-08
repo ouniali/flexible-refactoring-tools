@@ -94,30 +94,16 @@ public class GetSimpleNamesInformationVisitor extends ASTVisitor {
 	{
 		return MemberValuePairs;
 	}
-	public ArrayList<SimpleName> getSimpleNamesOfBinding(IBinding binding)
+	
+	public Hashtable<IBinding, ArrayList<SimpleName>> getEntireBindingTable()
 	{
-		if(binding == null)
-			return null;
-		ArrayList<SimpleName> nameList = null;
-		
-		nameList = Variables.get(binding);
-		if(nameList != null)
-			return nameList;
-		nameList = Methods.get(binding);
-		if(nameList != null)
-			return nameList;
-		nameList = Annotations.get(binding);
-		if(nameList != null)
-			return nameList;
-		nameList = MemberValuePairs.get(binding);
-		if(nameList != null)
-			return nameList;
-		nameList = Packages.get(binding);
-		if(nameList != null)
-			return nameList;
-		nameList = Types.get(binding);
-		if(nameList != null)
-			return nameList;
-		return nameList;		
+		Hashtable<IBinding, ArrayList<SimpleName>> EntireTable = new Hashtable<IBinding, ArrayList<SimpleName>>();
+		EntireTable.putAll(Variables);
+		EntireTable.putAll(Methods);
+		EntireTable.putAll(Types);
+		EntireTable.putAll(Packages);
+		EntireTable.putAll(MemberValuePairs);
+		EntireTable.putAll(Annotations);
+		return EntireTable;
 	}
 }

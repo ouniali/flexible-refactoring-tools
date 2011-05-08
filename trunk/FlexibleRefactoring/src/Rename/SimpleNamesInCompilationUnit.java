@@ -11,7 +11,7 @@ public class SimpleNamesInCompilationUnit {
 	public SimpleNamesInCompilationUnit(CompilationUnit t)
 	{
 		tree = t;
-		GetSimpleNamesInformationVisitor visitor = new GetSimpleNamesInformationVisitor();
+		visitor = new GetSimpleNamesInformationVisitor();
 		t.accept(visitor);
 	}
 	public ArrayList<SimpleName> getSimpleNamesOfBinding(IBinding bind)
@@ -19,6 +19,6 @@ public class SimpleNamesInCompilationUnit {
 		if(bind == null)
 			return null;
 		
-		return visitor.getSimpleNamesOfBinding(bind);
+		return visitor.getEntireBindingTable().get(bind);
 	}
 }
