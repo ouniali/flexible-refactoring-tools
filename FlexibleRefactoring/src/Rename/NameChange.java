@@ -10,6 +10,7 @@ public class NameChange {
 	public static final int VARIABLE_NAME_CHANGE_DECLARATION = 1;
 	public static final int METHOD_NAME_CHANGE_INVOCATION=2;
 	public static final int METHOD_NAME_CHANGE_DECLARATION=3;
+	public static final int UNCERTAIN_NAME_CHANGE = 4;
 	
 	public static String getNameChangeTypeDescription(int nameChangeType)
 	{
@@ -23,6 +24,8 @@ public class NameChange {
 			return "METHOD_NAME_CHANGE_INVOCATION";
 		case METHOD_NAME_CHANGE_DECLARATION:
 			return "METHOD_NAME_CHANGE_DECLARATION";
+		case UNCERTAIN_NAME_CHANGE:
+			return "UNCERTAIN_NAME_CHANGE";
 		default:
 			return "NOT_NAME_CHANGE";
 		}
@@ -48,10 +51,17 @@ public class NameChange {
 			nameChangeType = METHOD_NAME_CHANGE_INVOCATION;
 		else if(NameChange.isDeclaredMethodNameChange(rootOne, rootTwo))
 			nameChangeType = METHOD_NAME_CHANGE_DECLARATION;
+		else if(NameChange.isUncertainNameChange(rootOne, rootTwo))
+			nameChangeType = UNCERTAIN_NAME_CHANGE;
 		else
 			nameChangeType = NameChange.NOT_NAME_CHANGE;	
 		return nameChangeType;
 	}
+	public static boolean isUncertainNameChange(ASTNode rootOne, ASTNode rootTwo)
+	{
+		return rootOne instanceof SimpleName && rootTwo instanceof SimpleName;
+	}
+	
 	
 	public static boolean isReferencedVraibleNameChange(ASTNode rootOne, ASTNode rootTwo)
 	{
