@@ -34,8 +34,8 @@ public class NameChange {
 	{
 		if(node instanceof SimpleName)
 		{
-			VariableNames names = new VariableNames((CompilationUnit)node.getRoot());
-			return names.getTheVariablesOfBinding(((SimpleName)node).resolveBinding());
+			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit((CompilationUnit)node.getRoot());
+			return names.getSimpleNamesOfBinding(((SimpleName)node).resolveBinding());
 		}
 		else 
 			return null;
