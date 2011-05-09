@@ -71,7 +71,7 @@ public class ASTChangeInformation {
 		if(nameChangeType == NameChange.NOT_NAME_CHANGE)
 			return type;
 		else
-			return type+" "+originalName+" "+ originalNameBindingCount +" "+newName;
+			return type+" "+originalName+" "+ originalNameBindingCount+" "+ nameChangeFraction +" "+newName;
 	}
 	public String getChangeInformation()
 	{
