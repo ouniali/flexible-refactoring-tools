@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import Rename.ASTNameChangeInformation;
+
 public class ProjectHistoryCollector {
 	
 	private HashMap<IJavaProject,ProjectHistory> Map;
@@ -37,11 +39,9 @@ public class ProjectHistoryCollector {
 		else
 		{	
 			history.addAST(tree);
-			ASTChangeInformation change = history.LookingBackForDetectingRenameChange();
-			
-			if(change == null)
-				return;		
-			System.out.println(change.getNameChangeTypeDescription());
+			ASTChangeInformation GeneralChange = history.getMostRecentASTGeneralChange();
+			ASTFileSaver.saveFullAST(tree);
+			ASTFileSaver.saveConciseAST(GeneralChange);
 		}
 	}
 	

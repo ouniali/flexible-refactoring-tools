@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
 
+import Rename.ASTNameChangeInformation;
+
 
 public class ASTree {
 		
@@ -13,7 +15,7 @@ public class ASTree {
 		Root.accept(new OutputASTVisitor());
 	}
 	
-	public static ASTChangeInformation getChangedASTInformation(CompilationUnit AstOld, CompilationUnit AstNew)
+	public static ASTChangeInformation getGeneralASTChangeInformation(CompilationUnit AstOld, CompilationUnit AstNew)
 	{
 		ASTNode ASTOne = AstOld.getRoot();
 		ASTNode ASTTwo = AstNew.getRoot();
@@ -26,6 +28,21 @@ public class ASTree {
 		}while(pair.RootsChanged);
 				
 		return new ASTChangeInformation(ASTOne, ASTTwo);	
+	}
+	
+	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnit AstOld, CompilationUnit AstNew)
+	{
+		ASTNode ASTOne = AstOld.getRoot();
+		ASTNode ASTTwo = AstNew.getRoot();
+		NewRootPair pair;
+		do
+		{
+			pair = traverseToDeepestChange(ASTOne, ASTTwo);
+			ASTOne = pair.nodeOne;
+			ASTTwo = pair.nodeTwo;
+		}while(pair.RootsChanged);
+				
+		return new ASTNameChangeInformation(ASTOne, ASTTwo);	
 	}
 
 	private static NewRootPair traverseToDeepestChange(ASTNode AstOne, ASTNode AstTwo)
