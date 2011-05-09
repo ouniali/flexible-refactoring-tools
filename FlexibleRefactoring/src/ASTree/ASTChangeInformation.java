@@ -38,9 +38,7 @@ public class ASTChangeInformation {
 			newName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[1];
 			ArrayList<SimpleName> nodesWithSameBinding = NameChange.getNodesWithSameBinding(rootOne);
 			if(nodesWithSameBinding == null)
-			{
 				originalNameBindingCount = -1;
-			}
 			else
 			{
 				IBinding binding = ((SimpleName)rootOne).resolveBinding();
