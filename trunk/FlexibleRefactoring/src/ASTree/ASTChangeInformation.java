@@ -17,6 +17,7 @@ public class ASTChangeInformation {
 	String originalName;
 	int originalNameBindingCount;
 	String newName;
+	static NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 	//name change section ends
 	
 	public ASTChangeInformation(ASTNode r1, ASTNode r2)
@@ -34,12 +35,14 @@ public class ASTChangeInformation {
 		{
 			originalName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[0];
 			newName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[1];
-			//if(nameChangeType == NameChange.VARIABLE_NAME_CHANGE_REFERENCE)
 			ArrayList<SimpleName> nodesWithSameBinding = NameChange.getNodesWithSameBinding(rootOne);
 			if(nodesWithSameBinding == null)
 				originalNameBindingCount = -1;
 			else
 				originalNameBindingCount = nodesWithSameBinding.size();
+			IBinding binding = ((SimpleName)rootOne).resolveBinding();
+			if( binding != null)
+				nameChangeHistory.addNameChange(binding, originalNameBindingCount);
 		}
 		//end the setting of name change related information
 	}
