@@ -42,7 +42,18 @@ public class NameChangeCountHistory {
 			
 		}
 	}
-	
+	public float getNameChangeFraction(IBinding bind)
+	{
+		int index = bindings.indexOf(bind);
+		if(index != -1)
+		{
+			float changeCount = nameChangingCounts.get(index).floatValue();
+			float totalCount = bindingCounts.get(index).floatValue();
+			return changeCount/totalCount;		
+		}
+		else	
+			return -1;			
+	}
 	
 	
 
