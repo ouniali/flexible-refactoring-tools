@@ -8,17 +8,17 @@ import ASTree.*;
 public class NameChangeCountHistory {
 	
 	ArrayList<IBinding> bindings;// the bindings
-	ArrayList<Integer> bindingCounts;// the total number of names that binds to a binding
-	ArrayList<Integer> nameChangingCounts;// the total number of name changes for name of a binding
+	ArrayList<Integer> currentbindingCounts;// the current number of names that binds to a binding
+	ArrayList<Integer> nameChangingCounts;// the total number of name changes for a binding
 	
 	public NameChangeCountHistory()
 	{
 		bindings = new ArrayList<IBinding>();
-		bindingCounts = new ArrayList<Integer>();
+		currentbindingCounts = new ArrayList<Integer>();
 		nameChangingCounts = new ArrayList<Integer>();
 	}
-	
-	public void addNameChange(IBinding bind, int count)
+	//bind is the binding before name has been changed, the count is the number of names that binds identically with the given bind before name change.
+	public void addNameChange(IBinding bind, int countBeforeRename)
 	{
 		if(bind != null)
 		{
@@ -26,16 +26,16 @@ public class NameChangeCountHistory {
 			if(index == -1)
 			{
 				bindings.add(bind);
-				bindingCounts.add(new Integer(count));
+				currentbindingCounts.add(new Integer(countBeforeRename-1));
 				nameChangingCounts.add(new Integer(1));
 			}
 			else
 			{
 				Integer currentNameChangingCount = nameChangingCounts.get(index);
-				Integer newBindingCount = new Integer(count);
+				Integer newBindingCount = new Integer(countBeforeRename-1);
 				Integer newNameChangingCount = new Integer(currentNameChangingCount + 1);
-				bindingCounts.remove(index);
-				bindingCounts.add(index, newBindingCount);
+				currentbindingCounts.remove(index);
+				currentbindingCounts.add(index, newBindingCount);
 				nameChangingCounts.remove(index);
 				nameChangingCounts.add(index, newNameChangingCount);
 			}
@@ -48,7 +48,8 @@ public class NameChangeCountHistory {
 		if(index != -1)
 		{
 			float changeCount = nameChangingCounts.get(index).floatValue();
-			float totalCount = bindingCounts.get(index).floatValue();
+			float currentBindingCount = currentbindingCounts.get(index).floatValue();
+			float totalCount = changeCount + currentBindingCount;
 			return changeCount/totalCount;		
 		}
 		else	
