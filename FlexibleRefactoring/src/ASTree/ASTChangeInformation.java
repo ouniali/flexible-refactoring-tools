@@ -84,4 +84,11 @@ public class ASTChangeInformation {
 		return Information.toString();
 	}
 	
+	@Override
+	public boolean equals(Object o)
+	{
+		ASTChangeInformation info = (ASTChangeInformation) o;
+		return info.getNewRoot().equals(this.getNewRoot()) && info.getOldRoot().equals(this.getOldRoot());	
+	}
+	
 }

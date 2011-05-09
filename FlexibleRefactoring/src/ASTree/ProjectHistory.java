@@ -11,6 +11,7 @@ public class ProjectHistory {
 	private ArrayList<CompilationUnit> trees;
 	private ArrayList<Date> timeStamps;
 	private static final int MAXIMUM_LOOK_BACK_COUNT = 10;
+	static private ArrayList<ASTChangeInformation> detectedNameChanges = new ArrayList<ASTChangeInformation>();
 	
 	public ProjectHistory()
 	{
@@ -68,7 +69,15 @@ public class ProjectHistory {
 			oldUnit = trees.get(index);	
 			ASTChangeInformation change = ASTree.getChangedASTInformation(oldUnit,latest);
 			if(change.getNameChangeType() != NameChange.NOT_NAME_CHANGE)
-				return change;
+			{
+				if(detectedNameChanges.contains(change))
+					return null;
+				else
+				{
+					detectedNameChanges.add(change);
+					return change;
+				}
+			}
 		}
 		
 		return null;
