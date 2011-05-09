@@ -38,12 +38,13 @@ public class ASTChangeInformation {
 			newName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[1];
 			ArrayList<SimpleName> nodesWithSameBinding = NameChange.getNodesWithSameBinding(rootOne);
 			if(nodesWithSameBinding == null)
+			{
 				originalNameBindingCount = -1;
+			}
 			else
+			{
+				IBinding binding = ((SimpleName)rootOne).resolveBinding();
 				originalNameBindingCount = nodesWithSameBinding.size();
-			IBinding binding = ((SimpleName)rootOne).resolveBinding();
-			if( binding != null)
-			{	
 				nameChangeHistory.addNameChange(binding, originalNameBindingCount);
 				nameChangeFraction = nameChangeHistory.getNameChangeFraction(binding);
 			}
