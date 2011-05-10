@@ -12,8 +12,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	int originalNameBindingCount;
 	String newName;
 	
-	public ASTNameChangeInformation(ASTNode r1, ASTNode r2) {
-		super(r1, r2);
+	public ASTNameChangeInformation(ASTNode r1, long t1,ASTNode r2, long t2) {
+		super(r1, t1 ,r2, t2);
 		// TODO Auto-generated constructor stub
 		
 		ASTNode rootOne = this.getOldRoot();

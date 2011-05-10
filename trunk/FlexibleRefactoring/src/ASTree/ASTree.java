@@ -15,7 +15,7 @@ public class ASTree {
 		Root.accept(new OutputASTVisitor());
 	}
 	
-	public static ASTChangeInformation getGeneralASTChangeInformation(CompilationUnit AstOld, CompilationUnit AstNew)
+	public static ASTChangeInformation getGeneralASTChangeInformation(CompilationUnit AstOld, long oldTime, CompilationUnit AstNew, long newTime)
 	{
 		ASTNode ASTOne = AstOld.getRoot();
 		ASTNode ASTTwo = AstNew.getRoot();
@@ -27,10 +27,10 @@ public class ASTree {
 			ASTTwo = pair.nodeTwo;
 		}while(pair.RootsChanged);
 				
-		return new ASTChangeInformation(ASTOne, ASTTwo);	
+		return new ASTChangeInformation(ASTOne, oldTime, ASTTwo, newTime);	
 	}
 	
-	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnit AstOld, CompilationUnit AstNew)
+	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnit AstOld, long oldTime, CompilationUnit AstNew, long newTime)
 	{
 		ASTNode ASTOne = AstOld.getRoot();
 		ASTNode ASTTwo = AstNew.getRoot();
@@ -42,7 +42,7 @@ public class ASTree {
 			ASTTwo = pair.nodeTwo;
 		}while(pair.RootsChanged);
 				
-		return new ASTNameChangeInformation(ASTOne, ASTTwo);	
+		return new ASTNameChangeInformation(ASTOne, oldTime, ASTTwo, newTime);	
 	}
 
 	private static NewRootPair traverseToDeepestChange(ASTNode AstOne, ASTNode AstTwo)
