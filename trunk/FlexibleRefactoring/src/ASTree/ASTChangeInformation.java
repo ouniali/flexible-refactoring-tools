@@ -63,7 +63,7 @@ public class ASTChangeInformation {
 	public boolean equals(Object o)
 	{
 		ASTChangeInformation info = (ASTChangeInformation) o;
-		return info.getNewTime() == this.getNewTime() && info.getOldTime() == this.getOldTime();	
+		return info.getOldTime() == this.getOldTime() && info.getNewTime() == this.getNewTime();	
 	}
 	
 }
