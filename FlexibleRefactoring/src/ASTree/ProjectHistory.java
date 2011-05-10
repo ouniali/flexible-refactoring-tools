@@ -1,17 +1,15 @@
 package ASTree;
+import java.util.*;
+import java.util.Map.Entry;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.*;
 
 import Rename.*;
 
 public class ProjectHistory {
 	
-	private ArrayList<CompilationUnit> trees;
-	private ArrayList<Date> timeStamps;
+	
+	ArrayList<ProjectHistoryRecord> Records;
 	private static final int MAXIMUM_LOOK_BACK_COUNT = 10;
 	
 	private ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
@@ -19,13 +17,12 @@ public class ProjectHistory {
 	
 	public ProjectHistory()
 	{
-		trees = new ArrayList<CompilationUnit>();
-		timeStamps = new ArrayList<Date>();
+		Records = new ArrayList<ProjectHistoryRecord>();
+	
 	}
 	public void addAST(CompilationUnit tree)
 	{
-		timeStamps.add(Calendar.getInstance().getTime());
-		trees.add(tree);
+		Records.add(new ProjectHistoryRecord(System.currentTimeMillis(), tree));
 		
 		if(LookingBackForDetectingRenameChange())
 		{
@@ -33,56 +30,55 @@ public class ProjectHistory {
 			IBinding bind = infor.getBindingOfOldName();
 			int bindingCount = infor.getOldNameBindingCount();
 			nameChangeHistory.addNameChange(bind, bindingCount);
+			System.out.println(infor.getNameChangeTypeDescription());
 			
 		}
 	}
 	public ASTChangeInformation getMostRecentASTGeneralChange()
 	{
-		CompilationUnit newAST = trees.get(trees.size()-1);
-		CompilationUnit oldAST = null;
+		ProjectHistoryRecord newRecord = Records.get(Records.size()-1);
+		ProjectHistoryRecord oldRecord = null;
 		
-		ArrayList<CompilationUnit> history = getASTHistory(newAST);
+		ArrayList<ProjectHistoryRecord> history = getASTHistory(newRecord);
 		if(history.size()<=1)
 			return null;
-		oldAST = history.get(history.size()-2);
-		ASTChangeInformation change = ASTree.getGeneralASTChangeInformation(oldAST, newAST);
+		oldRecord = history.get(history.size()-2);
+		ASTChangeInformation change = ASTree.getGeneralASTChangeInformation(oldRecord.unit,oldRecord.time, newRecord.unit, newRecord.time);
 		return change;
 	}
 	
-	private ArrayList<CompilationUnit> getASTHistory(CompilationUnit unit)
+	private ArrayList<ProjectHistoryRecord> getASTHistory(ProjectHistoryRecord rec)
 	{
-		ArrayList<CompilationUnit> history = new ArrayList<CompilationUnit>();
-		String unitPath = unit.getJavaElement().getPath().toString();
+		ArrayList<ProjectHistoryRecord> history = new ArrayList<ProjectHistoryRecord>();
+		String unitPath = rec.unit.getJavaElement().getPath().toString();
 		
-		for (CompilationUnit current: trees)
+		for(ProjectHistoryRecord record: Records)
 		{
-			String currentPath = current.getJavaElement().getPath().toString();
+			String currentPath = record.unit.getJavaElement().getPath().toString();
 			if(unitPath.equals(currentPath))
-				history.add(current);
+				history.add(record);
 		}
-		
 		return history;
 	}
 	
-
 	private boolean LookingBackForDetectingRenameChange()
 	{
-		if(trees.size() == 0)
+		if(Records.size() == 0)
 			return false;
-		CompilationUnit latest = trees.get(trees.size()-1);
-		ArrayList<CompilationUnit> history = getASTHistory(latest);
+		ProjectHistoryRecord latestRecord = Records.get(Records.size()-1);
+		ArrayList<ProjectHistoryRecord> history = getASTHistory(latestRecord);
 		
 		if(history.size()<=1)
 			return false;
 		
 		int lookBackCount = Math.min(history.size()-1, MAXIMUM_LOOK_BACK_COUNT);
-		CompilationUnit oldUnit;
+		ProjectHistoryRecord oldRecord;
 		
 		for(int i = 1; i<= lookBackCount; i++)
 		{
 			int index = history.size()-1-i;
-			oldUnit = trees.get(index);	
-			ASTNameChangeInformation change = ASTree.getRenameASTChangedInformation(oldUnit,latest);
+			oldRecord = Records.get(index);	
+			ASTNameChangeInformation change = ASTree.getRenameASTChangedInformation(oldRecord.unit,oldRecord.time,latestRecord.unit, latestRecord.time);
 			if(change.getNameChangeType() != NameChange.NOT_NAME_CHANGE)
 			{
 				if(!detectedNameChanges.contains(change))				

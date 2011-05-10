@@ -9,6 +9,8 @@ public class ASTChangeInformation {
 
 	ASTNode rootOne;
 	ASTNode rootTwo;
+	long oldTime;
+	long newTime;
 		
 	boolean rootTypeChanged;
 
@@ -16,10 +18,12 @@ public class ASTChangeInformation {
 
 	//name change section ends
 	
-	protected ASTChangeInformation(ASTNode r1, ASTNode r2)
+	protected ASTChangeInformation(ASTNode r1, long time1, ASTNode r2, long time2)
 	{
 		rootOne = r1;
 		rootTwo = r2;
+		oldTime = time1;
+		newTime = time2;
 		if(rootOne.getNodeType() == rootTwo.getNodeType())
 			rootTypeChanged = false;
 		else	
@@ -46,12 +50,20 @@ public class ASTChangeInformation {
 		Information.append(getNewRoot());		
 		return Information.toString();
 	}
+	public long getOldTime()
+	{
+		return oldTime;
+	}
+	public long getNewTime()
+	{
+		return newTime;
+	}
 	
 	@Override
 	public boolean equals(Object o)
 	{
 		ASTChangeInformation info = (ASTChangeInformation) o;
-		return info.getNewRoot().equals(this.getNewRoot()) && info.getOldRoot().equals(this.getOldRoot());	
+		return info.getNewTime() == this.getNewTime() && info.getOldTime() == this.getOldTime();	
 	}
 	
 }
