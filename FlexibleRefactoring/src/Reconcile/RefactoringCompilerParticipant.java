@@ -21,6 +21,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	public RefactoringCompilerParticipant()
 	{
 		super();
+		System.out.println("participant construction");
 		collector = new ProjectHistoryCollector();
 		
 	}
@@ -55,19 +56,14 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	}
 	
 	public void reconcile(ReconcileContext context) 
-	{
-		
+	{	
 		try {
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
 			collector.addNewProjectVersion(pro, tree);
 			
-		} catch (JavaModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			
 		}
 		
 	}

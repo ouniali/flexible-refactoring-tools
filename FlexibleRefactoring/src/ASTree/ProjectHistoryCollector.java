@@ -40,7 +40,7 @@ public class ProjectHistoryCollector {
 		{	
 			if(history.addAST(tree))
 			{
-				ASTChangeInformation GeneralChange = history.getMostRecentASTGeneralChange();
+				ASTChangeInformation GeneralChange = history.getMostRecentChange();
 				ASTFileSaver.saveFullAST(tree);
 				ASTFileSaver.saveConciseAST(GeneralChange);
 			}

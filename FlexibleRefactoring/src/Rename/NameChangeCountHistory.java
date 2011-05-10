@@ -22,7 +22,7 @@ public class NameChangeCountHistory {
 	{
 		if(bind != null)
 		{
-			int index = bindings.indexOf(bind);
+			int index = getBindingIndexInArray(bind);
 			if(index == -1)
 			{
 				bindings.add(bind);
@@ -30,10 +30,10 @@ public class NameChangeCountHistory {
 				nameChangingCounts.add(new Integer(1));
 			}
 			else
-			{
+			{			
 				Integer currentNameChangingCount = nameChangingCounts.get(index);
 				Integer newBindingCount = new Integer(countBeforeRename-1);
-				Integer newNameChangingCount = new Integer(currentNameChangingCount + 1);
+				Integer newNameChangingCount = new Integer(currentNameChangingCount.intValue() + 1);
 				currentbindingCounts.remove(index);
 				currentbindingCounts.add(index, newBindingCount);
 				nameChangingCounts.remove(index);
@@ -42,9 +42,23 @@ public class NameChangeCountHistory {
 			
 		}
 	}
+	private int getBindingIndexInArray(IBinding bind)
+	{
+		int index = 0;
+		for(IBinding current: bindings)
+		{
+			if(current.isEqualTo(bind))
+				return index;
+			index++;
+		}
+		return -1;
+		
+	}
 	public float getNameChangeFraction(IBinding bind)
 	{
-		int index = bindings.indexOf(bind);
+		if(bind == null)
+			return -1;
+		int index = getBindingIndexInArray(bind);
 		if(index != -1)
 		{
 			float changeCount = nameChangingCounts.get(index).floatValue();
