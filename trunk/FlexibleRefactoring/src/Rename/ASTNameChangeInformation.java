@@ -11,11 +11,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	String originalName;
 	int originalNameBindingCount;
 	String newName;
+	float percentage;
 	
 	public ASTNameChangeInformation(ASTNode r1, long t1,ASTNode r2, long t2) {
 		super(r1, t1 ,r2, t2);
 		// TODO Auto-generated constructor stub
-		
+
 		ASTNode rootOne = this.getOldRoot();
 		ASTNode rootTwo = this.getNewRoot();
 		nameChangeType = NameChange.DecideNameChangeType(this.getOldRoot(), this.getNewRoot());//if the change is modifying a name, get the type of such change.
@@ -72,6 +73,15 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public int getOldNameBindingCount()
 	{
 		return originalNameBindingCount;
+	}
+	
+	public float getNameChangePercentage()
+	{
+		return percentage;
+	}
+	public void setNameChangePercentage(float per)
+	{
+		percentage = per;
 	}
 
 }
