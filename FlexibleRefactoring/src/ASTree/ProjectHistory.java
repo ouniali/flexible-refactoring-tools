@@ -35,11 +35,7 @@ public class ProjectHistory {
 		if(LookingBackForDetectingRenameChange())
 		{
 			ASTNameChangeInformation infor = detectedNameChanges.get(detectedNameChanges.size()-1);
-			IBinding bind = infor.getBindingOfOldName();
-			int bindingCount = infor.getOldNameBindingCount();
-			nameChangeHistory.addNameChange(bind, bindingCount);
-			System.out.println(infor.getNameChangeTypeDescription());
-			
+			System.out.println(infor.getNameChangeTypeDescription());			
 		}
 		
 		return true;
@@ -93,6 +89,11 @@ public class ProjectHistory {
 			{
 				if(!detectedNameChanges.contains(change))				
 				{	
+					IBinding bind = change.getBindingOfOldName();
+					int bindingCount = change.getOldNameBindingCount();
+					nameChangeHistory.addNameChange(bind, bindingCount);
+					float per = nameChangeHistory.getNameChangeFraction(bind);
+					change.setNameChangePercentage(per);					
 					detectedNameChanges.add(change);
 					return true;
 				}
