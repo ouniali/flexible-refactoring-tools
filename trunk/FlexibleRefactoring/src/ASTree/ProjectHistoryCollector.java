@@ -38,10 +38,12 @@ public class ProjectHistoryCollector {
 		}
 		else
 		{	
-			history.addAST(tree);
-			ASTChangeInformation GeneralChange = history.getMostRecentASTGeneralChange();
-			ASTFileSaver.saveFullAST(tree);
-			ASTFileSaver.saveConciseAST(GeneralChange);
+			if(history.addAST(tree))
+			{
+				ASTChangeInformation GeneralChange = history.getMostRecentASTGeneralChange();
+				ASTFileSaver.saveFullAST(tree);
+				ASTFileSaver.saveConciseAST(GeneralChange);
+			}
 		}
 	}
 	
