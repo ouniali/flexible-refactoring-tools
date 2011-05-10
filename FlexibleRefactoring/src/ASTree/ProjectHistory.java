@@ -20,8 +20,16 @@ public class ProjectHistory {
 		Records = new ArrayList<ProjectHistoryRecord>();
 	
 	}
-	public void addAST(CompilationUnit tree)
+
+	public boolean addAST(CompilationUnit tree)
 	{
+		if(Records.size()>0)
+		{
+			CompilationUnit lastUnit = Records.get(Records.size()-1).unit;
+			if(tree.subtreeMatch(new ASTMatcher(), lastUnit))
+				return false;
+		}
+		
 		Records.add(new ProjectHistoryRecord(System.currentTimeMillis(), tree));
 		
 		if(LookingBackForDetectingRenameChange())
@@ -33,6 +41,8 @@ public class ProjectHistory {
 			System.out.println(infor.getNameChangeTypeDescription());
 			
 		}
+		
+		return true;
 	}
 	public ASTChangeInformation getMostRecentASTGeneralChange()
 	{
