@@ -12,7 +12,7 @@ public class ASTFileSaver {
 	static public boolean saveFullAST(CompilationUnit tree) throws IOException
 	{
 		String filePath = getFilePath(FullASTFolderPath);
-		if(filePath == null)
+		if(filePath == null || tree == null)
 			return false;
 		File file = new File (filePath);
 		file.createNewFile();
@@ -25,7 +25,7 @@ public class ASTFileSaver {
 	static public boolean saveConciseAST(ASTChangeInformation change) throws IOException
 	{
 		String filePath = getFilePath(ConciseASTFolderPath);
-		if(filePath == null)
+		if(filePath == null || change == null)
 			return false;
 		File file = new File(filePath);
 		file.createNewFile();	

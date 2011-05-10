@@ -43,7 +43,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		if(nameChangeType == NameChange.NOT_NAME_CHANGE)
 			return type;
 		else
-			return type+" "+originalName+" "+ originalNameBindingCount + " "+newName;
+			return type+" "+originalName+" "+ getNameChangePercentage() + " "+newName;
 	}
 	
 	public IBinding getBindingOfOldName()
