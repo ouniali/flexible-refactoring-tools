@@ -1,6 +1,8 @@
 package Rename;
 import java.util.*;
 
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
 public class SimpleNamesInCompilationUnit {
@@ -15,9 +17,9 @@ public class SimpleNamesInCompilationUnit {
 		visitor = new GetSimpleNamesInformationVisitor();
 		t.accept(visitor);
 		SimpleNameTable = visitor.getEntireBindingTable();
-		
 	}
-	public ArrayList<SimpleName> getSimpleNamesOfBinding(IBinding bind)
+	
+	public ArrayList<SimpleName> getSimpleNamesOfBindingInCompilatioUnit(IBinding bind)
 	{
 		if(bind == null)
 			return null;

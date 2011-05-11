@@ -13,7 +13,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	String newName;
 	float percentage;
 	
-	public ASTNameChangeInformation(ASTNode r1, long t1,ASTNode r2, long t2) {
+	public ASTNameChangeInformation(ASTNode r1, long t1,ASTNode r2, long t2) throws Exception {
 		super(r1, t1 ,r2, t2);
 		// TODO Auto-generated constructor stub
 

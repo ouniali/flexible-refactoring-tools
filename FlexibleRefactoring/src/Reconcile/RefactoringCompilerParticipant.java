@@ -1,17 +1,10 @@
 package Reconcile;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.compiler.BuildContext;
 import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-
-import ASTree.ASTree;
 import ASTree.ProjectHistoryCollector;
 
 public class RefactoringCompilerParticipant extends CompilationParticipant {

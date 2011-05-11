@@ -2,6 +2,7 @@ package Rename;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 public class NameChange {
 	
@@ -44,12 +45,13 @@ public class NameChange {
 			return "NOT_NAME_CHANGE";
 		}
 	}
-	public static ArrayList<SimpleName> getNodesWithSameBinding(ASTNode node)
+	public static ArrayList<SimpleName> getNodesWithSameBinding(ASTNode node) throws Exception
 	{
 		if(node instanceof SimpleName)
 		{
-			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit((CompilationUnit)node.getRoot());
-			return names.getSimpleNamesOfBinding(((SimpleName)node).resolveBinding());
+			IJavaProject project = ((CompilationUnit)node.getRoot()).getJavaElement().getJavaProject();
+			SimpleNamesInJavaProject names = new SimpleNamesInJavaProject(project);
+			return names.getSimpleNamesOfBindingInJavaProject(((SimpleName)node).resolveBinding());
 		}
 		else 
 			return null;
