@@ -1,5 +1,6 @@
 package Rename;
 import java.util.*;
+import java.util.Map.Entry;
 
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
@@ -21,9 +22,14 @@ public class SimpleNamesInCompilationUnit {
 	
 	public ArrayList<SimpleName> getSimpleNamesOfBindingInCompilatioUnit(IBinding bind)
 	{
+		
 		if(bind == null)
 			return null;
-		
-		return SimpleNameTable.get(bind);
+		for (Entry<IBinding, ArrayList<SimpleName>> entry: SimpleNameTable.entrySet())
+		{
+			if(entry.getKey().isEqualTo(bind))
+				return entry.getValue();
+		}
+		return null;
 	}
 }

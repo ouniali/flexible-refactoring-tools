@@ -8,29 +8,30 @@ import org.eclipse.jdt.core.dom.*;
 import ASTree.*;
 
 public class SimpleNamesInJavaProject {
+	
 	IJavaProject project;
-	ArrayList<SimpleNamesInCompilationUnit> UnitNames;
-	ArrayList<CompilationUnit> Units;
+	ArrayList<SimpleNamesInCompilationUnit> UnitsNames;
 	
 	public SimpleNamesInJavaProject(IJavaProject pro) throws Exception
 	{
 		project = pro;
-		UnitNames = new ArrayList<SimpleNamesInCompilationUnit>();
-		Units = ASTreeManipulationMethods.getCompilationUnitsOfAProject(project);
+		UnitsNames = new ArrayList<SimpleNamesInCompilationUnit>();
+		ArrayList<CompilationUnit> Units = ASTreeManipulationMethods.getCompilationUnitsOfAProject(project);	
 		for(CompilationUnit unit : Units)
-			UnitNames.add(new SimpleNamesInCompilationUnit(unit));
+			UnitsNames.add(new SimpleNamesInCompilationUnit(unit));
 	}
 	public ArrayList<SimpleName> getSimpleNamesOfBindingInJavaProject(IBinding bind)
 	{
 		ArrayList<SimpleName> names = new ArrayList<SimpleName>();
-		for (SimpleNamesInCompilationUnit unit : UnitNames)
+	
+		for (SimpleNamesInCompilationUnit unitNames : UnitsNames)
 		{
-			ArrayList<SimpleName> NameInUnit = unit.getSimpleNamesOfBindingInCompilatioUnit(bind);
-			if(NameInUnit !=null)
+			ArrayList<SimpleName> NameInUnit = unitNames.getSimpleNamesOfBindingInCompilatioUnit(bind);
+			if(NameInUnit != null)	
 				names.addAll(NameInUnit);
 		}
 		
-		if(names.size()==0)
+		if(names.size() == 0)
 			return null;
 		else
 			return names;
