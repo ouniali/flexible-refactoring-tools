@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
+
+import ASTree.ASTreeManipulationMethods;
 public class NameChange {
 	
 	public static final int NOT_NAME_CHANGE = -1;
@@ -49,9 +51,20 @@ public class NameChange {
 	{
 		if(node instanceof SimpleName)
 		{
-			IJavaProject project = ((CompilationUnit)node.getRoot()).getJavaElement().getJavaProject();
-			SimpleNamesInJavaProject names = new SimpleNamesInJavaProject(project);
-			return names.getSimpleNamesOfBindingInJavaProject(((SimpleName)node).resolveBinding());
+			IBinding bind = ((SimpleName) node).resolveBinding();
+			CompilationUnit unit =(CompilationUnit) node.getRoot();
+			ArrayList<CompilationUnit> siblings = ASTreeManipulationMethods.getSiblingsOfACompilationUnitInItsProject((CompilationUnit)node.getRoot());
+			ArrayList<SimpleName> names = new ArrayList<SimpleName>();
+			ArrayList<SimpleName> namesInUnit = new SimpleNamesInCompilationUnit(unit).getSimpleNamesOfBindingInCompilatioUnit(bind);
+			if(namesInUnit != null)
+				names.addAll(namesInUnit);
+			for(CompilationUnit sib: siblings)
+			{
+				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(sib).getSimpleNamesOfBindingInCompilatioUnit(bind);
+				if(namesInSib != null)
+					names.addAll(namesInSib);	
+			}
+			return names;
 		}
 		else 
 			return null;

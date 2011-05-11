@@ -90,6 +90,21 @@ public class ASTreeManipulationMethods {
 		return remainingNodes;
 	}
 
+	public static ArrayList<CompilationUnit> getSiblingsOfACompilationUnitInItsProject(CompilationUnit unit) throws Exception
+	{
+		
+		ArrayList<CompilationUnit> siblings = new ArrayList<CompilationUnit>();
+		IJavaProject project = unit.getJavaElement().getJavaProject();
+		ArrayList<CompilationUnit> allUnits = getCompilationUnitsOfAProject(project);
+		
+		for(CompilationUnit item: allUnits)
+		{
+			if(!item.getJavaElement().getPath().toString().equals(unit.getJavaElement().getPath().toString()))
+				siblings.add(item);
+		}
+			
+		return siblings;
+	}
 	
 	public static ArrayList<CompilationUnit> getCompilationUnitsOfAProject(IJavaProject project) throws Exception
 	{
