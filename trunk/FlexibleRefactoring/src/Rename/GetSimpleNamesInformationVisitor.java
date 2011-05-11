@@ -7,27 +7,27 @@ import org.eclipse.jdt.core.dom.*;
 public class GetSimpleNamesInformationVisitor extends ASTVisitor {
 	
 	
-	Hashtable<IBinding, ArrayList<SimpleName>> Variables;
-	Hashtable<IBinding, ArrayList<SimpleName>> Methods;
-	Hashtable<IBinding, ArrayList<SimpleName>> Packages;
-	Hashtable<IBinding, ArrayList<SimpleName>> Types;
-	Hashtable<IBinding, ArrayList<SimpleName>> Annotations;
-	Hashtable<IBinding, ArrayList<SimpleName>> MemberValuePairs;
+	Hashtable<String, ArrayList<SimpleName>> Variables;
+	Hashtable<String, ArrayList<SimpleName>> Methods;
+	Hashtable<String, ArrayList<SimpleName>> Packages;
+	Hashtable<String, ArrayList<SimpleName>> Types;
+	Hashtable<String, ArrayList<SimpleName>> Annotations;
+	Hashtable<String, ArrayList<SimpleName>> MemberValuePairs;
 	
 	public GetSimpleNamesInformationVisitor()
 	{
-		Variables = new Hashtable<IBinding, ArrayList<SimpleName>>();
-		Methods = new Hashtable<IBinding, ArrayList<SimpleName>>();
-		Packages = new Hashtable<IBinding, ArrayList<SimpleName>>();
-		Types = new Hashtable<IBinding, ArrayList<SimpleName>>();
-		Annotations = new Hashtable<IBinding, ArrayList<SimpleName>>();
-		MemberValuePairs = new Hashtable<IBinding, ArrayList<SimpleName>>();
+		Variables = new Hashtable<String, ArrayList<SimpleName>>();
+		Methods = new Hashtable<String, ArrayList<SimpleName>>();
+		Packages = new Hashtable<String, ArrayList<SimpleName>>();
+		Types = new Hashtable<String, ArrayList<SimpleName>>();
+		Annotations = new Hashtable<String, ArrayList<SimpleName>>();
+		MemberValuePairs = new Hashtable<String, ArrayList<SimpleName>>();
 	}
 	@Override
 	public boolean visit(SimpleName node) {
 		IBinding binding = node.resolveBinding();
 		ArrayList<SimpleName> list;
-		Hashtable<IBinding, ArrayList<SimpleName>> correspondingTable;
+		Hashtable<String, ArrayList<SimpleName>> correspondingTable;
 		
 		if(binding == null)
 			return true;
@@ -56,7 +56,7 @@ public class GetSimpleNamesInformationVisitor extends ASTVisitor {
 			break;
 		}
 	
-		list = correspondingTable.get(binding);
+		list = correspondingTable.get(binding.getKey());
 		if(list != null)
 		{
 			list.add(node);
@@ -64,40 +64,40 @@ public class GetSimpleNamesInformationVisitor extends ASTVisitor {
 		}
 		list = new ArrayList<SimpleName>();
 		list.add(node);
-		correspondingTable.put(binding, list);
+		correspondingTable.put(binding.getKey(), list);
 		
 		return true;
 		
 	}
 	
-	public Hashtable<IBinding, ArrayList<SimpleName>> getVariables()
+	public Hashtable<String, ArrayList<SimpleName>> getVariables()
 	{
 		return Variables;
 	}
-	public Hashtable<IBinding, ArrayList<SimpleName>> getMethods()
+	public Hashtable<String, ArrayList<SimpleName>> getMethods()
 	{
 		return Methods;
 	}
-	public Hashtable<IBinding, ArrayList<SimpleName>> getAnnotations()
+	public Hashtable<String, ArrayList<SimpleName>> getAnnotations()
 	{
 		return Annotations;
 	}
-	public Hashtable<IBinding, ArrayList<SimpleName>> getTypes()
+	public Hashtable<String, ArrayList<SimpleName>> getTypes()
 	{
 		return Types;
 	}
-	public Hashtable<IBinding, ArrayList<SimpleName>> getPackages()
+	public Hashtable<String, ArrayList<SimpleName>> getPackages()
 	{
 		return Packages;
 	}
-	public Hashtable<IBinding, ArrayList<SimpleName>> getMemberValuePairs()
+	public Hashtable<String, ArrayList<SimpleName>> getMemberValuePairs()
 	{
 		return MemberValuePairs;
 	}
 	
-	public Hashtable<IBinding, ArrayList<SimpleName>> getEntireBindingTable()
+	public Hashtable<String, ArrayList<SimpleName>> getEntireBindingTable()
 	{
-		Hashtable<IBinding, ArrayList<SimpleName>> EntireTable = new Hashtable<IBinding, ArrayList<SimpleName>>();
+		Hashtable<String, ArrayList<SimpleName>> EntireTable = new Hashtable<String, ArrayList<SimpleName>>();
 		EntireTable.putAll(Variables);
 		EntireTable.putAll(Methods);
 		EntireTable.putAll(Types);
