@@ -17,7 +17,7 @@ public class ProjectHistory {
 		histories = new ArrayList<CompilationUnitHistory>();
 	}
 
-	public boolean addAST(CompilationUnit tree)
+	public boolean addAST(CompilationUnit tree) throws Exception
 	{
 		CompilationUnitHistory history = getHistory(tree);
 		if(history == null)

@@ -26,7 +26,7 @@ public class ProjectHistoryCollector {
 		Map = new HashMap<IJavaProject, ProjectHistory>();
 	}
 	
-	public void addNewProjectVersion(IJavaProject project, CompilationUnit tree) throws IOException
+	public void addNewProjectVersion(IJavaProject project, CompilationUnit tree) throws Exception
 	{
 		ProjectHistory history = Map.get(project);
 		

@@ -2,13 +2,13 @@ package ASTree;
 
 import java.util.ArrayList;
 
-import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import Rename.ASTNameChangeInformation;
 
 
-public class ASTree {
+public class ASTreeManipulationMethods {
 		
 	public static void OutputTree(CompilationUnit Root)
 	{
@@ -30,7 +30,7 @@ public class ASTree {
 		return new ASTChangeInformation(ASTOne, oldTime, ASTTwo, newTime);	
 	}
 	
-	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnit AstOld, long oldTime, CompilationUnit AstNew, long newTime)
+	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnit AstOld, long oldTime, CompilationUnit AstNew, long newTime) throws Exception
 	{
 		ASTNode ASTOne = AstOld.getRoot();
 		ASTNode ASTTwo = AstNew.getRoot();
@@ -89,6 +89,23 @@ public class ASTree {
 		
 		return remainingNodes;
 	}
+
+	
+	public static ArrayList<CompilationUnit> getCompilationUnitsOfAProject(IJavaProject project) throws Exception
+	{
+		ArrayList<CompilationUnit> result = new ArrayList<CompilationUnit>();
+		IPackageFragment[] packages = project.getPackageFragments();
+		for (IPackageFragment mypackage : packages) 
+		{
+			if (mypackage.getKind() == IPackageFragmentRoot.K_SOURCE) 
+			{
+				for (ICompilationUnit unit : mypackage.getCompilationUnits())
+					result.add(parse(unit));
+			}	
+		}
+		return result;
+	}
+	
 	public static CompilationUnit parse(ICompilationUnit unit) {
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);

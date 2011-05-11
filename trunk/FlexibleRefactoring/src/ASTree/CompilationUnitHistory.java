@@ -23,7 +23,7 @@ public class CompilationUnitHistory {
 	}
 	
 	
-	protected boolean addAST(CompilationUnit tree)
+	protected boolean addAST(CompilationUnit tree) throws Exception
 	{
 		if(Records.size()>0)
 		{
@@ -43,7 +43,7 @@ public class CompilationUnitHistory {
 		return true;
 	}
 	
-	private boolean LookingBackForDetectingRenameChange()
+	private boolean LookingBackForDetectingRenameChange() throws Exception
 	{
 		if(Records.size() == 0)
 			return false;
@@ -59,7 +59,7 @@ public class CompilationUnitHistory {
 		{
 			int index = Records.size()-1-i;
 			oldRecord = Records.get(index);	
-			ASTNameChangeInformation change = ASTree.getRenameASTChangedInformation(oldRecord.unit,oldRecord.time,latestRecord.unit, latestRecord.time);
+			ASTNameChangeInformation change = ASTreeManipulationMethods.getRenameASTChangedInformation(oldRecord.unit,oldRecord.time,latestRecord.unit, latestRecord.time);
 			if(change.getNameChangeType() != NameChange.NOT_NAME_CHANGE)
 			{
 				if(!detectedNameChanges.contains(change))				
@@ -86,7 +86,7 @@ public class CompilationUnitHistory {
 		if(Records.size()<=1)
 			return null;
 		oldRecord = Records.get(Records.size()-2);
-		ASTChangeInformation change = ASTree.getGeneralASTChangeInformation(oldRecord.unit,oldRecord.time, newRecord.unit, newRecord.time);
+		ASTChangeInformation change = ASTreeManipulationMethods.getGeneralASTChangeInformation(oldRecord.unit,oldRecord.time, newRecord.unit, newRecord.time);
 		return change;
 	}
 	
