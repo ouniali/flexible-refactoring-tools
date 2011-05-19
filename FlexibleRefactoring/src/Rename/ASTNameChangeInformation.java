@@ -2,7 +2,7 @@ package Rename;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.*;
-
+import org.eclipse.jdt.internal.corext.refactoring.*;
 import ASTree.*;
 
 public class ASTNameChangeInformation extends ASTChangeInformation {
@@ -87,6 +87,13 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		percentage = per;
 	
 	}
+	
+	public boolean NameChangeAutomatically()
+	{
+	//	Checks.checkIfConstructorName(null, null, null);
+		return false;
+	}
+	
 	
 
 }

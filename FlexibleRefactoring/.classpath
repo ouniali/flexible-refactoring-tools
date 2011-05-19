@@ -6,5 +6,8 @@
 	<classpathentry kind="lib" path="E:/Program Files/eclipse jdt/eclipse/plugins/org.eclipse.jdt.core_3.6.2.v_A76_R36x.jar"/>
 	<classpathentry kind="lib" path="E:/Program Files/eclipse jdt/eclipse/plugins/org.eclipse.core.commands_3.6.0.I20100512-1500.jar"/>
 	<classpathentry kind="lib" path="E:/Program Files/eclipse jdt/eclipse/plugins/org.eclipse.core.resources_3.6.1.R36x_v20110131-1630.jar"/>
+	<classpathentry kind="lib" path="E:/Program Files/eclipse jdt/eclipse/plugins/org.eclipse.jdt.ui_3.6.2.r362_v20110203.jar"/>
+	<classpathentry kind="lib" path="E:/Program Files/eclipse jdt/eclipse/plugins/org.eclipse.jdt_3.6.1.v201102101200.jar"/>
+	<classpathentry kind="lib" path="E:/Program Files/eclipse jdt/eclipse/plugins/org.eclipse.core.runtime_3.6.0.v20100505.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
