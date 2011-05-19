@@ -12,6 +12,9 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	int originalNameBindingCount;
 	String newName;
 	float percentage;
+	ArrayList<SimpleName> nodesWithSameBindingWithOriginalName;
+	static boolean allowFinishingRenamingAutomatically = true;
+	
 	
 	public ASTNameChangeInformation(ASTNode r1, long t1,ASTNode r2, long t2) throws Exception {
 		super(r1, t1 ,r2, t2);
@@ -24,11 +27,11 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			originalName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[0];
 			newName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[1];
-			ArrayList<SimpleName> nodesWithSameBinding = NameChange.getNodesWithSameBinding(rootOne);
-			if(nodesWithSameBinding == null)
+			nodesWithSameBindingWithOriginalName = NameChange.getNodesWithSameBinding(rootOne);
+			if(nodesWithSameBindingWithOriginalName == null)
 				originalNameBindingCount = -1;
 			else
-				originalNameBindingCount = nodesWithSameBinding.size();
+				originalNameBindingCount = nodesWithSameBindingWithOriginalName.size();
 		}
 	}
 	
@@ -82,6 +85,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public void setNameChangePercentage(float per)
 	{
 		percentage = per;
+	
 	}
+	
 
 }
