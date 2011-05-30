@@ -2,6 +2,7 @@ package Rename;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.ILocalVariable;
 import org.eclipse.jdt.core.dom.*;
 
 public class GetSimpleNamesInformationVisitor extends ASTVisitor {
@@ -23,12 +24,14 @@ public class GetSimpleNamesInformationVisitor extends ASTVisitor {
 		Annotations = new Hashtable<String, ArrayList<SimpleName>>();
 		MemberValuePairs = new Hashtable<String, ArrayList<SimpleName>>();
 	}
+	
+	
 	@Override
 	public boolean visit(SimpleName node) {
 		IBinding binding = node.resolveBinding();
 		ArrayList<SimpleName> list;
 		Hashtable<String, ArrayList<SimpleName>> correspondingTable;
-		
+			
 		if(binding == null)
 			return true;
 		switch(binding.getKind())

@@ -2,6 +2,7 @@ package Rename;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
@@ -47,20 +48,21 @@ public class NameChange {
 			return "NOT_NAME_CHANGE";
 		}
 	}
-	public static ArrayList<SimpleName> getNodesWithSameBinding(ASTNode node) throws Exception
-	{
+	public static ArrayList<SimpleName> getNodesWithSameBinding(ASTNode node, IJavaProject project, ICompilationUnit iunit) throws Exception
+	{	
 		if(node instanceof SimpleName)
 		{
 			IBinding bind = ((SimpleName) node).resolveBinding();
 			CompilationUnit unit =(CompilationUnit) node.getRoot();
-			ArrayList<CompilationUnit> siblings = ASTreeManipulationMethods.getSiblingsOfACompilationUnitInItsProject((CompilationUnit)node.getRoot());
+			ArrayList<ICompilationUnit> siblings = ASTreeManipulationMethods.getSiblingsOfACompilationUnitInItsProject(iunit, project);
 			ArrayList<SimpleName> names = new ArrayList<SimpleName>();
 			ArrayList<SimpleName> namesInUnit = new SimpleNamesInCompilationUnit(unit).getSimpleNamesOfBindingInCompilatioUnit(bind);
 			if(namesInUnit != null)
 				names.addAll(namesInUnit);
-			for(CompilationUnit sib: siblings)
+			for(ICompilationUnit sib: siblings)
 			{
-				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(sib).getSimpleNamesOfBindingInCompilatioUnit(bind);
+				CompilationUnit sibunit = ASTreeManipulationMethods.parseICompilationUnit(sib);
+				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(sibunit).getSimpleNamesOfBindingInCompilatioUnit(bind);
 				if(namesInSib != null)
 					names.addAll(namesInSib);	
 			}

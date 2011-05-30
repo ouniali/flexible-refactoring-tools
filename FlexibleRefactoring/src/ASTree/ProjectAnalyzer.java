@@ -52,7 +52,7 @@ public class ProjectAnalyzer {
 			for (ICompilationUnit unit : RequestedPackage.getCompilationUnits()) 
 			{
 				// Now create the AST for the ICompilationUnits
-				CompilationUnit parse = ASTreeManipulationMethods.parse(unit);
+				CompilationUnit parse = ASTreeManipulationMethods.parseICompilationUnit(unit);
 				TreeSet.add(parse);
 
 			}

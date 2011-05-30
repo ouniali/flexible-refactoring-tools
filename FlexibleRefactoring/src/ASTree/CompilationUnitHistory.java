@@ -2,6 +2,8 @@ package ASTree;
 
 import java.util.*;
 
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
 import Rename.ASTNameChangeInformation;
@@ -10,15 +12,24 @@ import Rename.NameChangeCountHistory;
 
 public class CompilationUnitHistory {
 	
-	String path;
+	String ProjectName;
+	String PackageName;
+	String UnitName;
+	IJavaProject Project;
+	ICompilationUnit unit;
 	ArrayList<CompilationUnitHistoryRecord> Records;
 	static final int MAXIMUM_LOOK_BACK_COUNT = 10;
+	
 	static private ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static private NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 	
-	protected CompilationUnitHistory(String p)
+	protected CompilationUnitHistory(IJavaProject proj, ICompilationUnit u, String pro, String pac, String un)
 	{
-		path = p;
+		unit = u;
+		Project = proj;
+		ProjectName = pro;
+		PackageName = pac;
+		UnitName = un;
 		Records = new ArrayList<CompilationUnitHistoryRecord>();
 	}
 	
@@ -27,12 +38,12 @@ public class CompilationUnitHistory {
 	{
 		if(Records.size()>0)
 		{
-			CompilationUnit lastUnit = Records.get(Records.size()-1).unit;
+			CompilationUnit lastUnit = Records.get(Records.size()-1).getASTree();
 			if(tree.subtreeMatch(new ASTMatcher(), lastUnit))
 				return false;
 		}
 		
-		Records.add(new CompilationUnitHistoryRecord(System.currentTimeMillis(), tree));
+		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName, tree, System.currentTimeMillis()));
 		
 		if(LookingBackForDetectingRenameChange())
 		{
@@ -59,7 +70,7 @@ public class CompilationUnitHistory {
 		{
 			int index = Records.size()-1-i;
 			oldRecord = Records.get(index);	
-			ASTNameChangeInformation change = ASTreeManipulationMethods.getRenameASTChangedInformation(oldRecord.unit,oldRecord.time,latestRecord.unit, latestRecord.time);
+			ASTNameChangeInformation change = ASTreeManipulationMethods.getRenameASTChangedInformation(Project, unit,oldRecord.getASTree(),oldRecord.getTime(),latestRecord.getASTree(), latestRecord.getTime());
 			if(change.getNameChangeType() != NameChange.NOT_NAME_CHANGE)
 			{
 				if(!detectedNameChanges.contains(change))				
@@ -86,13 +97,18 @@ public class CompilationUnitHistory {
 		if(Records.size()<=1)
 			return null;
 		oldRecord = Records.get(Records.size()-2);
-		ASTChangeInformation change = ASTreeManipulationMethods.getGeneralASTChangeInformation(oldRecord.unit,oldRecord.time, newRecord.unit, newRecord.time);
+		ASTChangeInformation change = ASTreeManipulationMethods.getGeneralASTChangeInformation(Project, unit, oldRecord.getASTree(),oldRecord.getTime(), newRecord.getASTree(), newRecord.getTime());
 		return change;
 	}
-	
-	protected String getCompilationUnitPath()
+	protected String getCompilationUnitName()
 	{
-		return path;
+		return UnitName;
 	}
+	
+	protected String getPackageName()
+	{
+		return PackageName;
+	}
+
 	
 }
