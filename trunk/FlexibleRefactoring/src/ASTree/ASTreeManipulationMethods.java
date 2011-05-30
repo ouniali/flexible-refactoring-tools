@@ -128,12 +128,11 @@ public class ASTreeManipulationMethods {
 		return (CompilationUnit) parser.createAST(null); // parse
 	}
 	
-	public static CompilationUnit parseSourceCode(String code, IJavaProject project)
+	public static CompilationUnit parseSourceCode(String code)
 	{
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(code.toCharArray());
-		parser.setProject(project);
 		parser.setResolveBindings(true);
 		CompilationUnit unit = (CompilationUnit) parser.createAST(null); 
 
