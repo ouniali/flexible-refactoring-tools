@@ -59,7 +59,7 @@ public class CompilationUnitHistoryRecord {
 	{
 		String path = Directory + File.separator + ASTFileName;
 		String source = readAllCodeFrom(path);		
-		CompilationUnit unit =  ASTreeManipulationMethods.parseSourceCode(source, Project);
+		CompilationUnit unit =  ASTreeManipulationMethods.parseSourceCode(source);
 		return unit;
 	}
 	private String readAllCodeFrom(String path)
