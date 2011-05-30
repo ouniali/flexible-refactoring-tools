@@ -20,7 +20,6 @@ public class SimpleNamesInCompilationUnit {
 	
 	public ArrayList<SimpleName> getSimpleNamesOfBindingInCompilatioUnit(IBinding bind)
 	{
-		
 		if(bind == null)
 			return null;
 		return SimpleNameTable.get(bind.getKey());

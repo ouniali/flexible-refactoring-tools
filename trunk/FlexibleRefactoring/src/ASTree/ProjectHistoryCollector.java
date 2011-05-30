@@ -28,11 +28,13 @@ public class ProjectHistoryCollector {
 	
 	public void addNewProjectVersion(IJavaProject project, CompilationUnit tree) throws Exception
 	{
+
+		
 		ProjectHistory history = Map.get(project);
 		
 		if(history == null)
 		{
-			ProjectHistory newHistory = new ProjectHistory();
+			ProjectHistory newHistory = new ProjectHistory(project ,ASTreeManipulationMethods.getJavaProjectName(project));
 			newHistory.addAST(tree);
 			Map.put(project, newHistory);
 		}
@@ -41,7 +43,6 @@ public class ProjectHistoryCollector {
 			if(history.addAST(tree))
 			{
 				ASTChangeInformation GeneralChange = history.getMostRecentChange();
-				ASTFileSaver.saveFullAST(tree);
 				ASTFileSaver.saveConciseAST(GeneralChange);
 			}
 		}

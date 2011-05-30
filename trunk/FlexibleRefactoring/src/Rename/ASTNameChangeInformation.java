@@ -1,9 +1,13 @@
 package Rename;
 import java.util.ArrayList;
 
+
+import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.internal.corext.refactoring.*;
+
+
 import ASTree.*;
+import JavaRefactoringAPI.JavaRenameRefactoringAPI;
 
 public class ASTNameChangeInformation extends ASTChangeInformation {
 
@@ -16,8 +20,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	static boolean allowFinishingRenamingAutomatically = true;
 	
 	
-	public ASTNameChangeInformation(ASTNode r1, long t1,ASTNode r2, long t2) throws Exception {
-		super(r1, t1 ,r2, t2);
+	public ASTNameChangeInformation(IJavaProject pro, ICompilationUnit iunit, ASTNode r1, long t1,ASTNode r2, long t2) throws Exception {
+		super(pro, iunit, r1, t1 ,r2, t2);
 		// TODO Auto-generated constructor stub
 
 		ASTNode rootOne = this.getOldRoot();
@@ -27,7 +31,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			originalName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[0];
 			newName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[1];
-			nodesWithSameBindingWithOriginalName = NameChange.getNodesWithSameBinding(rootOne);
+			nodesWithSameBindingWithOriginalName = NameChange.getNodesWithSameBinding(rootOne, getIJavaProject(), getICompilationUnit());
 			if(nodesWithSameBindingWithOriginalName == null)
 				originalNameBindingCount = -1;
 			else
@@ -85,13 +89,25 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public void setNameChangePercentage(float per)
 	{
 		percentage = per;
-	
+		//NameChangeAutomatically();
 	}
 	
 	public boolean NameChangeAutomatically()
 	{
-	//	Checks.checkIfConstructorName(null, null, null);
-		return false;
+		SimpleName name = (SimpleName)getNewRoot();
+		IBinding binding = name.resolveBinding();
+		IJavaElement element = binding.getJavaElement();
+		try {
+			
+			JavaRenameRefactoringAPI.performRefactoring(element, "newName");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return true;
 	}
 	
 	

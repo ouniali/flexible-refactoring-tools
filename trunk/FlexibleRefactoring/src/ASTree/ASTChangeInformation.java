@@ -1,6 +1,9 @@
 package ASTree;
 
 import java.util.ArrayList;
+
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
 import Rename.*;
@@ -11,15 +14,18 @@ public class ASTChangeInformation {
 	ASTNode rootTwo;
 	long oldTime;
 	long newTime;
-		
+	IJavaProject project;	
+	ICompilationUnit unit;
 	boolean rootTypeChanged;
 
 	//name change section
 
 	//name change section ends
 	
-	protected ASTChangeInformation(ASTNode r1, long time1, ASTNode r2, long time2)
+	protected ASTChangeInformation(IJavaProject proj, ICompilationUnit iu,ASTNode r1, long time1, ASTNode r2, long time2)
 	{
+		project = proj;
+		unit = iu;
 		rootOne = r1;
 		rootTwo = r2;
 		oldTime = time1;
@@ -64,6 +70,16 @@ public class ASTChangeInformation {
 	{
 		ASTChangeInformation info = (ASTChangeInformation) o;
 		return info.getOldTime() == this.getOldTime() && info.getNewTime() == this.getNewTime();	
+	}
+	
+	public IJavaProject getIJavaProject()
+	{
+		return project;
+	}
+	
+	public ICompilationUnit getICompilationUnit()
+	{
+		return unit;
 	}
 	
 }

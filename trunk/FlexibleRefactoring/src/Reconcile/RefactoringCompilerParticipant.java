@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import ASTree.ProjectHistoryCollector;
+import JavaRefactoringAPI.JavaRenameRefactoringAPI;
 
 public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
@@ -51,12 +52,13 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	public void reconcile(ReconcileContext context) 
 	{	
 		try {
+			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
 			collector.addNewProjectVersion(pro, tree);
 			
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 	}
