@@ -48,29 +48,27 @@ public class NameChange {
 			return "NOT_NAME_CHANGE";
 		}
 	}
-	public static ArrayList<SimpleName> getNodesWithSameBinding(ASTNode node, IJavaProject project, ICompilationUnit iunit) throws Exception
+	public static int getNodesWithSameBindingInOtherICompilationUnit(String binding, IJavaProject project, ICompilationUnit iunit) throws Exception
 	{	
-		if(node instanceof SimpleName)
-		{
-			IBinding bind = ((SimpleName) node).resolveBinding();
-			CompilationUnit unit =(CompilationUnit) node.getRoot();
+		
+		if(!binding.equals(""))
+		{	
 			ArrayList<ICompilationUnit> siblings = ASTreeManipulationMethods.getSiblingsOfACompilationUnitInItsProject(iunit, project);
 			ArrayList<SimpleName> names = new ArrayList<SimpleName>();
-			ArrayList<SimpleName> namesInUnit = new SimpleNamesInCompilationUnit(unit).getSimpleNamesOfBindingInCompilatioUnit(bind);
-			if(namesInUnit != null)
-				names.addAll(namesInUnit);
+		
 			for(ICompilationUnit sib: siblings)
 			{
 				CompilationUnit sibunit = ASTreeManipulationMethods.parseICompilationUnit(sib);
-				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(sibunit).getSimpleNamesOfBindingInCompilatioUnit(bind);
+				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(sibunit).getSimpleNamesOfBindingInCompilatioUnit(binding);
 				if(namesInSib != null)
-					names.addAll(namesInSib);	
+					names.addAll(namesInSib);
 			}
-			return names;
+			return names.size();
 		}
 		else 
-			return null;
+			return 0;
 	}
+	
 	public static int DecideNameChangeType(ASTNode rootOne, ASTNode rootTwo)
 	{
 		int nameChangeType;

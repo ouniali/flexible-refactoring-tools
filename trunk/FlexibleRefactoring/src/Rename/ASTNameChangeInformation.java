@@ -12,30 +12,37 @@ import JavaRefactoringAPI.JavaRenameRefactoringAPI;
 public class ASTNameChangeInformation extends ASTChangeInformation {
 
 	int nameChangeType;
+	
 	String originalName;
+	String modifiedName;
+	
 	int originalNameBindingCount;
-	String newName;
+	
 	float percentage;
-	ArrayList<SimpleName> nodesWithSameBindingWithOriginalName;
 	static boolean allowFinishingRenamingAutomatically = true;
+	String bindingKeyOne;
+	String bindingKeyTwo;
 	
 	
-	public ASTNameChangeInformation(IJavaProject pro, ICompilationUnit iunit, ASTNode r1, long t1,ASTNode r2, long t2) throws Exception {
-		super(pro, iunit, r1, t1 ,r2, t2);
+	public ASTNameChangeInformation(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
+		super(oldRecord,r1,newRecord,r2);
 		// TODO Auto-generated constructor stub
-
+				
 		ASTNode rootOne = this.getOldRoot();
 		ASTNode rootTwo = this.getNewRoot();
-		nameChangeType = NameChange.DecideNameChangeType(this.getOldRoot(), this.getNewRoot());//if the change is modifying a name, get the type of such change.
+		
+		nameChangeType = NameChange.DecideNameChangeType(rootOne, rootTwo);//if the change is modifying a name, get the type of such change.
+		Name oldName = (Name) rootOne;
+		Name newName = (Name) rootTwo;
+		
+		bindingKeyOne = oldRecord.getBindingKey(oldName.getFullyQualifiedName());
+		bindingKeyTwo = newRecord.getBindingKey(newName.getFullyQualifiedName());
+		
 		if(nameChangeType != NameChange.NOT_NAME_CHANGE)
 		{
-			originalName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[0];
-			newName = NameChange.getOriginalNameAndNewName(rootOne, rootTwo)[1];
-			nodesWithSameBindingWithOriginalName = NameChange.getNodesWithSameBinding(rootOne, getIJavaProject(), getICompilationUnit());
-			if(nodesWithSameBindingWithOriginalName == null)
-				originalNameBindingCount = -1;
-			else
-				originalNameBindingCount = nodesWithSameBindingWithOriginalName.size();
+			originalName = oldName.getFullyQualifiedName();
+			modifiedName = newName.getFullyQualifiedName();
+			originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
 		}
 	}
 	
@@ -50,33 +57,11 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		if(nameChangeType == NameChange.NOT_NAME_CHANGE)
 			return type;
 		else
-			return type+" "+originalName+" "+ getNameChangePercentage() + " "+newName;
+			return originalName+" "+ getNameChangePercentage() + " "+modifiedName;
 	}
 	
-	public IBinding getBindingOfOldName()
-	{
-		if(nameChangeType != NameChange.NOT_NAME_CHANGE)
-		{
-			SimpleName name = (SimpleName)this.getOldRoot();
-			IBinding bind = name.resolveBinding();
-			return bind;
-		}
-		
-		return null;
-	}	
-	
-	public IBinding getBindingOfNewName()
-	{
-		if(nameChangeType != NameChange.NOT_NAME_CHANGE)
-		{
-			SimpleName name = (SimpleName)this.getNewRoot();
-			IBinding bind = name.resolveBinding();
-			return bind;
-		}
-		
-		return null;
-	}
-	
+
+
 	public int getOldNameBindingCount()
 	{
 		return originalNameBindingCount;
@@ -108,6 +93,15 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		
 		
 		return true;
+	}
+	public String getOldRootBindingKey()
+	{
+		return bindingKeyOne;
+	}
+	
+	public String getNewRootBindingKey()
+	{
+		return bindingKeyTwo;
 	}
 	
 	

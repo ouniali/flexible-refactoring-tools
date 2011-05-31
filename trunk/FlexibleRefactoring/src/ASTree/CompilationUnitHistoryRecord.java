@@ -7,10 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
+
+import Rename.SimpleNamesInCompilationUnit;
 
 public class CompilationUnitHistoryRecord {
 	
@@ -18,36 +21,41 @@ public class CompilationUnitHistoryRecord {
 	private final long time;
 	private final String Directory;
 	private final String ASTFileName;
+	private final String BindingFileName;
 	private final String ProjectName;
 	private final String PackageName;
 	private final String UnitName;
 	private final IJavaProject Project;
-	private final ICompilationUnit unit;
+	private final ICompilationUnit Unit;
 	
 	
 	protected CompilationUnitHistoryRecord(IJavaProject proj, ICompilationUnit iu,String pro, String pac, String un, CompilationUnit u, long t ) throws IOException
 	{
 		Project = proj;
-		unit = iu;
+		Unit = iu;
 		ProjectName = pro;
 		PackageName = pac;
 		UnitName = un;
 		time = t;
 		ASTFileName = PackageName + "_" + UnitName + "_" + time+".java";
+		BindingFileName = PackageName + "_" + UnitName + "_" + time+"_bindng.txt";
 		Directory = root + File.separator + ProjectName;
 		new File(Directory).mkdirs();
-		saveAST(Directory + File.separator +ASTFileName, u);
-
+		save(Directory + File.separator +ASTFileName, u.getRoot().toString());
+		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
+		u.accept(bVisitor);
+		save(Directory + File.separator +BindingFileName, bVisitor.getBindingInformation());
+		
 	}
 	
 	
-	private void saveAST(String path, CompilationUnit unit) 
+	private void save(String path, String str) 
 	{
 		try{
 			File file = new File (path);
 			file.createNewFile();
 			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-			writer.write((unit.getRoot().toString()));
+			writer.write(str);
 			writer.close();
 		}catch (Exception e)
 		{
@@ -58,11 +66,12 @@ public class CompilationUnitHistoryRecord {
 	public CompilationUnit getASTree()
 	{
 		String path = Directory + File.separator + ASTFileName;
-		String source = readAllCodeFrom(path);		
+		String source = readFrom(path);		
 		CompilationUnit unit =  ASTreeManipulationMethods.parseSourceCode(source);
 		return unit;
 	}
-	private String readAllCodeFrom(String path)
+	
+	private String readFrom(String path)
 	{
 		StringBuffer source = new StringBuffer();
 		try{
@@ -85,4 +94,92 @@ public class CompilationUnitHistoryRecord {
 	{
 		return time;
 	}
+	
+	public String getBindingKey(String fullName)
+	{
+		String path = Directory + File.separator + BindingFileName;
+		String key = null;
+		try{
+			  FileInputStream fstream = new FileInputStream(path);
+			  DataInputStream in = new DataInputStream(fstream);
+			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			  String strLine;
+			  while ((strLine = br.readLine()) != null)
+			  {
+				  String[] strs = strLine.split(":");
+				  if(strs[1].equals(fullName))
+					  key = strs[0];
+				
+			  }
+			  in.close();
+			  return key;
+			}catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			return "";
+	}
+	
+	public IJavaProject getIJavaProject()
+	{
+		return Project;
+	}
+	public ICompilationUnit getICompilationUnit()
+	{
+		return Unit;
+	}
+	
+	public int getNumberOfSameBindingInHistory(String binding) throws Exception
+	{
+		int allCount = 0;
+		ArrayList<ICompilationUnit> allOtherUnits = ASTreeManipulationMethods.getSiblingsOfACompilationUnitInItsProject(Unit, Project);
+		
+		for(ICompilationUnit unit: allOtherUnits)
+		{
+			CompilationUnit cunit = ASTreeManipulationMethods.parseICompilationUnit(unit);
+			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(cunit);
+			allCount += names.getSimpleNamesOfBindingInCompilatioUnit(binding).size();
+		}
+		allCount += getBindingCount(binding);
+		return allCount;
+	}
+	public int getNumberOfSameBindingRightNow(String binding) throws Exception
+	{
+		int allCount = 0;
+		ArrayList<ICompilationUnit> allUnits = ASTreeManipulationMethods.getICompilationUnitsOfAProject(Project);
+		for(ICompilationUnit unit: allUnits)
+		{
+			CompilationUnit cunit = ASTreeManipulationMethods.parseICompilationUnit(unit);
+			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(cunit);
+			allCount += names.getSimpleNamesOfBindingInCompilatioUnit(binding).size();
+		}
+		
+		return allCount;
+	}
+	
+	int getBindingCount(String binding)
+	{
+		
+		String path = Directory + File.separator + BindingFileName;
+		int count = 0;
+		try{
+			  FileInputStream fstream = new FileInputStream(path);
+			  DataInputStream in = new DataInputStream(fstream);
+			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			  String strLine;
+			  while ((strLine = br.readLine()) != null)
+			  {
+				  String[] strs = strLine.split(":");
+				  if(strs[0].equals(binding))
+					 count+= Integer.parseInt(strs[2]);	
+			  }
+			  in.close();
+			  return count;
+			}catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			return 0;
+	}
 }
+	

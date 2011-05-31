@@ -7,22 +7,22 @@ import ASTree.*;
 
 public class NameChangeCountHistory {
 	
-	ArrayList<IBinding> bindings;// the bindings
+	ArrayList<String> bindings;// the bindings
 	ArrayList<Integer> currentbindingCounts;// the current number of names that binds to a binding
 	ArrayList<Integer> nameChangingCounts;// the total number of name changes for a binding
 	
 	public NameChangeCountHistory()
 	{
-		bindings = new ArrayList<IBinding>();
+		bindings = new ArrayList<String>();
 		currentbindingCounts = new ArrayList<Integer>();
 		nameChangingCounts = new ArrayList<Integer>();
 	}
 	//bind is the binding before name has been changed, the count is the number of names that binds identically with the given bind before name change.
-	public void addNameChange(IBinding bind, int countBeforeRename)
+	public void addNameChange(String bind, int countBeforeRename)
 	{
-		if(bind != null)
+		if(bind != null && !bind.equals(""))
 		{
-			int index = getBindingIndexInArray(bind);
+			int index = bindings.indexOf(bind);
 			if(index == -1)
 			{
 				bindings.add(bind);
@@ -42,23 +42,12 @@ public class NameChangeCountHistory {
 			
 		}
 	}
-	private int getBindingIndexInArray(IBinding bind)
+
+	public float getNameChangeFraction(String binding)
 	{
-		int index = 0;
-		for(IBinding current: bindings)
-		{
-			if(current.isEqualTo(bind))
-				return index;
-			index++;
-		}
-		return -1;
-		
-	}
-	public float getNameChangeFraction(IBinding bind)
-	{
-		if(bind == null)
+		if(binding == null || binding.equals(""))
 			return -1;
-		int index = getBindingIndexInArray(bind);
+		int index = bindings.indexOf(binding);
 		if(index != -1)
 		{
 			float changeCount = nameChangingCounts.get(index).floatValue();

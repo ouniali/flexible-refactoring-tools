@@ -70,15 +70,15 @@ public class CompilationUnitHistory {
 		{
 			int index = Records.size()-1-i;
 			oldRecord = Records.get(index);	
-			ASTNameChangeInformation change = ASTreeManipulationMethods.getRenameASTChangedInformation(Project, unit,oldRecord.getASTree(),oldRecord.getTime(),latestRecord.getASTree(), latestRecord.getTime());
-			if(change.getNameChangeType() != NameChange.NOT_NAME_CHANGE)
+			ASTNameChangeInformation change = ASTreeManipulationMethods.getRenameASTChangedInformation(oldRecord,latestRecord);
+			if(change != null)
 			{
 				if(!detectedNameChanges.contains(change))				
 				{	
-					IBinding bind = change.getBindingOfOldName();
+					String binding = change.getOldRootBindingKey();
 					int bindingCount = change.getOldNameBindingCount();
-					nameChangeHistory.addNameChange(bind, bindingCount);
-					float per = nameChangeHistory.getNameChangeFraction(bind);
+					nameChangeHistory.addNameChange(binding, bindingCount);
+					float per = nameChangeHistory.getNameChangeFraction(binding);
 					change.setNameChangePercentage(per);					
 					detectedNameChanges.add(change);
 					return true;
@@ -97,7 +97,7 @@ public class CompilationUnitHistory {
 		if(Records.size()<=1)
 			return null;
 		oldRecord = Records.get(Records.size()-2);
-		ASTChangeInformation change = ASTreeManipulationMethods.getGeneralASTChangeInformation(Project, unit, oldRecord.getASTree(),oldRecord.getTime(), newRecord.getASTree(), newRecord.getTime());
+		ASTChangeInformation change = ASTreeManipulationMethods.getGeneralASTChangeInformation(oldRecord, newRecord);
 		return change;
 	}
 	protected String getCompilationUnitName()
