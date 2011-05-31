@@ -20,13 +20,13 @@ public class SimpleNamesInJavaProject {
 		for(ICompilationUnit unit : Units)
 			UnitsNames.add(new SimpleNamesInCompilationUnit(ASTreeManipulationMethods.parseICompilationUnit(unit)));
 	}
-	public ArrayList<SimpleName> getSimpleNamesOfBindingInJavaProject(IBinding bind)
+	public ArrayList<SimpleName> getSimpleNamesOfBindingInJavaProject(String binding)
 	{
 		ArrayList<SimpleName> names = new ArrayList<SimpleName>();
 	
 		for (SimpleNamesInCompilationUnit unitNames : UnitsNames)
 		{
-			ArrayList<SimpleName> NameInUnit = unitNames.getSimpleNamesOfBindingInCompilatioUnit(bind);
+			ArrayList<SimpleName> NameInUnit = unitNames.getSimpleNamesOfBindingInCompilatioUnit(binding);
 			if(NameInUnit != null)	
 				names.addAll(NameInUnit);
 		}

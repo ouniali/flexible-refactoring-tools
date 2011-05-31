@@ -10,15 +10,12 @@ import Rename.ASTNameChangeInformation;
 
 public class ASTreeManipulationMethods {
 		
-	public static void OutputTree(CompilationUnit Root)
-	{
-		Root.accept(new OutputASTVisitor());
-	}
 	
-	public static ASTChangeInformation getGeneralASTChangeInformation(IJavaProject project, ICompilationUnit iunit, CompilationUnit AstOld, long oldTime, CompilationUnit AstNew, long newTime)
+	public static ASTChangeInformation getGeneralASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
-		ASTNode ASTOne = AstOld.getRoot();
-		ASTNode ASTTwo = AstNew.getRoot();
+
+		ASTNode ASTOne = oldRecord.getASTree().getRoot();
+		ASTNode ASTTwo = newRecord.getASTree().getRoot();
 		NewRootPair pair;
 		do
 		{
@@ -27,13 +24,13 @@ public class ASTreeManipulationMethods {
 			ASTTwo = pair.nodeTwo;
 		}while(pair.RootsChanged);
 				
-		return new ASTChangeInformation(project, iunit, ASTOne, oldTime, ASTTwo, newTime);	
+		return new ASTChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);	
 	}
 	
-	public static ASTNameChangeInformation getRenameASTChangedInformation(IJavaProject project,ICompilationUnit iunit, CompilationUnit AstOld, long oldTime, CompilationUnit AstNew, long newTime) throws Exception
+	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
 	{
-		ASTNode ASTOne = AstOld.getRoot();
-		ASTNode ASTTwo = AstNew.getRoot();
+		ASTNode ASTOne = oldRecord.getASTree().getRoot();
+		ASTNode ASTTwo = newRecord.getASTree().getRoot();
 		NewRootPair pair;
 		do
 		{
@@ -41,8 +38,11 @@ public class ASTreeManipulationMethods {
 			ASTOne = pair.nodeOne;
 			ASTTwo = pair.nodeTwo;
 		}while(pair.RootsChanged);
-				
-		return new ASTNameChangeInformation(project, iunit, ASTOne, oldTime, ASTTwo, newTime);	
+		
+		if(ASTOne instanceof Name && ASTTwo instanceof Name)
+			return new ASTNameChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);
+			
+		return null; 	
 	}
 
 	private static NewRootPair traverseToDeepestChange(ASTNode AstOne, ASTNode AstTwo)

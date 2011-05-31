@@ -10,26 +10,31 @@ import Rename.*;
 
 public class ASTChangeInformation {
 
+	IJavaProject project;
+	ICompilationUnit unit;
 	ASTNode rootOne;
 	ASTNode rootTwo;
+	CompilationUnitHistoryRecord oldRecord;
+	CompilationUnitHistoryRecord newRecord;
+	
 	long oldTime;
 	long newTime;
-	IJavaProject project;	
-	ICompilationUnit unit;
+
 	boolean rootTypeChanged;
 
-	//name change section
 
-	//name change section ends
 	
-	protected ASTChangeInformation(IJavaProject proj, ICompilationUnit iu,ASTNode r1, long time1, ASTNode r2, long time2)
+	protected ASTChangeInformation(CompilationUnitHistoryRecord or, ASTNode node1 ,CompilationUnitHistoryRecord nr, ASTNode node2)
 	{
-		project = proj;
-		unit = iu;
-		rootOne = r1;
-		rootTwo = r2;
-		oldTime = time1;
-		newTime = time2;
+		oldRecord = or; 
+		newRecord = nr;
+		project = oldRecord.getIJavaProject();
+		unit = oldRecord.getICompilationUnit();
+		rootOne = node1;
+		rootTwo = node2;
+		oldTime = oldRecord.getTime();
+		newTime = newRecord.getTime();
+		
 		if(rootOne.getNodeType() == rootTwo.getNodeType())
 			rootTypeChanged = false;
 		else	
@@ -82,4 +87,14 @@ public class ASTChangeInformation {
 		return unit;
 	}
 	
+	public CompilationUnitHistoryRecord getOldCompilationUnitRecord()
+	{
+		return oldRecord;
+	}
+	
+	public CompilationUnitHistoryRecord getNewCompilationUnitRecord()
+	{
+		return newRecord;
+	}
+
 }

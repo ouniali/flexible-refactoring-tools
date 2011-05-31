@@ -4,24 +4,31 @@ import java.util.Map.Entry;
 
 import org.eclipse.jdt.core.dom.*;
 
+import ASTree.NameBindingInformationVisitor;
+
 public class SimpleNamesInCompilationUnit {
 	
 	CompilationUnit tree;
-	GetSimpleNamesInformationVisitor visitor;
+	NameBindingInformationVisitor visitor;
 	Hashtable<String, ArrayList<SimpleName>> SimpleNameTable;
 	
+	// the compilation unit should be generated directly from ICompilationUnit
 	public SimpleNamesInCompilationUnit(CompilationUnit t)
 	{
 		tree = t;
-		visitor = new GetSimpleNamesInformationVisitor();
+		visitor = new NameBindingInformationVisitor();
 		t.accept(visitor);
-		SimpleNameTable = visitor.getEntireBindingTable();
+		SimpleNameTable = visitor.getEntireSimpleNameBindingTable();
 	}
 	
-	public ArrayList<SimpleName> getSimpleNamesOfBindingInCompilatioUnit(IBinding bind)
+	public ArrayList<SimpleName> getSimpleNamesOfBindingInCompilatioUnit(String bind)
 	{
-		if(bind == null)
-			return null;
-		return SimpleNameTable.get(bind.getKey());
+		if(bind == null || bind.equals(""))
+			return new ArrayList<SimpleName>();
+		ArrayList<SimpleName> res = SimpleNameTable.get(bind);
+		if(res == null)
+			return new ArrayList<SimpleName>(); 
+		else
+			return res;
 	}
 }
