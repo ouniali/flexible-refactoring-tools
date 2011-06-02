@@ -12,8 +12,15 @@ public class ASTChangeInformation {
 
 	IJavaProject project;
 	ICompilationUnit unit;
-	ASTNode rootOne;
-	ASTNode rootTwo;
+	
+	int nodeOneStart;
+	int nodeOneLength;
+	int nodeOneType;
+	
+	int nodeTwoStart;
+	int nodeTwoLength;
+	int nodeTwoType;
+	
 	CompilationUnitHistoryRecord oldRecord;
 	CompilationUnitHistoryRecord newRecord;
 	
@@ -28,37 +35,53 @@ public class ASTChangeInformation {
 	{
 		oldRecord = or; 
 		newRecord = nr;
+		
 		project = oldRecord.getIJavaProject();
 		unit = oldRecord.getICompilationUnit();
-		rootOne = node1;
-		rootTwo = node2;
+		
 		oldTime = oldRecord.getTime();
 		newTime = newRecord.getTime();
 		
-		if(rootOne.getNodeType() == rootTwo.getNodeType())
+		
+		nodeOneStart = node1.getStartPosition();
+		nodeOneLength = node1.getLength();
+		nodeOneType = node1.getNodeType();
+		
+		nodeTwoStart = node2.getStartPosition();
+		nodeTwoLength = node2.getLength();
+		nodeTwoType = node2.getNodeType();
+		
+		if(node1.getNodeType() == node2.getNodeType())
 			rootTypeChanged = false;
 		else	
 			rootTypeChanged = true;
 		
 	}
-	public ASTNode getOldRoot()
+/*	public ASTNode getOldNode()
 	{
 		return rootOne;
 	}
-	public ASTNode getNewRoot()
+	public ASTNode getNewNode()
 	{
 		return rootTwo;
-	}
+	}*/
 
 	
 	public String getChangeInformation()
 	{
+		String oldNode;
+		String newNode;
+		
+		oldNode = oldRecord.getASTree().toString();
+		oldNode = oldNode.substring(nodeOneStart, nodeOneLength + nodeOneStart-1);
+		newNode = newRecord.getASTree().toString();
+		newNode = newNode.substring(nodeTwoStart, nodeTwoLength + nodeTwoStart -1);
 		StringBuffer Information = new StringBuffer();
 		Information.append("Old Version:\r\n");
-		Information.append(getOldRoot());
+		Information.append(oldNode);
 		Information.append("\r\n");
 		Information.append("New Version:\r\n");
-		Information.append(getNewRoot());		
+		Information.append(newNode);		
 		return Information.toString();
 	}
 	public long getOldTime()

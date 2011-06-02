@@ -1,22 +1,24 @@
 package Reconcile;
 
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.compiler.BuildContext;
 import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import ASTree.ProjectHistoryCollector;
-import JavaRefactoringAPI.JavaRenameRefactoringAPI;
+import JavaRefactoringAPI.JavaRefactoring;
+
+
 
 public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
-	private ProjectHistoryCollector collector;
+	static private ProjectHistoryCollector collector = new ProjectHistoryCollector();
 	
 	public RefactoringCompilerParticipant()
 	{
 		super();
 		System.out.println("participant construction");
-		collector = new ProjectHistoryCollector();
 		
 	}
 	public void buildFinished(IJavaProject project) 
@@ -55,8 +57,18 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
-			collector.addNewProjectVersion(pro, tree);
 			
+			if(!JavaRefactoring.UnhandledRefactorings.isEmpty())
+			{
+				for(JavaRefactoring refactoring : JavaRefactoring.UnhandledRefactorings)
+				{
+					refactoring.setEnvironment((ICompilationUnit)tree.getJavaElement());
+					refactoring.start();
+				}
+			}
+			JavaRefactoring.UnhandledRefactorings.clear();
+			collector.addNewProjectVersion(pro, tree);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
