@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
+import JavaRefactoringAPI.JavaRefactoring;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChange;
 import Rename.NameChangeCountHistory;
@@ -48,6 +49,7 @@ public class CompilationUnitHistory {
 		if(LookingBackForDetectingRenameChange())
 		{
 			ASTNameChangeInformation infor = detectedNameChanges.get(detectedNameChanges.size()-1);
+			JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
 			System.out.println(infor.getNameChangeTypeDescription());			
 		}
 		

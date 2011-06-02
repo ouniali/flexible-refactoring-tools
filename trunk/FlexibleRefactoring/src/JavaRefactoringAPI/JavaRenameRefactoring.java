@@ -1,36 +1,89 @@
 package JavaRefactoringAPI;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.ui.refactoring.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.core.refactoring.participants.*;
 import org.eclipse.jdt.internal.corext.refactoring.rename.*;
 import org.eclipse.jdt.internal.corext.util.*;
 
+import Rename.SimpleNamesInCompilationUnit;
+
+import ASTree.ASTreeManipulationMethods;
 
 
-public class JavaRenameRefactoringAPI {
+
+public class JavaRenameRefactoring extends JavaRefactoring{
 
 	static final int flag = RenameSupport.UPDATE_REFERENCES|RenameSupport.UPDATE_GETTER_METHOD|RenameSupport.UPDATE_SETTER_METHOD;
 	
-	@SuppressWarnings("restriction")
-	public static void performRefactoring(IJavaElement element, String newName) throws Exception
-	{	
-
-		RefactoringCheckingStatusProgressMonitor myMonitor = new RefactoringCheckingStatusProgressMonitor();
-		JavaRenameProcessor processor  = getRenameProcessor(element);
-		processor.setNewElementName(newName);
-		RenameRefactoring refactoring = new RenameRefactoring(processor);
-		System.out.println(element);
-		RefactoringStatus preStatus = refactoring.checkInitialConditions(myMonitor);
-		if(preStatus.isOK())
-			System.out.println("preconditions ok");
-		RefactoringStatus postStatus = refactoring.checkFinalConditions(myMonitor);
-		refactoring.createChange(myMonitor);
-		System.out.println("d");
+	final String bindingKey;
+	final String newName;
+	IJavaElement element;
+	ICompilationUnit unit;
+	RenameRefactoring refactoring;
 	
+	public JavaRenameRefactoring(String bin, String n)
+	{
+		bindingKey = bin;
+		newName = n;
 	}
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		performRefactoring();
+	}
+
+	@Override
+	@SuppressWarnings("restriction")
+	public void setEnvironment(ICompilationUnit u) {
+		// TODO Auto-generated method stub
+		unit = u; 
+		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(u);
+		ArrayList<SimpleName> names = new SimpleNamesInCompilationUnit(tree).getSimpleNamesOfBindingInCompilatioUnit(bindingKey);
+		if(!names.isEmpty())
+			element = names.get(0).resolveBinding().getJavaElement();
+		try{	
+			JavaRenameProcessor processor  = getRenameProcessor(element);
+			processor.setNewElementName(newName);
+			refactoring = new RenameRefactoring(processor);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void performRefactoring() {
+		NullProgressMonitor monitor = new NullProgressMonitor();
+		try{
+			refactoring.checkInitialConditions(monitor);
+			refactoring.checkFinalConditions(monitor);
+			Change change = refactoring.createChange(monitor);
+			change.perform(monitor);
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean checkPreconditions() {
+
+		return true;
+	}
+
+	@Override
+	public boolean checkPostconditions() {
+		return true;
+	}
+
 	
 	@SuppressWarnings("restriction")
 	private static JavaRenameProcessor getRenameProcessor(IJavaElement element) throws CoreException
@@ -96,5 +149,4 @@ public class JavaRenameRefactoringAPI {
 			return null;
 		}
 	}
-
 }
