@@ -67,7 +67,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 				}
 			}
 			JavaRefactoring.UnhandledRefactorings.clear();
-			collector.addNewProjectVersion(pro, tree);
+			collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());
 		
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -2,6 +2,8 @@ package ASTree;
 
 import java.io.IOException;
 import java.util.HashMap;
+
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
@@ -26,10 +28,10 @@ public class ProjectHistoryCollector {
 		Map = new HashMap<IJavaProject, ProjectHistory>();
 	}
 	
-	public void addNewProjectVersion(IJavaProject project, CompilationUnit tree) throws Exception
+	public void addNewProjectVersion(IJavaProject project, ICompilationUnit unit) throws Exception
 	{
 
-		
+		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		ProjectHistory history = Map.get(project);
 		
 		if(history == null)
@@ -40,11 +42,7 @@ public class ProjectHistoryCollector {
 		}
 		else
 		{	
-			if(history.addAST(tree))
-			{
-				ASTChangeInformation GeneralChange = history.getMostRecentChange();
-				ASTFileSaver.saveConciseAST(GeneralChange);
-			}
+			history.addAST(tree);
 		}
 	}
 	
