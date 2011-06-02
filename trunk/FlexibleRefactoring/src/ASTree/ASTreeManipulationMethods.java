@@ -27,6 +27,22 @@ public class ASTreeManipulationMethods {
 		return new ASTChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);	
 	}
 	
+	public static ASTChangeInformation getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
+	{
+
+		ASTNode ASTOne = oldRecord.getASTree().getRoot();
+		ASTNode ASTTwo = newRecord.getASTree().getRoot();
+		NewRootPair pair;
+		do
+		{
+			pair = traverseToDeepestChange(ASTOne, ASTTwo);
+			ASTOne = pair.nodeOne;
+			ASTTwo = pair.nodeTwo;
+		}while(pair.RootsChanged);
+				
+		return new ASTChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);	
+	}
+	
 	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
 	{
 		ASTNode ASTOne = oldRecord.getASTree().getRoot();
@@ -138,6 +154,7 @@ public class ASTreeManipulationMethods {
 
 		return unit;
 	}
+
 	
 	static public String getCompilationUnitName(CompilationUnit unit)
 	{	

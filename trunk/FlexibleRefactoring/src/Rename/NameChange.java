@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
 import ASTree.ASTreeManipulationMethods;
+import ASTree.CompilationUnitHistoryRecord;
 public class NameChange {
 	
 	public static final int NOT_NAME_CHANGE = -1;
@@ -21,6 +22,44 @@ public class NameChange {
 	public static final int PACKAGE_NAME_CHANGE_DECLARATION = 7;
 		
 	public static final int UNCERTAIN_NAME_CHANGE = 8;
+	
+	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
+	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
+	
+	public static boolean LookingBackForDetectingRenameChange(ArrayList<CompilationUnitHistoryRecord> Records, int LookBackCount) throws Exception
+	{
+		if(Records.size() == 0)
+			return false;
+		CompilationUnitHistoryRecord latestRecord = Records.get(Records.size()-1);
+		
+		if(Records.size()<=1)
+			return false;
+		
+		int lookBackCount = Math.min(Records.size()-1, LookBackCount);
+		CompilationUnitHistoryRecord oldRecord;
+		
+		for(int i = 1; i<= lookBackCount; i++)
+		{
+			int index = Records.size()-1-i;
+			oldRecord = Records.get(index);	
+			ASTNameChangeInformation change = ASTreeManipulationMethods.getRenameASTChangedInformation(oldRecord,latestRecord);
+			if(change != null)
+			{
+				if(!detectedNameChanges.contains(change))				
+				{	
+					String binding = change.getOldRootBindingKey();
+					int bindingCount = change.getOldNameBindingCount();
+					nameChangeHistory.addNameChange(binding, bindingCount);
+					float per = nameChangeHistory.getNameChangeFraction(binding);
+					change.setNameChangePercentage(per);					
+					detectedNameChanges.add(change);
+					return true;
+				}
+			}
+		}
+		
+		return false;	
+	}
 	
 	public static String getNameChangeTypeDescription(int nameChangeType)
 	{
