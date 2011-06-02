@@ -29,7 +29,7 @@ public class CompilationUnitHistoryRecord {
 	private final ICompilationUnit Unit;
 	
 	
-	protected CompilationUnitHistoryRecord(IJavaProject proj, ICompilationUnit iu,String pro, String pac, String un, CompilationUnit u, long t ) throws IOException
+	protected CompilationUnitHistoryRecord(IJavaProject proj, ICompilationUnit iu,String pro, String pac, String un,CompilationUnit u, long t ) throws IOException
 	{
 		Project = proj;
 		Unit = iu;
@@ -41,27 +41,27 @@ public class CompilationUnitHistoryRecord {
 		BindingFileName = PackageName + "_" + UnitName + "_" + time+"_bindng.txt";
 		Directory = root + File.separator + ProjectName;
 		new File(Directory).mkdirs();
-		save(Directory + File.separator +ASTFileName, u.getRoot().toString());
+		FileManipulationMethods.save(Directory + File.separator +ASTFileName, u.getRoot().toString());
 		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
 		u.accept(bVisitor);
-		save(Directory + File.separator +BindingFileName, bVisitor.getBindingInformation());
+		FileManipulationMethods.save(Directory + File.separator +BindingFileName, bVisitor.getBindingInformation());
 		
 	}
-	
-	
-	private void save(String path, String str) 
+	public String getPackageName()
 	{
-		try{
-			File file = new File (path);
-			file.createNewFile();
-			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-			writer.write(str);
-			writer.close();
-		}catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		return PackageName;
 	}
+	
+	public String getCompilationUnitName()
+	{
+		return UnitName;
+	}
+	
+	public String getProjectName()
+	{
+		return ProjectName;
+	}
+	
 	
 	public CompilationUnit getASTree()
 	{

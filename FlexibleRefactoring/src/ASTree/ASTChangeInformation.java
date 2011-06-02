@@ -1,5 +1,6 @@
 package ASTree;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -28,6 +29,10 @@ public class ASTChangeInformation {
 	long newTime;
 
 	boolean rootTypeChanged;
+	
+	static final String root = "AST_CONCISE";
+	final String Directory;
+	final String ChangeFileName;
 
 
 	
@@ -56,32 +61,22 @@ public class ASTChangeInformation {
 		else	
 			rootTypeChanged = true;
 		
+		Directory = root+File.separator+project.getElementName();
+		ChangeFileName = oldRecord.getPackageName()+"_"+oldRecord.getCompilationUnitName()+"_"+oldRecord.getTime()+"_"+newRecord.getTime()+".txt";
+		new File(Directory).mkdirs();
+		FileManipulationMethods.save(Directory + File.separator + ChangeFileName, getChangeInformation(node1, node2));
 	}
-/*	public ASTNode getOldNode()
-	{
-		return rootOne;
-	}
-	public ASTNode getNewNode()
-	{
-		return rootTwo;
-	}*/
+	
 
 	
-	public String getChangeInformation()
+	public String getChangeInformation(ASTNode node1, ASTNode node2)
 	{
-		String oldNode;
-		String newNode;
-		
-		oldNode = oldRecord.getASTree().toString();
-		oldNode = oldNode.substring(nodeOneStart, nodeOneLength + nodeOneStart-1);
-		newNode = newRecord.getASTree().toString();
-		newNode = newNode.substring(nodeTwoStart, nodeTwoLength + nodeTwoStart -1);
 		StringBuffer Information = new StringBuffer();
 		Information.append("Old Version:\r\n");
-		Information.append(oldNode);
+		Information.append(node1);
 		Information.append("\r\n");
 		Information.append("New Version:\r\n");
-		Information.append(newNode);		
+		Information.append(node2);		
 		return Information.toString();
 	}
 	public long getOldTime()
