@@ -18,8 +18,14 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	public RefactoringCompilerParticipant()
 	{
 		super();
-		System.out.println("participant construction");
+		System.out.println("participant construction");	
 		
+	/*	IWorkbench workbench= PlatformUI.getWorkbench();
+		IWorkbenchWindow window = workbench.getWorkbenchWindows()[0];
+		IWorkbenchPage page = window.getPages()[0];
+		IEditorPart part = page.getActiveEditor();
+		IEditorSite site = part.getEditorSite();		
+		IActionBars actionBars = site.getActionBars();*/
 	}
 	public void buildFinished(IJavaProject project) 
 	{
@@ -53,11 +59,11 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
 	public void reconcile(ReconcileContext context) 
 	{	
+	 
 		try {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
-			
 			if(!JavaRefactoring.UnhandledRefactorings.isEmpty())
 			{
 				for(JavaRefactoring refactoring : JavaRefactoring.UnhandledRefactorings)
