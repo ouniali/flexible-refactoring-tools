@@ -10,56 +10,6 @@ import Rename.ASTNameChangeInformation;
 
 public class ASTreeManipulationMethods {
 		
-	
-	public static ASTChangeInformation getGeneralASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
-	{
-
-		ASTNode ASTOne = oldRecord.getASTree().getRoot();
-		ASTNode ASTTwo = newRecord.getASTree().getRoot();
-		NewRootPair pair;
-		do
-		{
-			pair = traverseToDeepestChange(ASTOne, ASTTwo);
-			ASTOne = pair.nodeOne;
-			ASTTwo = pair.nodeTwo;
-		}while(pair.RootsChanged);
-				
-		return new ASTChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);	
-	}
-	
-	
-
-	public static NewRootPair traverseToDeepestChange(ASTNode AstOne, ASTNode AstTwo)
-	{
-		ArrayList<ASTNode> childrenOne = getChildNodes(AstOne);
-		ArrayList<ASTNode> childrenTwo = getChildNodes(AstTwo);
-			
-		if(childrenOne.size() != childrenTwo.size())
-		{
-			return new NewRootPair(false, AstOne, AstTwo);
-		}
-		
-		int differentSubtreeCount=0;
-		ASTNode changedNodeOne = null;
-		ASTNode changedNodeTwo = null;
-		
-		for(int i = 0; i<childrenOne.size(); i++)
-		{
-			ASTNode node1 = childrenOne.get(i);
-			ASTNode node2 = childrenTwo.get(i);
-			if(!node1.subtreeMatch(new ASTMatcher(),node2))
-			{	
-				differentSubtreeCount++;
-				changedNodeOne = node1;
-				changedNodeTwo = node2;	
-			}
-		}
-		
-		if(differentSubtreeCount == 1)
-			return new NewRootPair(true, changedNodeOne, changedNodeTwo);
-		return new NewRootPair(false, AstOne, AstTwo);
-	}
-	
 	public static ArrayList<ASTNode> getRemainingNodes(ArrayList<ASTNode> totalNodes, ArrayList<ASTNode> deletedNodes)
 	{
 		ArrayList<ASTNode> remainingNodes = new ArrayList<ASTNode>();

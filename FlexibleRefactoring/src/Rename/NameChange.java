@@ -6,9 +6,10 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
+import ASTree.ASTChangeInformationGenerator;
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
-import ASTree.NewRootPair;
+
 public class NameChange {
 	
 	public static final int NOT_NAME_CHANGE = -1;
@@ -27,23 +28,14 @@ public class NameChange {
 	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 	
-	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
+	public static boolean isRenameChange(ASTNode node1, ASTNode node2)
 	{
-		ASTNode ASTOne = oldRecord.getASTree().getRoot();
-		ASTNode ASTTwo = newRecord.getASTree().getRoot();
-		NewRootPair pair;
-		do
-		{
-			pair = ASTreeManipulationMethods.traverseToDeepestChange(ASTOne, ASTTwo);
-			ASTOne = pair.nodeOne;
-			ASTTwo = pair.nodeTwo;
-		}while(pair.RootsChanged);
-		
-		if(ASTOne instanceof Name && ASTTwo instanceof Name)
-			return new ASTNameChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);
-			
-		return null; 	
+		if(node1 instanceof Name && node2 instanceof Name)
+			return true;
+		else
+			return false;
 	}
+	
 	
 	public static boolean LookingBackForDetectingRenameChange(ArrayList<CompilationUnitHistoryRecord> Records, int LookBackCount) throws Exception
 	{
@@ -61,7 +53,7 @@ public class NameChange {
 		{
 			int index = Records.size()-1-i;
 			oldRecord = Records.get(index);	
-			ASTNameChangeInformation change = getRenameASTChangedInformation(oldRecord,latestRecord);
+			ASTNameChangeInformation change = ASTChangeInformationGenerator.getRenameASTChangedInformation(oldRecord,latestRecord);
 			if(change != null)
 			{
 				if(!detectedNameChanges.contains(change))				
