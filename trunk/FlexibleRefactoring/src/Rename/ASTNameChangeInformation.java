@@ -20,8 +20,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	
 	public ASTNameChangeInformation(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
 		super(oldRecord,r1,newRecord,r2);
-		// TODO Auto-generated constructor stub
-				
+		// TODO Auto-generated constructor stub				
 		
 		nameChangeType = NameChange.DecideNameChangeType(r1, r2);//if the change is modifying a name, get the type of such change.
 		Name oldName = (Name) r1;
