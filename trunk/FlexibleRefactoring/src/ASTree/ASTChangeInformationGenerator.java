@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Name;
 
 import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
