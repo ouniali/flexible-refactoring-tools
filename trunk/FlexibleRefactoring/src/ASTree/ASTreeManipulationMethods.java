@@ -27,41 +27,9 @@ public class ASTreeManipulationMethods {
 		return new ASTChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);	
 	}
 	
-	public static ASTChangeInformation getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
-	{
-
-		ASTNode ASTOne = oldRecord.getASTree().getRoot();
-		ASTNode ASTTwo = newRecord.getASTree().getRoot();
-		NewRootPair pair;
-		do
-		{
-			pair = traverseToDeepestChange(ASTOne, ASTTwo);
-			ASTOne = pair.nodeOne;
-			ASTTwo = pair.nodeTwo;
-		}while(pair.RootsChanged);
-				
-		return new ASTChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);	
-	}
 	
-	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
-	{
-		ASTNode ASTOne = oldRecord.getASTree().getRoot();
-		ASTNode ASTTwo = newRecord.getASTree().getRoot();
-		NewRootPair pair;
-		do
-		{
-			pair = traverseToDeepestChange(ASTOne, ASTTwo);
-			ASTOne = pair.nodeOne;
-			ASTTwo = pair.nodeTwo;
-		}while(pair.RootsChanged);
-		
-		if(ASTOne instanceof Name && ASTTwo instanceof Name)
-			return new ASTNameChangeInformation(oldRecord, ASTOne, newRecord, ASTTwo);
-			
-		return null; 	
-	}
 
-	private static NewRootPair traverseToDeepestChange(ASTNode AstOne, ASTNode AstTwo)
+	public static NewRootPair traverseToDeepestChange(ASTNode AstOne, ASTNode AstTwo)
 	{
 		ArrayList<ASTNode> childrenOne = getChildNodes(AstOne);
 		ArrayList<ASTNode> childrenTwo = getChildNodes(AstTwo);
