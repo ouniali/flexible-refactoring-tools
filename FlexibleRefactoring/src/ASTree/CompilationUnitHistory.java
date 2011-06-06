@@ -65,7 +65,7 @@ public class CompilationUnitHistory {
 		if(Records.size()<=1)
 			return null;
 		oldRecord = Records.get(Records.size()-2);
-		ASTChangeInformation change = ASTreeManipulationMethods.getGeneralASTChangeInformation(oldRecord, newRecord);
+		ASTChangeInformation change = ASTChangeInformationGenerator.getGeneralASTChangeInformation(oldRecord, newRecord);
 		return change;
 	}
 	protected String getCompilationUnitName()
