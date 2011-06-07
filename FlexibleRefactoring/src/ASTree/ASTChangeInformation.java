@@ -14,13 +14,8 @@ public class ASTChangeInformation {
 	IJavaProject project;
 	ICompilationUnit unit;
 	
-	int nodeOneStart;
-	int nodeOneLength;
-	int nodeOneType;
-	
-	int nodeTwoStart;
-	int nodeTwoLength;
-	int nodeTwoType;
+	int nodeOneIndex;
+	int nodeTwoIndex;
 	
 	CompilationUnitHistoryRecord oldRecord;
 	CompilationUnitHistoryRecord newRecord;
@@ -47,14 +42,8 @@ public class ASTChangeInformation {
 		oldTime = oldRecord.getTime();
 		newTime = newRecord.getTime();
 		
-		
-		nodeOneStart = node1.getStartPosition();
-		nodeOneLength = node1.getLength();
-		nodeOneType = node1.getNodeType();
-		
-		nodeTwoStart = node2.getStartPosition();
-		nodeTwoLength = node2.getLength();
-		nodeTwoType = node2.getNodeType();
+		nodeOneIndex = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node1);
+		nodeTwoIndex = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node2);
 		
 		if(node1.getNodeType() == node2.getNodeType())
 			rootTypeChanged = false;
@@ -114,5 +103,12 @@ public class ASTChangeInformation {
 	{
 		return newRecord;
 	}
-
+	public int getNodeOneIndex()
+	{
+		return nodeOneIndex;
+	}
+	public int getNodeTwoIndex()
+	{
+		return nodeTwoIndex;
+	}
 }

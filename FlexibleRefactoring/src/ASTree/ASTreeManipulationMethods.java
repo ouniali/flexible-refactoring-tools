@@ -102,6 +102,21 @@ public class ASTreeManipulationMethods {
 		return project.getElementName();
 	}
 	
+	public static int getASTNodeIndexInCompilationUnit(ASTNode node)
+	{
+		CompilationUnit unit = (CompilationUnit)node.getRoot();
+		ASTNodeIndexVisitor visitor = new ASTNodeIndexVisitor(node);
+		unit.accept(visitor);	
+		return visitor.getTargetNodeIndex();
+	}
+	
+	public static ASTNode getASTNodeByIndex(CompilationUnit unit, int index)
+	{
+		ASTNodeIndexVisitor visitor = new ASTNodeIndexVisitor(index);
+		unit.accept(visitor);
+		return visitor.getTargetNode();
+	}
+	
 }
 
 
