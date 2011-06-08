@@ -30,7 +30,6 @@ public class ProjectHistoryCollector {
 	
 	public void addNewProjectVersion(IJavaProject project, ICompilationUnit unit) throws Exception
 	{
-
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		ProjectHistory history = Map.get(project);
 		

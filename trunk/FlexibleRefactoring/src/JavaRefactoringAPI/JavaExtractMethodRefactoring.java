@@ -22,7 +22,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info)
 	{
 		information = info;
-		newMethodName ="ExtractedMethod";
+		newMethodName ="extractedMethod";
 	}
 	@Override
 	public void setEnvironment(ICompilationUnit u) {
@@ -43,12 +43,16 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 		index = information.getSelectionStartAndEnd(unit);
 		
 		try{
-			refactoring = new ExtractMethodRefactoring(unit, index[0], index[1]);
+			refactoring = new ExtractMethodRefactoring(unit, index[0], index[1]-index[0]+1);
 			refactoring.setMethodName(newMethodName);
 			refactoring.setReplaceDuplicates(false);
 			refactoring.setVisibility(Modifier.PRIVATE);
 			iniStatus = refactoring.checkInitialConditions(monitor);
+			if(!iniStatus.isOK())
+				return;
 			finStatus = refactoring.checkFinalConditions(monitor);
+			if(!finStatus.isOK())
+				return;
 			Change change = refactoring.createChange(monitor);
 			change.perform(monitor);
 		}catch (Exception e)
