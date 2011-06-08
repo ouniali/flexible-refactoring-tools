@@ -15,7 +15,7 @@ public class ExtractMethod {
 		int childrenOneSize = ASTreeManipulationMethods.getChildNodes(nodeOne).size();
 		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo).size();
 		
-		if(childrenOneSize> childrenTwoSize && LastIndexFromStart + FirstIndexFromEnd  >= childrenTwoSize)
+		if(childrenOneSize> childrenTwoSize && LastIndexFromStart + FirstIndexFromEnd  == childrenTwoSize)
 			return true;
 		else
 			return false;

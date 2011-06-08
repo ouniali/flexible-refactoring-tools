@@ -8,29 +8,26 @@ import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.internal.corext.refactoring.code.*;
 import org.eclipse.ltk.core.refactoring.Change;
 
+import ExtractMethod.ASTExtractMethodChangeInformation;
+
 public class JavaExtractMethodRefactoring extends JavaRefactoring{
 
 	@SuppressWarnings("restriction")
 	ExtractMethodRefactoring refactoring;
 	ICompilationUnit unit;
-	int SelectionStart;
-	int SelectionLength;
-	static String NewMethodName = "ExtractedMethod";
+	ASTExtractMethodChangeInformation information;
+	String newMethodName;
 	
-	public JavaExtractMethodRefactoring(int start, int length)
+	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info)
 	{
-		SelectionStart = start;
-		SelectionLength = length;
+		information = info;
+		newMethodName ="ExtractedMethod";
 	}
-	@SuppressWarnings("restriction")
 	@Override
 	public void setEnvironment(ICompilationUnit u) {
 		// TODO Auto-generated method stub
 		unit = u;
-		refactoring = new ExtractMethodRefactoring(unit, SelectionStart, SelectionLength);
-		refactoring.setMethodName(NewMethodName);
-		refactoring.setReplaceDuplicates(false);
-		refactoring.setVisibility(Modifier.PRIVATE);
+	
 	}
 
 	@SuppressWarnings("restriction")
@@ -38,7 +35,15 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	public void performRefactoring() {
 		// TODO Auto-generated method stub
 		NullProgressMonitor monitor = new NullProgressMonitor();
+		int[] index;
+		information.recoverICompilationUnitToBeforeCutting(unit);
+		index = information.getSelectionStartAndEnd(unit);
+		
 		try{
+			refactoring = new ExtractMethodRefactoring(unit, index[0], index[1]);
+			refactoring.setMethodName(newMethodName);
+			refactoring.setReplaceDuplicates(false);
+			refactoring.setVisibility(Modifier.PRIVATE);
 			refactoring.checkInitialConditions(monitor);
 			refactoring.checkFinalConditions(monitor);
 			Change change = refactoring.createChange(monitor);
