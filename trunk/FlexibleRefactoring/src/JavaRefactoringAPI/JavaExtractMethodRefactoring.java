@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.internal.corext.refactoring.code.*;
 import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
@@ -35,6 +36,8 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	public void performRefactoring() {
 		// TODO Auto-generated method stub
 		NullProgressMonitor monitor = new NullProgressMonitor();
+		RefactoringStatus iniStatus;
+		RefactoringStatus finStatus;
 		int[] index;
 		information.recoverICompilationUnitToBeforeCutting(unit);
 		index = information.getSelectionStartAndEnd(unit);
@@ -44,8 +47,8 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			refactoring.setMethodName(newMethodName);
 			refactoring.setReplaceDuplicates(false);
 			refactoring.setVisibility(Modifier.PRIVATE);
-			refactoring.checkInitialConditions(monitor);
-			refactoring.checkFinalConditions(monitor);
+			iniStatus = refactoring.checkInitialConditions(monitor);
+			finStatus = refactoring.checkFinalConditions(monitor);
 			Change change = refactoring.createChange(monitor);
 			change.perform(monitor);
 		}catch (Exception e)

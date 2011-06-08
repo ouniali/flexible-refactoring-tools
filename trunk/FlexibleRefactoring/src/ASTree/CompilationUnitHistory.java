@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
+import ExtractMethod.ASTExtractMethodChangeInformation;
+import ExtractMethod.ExtractMethod;
 import JavaRefactoringAPI.JavaRefactoring;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChange;
@@ -19,8 +21,8 @@ public class CompilationUnitHistory {
 	IJavaProject Project;
 	ICompilationUnit unit;
 	ArrayList<CompilationUnitHistoryRecord> Records;
-	static final int MAXIMUM_LOOK_BACK_COUNT = 10;
-	
+	static final int MAXIMUM_LOOK_BACK_COUNT_RENAME = 10;
+	static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 3;
 
 	
 	protected CompilationUnitHistory(IJavaProject proj, ICompilationUnit u, String pro, String pac, String un)
@@ -45,11 +47,16 @@ public class CompilationUnitHistory {
 		
 		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName, tree,System.currentTimeMillis()));
 		
-		if(NameChange.LookingBackForDetectingRenameChange(Records, MAXIMUM_LOOK_BACK_COUNT))
+	/*	if(NameChange.LookingBackForDetectingRenameChange(Records, MAXIMUM_LOOK_BACK_COUNT_RENAME))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
 			JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
 			System.out.println(infor.getNameChangeTypeDescription());			
+		}*/
+		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(Records, MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD))
+		{
+			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
+			JavaRefactoring.UnhandledRefactorings.add(infor.getJavaExtractMethodRefactoring());
 		}
 		
 		return true;

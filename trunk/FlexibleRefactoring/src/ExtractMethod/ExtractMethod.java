@@ -4,9 +4,44 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.*;
 
+import Rename.ASTNameChangeInformation;
+
+import ASTree.ASTChangeInformationGenerator;
 import ASTree.ASTreeManipulationMethods;
+import ASTree.CompilationUnitHistoryRecord;
 
 public class ExtractMethod {
+	
+	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
+	
+	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records, int LookBackCount)
+	{
+		if(Records.size() == 0)
+			return false;
+		CompilationUnitHistoryRecord RecordTwo = Records.get(Records.size()-1);
+		
+		if(Records.size()<=1)
+			return false;
+		
+		int lookBackCount = Math.min(Records.size()-1, LookBackCount);
+		CompilationUnitHistoryRecord RecordOne;
+		
+		for(int i = 1; i<= lookBackCount; i++)
+		{
+			int index = Records.size()-1-i;
+			RecordOne = Records.get(index);	
+			ASTExtractMethodChangeInformation change = ASTChangeInformationGenerator.getExtractMethodASTChangeInformation(RecordOne,RecordTwo);
+			if(change != null)
+			{
+				detectedExtractMethodChanges.add(change);
+				return true;
+			}			
+		}		
+		return false;
+		
+	}
+	
+	
 	
 	public static boolean isExtractMethodChange(ASTNode nodeOne, ASTNode nodeTwo)
 	{

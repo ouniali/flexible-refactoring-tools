@@ -62,23 +62,6 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	public void reconcile(ReconcileContext context) 
 	{	
 		try {
-			
-			ICompilationUnit unit = (ICompilationUnit) context.getAST3().getJavaElement();
-			String originalCode = unit.getSource();
-			String newCode = originalCode +"afasfdafdsaf";
-			ICompilationUnitManipulationMethod.UpdateICompilationUnit(unit, newCode);
-			
-		} catch (JavaModelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		return;
-		
-/*		try {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
@@ -96,7 +79,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-*/	}
+	}
 	
 	
 
