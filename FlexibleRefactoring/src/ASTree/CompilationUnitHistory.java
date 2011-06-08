@@ -57,6 +57,7 @@ public class CompilationUnitHistory {
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
 			JavaRefactoring.UnhandledRefactorings.add(infor.getJavaExtractMethodRefactoring());
+			System.out.println("Extract method detected.");
 		}
 		
 		return true;
