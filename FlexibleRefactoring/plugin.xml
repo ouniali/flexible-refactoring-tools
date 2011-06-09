@@ -57,5 +57,30 @@
             id="RefactoringCompilationParticipation">
       </compilationParticipant>
    </extension>
+   <extension
+         id="refactoringmarker"
+         point="org.eclipse.core.resources.markers">
+      <attribute
+            name="refactoringmarker">
+      </attribute>
+      <persistent
+            value="false">
+      </persistent>
+      <super
+            type="org.eclipse.core.resources.taskmarker">
+      </super>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.ui.quickFixProcessors">
+      <quickFixProcessor
+            class="userinterface.RefactoringQuickFix"
+            id="refactoringquickfix">
+         <handledMarkerTypes>
+            <markerType
+                  id="refactoringmarker">
+            </markerType>
+         </handledMarkerTypes>
+      </quickFixProcessor>
+   </extension>
 
 </plugin>
