@@ -21,9 +21,6 @@ public class CompilationUnitHistory {
 	IJavaProject Project;
 	ICompilationUnit unit;
 	ArrayList<CompilationUnitHistoryRecord> Records;
-	static final int MAXIMUM_LOOK_BACK_COUNT_RENAME = 10;
-	static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 3;
-
 	
 	protected CompilationUnitHistory(IJavaProject proj, ICompilationUnit u, String pro, String pac, String un)
 	{
@@ -47,18 +44,7 @@ public class CompilationUnitHistory {
 		
 		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName, tree,System.currentTimeMillis()));
 		
-	/*	if(NameChange.LookingBackForDetectingRenameChange(Records, MAXIMUM_LOOK_BACK_COUNT_RENAME))
-		{
-			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
-			JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
-			System.out.println(infor.getNameChangeTypeDescription());			
-		}*/
-		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(Records))
-		{
-			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
-			JavaRefactoring.UnhandledRefactorings.add(infor.getJavaExtractMethodRefactoring());
-			System.out.println("Extract method detected.");
-		}
+		detectRefactoringOpportunity(Records);
 		
 		return true;
 	}
@@ -85,6 +71,24 @@ public class CompilationUnitHistory {
 	{
 		return PackageName;
 	}
-
+	
+	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records) throws Exception
+	{
+		if(NameChange.LookingBackForDetectingRenameChange(records))
+		{
+			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
+			JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
+			System.out.println("Rename detected.");			
+		}
+		else if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
+		{
+			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
+			JavaRefactoring.UnhandledRefactorings.add(infor.getJavaExtractMethodRefactoring());
+			System.out.println("Extract method detected.");
+		}
+		else 
+			return;
+		
+	}
 	
 }
