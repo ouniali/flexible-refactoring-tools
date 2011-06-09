@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import userinterface.RefactoringMarker;
-import ASTree.ICompilationUnitManipulationMethod;
+import ASTree.CompilationUnitManipulationMethod;
 import ASTree.ProjectHistoryCollector;
 import JavaRefactoringAPI.JavaRefactoring;
 

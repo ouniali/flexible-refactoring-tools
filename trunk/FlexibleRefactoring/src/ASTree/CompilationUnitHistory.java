@@ -42,7 +42,7 @@ public class CompilationUnitHistory {
 				return false;
 		}
 		
-		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName, tree,System.currentTimeMillis()));
+		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName,System.currentTimeMillis()));
 		
 		detectRefactoringOpportunity(Records);
 		

@@ -115,14 +115,14 @@ public class ASTChangeInformation {
 	public void recoverICompilationUnitToOldRecord(ICompilationUnit unit)
 	{
 		String code = getOldCompilationUnitRecord().getASTree().toString();
-		ICompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-		ICompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
+		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
 	public void recoverICompilationUnitToNewRecord(ICompilationUnit unit)
 	{
 		String code = getNewCompilationUnitRecord().getASTree().toString();
-		ICompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-		ICompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
+		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 }

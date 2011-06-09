@@ -5,9 +5,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 
-public class ICompilationUnitManipulationMethod {
+public class CompilationUnitManipulationMethod {
 
 	
 	static public void UpdateICompilationUnit(ICompilationUnit unit, String code)
@@ -40,6 +41,5 @@ public class ICompilationUnitManipulationMethod {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 }

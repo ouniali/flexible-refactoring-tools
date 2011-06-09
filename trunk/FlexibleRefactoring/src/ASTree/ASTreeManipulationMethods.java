@@ -58,7 +58,6 @@ public class ASTreeManipulationMethods {
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(unit);
 		parser.setResolveBindings(true);
-		
 		return (CompilationUnit) parser.createAST(null); // parse
 	}
 	
@@ -69,7 +68,6 @@ public class ASTreeManipulationMethods {
 		parser.setSource(code.toCharArray());
 		parser.setResolveBindings(true);
 		CompilationUnit unit = (CompilationUnit) parser.createAST(null); 
-
 		return unit;
 	}
 
