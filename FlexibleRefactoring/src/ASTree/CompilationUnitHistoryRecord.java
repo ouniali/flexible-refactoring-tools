@@ -30,7 +30,7 @@ public class CompilationUnitHistoryRecord {
 	private final ICompilationUnit Unit;
 	
 	
-	protected CompilationUnitHistoryRecord(IJavaProject proj, ICompilationUnit iu,String pro, String pac, String un,CompilationUnit u, long t ) throws Exception
+	protected CompilationUnitHistoryRecord(IJavaProject proj, ICompilationUnit iu,String pro, String pac, String un, long t ) throws Exception
 	{
 		Project = proj;
 		Unit = iu;
@@ -42,10 +42,12 @@ public class CompilationUnitHistoryRecord {
 		BindingFileName = PackageName + "_" + UnitName + "_" + time+"_bindng.txt";
 		Directory = root + File.separator + ProjectName;
 		new File(Directory).mkdirs();
-		FileManipulationMethods.save(Directory + File.separator +ASTFileName, u.toString());
+		FileManipulationMethods.save(Directory + File.separator +ASTFileName, iu.getSource());
 		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
-		u.accept(bVisitor);
+		CompilationUnit unit = ASTreeManipulationMethods.parseICompilationUnit(iu);
+		unit.accept(bVisitor);
 		FileManipulationMethods.save(Directory + File.separator +BindingFileName, bVisitor.getBindingInformation());
+	
 		
 	}
 	public String getPackageName()
@@ -182,5 +184,6 @@ public class CompilationUnitHistoryRecord {
 			}
 			return 0;
 	}
+
 }
 	

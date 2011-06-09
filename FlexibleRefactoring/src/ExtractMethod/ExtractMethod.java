@@ -53,9 +53,10 @@ public class ExtractMethod {
 		int FirstIndexFromEnd = getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo);
 		int childrenOneSize = ASTreeManipulationMethods.getChildNodes(nodeOne).size();
 		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo).size();
-		
-		System.out.println(childrenOneSize + " " + childrenTwoSize);
-		
+	
+		if(childrenOneSize == 0 || childrenTwoSize ==0)
+			return false;
+			
 		if(childrenOneSize> childrenTwoSize && LastIndexFromStart + FirstIndexFromEnd  == childrenTwoSize)
 			return true;
 		else
