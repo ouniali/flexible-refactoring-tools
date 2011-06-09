@@ -47,8 +47,6 @@ public class CompilationUnitHistoryRecord {
 		CompilationUnit unit = ASTreeManipulationMethods.parseICompilationUnit(iu);
 		unit.accept(bVisitor);
 		FileManipulationMethods.save(Directory + File.separator +BindingFileName, bVisitor.getBindingInformation());
-	
-		
 	}
 	public String getPackageName()
 	{
