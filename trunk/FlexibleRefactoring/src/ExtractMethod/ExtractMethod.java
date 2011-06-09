@@ -38,11 +38,8 @@ public class ExtractMethod {
 				return true;
 			}			
 		}		
-		return false;
-		
+		return false;		
 	}
-	
-	
 	
 	public static boolean isExtractMethodChange(ASTNode nodeOne, ASTNode nodeTwo)
 	{
@@ -56,6 +53,8 @@ public class ExtractMethod {
 		int FirstIndexFromEnd = getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo);
 		int childrenOneSize = ASTreeManipulationMethods.getChildNodes(nodeOne).size();
 		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo).size();
+		
+		System.out.println(childrenOneSize + " " + childrenTwoSize);
 		
 		if(childrenOneSize> childrenTwoSize && LastIndexFromStart + FirstIndexFromEnd  == childrenTwoSize)
 			return true;
