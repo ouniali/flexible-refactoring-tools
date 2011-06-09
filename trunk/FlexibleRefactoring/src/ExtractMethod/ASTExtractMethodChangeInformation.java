@@ -39,11 +39,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		return new JavaExtractMethodRefactoring(this);
 	}
 	
-	public void recoverICompilationUnitToBeforeCutting(ICompilationUnit unit)
-	{
-		String code = getOldCompilationUnitRecord().getASTree().toString();
-		ICompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-	}
+
 	public int[] getSelectionStartAndEnd(ICompilationUnit iunit)
 	{
 		int[] offsets = new int[2];
