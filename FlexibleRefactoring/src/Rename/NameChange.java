@@ -25,6 +25,8 @@ public class NameChange {
 		
 	public static final int UNCERTAIN_NAME_CHANGE = 8;
 	
+	public static final int MAXIMUM_LOOK_BACK_COUNT_RENAME = 5;
+	
 	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 	
@@ -37,7 +39,7 @@ public class NameChange {
 	}
 	
 	
-	public static boolean LookingBackForDetectingRenameChange(ArrayList<CompilationUnitHistoryRecord> Records, int LookBackCount) throws Exception
+	public static boolean LookingBackForDetectingRenameChange(ArrayList<CompilationUnitHistoryRecord> Records) throws Exception
 	{
 		if(Records.size() == 0)
 			return false;
@@ -46,7 +48,7 @@ public class NameChange {
 		if(Records.size()<=1)
 			return false;
 		
-		int lookBackCount = Math.min(Records.size()-1, LookBackCount);
+		int lookBackCount = Math.min(Records.size()-1, MAXIMUM_LOOK_BACK_COUNT_RENAME);
 		CompilationUnitHistoryRecord oldRecord;
 		
 		for(int i = 1; i<= lookBackCount; i++)

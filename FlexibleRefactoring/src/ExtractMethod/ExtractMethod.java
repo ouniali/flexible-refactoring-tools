@@ -13,8 +13,9 @@ import ASTree.CompilationUnitHistoryRecord;
 public class ExtractMethod {
 	
 	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
+	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 3;
 	
-	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records, int LookBackCount)
+	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records)
 	{
 		if(Records.size() == 0)
 			return false;
@@ -23,7 +24,7 @@ public class ExtractMethod {
 		if(Records.size()<=1)
 			return false;
 		
-		int lookBackCount = Math.min(Records.size()-1, LookBackCount);
+		int lookBackCount = Math.min(Records.size()-1, MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD);
 		CompilationUnitHistoryRecord RecordOne;
 		
 		for(int i = 1; i<= lookBackCount; i++)
