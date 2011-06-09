@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.compiler.BuildContext;
 import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+
+import userinterface.RefactoringMarker;
 import ASTree.ProjectHistoryCollector;
 import ExtractMethod.ICompilationUnitManipulationMethod;
 import JavaRefactoringAPI.JavaRefactoring;

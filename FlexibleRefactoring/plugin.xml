@@ -61,7 +61,7 @@
          id="refactoringmarker"
          point="org.eclipse.core.resources.markers">
       <attribute
-            name="refactoringmarker">
+            name="handler">
       </attribute>
       <persistent
             value="false">

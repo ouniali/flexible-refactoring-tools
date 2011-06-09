@@ -12,7 +12,7 @@ public class RefactoringQuickFix implements IQuickFixProcessor {
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

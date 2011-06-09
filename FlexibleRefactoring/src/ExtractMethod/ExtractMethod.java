@@ -45,6 +45,12 @@ public class ExtractMethod {
 	
 	public static boolean isExtractMethodChange(ASTNode nodeOne, ASTNode nodeTwo)
 	{
+		if(nodeOne.getNodeType()!= ASTNode.BLOCK)
+			return false;
+		
+		if(nodeTwo.getNodeType() != ASTNode.BLOCK)
+			return false;
+		
 		int LastIndexFromStart = getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
 		int FirstIndexFromEnd = getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo);
 		int childrenOneSize = ASTreeManipulationMethods.getChildNodes(nodeOne).size();
