@@ -17,12 +17,12 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	ExtractMethodRefactoring refactoring;
 	ICompilationUnit unit;
 	ASTExtractMethodChangeInformation information;
-	String newMethodName;
+	static int extractedMethodCount = -1;
 	
 	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info)
 	{
 		information = info;
-		newMethodName ="extractedMethod";
+		extractedMethodCount ++;
 	}
 	@Override
 	public void setEnvironment(ICompilationUnit u) {
@@ -39,24 +39,31 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 		RefactoringStatus iniStatus;
 		RefactoringStatus finStatus;
 		int[] index;
-		information.recoverICompilationUnitToBeforeCutting(unit);
+		information.recoverICompilationUnitToOldRecord(unit);
 		index = information.getSelectionStartAndEnd(unit);
 		
 		try{
 			refactoring = new ExtractMethodRefactoring(unit, index[0], index[1]-index[0]+1);
-			refactoring.setMethodName(newMethodName);
+			refactoring.setMethodName(getExtractedMethodName());
 			refactoring.setReplaceDuplicates(false);
 			refactoring.setVisibility(Modifier.PRIVATE);
 			iniStatus = refactoring.checkInitialConditions(monitor);
 			if(!iniStatus.isOK())
+			{
+				information.recoverICompilationUnitToNewRecord(unit);
 				return;
+			}
 			finStatus = refactoring.checkFinalConditions(monitor);
 			if(!finStatus.isOK())
+			{
+				information.recoverICompilationUnitToNewRecord(unit);
 				return;
+			}
 			Change change = refactoring.createChange(monitor);
 			change.perform(monitor);
 		}catch (Exception e)
 		{
+			information.recoverICompilationUnitToNewRecord(unit);
 			e.printStackTrace();
 		}
 	}
@@ -76,6 +83,14 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	public void run()
 	{
 		performRefactoring();
+	}
+	
+	String getExtractedMethodName()
+	{
+		if(extractedMethodCount == 0)
+			return "extractedMethod";
+		else
+			return "extractedMethod" + extractedMethodCount;
 	}
 
 }
