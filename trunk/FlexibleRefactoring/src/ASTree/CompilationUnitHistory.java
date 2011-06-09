@@ -53,7 +53,7 @@ public class CompilationUnitHistory {
 			JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
 			System.out.println(infor.getNameChangeTypeDescription());			
 		}*/
-		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(Records, MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD))
+		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(Records))
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
 			JavaRefactoring.UnhandledRefactorings.add(infor.getJavaExtractMethodRefactoring());
