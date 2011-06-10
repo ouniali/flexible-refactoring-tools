@@ -19,6 +19,8 @@ public class CompilationUnitManipulationMethod {
         	NullProgressMonitor monitor = new NullProgressMonitor();
 			unit.applyTextEdit(edit, monitor);
 			unit.makeConsistent(monitor);
+			unit.becomeWorkingCopy(monitor);
+			unit.commitWorkingCopy(true, monitor);
 			//unit.save(monitor, true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

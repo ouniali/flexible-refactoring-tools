@@ -117,7 +117,7 @@ public class ASTChangeInformation {
 	{
 		String code = getOldCompilationUnitRecord().getASTree().toString();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+	//	CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 		try {
 			unit.save(null, true);
 		} catch (Exception e) {
@@ -130,7 +130,7 @@ public class ASTChangeInformation {
 	{
 		String code = getNewCompilationUnitRecord().getASTree().toString();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+	//	CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 		try {
 			unit.save(null, true);
 		} catch (Exception e) {
