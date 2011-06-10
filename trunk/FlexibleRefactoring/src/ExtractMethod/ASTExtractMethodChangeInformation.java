@@ -3,6 +3,7 @@ package ExtractMethod;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
@@ -46,9 +47,24 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		CompilationUnit parsedUnit = ASTreeManipulationMethods.parseICompilationUnit(iunit);
 		ASTNode nodeOne = ASTreeManipulationMethods.getASTNodeByIndex(parsedUnit, firstCutNodeIndex);
 		ASTNode nodeTwo = ASTreeManipulationMethods.getASTNodeByIndex(parsedUnit, lastCutNodeIndex);
+		System.out.println("node " + nodeOne + " "+ nodeOne.getLength());
+		System.out.println("node " + nodeTwo +" "+ nodeTwo.getLength());
 		offsets[0] = nodeOne.getStartPosition();
 		offsets[1] = nodeTwo.getStartPosition()+ nodeTwo.getLength() - 1;
 		return offsets;
+	}
+	public String getCuttedSourceCode(ICompilationUnit unit)
+	{
+		int[] offsets = getSelectionStartAndEnd(unit);
+		String source;
+		try {
+			source = unit.getSource();
+			return source.substring(offsets[0], offsets[1]+1);
+		} catch (JavaModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

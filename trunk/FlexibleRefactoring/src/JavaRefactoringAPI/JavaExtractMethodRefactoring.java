@@ -41,7 +41,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 		int[] index;
 		information.recoverICompilationUnitToOldRecord(unit);
 		index = information.getSelectionStartAndEnd(unit);
-		
+		System.out.println(information.getCuttedSourceCode(unit));
 		try{
 			refactoring = new ExtractMethodRefactoring(unit, index[0], index[1]-index[0]+1);
 			refactoring.setMethodName(getExtractedMethodName());
