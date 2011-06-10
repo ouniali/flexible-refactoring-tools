@@ -13,6 +13,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	int originalNameBindingCount;
 	
 	float percentage;
+	final float PERCENTAGE_THRESHHOLD = (float)0.5;
 	static boolean allowFinishingRenamingAutomatically = true;
 	String bindingKeyOne;
 	String bindingKeyTwo;
@@ -90,5 +91,13 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return refactoring;
 	}
 	
+	public boolean isPercentageAboveThreshhold()
+	{
+		return percentage> PERCENTAGE_THRESHHOLD;
+	}
+	public boolean isRenameComplete()
+	{
+		return percentage == 1.00;
+	}
 
 }

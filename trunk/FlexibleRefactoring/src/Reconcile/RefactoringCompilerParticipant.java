@@ -18,7 +18,7 @@ import JavaRefactoringAPI.JavaRefactoring;
 public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
 	static private ProjectHistoryCollector collector = new ProjectHistoryCollector();
-	
+			
 	public RefactoringCompilerParticipant()
 	{
 		super();
@@ -39,6 +39,9 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	public void buildStarting(BuildContext[] files, boolean isBatch) 
 	{
 		System.out.println("buildStarting");
+
+		
+		
 	}
 	
 	public void cleanStarting(IJavaProject project) 
@@ -67,15 +70,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
-			if(!JavaRefactoring.UnhandledRefactorings.isEmpty())
-			{
-				for(JavaRefactoring refactoring : JavaRefactoring.UnhandledRefactorings)
-				{
-					refactoring.setEnvironment((ICompilationUnit)tree.getJavaElement());
-					refactoring.start();
-				}
-			}
-			JavaRefactoring.UnhandledRefactorings.clear();
+			performRefactoring((ICompilationUnit)tree.getJavaElement());					
 			collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());
 		
 		} catch (Exception e) {
@@ -83,6 +78,16 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		}
 	}
 	
+	 synchronized void performRefactoring(ICompilationUnit unit)
+	 {
+		 if(!JavaRefactoring.UnhandledRefactorings.isEmpty())
+		{
+			JavaRefactoring refactoring = JavaRefactoring.UnhandledRefactorings.remove(0);
+			JavaRefactoring.UnhandledRefactorings.clear();
+			refactoring.setEnvironment(unit);
+			new Thread(refactoring).start();
+		}
+	 }
 	
 
 	

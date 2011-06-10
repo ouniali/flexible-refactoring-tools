@@ -77,8 +77,11 @@ public class CompilationUnitHistory {
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
-			JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
-			System.out.println("Rename detected.");			
+			if(infor.isPercentageAboveThreshhold() && !infor.isRenameComplete())
+			{
+				JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
+			}
+			System.out.println("Rename detected. " + infor.getNameChangePercentage());			
 		}
 		else if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
 		{
