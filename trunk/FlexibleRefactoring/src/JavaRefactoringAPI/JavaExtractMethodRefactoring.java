@@ -48,12 +48,14 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			refactoring.setReplaceDuplicates(false);
 			refactoring.setVisibility(Modifier.PRIVATE);
 			iniStatus = refactoring.checkInitialConditions(monitor);
+			System.out.println(iniStatus.toString());
 			if(!iniStatus.isOK())
 			{
 				information.recoverICompilationUnitToNewRecord(unit);
 				return;
 			}
 			finStatus = refactoring.checkFinalConditions(monitor);
+			System.out.println(finStatus.toString());
 			if(!finStatus.isOK())
 			{
 				information.recoverICompilationUnitToNewRecord(unit);
