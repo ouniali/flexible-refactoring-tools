@@ -13,7 +13,7 @@ import ASTree.CompilationUnitHistoryRecord;
 public class ExtractMethod {
 	
 	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
-	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 3;
+	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 	
 	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records)
 	{

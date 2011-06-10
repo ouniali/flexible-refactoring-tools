@@ -19,7 +19,7 @@ public class CompilationUnitManipulationMethod {
         	NullProgressMonitor monitor = new NullProgressMonitor();
 			unit.applyTextEdit(edit, monitor);
 			unit.makeConsistent(monitor);
-			unit.save(monitor, true);
+			//unit.save(monitor, true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,7 +36,7 @@ public class CompilationUnitManipulationMethod {
 			unit.makeConsistent(monitor);
 			unit.applyTextEdit(formatEdit, monitor);
 			unit.makeConsistent(monitor);
-			unit.save(monitor, true);
+			//unit.save(monitor, true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

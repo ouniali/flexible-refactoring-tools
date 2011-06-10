@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 
 import Rename.*;
@@ -117,6 +118,12 @@ public class ASTChangeInformation {
 		String code = getOldCompilationUnitRecord().getASTree().toString();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
 		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+		try {
+			unit.save(null, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void recoverICompilationUnitToNewRecord(ICompilationUnit unit)
@@ -124,5 +131,11 @@ public class ASTChangeInformation {
 		String code = getNewCompilationUnitRecord().getASTree().toString();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
 		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+		try {
+			unit.save(null, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -57,9 +57,11 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	{
 		int[] offsets = getSelectionStartAndEnd(unit);
 		String source;
+		String cutted;
 		try {
 			source = unit.getSource();
-			return source.substring(offsets[0], offsets[1]+1);
+			cutted = source.substring(offsets[0], offsets[1]+1);
+			return "Cutted code: " + cutted +" "+ cutted.length();
 		} catch (JavaModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
