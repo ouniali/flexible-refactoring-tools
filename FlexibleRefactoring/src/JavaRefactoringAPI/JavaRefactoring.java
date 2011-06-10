@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.*;
 
-public abstract class JavaRefactoring extends Thread {
+public abstract class JavaRefactoring implements Runnable {
 	public static ArrayList<JavaRefactoring> UnhandledRefactorings = new ArrayList<JavaRefactoring>();
 	
 	public abstract void setEnvironment(ICompilationUnit unit);
