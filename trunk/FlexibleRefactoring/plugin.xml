@@ -60,14 +60,21 @@
    <extension
          id="refactoringmarker"
          point="org.eclipse.core.resources.markers">
+   </extension>
+   <extension
+         id="refactoringproblem"
+         point="org.eclipse.core.resources.markers">
       <attribute
-            name="handler">
+            name="refactoringproblem">
       </attribute>
       <persistent
             value="false">
       </persistent>
       <super
-            type="org.eclipse.core.resources.taskmarker">
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <super
+            type="FlexibleRefactoring.refactoringmarker">
       </super>
    </extension>
    <extension
@@ -77,7 +84,7 @@
             id="refactoringquickfix">
          <handledMarkerTypes>
             <markerType
-                  id="refactoringmarker">
+                  id="refactoringproblem">
             </markerType>
          </handledMarkerTypes>
       </quickFixProcessor>

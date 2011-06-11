@@ -12,7 +12,7 @@ public class RefactoringMarker {
 	{
 
 		String message = "finish " + JavaRefactoringType.getRefactoringTypeName(type)+" automatically";
-		IMarker marker = unit.getResource().createMarker("refactoringmarker");
+		IMarker marker = unit.getResource().createMarker("FlexibleRefactoring.refactoringproblem");
 		marker.setAttribute(IMarker.LINE_NUMBER, lineNo);
 		marker.setAttribute(IMarker.MESSAGE, message);
 		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
