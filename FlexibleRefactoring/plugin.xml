@@ -78,16 +78,9 @@
       </super>
    </extension>
    <extension
-         point="org.eclipse.jdt.ui.quickFixProcessors">
-      <quickFixProcessor
-            class="userinterface.RefactoringQuickFix"
-            id="refactoringquickfix">
-         <handledMarkerTypes>
-            <markerType
-                  id="FlexibleRefactoring.refactoringproblem">
-            </markerType>
-         </handledMarkerTypes>
-      </quickFixProcessor>
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator>
+      </markerResolutionGenerator>
    </extension>
 
 </plugin>

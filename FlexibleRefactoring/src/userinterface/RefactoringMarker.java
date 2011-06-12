@@ -3,6 +3,7 @@ package userinterface;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.ui.text.java.*;
 import org.eclipse.ui.*;
 
 import JavaRefactoringAPI.JavaRefactoringType;
@@ -18,6 +19,7 @@ public class RefactoringMarker {
 		marker.setAttribute(IMarker.MESSAGE, message);
 		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
 		marker.setAttribute(IMarker.USER_EDITABLE, false);
+		IJavaCompletionProposal pro;
 		return marker.getId();
 	}
 	
