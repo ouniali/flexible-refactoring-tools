@@ -9,9 +9,14 @@ import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
 public class RefactoringQuickFix implements IQuickFixProcessor {
 
+	public RefactoringQuickFix ()
+	{
+		System.out.println("here");
+	}
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
 		// TODO Auto-generated method stub
+		
 		return true;
 	}
 
