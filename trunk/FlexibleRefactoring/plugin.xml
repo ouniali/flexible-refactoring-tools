@@ -79,7 +79,9 @@
    </extension>
    <extension
          point="org.eclipse.ui.ide.markerResolution">
-      <markerResolutionGenerator>
+      <markerResolutionGenerator
+            class="userinterface.RefactoringProblemMarkerResolutionGenerator"
+            markerType="FlexibleRefactoring.refactoringproblem">
       </markerResolutionGenerator>
    </extension>
 
