@@ -84,7 +84,7 @@
             id="refactoringquickfix">
          <handledMarkerTypes>
             <markerType
-                  id="refactoringproblem">
+                  id="FlexibleRefactoring.refactoringproblem">
             </markerType>
          </handledMarkerTypes>
       </quickFixProcessor>
