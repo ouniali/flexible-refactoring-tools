@@ -14,7 +14,6 @@ public class RefactoringProblemMarkerResolution implements IMarkerResolution  {
 	@Override
 	public void run(IMarker marker) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
