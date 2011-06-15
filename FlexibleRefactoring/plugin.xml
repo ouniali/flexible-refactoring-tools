@@ -84,5 +84,20 @@
             markerType="FlexibleRefactoring.refactoringproblem">
       </markerResolutionGenerator>
    </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="userinterface.WarningMarkerResolutionGenerator"
+            markerType="org.eclipse.pde.core.problem">
+      </markerResolutionGenerator>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.ui.quickFixProcessors">
+      <quickFixProcessor
+            class="userinterface.QuickFixProcessor"
+            id="FlexibleRefactoring.quickFixProcessor1"
+            name="finish automatic refactoring">
+      </quickFixProcessor>
+   </extension>
 
 </plugin>

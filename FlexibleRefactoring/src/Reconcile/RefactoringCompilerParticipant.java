@@ -70,7 +70,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		try {
 			tree = context.getAST3();
 			ICompilationUnit unit = (ICompilationUnit)tree.getJavaElement();
-			RefactoringMarker.createRefactoringMarker(unit, 1, 0 );
+			RefactoringMarker.createRefactoringMarker(unit, 15, 0 );
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
