@@ -23,11 +23,9 @@ public class CompilationUnitManipulationMethod {
 			unit.commitWorkingCopy(true, monitor);
 			unit.becomeWorkingCopy(monitor);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
-	@SuppressWarnings("restriction")
 	static public void FormattICompilationUnit(ICompilationUnit unit)
 	{		
 		try {
@@ -41,7 +39,6 @@ public class CompilationUnitManipulationMethod {
 			unit.commitWorkingCopy(true, monitor);
 			unit.becomeWorkingCopy(monitor);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
