@@ -27,9 +27,16 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	{
 		int[] index = new int[2];
 		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods.getChildNodes(nodeOne);
+		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(nodeTwo);
 		int childrenOneSize = childrenOne.size();
-		ASTNode firstDiffNode =childrenOne.get( ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo) );
-		ASTNode lastDiffNode = childrenOne.get(childrenOneSize - ExtractMethod.getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo) - 1);
+		int childrenTwoSize = childrenTwo.size();
+		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
+		int end = Math.min(
+				ExtractMethod.getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo),
+				childrenTwoSize-start
+		);
+		ASTNode firstDiffNode =childrenOne.get( start );
+		ASTNode lastDiffNode = childrenOne.get(childrenOneSize - end - 1);
 		index[0] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(firstDiffNode);
 		index[1] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(lastDiffNode);		
 		return index;
