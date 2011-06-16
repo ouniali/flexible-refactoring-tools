@@ -59,22 +59,15 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			System.out.println(selectionStart + " " + selectionLength);
 			System.out.println(iniStatus.toString());
 			if(!iniStatus.isOK())
-			{
-				information.recoverICompilationUnitToNewRecord(unit);
 				return;
-			}
 			finStatus = refactoring.checkFinalConditions(monitor);
 			System.out.println(finStatus.toString());
 			if(!finStatus.isOK())
-			{
-				information.recoverICompilationUnitToNewRecord(unit);
 				return;
-			}
 			Change change = refactoring.createChange(monitor);
 			change.perform(monitor);
 		}catch (Exception e)
 		{
-			information.recoverICompilationUnitToNewRecord(unit);
 			e.printStackTrace();
 		}
 	}
