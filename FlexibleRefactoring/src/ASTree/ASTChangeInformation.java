@@ -117,25 +117,13 @@ public class ASTChangeInformation {
 	{
 		String code = getOldCompilationUnitRecord().getASTree().toString();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-	//	CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
-		try {
-			unit.save(null, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
 	public void recoverICompilationUnitToNewRecord(ICompilationUnit unit)
 	{
 		String code = getNewCompilationUnitRecord().getASTree().toString();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-	//	CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
-		try {
-			unit.save(null, true);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 }
