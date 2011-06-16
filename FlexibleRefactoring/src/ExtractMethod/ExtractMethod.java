@@ -57,7 +57,7 @@ public class ExtractMethod {
 		if(childrenOneSize == 0 || childrenTwoSize ==0)
 			return false;
 			
-		if(childrenOneSize> childrenTwoSize && LastIndexFromStart + FirstIndexFromEnd  == childrenTwoSize)
+		if(childrenOneSize> childrenTwoSize && LastIndexFromStart + FirstIndexFromEnd  >= childrenTwoSize)
 			return true;
 		else
 			return false;
