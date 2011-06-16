@@ -50,7 +50,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		System.out.println("node " + nodeOne + " " + nodeOne.getLength());
 		System.out.println("node " + nodeTwo + " " + nodeTwo.getLength());
 		offsets[0] = nodeOne.getStartPosition();
-		offsets[1] = nodeTwo.getStartPosition()+ nodeTwo.getLength() - 1;
+		offsets[1] = nodeTwo.getStartPosition()+ nodeTwo.getLength()-1;
 		return offsets;
 	}
 	public String getCuttedSourceCode(ICompilationUnit unit)
@@ -61,7 +61,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		try {
 			source = unit.getSource();
 			cutted = source.substring(offsets[0], offsets[1]+1);
-			return "Cutted code: " + cutted +" "+ cutted.length();
+			return  cutted;
 		} catch (JavaModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

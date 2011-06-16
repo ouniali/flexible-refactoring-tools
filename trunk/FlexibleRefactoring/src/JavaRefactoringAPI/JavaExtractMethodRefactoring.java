@@ -44,11 +44,14 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 		index = information.getSelectionStartAndEnd(unit);
 		System.out.println(information.getCuttedSourceCode(unit));
 		
+		
 		try{
-			System.out.println(unit.getSource());
+			String source = unit.getSource();
+			System.out.println(source);
 			int selectionStart = index[0];
-			int selectionLength =  index[1]-index[0]+1; 
-			refactoring = new ExtractMethodRefactoring(unit, selectionStart, selectionLength );
+			int selectionLength =  index[1]-index[0]+1;
+			System.out.println(source.substring(index[0],index[1]+1));
+			refactoring = new ExtractMethodRefactoring(unit, selectionStart, selectionLength -1 );
 			refactoring.setMethodName(getExtractedMethodName());
 			refactoring.setReplaceDuplicates(false);
 			refactoring.setVisibility(Modifier.PRIVATE);

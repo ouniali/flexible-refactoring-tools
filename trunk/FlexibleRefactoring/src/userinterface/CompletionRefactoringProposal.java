@@ -44,8 +44,6 @@ public class CompletionRefactoringProposal implements IJavaCompletionProposal{
 		// TODO Auto-generated method stub
 		Display display = PlatformUI.getWorkbench().getDisplay();
 		Image icon = new Image(display, "C:" +File.separator+ "refactoring.png");
-		
-		
 		return icon;
 	}
 
