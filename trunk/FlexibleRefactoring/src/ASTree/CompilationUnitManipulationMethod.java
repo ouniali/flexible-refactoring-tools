@@ -18,9 +18,8 @@ public class CompilationUnitManipulationMethod {
     		ReplaceEdit edit = new ReplaceEdit(0, len,code);
         	NullProgressMonitor monitor = new NullProgressMonitor();
 			unit.applyTextEdit(edit, monitor);
-			unit.makeConsistent(monitor);
-			unit.becomeWorkingCopy(monitor);
 			unit.save(monitor, true);
+			unit.makeConsistent(monitor);		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,10 +33,9 @@ public class CompilationUnitManipulationMethod {
 			TextEdit formatEdit;
 			NullProgressMonitor monitor = new NullProgressMonitor();
 			formatEdit = formatter.format(CodeFormatter.K_COMPILATION_UNIT, unit.getSource(), 0, unit.getSource().length(), 0, unit.findRecommendedLineSeparator());
-			unit.makeConsistent(monitor);
 			unit.applyTextEdit(formatEdit, monitor);
+			unit.save(monitor, true);
 			unit.makeConsistent(monitor);
-			//unit.save(monitor, true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
