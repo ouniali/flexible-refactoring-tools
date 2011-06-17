@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.internal.corext.refactoring.code.*;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 
+import ASTree.CompilationUnitManipulationMethod;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
 public class JavaExtractMethodRefactoring extends JavaRefactoring{
@@ -18,7 +20,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	ExtractMethodRefactoring refactoring;
 	ICompilationUnit unit;
 	ASTExtractMethodChangeInformation information;
-	static int extractedMethodCount = -1;
+	static int extractedMethodCount =2;
 	
 	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info)
 	{
@@ -34,20 +36,21 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 
 	@SuppressWarnings("restriction")
 	@Override
-	public void performRefactoring() {
+	public void performRefactoring()  {
 		// TODO Auto-generated method stub
 		NullProgressMonitor monitor = new NullProgressMonitor();
 		RefactoringStatus iniStatus;
 		RefactoringStatus finStatus;
 		int[] index;
+	
 		information.recoverICompilationUnitToOldRecord(unit);
 		index = information.getSelectionStartAndEnd(unit);
 		System.out.println(information.getCuttedSourceCode(unit));
 		
 		
+		
 		try{
 			String source = unit.getSource();
-			System.out.println(source);
 			int selectionStart = index[0];
 			int selectionLength =  index[1]-index[0]+1;
 			System.out.println(source.substring(index[0],index[1]+1));
@@ -66,6 +69,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 				return;
 			Change change = refactoring.createChange(monitor);
 			change.perform(monitor);
+			CompilationUnitManipulationMethod.commitChangesForICompilationUnit(unit);
 		}catch (Exception e)
 		{
 			e.printStackTrace();
