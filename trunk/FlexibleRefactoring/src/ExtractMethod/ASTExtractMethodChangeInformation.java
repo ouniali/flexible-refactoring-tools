@@ -18,12 +18,19 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	int firstCutNodeIndex;
 	int lastCutNodeIndex;
 	
+	int lastUncutNodeIndexFromStart;
+	int firstUncutNodeIndexFromEnd;
+	
+	int insertPlaceNodeIndex;
+	
 	public ASTExtractMethodChangeInformation( CompilationUnitHistoryRecord or, ASTNode node1, CompilationUnitHistoryRecord nr, ASTNode node2) 
 	{
 		super(or, node1, nr, node2);
 		int[] index = getCutASTNodeIndex(node1, node2);
 		firstCutNodeIndex = index[0];
 		lastCutNodeIndex = index[1];
+		
+		insertPlaceNodeIndex = getCuttedASTNodeIndexInNodeTwo(node1, node2);
 		
 	}
 	private int[] getCutASTNodeIndex(ASTNode nodeOne, ASTNode nodeTwo)
@@ -38,12 +45,24 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 				ExtractMethod.getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo),
 				childrenTwoSize-start
 		);
-		ASTNode firstDiffNode =childrenOne.get( start );
+		
+		ASTNode firstDiffNode =childrenOne.get( start );	
 		ASTNode lastDiffNode = childrenOne.get(childrenOneSize - end - 1);
-		index[0] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(firstDiffNode);
-		index[1] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(lastDiffNode);		
+		
+		index[0] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(firstDiffNode);		
+		index[1] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(lastDiffNode);
 		return index;
 	}
+	private int getCuttedASTNodeIndexInNodeTwo(ASTNode nodeOne, ASTNode nodeTwo)
+	{
+		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
+		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(nodeTwo);
+		ASTNode node = childrenTwo.get(start-1);
+		int index = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node);
+		return index;		
+	}
+	
+	
 	
 	public JavaExtractMethodRefactoring getJavaExtractMethodRefactoring()
 	{
@@ -82,9 +101,9 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
 	{
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
-		ASTNode firstCutNode = ASTreeManipulationMethods.getASTNodeByIndex(tree, firstCutNodeIndex);
-		int lineNo = tree.getLineNumber(firstCutNode.getStartPosition());
-		RefactoringMarker.createRefactoringMarker(unit, lineNo - 1, JavaRefactoringType.EXTRACT_METHOD);
+		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, insertPlaceNodeIndex);
+		int lineNo = tree.getLineNumber(node.getStartPosition());
+		RefactoringMarker.createRefactoringMarker(unit, lineNo + 1, JavaRefactoringType.EXTRACT_METHOD);
 	}
 
 }
