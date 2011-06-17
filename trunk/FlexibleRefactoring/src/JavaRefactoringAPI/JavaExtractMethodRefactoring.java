@@ -20,7 +20,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	ExtractMethodRefactoring refactoring;
 	ICompilationUnit unit;
 	ASTExtractMethodChangeInformation information;
-	static int extractedMethodCount =15;
+	static int extractedMethodCount =-1;
 	
 	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info)
 	{
@@ -47,8 +47,6 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	
 		index = information.getSelectionStartAndEnd(unit);
 		System.out.println(information.getCuttedSourceCode(unit));
-		
-		
 		
 		try{
 			String source = unit.getSource();
