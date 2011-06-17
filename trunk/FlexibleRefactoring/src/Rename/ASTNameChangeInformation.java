@@ -1,7 +1,10 @@
 package Rename;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
+
+import userinterface.RefactoringMarker;
 import ASTree.*;
+import JavaRefactoringAPI.JavaRefactoringType;
 import JavaRefactoringAPI.JavaRenameRefactoring;
 
 public class ASTNameChangeInformation extends ASTChangeInformation {
@@ -18,6 +21,9 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	static boolean allowFinishingRenamingAutomatically = true;
 	String bindingKeyOne;
 	String bindingKeyTwo;
+	
+	int oldNameNodeIndex;
+	int newNameNodeIndex;
 	
 	
 	public ASTNameChangeInformation(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
@@ -37,6 +43,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			modifiedName = newName.getFullyQualifiedName();
 			originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
 		}
+		oldNameNodeIndex = this.getNodeOneIndex();
+		newNameNodeIndex = this.getNodeTwoIndex();
 	}
 	
 	public int getNameChangeType()
@@ -101,9 +109,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return percentage == 1.00;
 	}
 	
-	public void addRefactoringMarker(ICompilationUnit unit)
+	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
 	{
-		
+		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		ASTNode oldNameNode = ASTreeManipulationMethods.getASTNodeByIndex(tree, oldNameNodeIndex);
+		int lineNo = tree.getLineNumber(oldNameNode.getStartPosition());
+		RefactoringMarker.createRefactoringMarker(unit, lineNo, JavaRefactoringType.RENAME);
 	}
 
 }
