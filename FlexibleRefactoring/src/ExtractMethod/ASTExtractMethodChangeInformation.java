@@ -7,8 +7,11 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import userinterface.RefactoringMarker;
+
 import ASTree.*;
 import JavaRefactoringAPI.JavaExtractMethodRefactoring;
+import JavaRefactoringAPI.JavaRefactoringType;
 
 public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 
@@ -76,9 +79,12 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		return null;
 	}
 	
-	public void addRefactoringMarker(ICompilationUnit unit)
+	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
 	{
-		
+		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		ASTNode firstCutNode = ASTreeManipulationMethods.getASTNodeByIndex(tree, firstCutNodeIndex);
+		int lineNo = tree.getLineNumber(firstCutNode.getStartPosition());
+		RefactoringMarker.createRefactoringMarker(unit, lineNo - 1, JavaRefactoringType.EXTRACT_METHOD);
 	}
 
 }

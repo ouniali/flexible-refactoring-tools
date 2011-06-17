@@ -19,6 +19,7 @@ public class RefactoringMarker {
 		marker.setAttribute(IMarker.MESSAGE, message);
 		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
 		marker.setAttribute(IMarker.USER_EDITABLE, false);
+		marker.setAttribute("REFACTORING_TYPE", type);
 		return marker.getId();
 	}
 	

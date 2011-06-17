@@ -44,7 +44,7 @@ public class CompilationUnitHistory {
 		
 		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName,System.currentTimeMillis()));
 		
-		detectRefactoringOpportunity(Records);
+		detectRefactoringOpportunity(Records, unit);
 		
 		return true;
 	}
@@ -72,14 +72,15 @@ public class CompilationUnitHistory {
 		return PackageName;
 	}
 	
-	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records) throws Exception
+	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
+			infor.addRefactoringMarker(unit);
 			if(infor.isPercentageAboveThreshhold() && !infor.isRenameComplete())
 			{
-				JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());
+				JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());		
 			}
 			System.out.println("Rename detected. " + infor.getNameChangePercentage());			
 		}
@@ -87,6 +88,7 @@ public class CompilationUnitHistory {
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
 			JavaRefactoring.UnhandledRefactorings.add(infor.getJavaExtractMethodRefactoring());
+			infor.addRefactoringMarker(unit);
 			System.out.println("Extract method detected.");
 		}
 		else 

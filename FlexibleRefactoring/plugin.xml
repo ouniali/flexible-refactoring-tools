@@ -76,6 +76,9 @@
       <super
             type="FlexibleRefactoring.refactoringmarker">
       </super>
+      <attribute
+            name="REFACTORING_TYPE">
+      </attribute>
    </extension>
    <extension
          point="org.eclipse.ui.ide.markerResolution">
