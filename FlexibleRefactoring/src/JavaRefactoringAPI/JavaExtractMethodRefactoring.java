@@ -44,6 +44,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 		int[] index;
 	
 		information.recoverICompilationUnitToOldRecord(unit);
+	
 		index = information.getSelectionStartAndEnd(unit);
 		System.out.println(information.getCuttedSourceCode(unit));
 		
@@ -54,7 +55,6 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			int selectionStart = index[0];
 			int selectionLength =  index[1]-index[0]+1;
 			System.out.println(source.substring(index[0],index[1]+1));
-			unit.makeConsistent(monitor);
 			refactoring = new ExtractMethodRefactoring(unit, selectionStart, selectionLength);
 			refactoring.setMethodName(getExtractedMethodName());
 			refactoring.setReplaceDuplicates(true);
@@ -69,9 +69,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			if(!finStatus.isOK())
 				return;
 			Change change = refactoring.createChange(monitor);
-			unit.becomeWorkingCopy(monitor);
 			change.perform(monitor);
-			unit.discardWorkingCopy();
 		}catch (Exception e)
 		{
 			e.printStackTrace();

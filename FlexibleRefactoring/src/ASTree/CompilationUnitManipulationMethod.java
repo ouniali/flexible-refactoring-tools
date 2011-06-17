@@ -16,12 +16,14 @@ public class CompilationUnitManipulationMethod {
 	{	    
         try {
         	NullProgressMonitor monitor = new NullProgressMonitor();
-        	int len = unit.getSourceRange().getLength();
-    		unit.becomeWorkingCopy(monitor);
-        	ReplaceEdit edit = new ReplaceEdit(0, len,code);   	
+        	unit.becomeWorkingCopy(monitor);
+        	int oldLen = unit.getSourceRange().getLength();  	
+        	int newLen = code.length();
+        	ReplaceEdit edit = new ReplaceEdit(0, oldLen,code);   	
 			unit.applyTextEdit(edit, monitor);
 			unit.commitWorkingCopy(true, monitor);
 			unit.discardWorkingCopy();
+			unit.makeConsistent(monitor);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -37,6 +39,7 @@ public class CompilationUnitManipulationMethod {
 			unit.applyTextEdit(formatEdit, monitor);
 			unit.commitWorkingCopy(true, monitor);
 			unit.discardWorkingCopy();
+			unit.makeConsistent(monitor);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
