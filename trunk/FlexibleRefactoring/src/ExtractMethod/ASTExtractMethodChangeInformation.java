@@ -75,5 +75,10 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		}
 		return null;
 	}
+	
+	public void addRefactoringMarker(ICompilationUnit unit)
+	{
+		
+	}
 
 }

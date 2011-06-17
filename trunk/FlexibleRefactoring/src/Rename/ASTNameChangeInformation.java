@@ -1,4 +1,5 @@
 package Rename;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
 import ASTree.*;
 import JavaRefactoringAPI.JavaRenameRefactoring;
@@ -98,6 +99,11 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public boolean isRenameComplete()
 	{
 		return percentage == 1.00;
+	}
+	
+	public void addRefactoringMarker(ICompilationUnit unit)
+	{
+		
 	}
 
 }
