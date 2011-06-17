@@ -17,9 +17,11 @@ public class CompilationUnitManipulationMethod {
         try {
         	NullProgressMonitor monitor = new NullProgressMonitor();
         	int len = unit.getSourceRange().getLength();
-    		ReplaceEdit edit = new ReplaceEdit(0, len,code);   	
+    		unit.becomeWorkingCopy(monitor);
+        	ReplaceEdit edit = new ReplaceEdit(0, len,code);   	
 			unit.applyTextEdit(edit, monitor);
-			commitChangesForICompilationUnit(unit);
+			unit.commitWorkingCopy(true, monitor);
+			unit.discardWorkingCopy();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -28,32 +30,14 @@ public class CompilationUnitManipulationMethod {
 	{		
 		try {
 			NullProgressMonitor monitor = new NullProgressMonitor();
+			unit.becomeWorkingCopy(monitor);
 			CodeFormatter formatter = ToolFactory.createCodeFormatter(null);
 			TextEdit formatEdit;	
 			formatEdit = formatter.format(CodeFormatter.K_COMPILATION_UNIT, unit.getSource(), 0, unit.getSource().length(), 0, unit.findRecommendedLineSeparator());
 			unit.applyTextEdit(formatEdit, monitor);
-			commitChangesForICompilationUnit(unit);
+			unit.commitWorkingCopy(true, monitor);
+			unit.discardWorkingCopy();
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	static public void commitChangesForICompilationUnit(ICompilationUnit unit)
-	{
-		NullProgressMonitor monitor = new NullProgressMonitor();
-		try {
-			//unit.save(monitor, true);
-			unit.makeConsistent(monitor);
-			unit.commitWorkingCopy(true, monitor);
-			unit.reconcile(AST.JLS3, true, null, monitor);
-			unit.makeConsistent(monitor);
-			
-			/*unit.save(monitor, true);
-			unit.commitWorkingCopy(true, monitor);
-			
-			unit.becomeWorkingCopy(monitor);
-			unit.reconcile(AST.JLS3, true, null, monitor);
-			unit.makeConsistent(monitor);*/
-		} catch (JavaModelException e) {
 			e.printStackTrace();
 		}
 	}

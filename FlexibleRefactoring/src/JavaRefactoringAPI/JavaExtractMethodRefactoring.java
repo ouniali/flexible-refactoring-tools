@@ -20,7 +20,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	ExtractMethodRefactoring refactoring;
 	ICompilationUnit unit;
 	ASTExtractMethodChangeInformation information;
-	static int extractedMethodCount =2;
+	static int extractedMethodCount =15;
 	
 	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info)
 	{
@@ -54,9 +54,10 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			int selectionStart = index[0];
 			int selectionLength =  index[1]-index[0]+1;
 			System.out.println(source.substring(index[0],index[1]+1));
+			unit.makeConsistent(monitor);
 			refactoring = new ExtractMethodRefactoring(unit, selectionStart, selectionLength);
 			refactoring.setMethodName(getExtractedMethodName());
-			refactoring.setReplaceDuplicates(false);
+			refactoring.setReplaceDuplicates(true);
 			refactoring.setVisibility(Modifier.PRIVATE);
 			iniStatus = refactoring.checkInitialConditions(monitor);
 			System.out.println(selectionStart + " " + selectionLength);
@@ -68,8 +69,9 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			if(!finStatus.isOK())
 				return;
 			Change change = refactoring.createChange(monitor);
+			unit.becomeWorkingCopy(monitor);
 			change.perform(monitor);
-			CompilationUnitManipulationMethod.commitChangesForICompilationUnit(unit);
+			unit.discardWorkingCopy();
 		}catch (Exception e)
 		{
 			e.printStackTrace();

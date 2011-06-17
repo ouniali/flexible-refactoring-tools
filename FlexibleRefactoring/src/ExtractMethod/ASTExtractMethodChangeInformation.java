@@ -31,7 +31,6 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		lastCutNodeIndex = index[1];
 		
 		insertPlaceNodeIndex = getCuttedASTNodeIndexInNodeTwo(node1, node2);
-		
 	}
 	private int[] getCutASTNodeIndex(ASTNode nodeOne, ASTNode nodeTwo)
 	{
