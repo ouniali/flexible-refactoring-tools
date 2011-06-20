@@ -48,8 +48,14 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 			refactoring.setMethodName(getExtractedMethodName());
 			refactoring.setReplaceDuplicates(true);
 			refactoring.setVisibility(Modifier.PRIVATE);
-			//this is used to wait for the underlying resource to be ready
-			Thread.sleep(WAIT_TIME);		
+			//always output true for the statement
+			/*System.out.println(unit.isConsistent() && !unit.getBuffer().hasUnsavedChanges()
+					&& !unit.hasResourceChanged() && !unit.hasUnsavedChanges() && unit.isStructureKnown()
+			&& unit.isOpen() && !unit.isReadOnly() && unit.isWorkingCopy() && !unit.getBuffer().isClosed()
+			&& !unit.getBuffer().isReadOnly() && unit.getResource().isAccessible() && unit.getResource().isSynchronized(1));
+			*///
+			//wait for the underlying resource to be ready
+			Thread.sleep(WAIT_TIME);
 			iniStatus = refactoring.checkInitialConditions(monitor);
 			if(!iniStatus.isOK())
 				return;
