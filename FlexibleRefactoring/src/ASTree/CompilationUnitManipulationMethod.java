@@ -19,7 +19,6 @@ public class CompilationUnitManipulationMethod {
         	NullProgressMonitor monitor = new NullProgressMonitor();
         	unit.becomeWorkingCopy(monitor);
         	int oldLen = unit.getSourceRange().getLength();  	
-        	int newLen = code.length();
         	ReplaceEdit edit = new ReplaceEdit(0, oldLen, code);   	
 			unit.applyTextEdit(edit, monitor);	
 			unit.commitWorkingCopy(true, monitor);
