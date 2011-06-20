@@ -15,6 +15,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 	ICompilationUnit unit;
 	ASTExtractMethodChangeInformation information;
 	static int extractedMethodCount =-1;
+	long WAIT_TIME = 2000;
 	
 	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info)
 	{
@@ -38,26 +39,21 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring{
 		int[] index;
 	
 		information.recoverICompilationUnitToOldRecord(unit);
-	
 		index = information.getSelectionStartAndEnd(unit);
-		System.out.println(information.getCuttedSourceCode(unit));
-		
+	
 		try{
-			String source = unit.getSource();
 			int selectionStart = index[0];
 			int selectionLength =  index[1]-index[0]+1;
-			System.out.println(source.substring(index[0],index[1]+1));
 			refactoring = new ExtractMethodRefactoring(unit, selectionStart, selectionLength);
 			refactoring.setMethodName(getExtractedMethodName());
 			refactoring.setReplaceDuplicates(true);
 			refactoring.setVisibility(Modifier.PRIVATE);
+			//this is used to wait for the underlying resource to be ready
+			Thread.sleep(WAIT_TIME);		
 			iniStatus = refactoring.checkInitialConditions(monitor);
-			System.out.println(selectionStart + " " + selectionLength);
-			System.out.println(iniStatus.toString());
 			if(!iniStatus.isOK())
 				return;
 			finStatus = refactoring.checkFinalConditions(monitor);
-			System.out.println(finStatus.toString());
 			if(!finStatus.isOK())
 				return;
 			Change change = refactoring.createChange(monitor);
