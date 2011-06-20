@@ -41,8 +41,9 @@ public class SourceWriterFactory {
    * @return The new {@link SourceWriter}.
    * @throws JavaModelException
    */
-  public SourceWriter createForMethod(IMethod method) throws JavaModelException {
-    return new SourceWriter(method);
-  }
+	public SourceWriter createForMethod(IMethod method)
+			throws JavaModelException {
+		return new SourceWriter(method);
+	}
 
 }
