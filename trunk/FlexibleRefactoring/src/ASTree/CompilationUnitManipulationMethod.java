@@ -2,6 +2,7 @@ package ASTree;
 
 import org.eclipse.text.edits.*;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.IBuffer;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.ToolFactory;
@@ -19,8 +20,8 @@ public class CompilationUnitManipulationMethod {
         	unit.becomeWorkingCopy(monitor);
         	int oldLen = unit.getSourceRange().getLength();  	
         	int newLen = code.length();
-        	ReplaceEdit edit = new ReplaceEdit(0, oldLen,code);   	
-			unit.applyTextEdit(edit, monitor);
+        	ReplaceEdit edit = new ReplaceEdit(0, oldLen, code);   	
+			unit.applyTextEdit(edit, monitor);	
 			unit.commitWorkingCopy(true, monitor);
 			unit.discardWorkingCopy();
 			unit.makeConsistent(monitor);

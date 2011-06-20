@@ -36,7 +36,7 @@ public class CompletionRefactoringProposal implements IJavaCompletionProposal{
 	@Override
 	public String getDisplayString() {
 		// TODO Auto-generated method stub
-		return "Finishing Rename Refactoring";
+		return "Finish rename refactoring";
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CompletionRefactoringProposal implements IJavaCompletionProposal{
 	@Override
 	public int getRelevance() {
 		// TODO Auto-generated method stub
-		return Integer.MAX_VALUE-1;
+		return Integer.MAX_VALUE;
 	}
 
 }
