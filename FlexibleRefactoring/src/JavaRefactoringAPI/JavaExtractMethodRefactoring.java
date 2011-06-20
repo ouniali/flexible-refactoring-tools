@@ -1,17 +1,11 @@
 package JavaRefactoringAPI;
 
-import java.util.ArrayList;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.internal.corext.refactoring.code.*;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
-
-import ASTree.CompilationUnitManipulationMethod;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
 public class JavaExtractMethodRefactoring extends JavaRefactoring{
