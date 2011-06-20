@@ -75,8 +75,6 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		CompilationUnit parsedUnit = ASTreeManipulationMethods.parseICompilationUnit(iunit);
 		ASTNode nodeOne = ASTreeManipulationMethods.getASTNodeByIndex(parsedUnit, firstCutNodeIndex);
 		ASTNode nodeTwo = ASTreeManipulationMethods.getASTNodeByIndex(parsedUnit, lastCutNodeIndex);
-		System.out.println("node " + nodeOne + " " + nodeOne.getLength());
-		System.out.println("node " + nodeTwo + " " + nodeTwo.getLength());
 		offsets[0] = nodeOne.getStartPosition();
 		offsets[1] = nodeTwo.getStartPosition()+ nodeTwo.getLength()-1;
 		return offsets;
