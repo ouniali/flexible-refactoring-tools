@@ -19,7 +19,7 @@ public class RefactoringProblemMarkerResolutionGenerator implements
 		};
 	}
 	
-	private IMarkerResolution getRefactoringResolution(int type)
+	static public IMarkerResolution getRefactoringResolution(int type)
 	{
 		switch(type)
 		{
