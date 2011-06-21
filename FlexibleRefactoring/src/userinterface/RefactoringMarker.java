@@ -60,7 +60,7 @@ public class RefactoringMarker {
 		for (IMarker marker : markers) {
 			markerLine = marker.getAttribute(IMarker.LINE_NUMBER, -1);
 			if (markerLine == lineNo) {
-				CategorizedProblem problem = proFac.createProblem(fileName,
+				proFac.createProblem(fileName,
 						problemID, problemArguments, messageArguments,
 						severity, startPosition, endPosition, lineNumber,
 						columnNumber);
