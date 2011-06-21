@@ -24,6 +24,18 @@ public class QuickFixProcessor implements IQuickFixProcessor {
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
 		// TODO Auto-generated method stub
+		String[] arguments = locations[0].getProblemArguments();
+		if(arguments[0].equals(RefactoringMarker.Refactoring_Problem_First_Argument))
+		{
+			int refatoringType = Integer.parseInt(arguments[1]);
+			
+			
+		}
+		else
+		{
+			return null;
+		}
+			
 		return new IJavaCompletionProposal[] {
 				new CompletionRefactoringProposal()
 		};

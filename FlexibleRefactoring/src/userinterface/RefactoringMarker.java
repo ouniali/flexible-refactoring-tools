@@ -16,6 +16,8 @@ import JavaRefactoringAPI.JavaRefactoringType;
 
 public class RefactoringMarker {
 
+	public static String Refactoring_Problem_First_Argument = "refactoring_problem";
+	
 	public static void addAutomaticRefactoringResolution(ICompilationUnit unit,
 			int lineNo, int type) throws Exception {
 		if (!addRefactoringResolutionToExistingMarker(unit, lineNo, type))
@@ -47,8 +49,9 @@ public class RefactoringMarker {
 				.getDefault());
 		char[] fileName = unit.getPath().toOSString().toCharArray();
 		int problemID = IProblem.ExternalProblemFixable;
-		String[] problemArguments = new String[1];
-		problemArguments[0] = Integer.toString(type);
+		String[] problemArguments = new String[2];
+		problemArguments[0] = Refactoring_Problem_First_Argument;
+		problemArguments[1] = Integer.toString(type);
 		String[] messageArguments = null;
 		int severity = ProblemSeverities.Optional;
 		int startPosition = 0;
