@@ -114,7 +114,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		ASTNode oldNameNode = ASTreeManipulationMethods.getASTNodeByIndex(tree, oldNameNodeIndex);
 		int lineNo = tree.getLineNumber(oldNameNode.getStartPosition());
-		RefactoringMarker.createRefactoringMarker(unit, lineNo, JavaRefactoringType.RENAME);
+		RefactoringMarker.addAutomaticRefactoringResolution(unit, lineNo, JavaRefactoringType.RENAME);
 	}
 
 }
