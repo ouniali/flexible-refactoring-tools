@@ -16,9 +16,7 @@ public class QuickFixProcessor implements IQuickFixProcessor {
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
 		
-		refactoringType = problemId - IProblem.ExternalProblemFixable;
-		proposal = RefactoringProposal.getRefactoringProposalByType(refactoringType);
-		if(proposal == null)
+		if(problemId == IProblem.ExternalProblemFixable)
 			return false;
 		else
 			return true;
@@ -27,9 +25,14 @@ public class QuickFixProcessor implements IQuickFixProcessor {
 	@Override
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
-		return new IJavaCompletionProposal[]{
-				proposal
-		};
+		String[] parameters = locations[0].getProblemArguments();
+		if(parameters[0].equals(RefactoringMarker.Refactoring_Problem_First_Argument))
+		{
+			refactoringType = Integer.parseInt(parameters[1]);
+			proposal = RefactoringProposal.getRefactoringProposalByType(refactoringType);
+			return new IJavaCompletionProposal[]{proposal};
+		}
+		return null;
 	}
 
 }
