@@ -23,7 +23,7 @@ public class RefactoringMarker {
 			int lineNo, int type) throws Exception {
 		if(!isMarkerExisting(unit, lineNo))
 			createRefactoringMarker(unit, lineNo);
-		shootRefactoringProblem(unit, lineNo, type + IProblem.ExternalProblemFixable);
+		shootRefactoringProblem(unit, lineNo, IProblem.ExternalProblemFixable);
 	}
 
 	public static long createRefactoringMarker(ICompilationUnit unit,
