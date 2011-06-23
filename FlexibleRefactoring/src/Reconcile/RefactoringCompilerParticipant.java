@@ -75,14 +75,13 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-*/
+*/	
 		try {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
 			performRefactoring((ICompilationUnit)tree.getJavaElement());					
-			collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());
-		
+			collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
