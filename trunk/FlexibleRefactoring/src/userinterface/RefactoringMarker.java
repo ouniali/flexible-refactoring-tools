@@ -52,7 +52,7 @@ public class RefactoringMarker {
 		problemArguments[0] = Refactoring_Problem_First_Argument;
 		problemArguments[1] = Integer.toString(type);
 		String[] messageArguments = null;
-		int severity = ProblemSeverities.Fatal;
+		int severity = ProblemSeverities.Optional;
 		int startPosition = 0;
 		int endPosition = 1;
 		int lineNumber = lineNo;
