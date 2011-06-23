@@ -100,7 +100,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, insertPlaceNodeIndex);
 		int lineNo = tree.getLineNumber(node.getStartPosition());
-		RefactoringMarker.addAutomaticRefactoringResolution(unit, lineNo + 1, JavaRefactoringType.EXTRACT_METHOD);
+		RefactoringMarker.addAutomaticRefactoringProposal(unit, lineNo + 1, JavaRefactoringType.EXTRACT_METHOD);
 	}
 
 }

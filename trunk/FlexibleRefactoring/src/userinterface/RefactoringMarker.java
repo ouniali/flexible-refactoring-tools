@@ -19,11 +19,12 @@ public class RefactoringMarker {
 
 	public static String Refactoring_Problem_First_Argument = "refactoring_problem";
 	
-	public static void addAutomaticRefactoringResolution(ICompilationUnit unit,
+	public static void addAutomaticRefactoringProposal(ICompilationUnit unit,
 			int lineNo, int type) throws Exception {
-		if(!isMarkerExisting(unit, lineNo))
-			createRefactoringMarker(unit, lineNo);
-		shootRefactoringProblem(unit, lineNo, IProblem.ExternalProblemFixable);
+		
+	//	if(!isMarkerExisting(unit, lineNo))
+	//		createRefactoringMarker(unit, lineNo);	
+		shootRefactoringProblem(unit, lineNo, type);
 	}
 
 	public static long createRefactoringMarker(ICompilationUnit unit,
@@ -42,6 +43,7 @@ public class RefactoringMarker {
 	@SuppressWarnings("restriction")
 	private static void shootRefactoringProblem(
 			ICompilationUnit unit, int lineNo, int type) throws Exception {
+
 		ProblemFactory proFac = ProblemFactory.getProblemFactory(Locale
 				.getDefault());
 		char[] fileName = unit.getPath().toOSString().toCharArray();
@@ -50,7 +52,7 @@ public class RefactoringMarker {
 		problemArguments[0] = Refactoring_Problem_First_Argument;
 		problemArguments[1] = Integer.toString(type);
 		String[] messageArguments = null;
-		int severity = ProblemSeverities.Optional;
+		int severity = ProblemSeverities.Fatal;
 		int startPosition = 0;
 		int endPosition = 1;
 		int lineNumber = lineNo;

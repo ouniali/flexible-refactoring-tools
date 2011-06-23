@@ -8,30 +8,34 @@ import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
 import org.eclipse.jdt.ui.text.java.IProblemLocation;
 import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
-public class QuickFixProcessor implements IQuickFixProcessor {
+public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 
 	int refactoringType;
 	RefactoringProposal proposal;
 	
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
-		
-		if(problemId == IProblem.ExternalProblemFixable)
-			return false;
-		else
-			return true;
+		return problemId == IProblem.ExternalProblemFixable;
 	}
 
 	@Override
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
-		String[] parameters = locations[0].getProblemArguments();
-		if(parameters[0].equals(RefactoringMarker.Refactoring_Problem_First_Argument))
+	
+		for (IProblemLocation location: locations)
 		{
-			refactoringType = Integer.parseInt(parameters[1]);
-			proposal = RefactoringProposal.getRefactoringProposalByType(refactoringType);
-			return new IJavaCompletionProposal[]{proposal};
+			if(location.getProblemId() == IProblem.ExternalProblemFixable)
+			{
+				String[] parameters = location.getProblemArguments();
+				if(parameters[0].equals(RefactoringMarker.Refactoring_Problem_First_Argument))
+				{
+					refactoringType = Integer.parseInt(parameters[1]);
+					proposal = RefactoringProposal.getRefactoringProposalByType(refactoringType);
+					return new IJavaCompletionProposal[]{proposal};
+				}
+			}
 		}
+		
 		return null;
 	}
 
