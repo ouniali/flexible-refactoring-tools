@@ -37,7 +37,16 @@ public class NameChange {
 		else
 			return false;
 	}
-	
+	public static boolean isNameInDeclaration(Name name)
+	{
+		if(name instanceof SimpleName)
+		{
+			SimpleName sName = (SimpleName) name;
+			return sName.isDeclaration();
+		}
+		else 
+			return false;
+	}
 	
 	public static boolean LookingBackForDetectingRenameChange(ArrayList<CompilationUnitHistoryRecord> Records) throws Exception
 	{
@@ -124,7 +133,7 @@ public class NameChange {
 	public static int DecideNameChangeType(ASTNode rootOne, ASTNode rootTwo)
 	{
 		int nameChangeType;
-		if(isReferencedVraibleNameChange(rootOne, rootTwo))
+		if(NameChange.isReferencedVraibleNameChange(rootOne, rootTwo))
 			nameChangeType =VARIABLE_NAME_CHANGE_REFERENCE;
 		else if(NameChange.isDeclaredVariableNameChange(rootOne, rootTwo))
 			nameChangeType = VARIABLE_NAME_CHANGE_DECLARATION;
@@ -148,18 +157,18 @@ public class NameChange {
 	}
 	public static boolean isUncertainNameChange(ASTNode rootOne, ASTNode rootTwo)
 	{
-		return rootOne instanceof SimpleName && rootTwo instanceof SimpleName;
+		return rootOne instanceof Name && rootTwo instanceof Name;
 	}
 	
 	public static boolean isReferencedTypeNameChange(ASTNode rootOne, ASTNode rootTwo)
 	{
-		if(rootOne instanceof SimpleName && rootTwo instanceof SimpleName)
+		if(rootOne instanceof Name && rootTwo instanceof Name)
 		{
-			SimpleName name1 = (SimpleName)rootOne;
+			Name name1 = (Name)rootOne;
 			IBinding bind1 = name1.resolveBinding();
 			if(bind1 == null)
 				return false;
-			if(bind1.getKind() == IBinding.TYPE && !name1.isDeclaration())
+			if(bind1.getKind() == IBinding.TYPE && isNameInDeclaration(name1))
 				return true;
 		}
 		return false;

@@ -88,5 +88,12 @@
             name="finish automatic refactoring">
       </quickFixProcessor>
    </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="userinterface.RefactoringResolutionGenerator"
+            markerType="FlexibleRefactoring.refactoringproblem">
+      </markerResolutionGenerator>
+   </extension>
 
 </plugin>

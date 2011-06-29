@@ -11,7 +11,7 @@ public class RefactoringProposalRename extends RefactoringProposal{
 	
 	public String getDisplayString() {
 		// TODO Auto-generated method stub
-		return "Finish rename refactoring";
+		return "Finish rename refactoring: 'event' to 'intEvent'";
 	}
 	public Image getImage() {
 		// TODO Auto-generated method stub

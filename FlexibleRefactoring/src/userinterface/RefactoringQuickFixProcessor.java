@@ -15,14 +15,19 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 	
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
+		
 		return problemId == IProblem.ExternalProblemFixable;
 	}
 
 	@Override
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
-	
-		for (IProblemLocation location: locations)
+		
+		if (locations == null || locations.length == 0) {
+           return null;
+		}
+		return  new IJavaCompletionProposal[]{new RefactoringProposalRename()};
+	/*	for (IProblemLocation location: locations)
 		{
 			if(location.getProblemId() == IProblem.ExternalProblemFixable)
 			{
@@ -36,7 +41,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 			}
 		}
 		
-		return null;
+		return null;*/
 	}
 
 }
