@@ -155,11 +155,8 @@ public class CompilationUnitHistoryRecord {
 		ArrayList<ICompilationUnit> allOtherUnits = ASTreeManipulationMethods
 				.getSiblingsOfACompilationUnitInItsProject(Unit, Project);
 
-		for (ICompilationUnit unit : allOtherUnits) {
-			CompilationUnit cunit = ASTreeManipulationMethods
-					.parseICompilationUnit(unit);
-			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(
-					cunit);
+		for (ICompilationUnit unit : allOtherUnits) {	
+			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(unit);
 			allCount += names.getSimpleNamesOfBindingInCompilatioUnit(binding)
 					.size();
 		}
@@ -172,10 +169,7 @@ public class CompilationUnitHistoryRecord {
 		ArrayList<ICompilationUnit> allUnits = ASTreeManipulationMethods
 				.getICompilationUnitsOfAProject(Project);
 		for (ICompilationUnit unit : allUnits) {
-			CompilationUnit cunit = ASTreeManipulationMethods
-					.parseICompilationUnit(unit);
-			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(
-					cunit);
+			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(unit);
 			allCount += names.getSimpleNamesOfBindingInCompilatioUnit(binding)
 					.size();
 		}

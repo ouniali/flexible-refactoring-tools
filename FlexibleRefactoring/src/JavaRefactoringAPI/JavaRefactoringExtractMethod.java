@@ -98,4 +98,11 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			return "extractedMethod" + extractedMethodCount;
 	}
 
+	@Override
+	protected void performCodeRecovery() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

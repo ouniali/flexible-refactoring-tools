@@ -18,7 +18,7 @@ public class SimpleNamesInJavaProject {
 		UnitsNames = new ArrayList<SimpleNamesInCompilationUnit>();
 		ArrayList<ICompilationUnit> Units = ASTreeManipulationMethods.getICompilationUnitsOfAProject(project);	
 		for(ICompilationUnit unit : Units)
-			UnitsNames.add(new SimpleNamesInCompilationUnit(ASTreeManipulationMethods.parseICompilationUnit(unit)));
+			UnitsNames.add(new SimpleNamesInCompilationUnit(unit));
 	}
 	public ArrayList<SimpleName> getSimpleNamesOfBindingInJavaProject(String binding)
 	{

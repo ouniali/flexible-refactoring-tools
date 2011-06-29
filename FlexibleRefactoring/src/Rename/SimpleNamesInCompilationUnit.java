@@ -2,8 +2,10 @@ package Rename;
 import java.util.*;
 import java.util.Map.Entry;
 
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
 
+import ASTree.ASTreeManipulationMethods;
 import ASTree.NameBindingInformationVisitor;
 
 public class SimpleNamesInCompilationUnit {
@@ -13,11 +15,11 @@ public class SimpleNamesInCompilationUnit {
 	Hashtable<String, ArrayList<SimpleName>> SimpleNameTable;
 	
 	// the compilation unit should be generated directly from ICompilationUnit
-	public SimpleNamesInCompilationUnit(CompilationUnit t)
+	public SimpleNamesInCompilationUnit(ICompilationUnit unit)
 	{
-		tree = t;
+		tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		visitor = new NameBindingInformationVisitor();
-		t.accept(visitor);
+		tree.accept(visitor);
 		SimpleNameTable = visitor.getEntireSimpleNameBindingTable();
 	}
 	
