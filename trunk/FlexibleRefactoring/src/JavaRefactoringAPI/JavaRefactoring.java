@@ -11,4 +11,5 @@ public abstract class JavaRefactoring implements Runnable {
 	public abstract void performRefactoring();
 	public abstract boolean checkPreconditions();
 	public abstract boolean checkPostconditions();
+	protected abstract void performCodeRecovery();
 }

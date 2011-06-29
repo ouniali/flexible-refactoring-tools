@@ -135,10 +135,7 @@ public class NameChange {
 			ArrayList<SimpleName> names = new ArrayList<SimpleName>();
 
 			for (ICompilationUnit sib : siblings) {
-				CompilationUnit sibunit = ASTreeManipulationMethods
-						.parseICompilationUnit(sib);
-				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(
-						sibunit)
+				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(sib)
 						.getSimpleNamesOfBindingInCompilatioUnit(binding);
 				if (namesInSib != null)
 					names.addAll(namesInSib);

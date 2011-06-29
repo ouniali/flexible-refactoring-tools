@@ -27,16 +27,19 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	IJavaElement element;
 	ICompilationUnit unit;
 	RenameRefactoring refactoring;
+	boolean fakeBinding;
 	
-	public JavaRefactoringRename(String bin, String n)
+	public JavaRefactoringRename(String bin, String n, boolean fakeBin)
 	{
 		bindingKey = bin;
 		newName = n;
+		fakeBinding = fakeBin;
 	}
 	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		performCodeRecovery();
 		performRefactoring();
 	}
 
@@ -45,8 +48,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	public void setEnvironment(ICompilationUnit u) {
 		// TODO Auto-generated method stub
 		unit = u; 
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(u);
-		ArrayList<SimpleName> names = new SimpleNamesInCompilationUnit(tree).getSimpleNamesOfBindingInCompilatioUnit(bindingKey);
+		ArrayList<SimpleName> names = new SimpleNamesInCompilationUnit(unit).getSimpleNamesOfBindingInCompilatioUnit(bindingKey);
 		if(!names.isEmpty())
 			element = names.get(0).resolveBinding().getJavaElement();
 		try{	
@@ -82,6 +84,16 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	@Override
 	public boolean checkPostconditions() {
 		return true;
+	}
+	
+	protected void performCodeRecovery()
+	{
+		if(fakeBinding)
+		{
+			NullProgressMonitor monitor = new NullProgressMonitor();
+			
+			
+		}
 	}
 
 	

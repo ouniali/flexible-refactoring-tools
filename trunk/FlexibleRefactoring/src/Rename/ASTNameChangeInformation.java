@@ -102,9 +102,13 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public JavaRefactoringRename getRenameRefactoring()
 	{
 		String tempKey = bindingKeyOne;
+		boolean fakeBinding = false;
 		if(tempKey == "")
+		{
 			tempKey = NameChange.searchBindingKeyInHistory(originalName);
-		JavaRefactoringRename refactoring = new JavaRefactoringRename(tempKey, modifiedName);
+			fakeBinding = true;
+		}
+		JavaRefactoringRename refactoring = new JavaRefactoringRename(tempKey, modifiedName, fakeBinding);
 		return refactoring;
 	}
 	
