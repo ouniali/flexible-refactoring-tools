@@ -18,7 +18,7 @@ import ASTree.ASTreeManipulationMethods;
 
 
 
-public class JavaRenameRefactoring extends JavaRefactoring{
+public class JavaRefactoringRename extends JavaRefactoring{
 
 	static final int flag = RenameSupport.UPDATE_REFERENCES|RenameSupport.UPDATE_GETTER_METHOD|RenameSupport.UPDATE_SETTER_METHOD;
 	
@@ -28,7 +28,7 @@ public class JavaRenameRefactoring extends JavaRefactoring{
 	ICompilationUnit unit;
 	RenameRefactoring refactoring;
 	
-	public JavaRenameRefactoring(String bin, String n)
+	public JavaRefactoringRename(String bin, String n)
 	{
 		bindingKey = bin;
 		newName = n;
