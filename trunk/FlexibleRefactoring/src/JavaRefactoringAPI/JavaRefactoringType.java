@@ -14,11 +14,11 @@ public class JavaRefactoringType {
 		switch(type)
 		{
 		case RENAME:
-			return "rename";
+			return "RENAME";
 		case EXTRACT_METHOD:
-			return "extract method";
+			return "EXTRACT_METHOD";
 		default:
-			return "uncertain refactoring type";
+			return "UNCERTAIN";
 		}
 	}
 	

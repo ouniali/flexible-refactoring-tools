@@ -25,12 +25,15 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	int oldNameNodeIndex;
 	int newNameNodeIndex;
 	
+	boolean isDeclarationChange;
+	int declarationNodeIndex;
+	
 	
 	public ASTNameChangeInformation(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
-		super(oldRecord,r1,newRecord,r2);
-		// TODO Auto-generated constructor stub				
 		
-		nameChangeType = NameChange.DecideNameChangeType(r1, r2);//if the change is modifying a name, get the type of such change.
+		super(oldRecord,r1,newRecord,r2);
+		
+		nameChangeType = NameChange.DecideNameChangeType(r1, r2);
 		Name oldName = (Name) r1;
 		Name newName = (Name) r2;
 		
@@ -45,6 +48,13 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		}
 		oldNameNodeIndex = this.getNodeOneIndex();
 		newNameNodeIndex = this.getNodeTwoIndex();
+		
+		if(oldName instanceof SimpleName)
+		{
+			SimpleName sOldName = (SimpleName) oldName; 
+			isDeclarationChange = sOldName.isDeclaration();
+		}
+		else isDeclarationChange = false;
 	}
 	
 	public int getNameChangeType()
@@ -72,19 +82,13 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	{
 		return percentage;
 	}
+	
 	public void setNameChangePercentage(float per)
 	{
 		percentage = per;
-		//NameChangeAutomatically();
 	}
 	
-	public boolean NameChangeAutomatically()
-	{
 
-	
-		
-		return true;
-	}
 	public String getOldRootBindingKey()
 	{
 		return bindingKeyOne;
@@ -94,6 +98,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	{
 		return bindingKeyTwo;
 	}
+	
 	public JavaRenameRefactoring getRenameRefactoring()
 	{
 		JavaRenameRefactoring refactoring = new JavaRenameRefactoring(bindingKeyOne, modifiedName);
@@ -104,9 +109,15 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	{
 		return percentage> PERCENTAGE_THRESHHOLD;
 	}
+	
 	public boolean isRenameComplete()
 	{
 		return percentage == 1.00;
+	}
+	
+	public boolean isRenamingDeclaration()
+	{
+		return isDeclarationChange;
 	}
 	
 	public void addRefactoringMarker(ICompilationUnit unit) throws Exception

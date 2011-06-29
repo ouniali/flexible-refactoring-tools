@@ -12,6 +12,8 @@ import org.eclipse.jdt.internal.core.builder.ProblemFactory;
 import org.eclipse.jdt.internal.compiler.problem.ProblemSeverities;
 import org.eclipse.jdt.ui.text.java.*;
 import org.eclipse.ui.*;
+import org.eclipse.jdt.internal.compiler.CompilationResult;
+
 
 import JavaRefactoringAPI.JavaRefactoringType;
 
@@ -22,13 +24,13 @@ public class RefactoringMarker {
 	public static void addAutomaticRefactoringProposal(ICompilationUnit unit,
 			int lineNo, int type) throws Exception {
 		
-	//	if(!isMarkerExisting(unit, lineNo))
-	//		createRefactoringMarker(unit, lineNo);	
-		shootRefactoringProblem(unit, lineNo, type);
+		if(!isMarkerExisting(unit, lineNo))
+			createRefactoringMarker(unit, lineNo, type);
+		//shootRefactoringProblem(unit, lineNo, type);
 	}
 
 	public static long createRefactoringMarker(ICompilationUnit unit,
-			int lineNo) throws Exception {
+			int lineNo, int type) throws Exception {
 		String message = "Benefactor message";
 		IMarker marker = unit.getResource().createMarker(
 				"FlexibleRefactoring.refactoringproblem");
@@ -36,6 +38,7 @@ public class RefactoringMarker {
 		marker.setAttribute(IMarker.MESSAGE, message);
 		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
 		marker.setAttribute(IMarker.USER_EDITABLE, false);
+		marker.setAttribute("REFACTORING_TYPE", type);
 		
 		return marker.getId();
 	}
@@ -43,7 +46,7 @@ public class RefactoringMarker {
 	@SuppressWarnings("restriction")
 	private static void shootRefactoringProblem(
 			ICompilationUnit unit, int lineNo, int type) throws Exception {
-
+		
 		ProblemFactory proFac = ProblemFactory.getProblemFactory(Locale
 				.getDefault());
 		char[] fileName = unit.getPath().toOSString().toCharArray();
@@ -52,16 +55,17 @@ public class RefactoringMarker {
 		problemArguments[0] = Refactoring_Problem_First_Argument;
 		problemArguments[1] = Integer.toString(type);
 		String[] messageArguments = null;
-		int severity = ProblemSeverities.Optional;
-		int startPosition = 0;
+		int severity = ProblemSeverities.Error;
+		int startPosition = 1;
 		int endPosition = 1;
 		int lineNumber = lineNo;
-		int columnNumber = 0;
+		int columnNumber = 1;
 		
-		proFac.createProblem(fileName,
+		CategorizedProblem problem = proFac.createProblem(fileName,
 						problemID, problemArguments, messageArguments,
 						severity, startPosition, endPosition, lineNumber,
 						columnNumber);
+		
 	}
 	
 
