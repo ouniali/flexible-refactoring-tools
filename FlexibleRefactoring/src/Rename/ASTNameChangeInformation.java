@@ -89,12 +89,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	}
 	
 
-	public String getOldRootBindingKey()
+	public String getOldNameBindingKey()
 	{
 		return bindingKeyOne;
 	}
 	
-	public String getNewRootBindingKey()
+	public String getNewNameBindingKey()
 	{
 		return bindingKeyTwo;
 	}
@@ -119,7 +119,14 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	{
 		return isDeclarationChange;
 	}
-	
+	public String getOldName()
+	{
+		return originalName;
+	}
+	public String getNewName()
+	{
+		return modifiedName;
+	}
 	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
 	{
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
