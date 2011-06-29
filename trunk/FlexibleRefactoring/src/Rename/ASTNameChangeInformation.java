@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import userinterface.RefactoringMarker;
 import ASTree.*;
 import JavaRefactoringAPI.JavaRefactoringType;
-import JavaRefactoringAPI.JavaRenameRefactoring;
+import JavaRefactoringAPI.*;
 
 public class ASTNameChangeInformation extends ASTChangeInformation {
 
@@ -99,9 +99,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return bindingKeyTwo;
 	}
 	
-	public JavaRenameRefactoring getRenameRefactoring()
+	public JavaRefactoringRename getRenameRefactoring()
 	{
-		JavaRenameRefactoring refactoring = new JavaRenameRefactoring(bindingKeyOne, modifiedName);
+		String tempKey = bindingKeyOne;
+		if(tempKey == "")
+			tempKey = NameChange.searchBindingKeyInHistory(originalName);
+		JavaRefactoringRename refactoring = new JavaRefactoringRename(tempKey, modifiedName);
 		return refactoring;
 	}
 	

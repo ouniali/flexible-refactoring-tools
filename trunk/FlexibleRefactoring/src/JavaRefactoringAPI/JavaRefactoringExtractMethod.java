@@ -8,7 +8,7 @@ import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
-public class JavaExtractMethodRefactoring extends JavaRefactoring {
+public class JavaRefactoringExtractMethod extends JavaRefactoring {
 
 	@SuppressWarnings("restriction")
 	ExtractMethodRefactoring refactoring;
@@ -17,7 +17,7 @@ public class JavaExtractMethodRefactoring extends JavaRefactoring {
 	static int extractedMethodCount = -1;
 	long WAIT_TIME = 2000;
 
-	public JavaExtractMethodRefactoring(ASTExtractMethodChangeInformation info) {
+	public JavaRefactoringExtractMethod(ASTExtractMethodChangeInformation info) {
 		information = info;
 		extractedMethodCount++;
 	}

@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import userinterface.RefactoringMarker;
 
 import ASTree.*;
-import JavaRefactoringAPI.JavaExtractMethodRefactoring;
+import JavaRefactoringAPI.*;
 import JavaRefactoringAPI.JavaRefactoringType;
 
 public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
@@ -63,9 +63,9 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	
 	
 	
-	public JavaExtractMethodRefactoring getJavaExtractMethodRefactoring()
+	public JavaRefactoringExtractMethod getJavaExtractMethodRefactoring()
 	{
-		return new JavaExtractMethodRefactoring(this);
+		return new JavaRefactoringExtractMethod(this);
 	}
 	
 
