@@ -30,6 +30,25 @@ public class NameChange {
 	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 	
+	static public String getBindingKeyInHistory(String fullName)
+	{
+		for(int i = detectedNameChanges.size(); i>=0; i--)
+		{
+			ASTNameChangeInformation change = detectedNameChanges.get(i);
+			if(change.isRenamingDeclaration())
+			{
+				String newKey = change.getNewNameBindingKey();
+				String oldName = change.getOldName();
+				if(oldName.equals(fullName))
+					return newKey;
+			}
+				
+		}
+		return "";
+	}
+	
+	
+	
 	public static boolean isRenameChange(ASTNode node1, ASTNode node2)
 	{
 		if(node1 instanceof Name && node2 instanceof Name)
@@ -69,7 +88,7 @@ public class NameChange {
 			{
 				if(!detectedNameChanges.contains(change))				
 				{	
-					String binding = change.getOldRootBindingKey();
+					String binding = change.getOldNameBindingKey();
 					int bindingCount = change.getOldNameBindingCount();
 					nameChangeHistory.addNameChange(binding, bindingCount);
 					float per = nameChangeHistory.getNameChangeFraction(binding);

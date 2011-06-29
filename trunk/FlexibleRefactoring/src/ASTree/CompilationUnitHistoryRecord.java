@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import org.eclipse.jdt.core.BindingKey;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
@@ -126,7 +127,6 @@ public class CompilationUnitHistoryRecord {
 				String[] strs = strLine.split(":");
 				if (strs[1].equals(fullName))
 					key = strs[0];
-
 			}
 			in.close();
 			return key;
@@ -135,6 +135,12 @@ public class CompilationUnitHistoryRecord {
 		}
 		return "";
 	}
+	public BindingKey getDecodedBindingKey(String fullName)
+	{
+		String key = getBindingKey(fullName);
+		return new BindingKey(key);
+	}
+	
 
 	public IJavaProject getIJavaProject() {
 		return Project;
