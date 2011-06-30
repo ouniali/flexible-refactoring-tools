@@ -16,7 +16,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 
-import Rename.SimpleNamesInCompilationUnit;
+import Rename.NamesInCompilationUnit;
+import Rename.*;
 
 public class CompilationUnitHistoryRecord {
 
@@ -156,8 +157,8 @@ public class CompilationUnitHistoryRecord {
 				.getSiblingsOfACompilationUnitInItsProject(Unit, Project);
 
 		for (ICompilationUnit unit : allOtherUnits) {	
-			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(unit);
-			allCount += names.getSimpleNamesOfBindingInCompilatioUnit(binding)
+			NamesInCompilationUnit names = new NamesInCompilationUnit(unit);
+			allCount += names.getNamesOfBindingInCompilatioUnit(binding)
 					.size();
 		}
 		allCount += getBindingCount(binding);
@@ -169,8 +170,8 @@ public class CompilationUnitHistoryRecord {
 		ArrayList<ICompilationUnit> allUnits = ASTreeManipulationMethods
 				.getICompilationUnitsOfAProject(Project);
 		for (ICompilationUnit unit : allUnits) {
-			SimpleNamesInCompilationUnit names = new SimpleNamesInCompilationUnit(unit);
-			allCount += names.getSimpleNamesOfBindingInCompilatioUnit(binding)
+			NamesInCompilationUnit names = new NamesInCompilationUnit(unit);
+			allCount += names.getNamesOfBindingInCompilatioUnit(binding)
 					.size();
 		}
 

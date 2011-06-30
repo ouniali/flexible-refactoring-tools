@@ -182,6 +182,38 @@ public class NameBindingInformationVisitor extends ASTVisitor {
 		EntireTable.putAll(AnnotationsQualified);
 		return EntireTable;
 	}
+	public Hashtable<String, ArrayList<Name>> getEntireNameBindingTable()
+	{
+		Hashtable<String, ArrayList<Name>> EntireTable = new Hashtable<String, ArrayList<Name>>();
+		Hashtable<String, ArrayList<SimpleName>> SimpleTable = getEntireSimpleNameBindingTable();
+		Hashtable<String, ArrayList<QualifiedName>> QualifiedTable = getEntireQualifiedNameBindingTable();
+		
+		for(Entry<String, ArrayList<SimpleName>> entry: SimpleTable.entrySet())
+		{
+			String key = entry.getKey();
+			ArrayList<Name> nameList = new ArrayList<Name>();
+			for(SimpleName sName: entry.getValue())
+				nameList.add((Name)sName);
+			if(EntireTable.containsKey(key))
+				EntireTable.get(key).addAll(nameList);
+			else 
+				EntireTable.put(key, nameList);
+		}
+		
+		for(Entry<String, ArrayList<QualifiedName>> entry: QualifiedTable.entrySet())
+		{
+			String key = entry.getKey();
+			ArrayList<Name> nameList = new ArrayList<Name>();
+			for(QualifiedName qName: entry.getValue())
+				nameList.add((Name)qName);
+			if(EntireTable.containsKey(key))
+				EntireTable.get(key).addAll(nameList);
+			else 
+				EntireTable.put(key, nameList);
+		}
+		
+		return EntireTable;
+	}
 	
 	public String getBindingInformation()
 	{

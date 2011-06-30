@@ -31,7 +31,7 @@ public class NameChange {
 	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 
-	static public String searchBindingKeyInHistory(String fullName) {
+	static public ASTNameChangeInformation searchDeclarationChangeInHistory(String fullName) {
 		int lookBack = Math.min(MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY,
 				detectedNameChanges.size());
 		int start = detectedNameChanges.size() - 1;
@@ -39,14 +39,13 @@ public class NameChange {
 		for (int i = start; i >= end; i--) {
 			ASTNameChangeInformation change = detectedNameChanges.get(i);
 			if (change.isRenamingDeclaration()) {
-				String newKey = change.getNewNameBindingKey();
-				String oldName = change.getOldName();
-				if (oldName.equals(fullName))
-					return newKey;
+				String oldNameFull = change.getOldNameFull();
+				if (oldNameFull.equals(fullName))
+					return change;
 			}
 
 		}
-		return "";
+		return null;
 	}
 
 	public static boolean isRenameChange(ASTNode node1, ASTNode node2) {
@@ -132,11 +131,11 @@ public class NameChange {
 		if (!binding.equals("")) {
 			ArrayList<ICompilationUnit> siblings = ASTreeManipulationMethods
 					.getSiblingsOfACompilationUnitInItsProject(iunit, project);
-			ArrayList<SimpleName> names = new ArrayList<SimpleName>();
+			ArrayList<Name> names = new ArrayList<Name>();
 
 			for (ICompilationUnit sib : siblings) {
-				ArrayList<SimpleName> namesInSib = new SimpleNamesInCompilationUnit(sib)
-						.getSimpleNamesOfBindingInCompilatioUnit(binding);
+				ArrayList<Name> namesInSib = new NamesInCompilationUnit(sib)
+						.getNamesOfBindingInCompilatioUnit(binding);
 				if (namesInSib != null)
 					names.addAll(namesInSib);
 			}
