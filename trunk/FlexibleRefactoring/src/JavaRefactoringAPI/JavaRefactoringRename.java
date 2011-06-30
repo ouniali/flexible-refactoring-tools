@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.ui.refactoring.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.core.refactoring.participants.*;
+import org.eclipse.jdt.internal.core.JavaElement;
 import org.eclipse.jdt.internal.corext.refactoring.rename.*;
 import org.eclipse.jdt.internal.corext.util.*;
 
-import Rename.SimpleNamesInCompilationUnit;
+import Rename.*;
 
 import ASTree.ASTreeManipulationMethods;
 
@@ -22,39 +24,32 @@ public class JavaRefactoringRename extends JavaRefactoring{
 
 	static final int flag = RenameSupport.UPDATE_REFERENCES|RenameSupport.UPDATE_GETTER_METHOD|RenameSupport.UPDATE_SETTER_METHOD;
 	
-	final String bindingKey;
+	
+	final String bindingKeyBeforeDeclarationChange;
+	final String bindingKeyAfterDeclarationChange;
+	final String oldName;
 	final String newName;
+	
 	IJavaElement element;
 	ICompilationUnit unit;
-	RenameRefactoring refactoring;
-	boolean fakeBinding;
+	IJavaProject project;
 	
-	public JavaRefactoringRename(String bin, String n, boolean fakeBin)
+	ArrayList<Name> namesInProject;
+	boolean renamedBindingKey;
+	
+	public JavaRefactoringRename(String keyBefore,String keyAfter, String oN, String nN)
 	{
-		bindingKey = bin;
-		newName = n;
-		fakeBinding = fakeBin;
+		bindingKeyBeforeDeclarationChange = keyBefore;
+		bindingKeyAfterDeclarationChange = keyAfter;
+		oldName = oN;
+		newName = nN;
 	}
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		performCodeRecovery();
-		performRefactoring();
-	}
-
-	@Override
-	@SuppressWarnings("restriction")
-	public void setEnvironment(ICompilationUnit u) {
-		// TODO Auto-generated method stub
-		unit = u; 
-		ArrayList<SimpleName> names = new SimpleNamesInCompilationUnit(unit).getSimpleNamesOfBindingInCompilatioUnit(bindingKey);
-		if(!names.isEmpty())
-			element = names.get(0).resolveBinding().getJavaElement();
-		try{	
-			JavaRenameProcessor processor  = getRenameProcessor(element);
-			processor.setNewElementName(newName);
-			refactoring = new RenameRefactoring(processor);
+		try{
+			performCodeRecovery();
+			performRefactoring();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -62,16 +57,30 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	}
 
 	@Override
-	public void performRefactoring() {
+	@SuppressWarnings("restriction")
+	public void setEnvironment(ICompilationUnit u) {
+		unit = u; 
+		project = u.getJavaProject();
+	}
+
+	@SuppressWarnings("restriction")
+	@Override
+	public void performRefactoring() throws Exception {
 		NullProgressMonitor monitor = new NullProgressMonitor();
-		try{
+		RenameRefactoring refactoring;
+		ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKeyBeforeDeclarationChange);	
+		
+		if(!names.isEmpty())
+		{
+			unit.becomeWorkingCopy(monitor);
+			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+			JavaRenameProcessor processor = getRenameProcessor(element);
+			processor.setNewElementName(newName);
+			refactoring = new RenameRefactoring(processor);
 			refactoring.checkInitialConditions(monitor);
 			refactoring.checkFinalConditions(monitor);
 			Change change = refactoring.createChange(monitor);
 			change.perform(monitor);
-		}catch (Exception e)
-		{
-			e.printStackTrace();
 		}
 	}
 
@@ -86,12 +95,27 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		return true;
 	}
 	
-	protected void performCodeRecovery()
+	
+	@SuppressWarnings("restriction")
+	protected void performCodeRecovery() throws Exception
 	{
-		if(fakeBinding)
-		{
-			NullProgressMonitor monitor = new NullProgressMonitor();
-			
+		NullProgressMonitor monitor = new NullProgressMonitor();	
+		if(!bindingKeyBeforeDeclarationChange.equals(bindingKeyAfterDeclarationChange))
+		{		
+			ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKeyAfterDeclarationChange);
+			if(!names.isEmpty())
+			{
+				unit.becomeWorkingCopy(monitor);
+				IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+				JavaRenameProcessor processor = getRenameProcessor(element);
+				processor.setNewElementName(oldName);
+				RenameRefactoring recoverRefactoring = new RenameRefactoring(processor);
+				recoverRefactoring.checkInitialConditions(monitor);
+				recoverRefactoring.checkFinalConditions(monitor);
+				recoverRefactoring.createChange(monitor).perform(monitor);
+				unit.commitWorkingCopy(true, monitor);
+				unit.makeConsistent(monitor);
+			}
 			
 		}
 	}

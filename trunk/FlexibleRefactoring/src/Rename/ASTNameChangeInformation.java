@@ -12,7 +12,9 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	int nameChangeType;
 	
 	String originalName;
+	String originalNameFull;
 	String modifiedName;
+	String modifiedNameFull;
 	
 	int originalNameBindingCount;
 	
@@ -33,19 +35,19 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		
 		super(oldRecord,r1,newRecord,r2);
 		
-		nameChangeType = NameChange.DecideNameChangeType(r1, r2);
 		Name oldName = (Name) r1;
 		Name newName = (Name) r2;
 		
 		bindingKeyOne = oldRecord.getBindingKey(oldName.getFullyQualifiedName());
 		bindingKeyTwo = newRecord.getBindingKey(newName.getFullyQualifiedName());
 		
-		if(nameChangeType != NameChange.NOT_NAME_CHANGE)
-		{
-			originalName = oldName.getFullyQualifiedName();
-			modifiedName = newName.getFullyQualifiedName();
-			originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
-		}
+		originalName = oldName.toString();
+		originalNameFull = oldName.getFullyQualifiedName();
+		modifiedName = newName.toString();
+		modifiedNameFull = newName.getFullyQualifiedName();
+		
+		originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
+	
 		oldNameNodeIndex = this.getNodeOneIndex();
 		newNameNodeIndex = this.getNodeTwoIndex();
 		
@@ -101,14 +103,22 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	
 	public JavaRefactoringRename getRenameRefactoring()
 	{
-		String tempKey = bindingKeyOne;
-		boolean fakeBinding = false;
-		if(tempKey == "")
+		if(bindingKeyOne == "")
 		{
-			tempKey = NameChange.searchBindingKeyInHistory(originalName);
-			fakeBinding = true;
+			ASTNameChangeInformation declarationChange = NameChange.searchDeclarationChangeInHistory(originalNameFull);
+			if(declarationChange != null)
+			{
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(declarationChange.getOldNameBindingKey(),
+						declarationChange.getNewNameBindingKey(),
+						originalName,
+						modifiedName
+						);
+				return refactoring;
+			}
+			else
+				return null;
 		}
-		JavaRefactoringRename refactoring = new JavaRefactoringRename(tempKey, modifiedName, fakeBinding);
+		JavaRefactoringRename refactoring = new JavaRefactoringRename(bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
 		return refactoring;
 	}
 	
@@ -126,14 +136,27 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	{
 		return isDeclarationChange;
 	}
+	
 	public String getOldName()
 	{
 		return originalName;
 	}
+	
+	public String getOldNameFull()
+	{
+		return originalNameFull;
+	}
+	
 	public String getNewName()
 	{
 		return modifiedName;
 	}
+	
+	public String getNewNameFull()
+	{
+		return modifiedNameFull;
+	}
+	
 	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
 	{
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
