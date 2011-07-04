@@ -46,19 +46,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		project = u.getJavaProject(); 
 	}
 	
-	@Override
-	public void run() {
-		try{
-			performCodeRecovery();
-			performRefactoring();
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	
-
 	@SuppressWarnings("restriction")
 	@Override
 	public void performRefactoring() throws Exception {
@@ -80,18 +67,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			unit.discardWorkingCopy();
 		}
 	}
-
-	@Override
-	public boolean checkPreconditions() {
-
-		return true;
-	}
-
-	@Override
-	public boolean checkPostconditions() {
-		return true;
-	}
-	
 	
 	@SuppressWarnings("restriction")
 	protected void performCodeRecovery() throws Exception

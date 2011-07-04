@@ -15,15 +15,8 @@ import org.eclipse.jdt.ui.text.java.*;
 import org.eclipse.ui.*;
 import org.eclipse.jdt.internal.compiler.CompilationResult;
 
-import compilation.*;
-
-
-import JavaRefactoringAPI.JavaRefactoringType;
-
 public class RefactoringMarker {
 
-	public static String Refactoring_Problem_First_Argument = "refactoring_problem";
-	
 	public static void addRefactoringMarkerIfNo(ICompilationUnit unit,
 			int lineNo) throws Exception {
 		if(!isMarkerExisting(unit, lineNo))
@@ -44,15 +37,23 @@ public class RefactoringMarker {
 
 
 	public static void deleteRefactoringMarker(ICompilationUnit unit,
-			long markerId) {
+			int line) {
+		IMarker[] markers;
 		try {
-			IMarker marker = unit.getResource().findMarker(markerId);
-			if (marker != null)
-				marker.delete();
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			markers = unit.getResource().findMarkers(IMarker.MARKER, true, IResource.DEPTH_INFINITE);
+			int index;
+			for( index = 0; index < markers.length; index++)
+			{
+				IMarker marker = markers[index];
+				int lineNo = marker.getAttribute(IMarker.LINE_NUMBER, -1);
+				if(line == lineNo)
+					break;
+			}
+			if(index<markers.length)
+				markers[index].delete();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}	
 	}
 	
 	public static boolean isMarkerExisting(ICompilationUnit unit, int line) throws Exception
