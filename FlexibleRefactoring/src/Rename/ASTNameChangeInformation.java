@@ -106,10 +106,13 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		if(bindingKeyOne == "")
 		{
 			ASTNameChangeInformation declarationChange = NameChange.searchDeclarationChangeInHistory(originalNameFull);
-			if(declarationChange != null)
+			String keyBefore = declarationChange.getOldNameBindingKey();
+			String keyAfter = declarationChange.getNewNameBindingKey();
+			if(declarationChange != null && !keyBefore.equals("") && !keyAfter.equals(""))
 			{
-				JavaRefactoringRename refactoring = new JavaRefactoringRename(declarationChange.getOldNameBindingKey(),
-						declarationChange.getNewNameBindingKey(),
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(
+						keyBefore,
+						keyAfter,
 						originalName,
 						modifiedName
 						);
@@ -118,8 +121,11 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			else
 				return null;
 		}
-		JavaRefactoringRename refactoring = new JavaRefactoringRename(bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
-		return refactoring;
+		else
+		{
+			JavaRefactoringRename refactoring = new JavaRefactoringRename(bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
+			return refactoring;
+		}	
 	}
 	
 	public boolean isPercentageAboveThreshhold()
@@ -157,12 +163,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return modifiedNameFull;
 	}
 	
-	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
+	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		ASTNode oldNameNode = ASTreeManipulationMethods.getASTNodeByIndex(tree, oldNameNodeIndex);
 		int lineNo = tree.getLineNumber(oldNameNode.getStartPosition());
-		RefactoringMarker.addAutomaticRefactoringProposal(unit, lineNo, JavaRefactoringType.RENAME);
+		return lineNo;
 	}
 
 }

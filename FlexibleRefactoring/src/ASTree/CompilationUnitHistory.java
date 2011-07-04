@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
+import compilation.RefactoringChances;
+
 import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
 import JavaRefactoringAPI.JavaRefactoring;
@@ -77,18 +79,18 @@ public class CompilationUnitHistory {
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
-			infor.addRefactoringMarker(unit);
+			/*infor.addRefactoringMarker(unit);
 			if(infor.isPercentageAboveThreshhold() && !infor.isRenameComplete())
 			{
 				JavaRefactoring.UnhandledRefactorings.add(infor.getRenameRefactoring());		
-			}
-			System.out.println("Rename detected. " + infor.getNameChangePercentage());			
+			}*/
+			RefactoringChances.addNewRefactoringChance(unit, infor.getRefactoringMarkerLine(unit), (JavaRefactoring) infor.getRenameRefactoring());
+			System.out.println("Rename detected. " + infor.getNameChangePercentage());	
 		}
 		else if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
-			JavaRefactoring.UnhandledRefactorings.add(infor.getJavaExtractMethodRefactoring());
-			infor.addRefactoringMarker(unit);
+			RefactoringChances.addNewRefactoringChance(unit, infor.getRefactoringMarkerLine(unit), infor.getJavaExtractMethodRefactoring());
 			System.out.println("Extract method detected.");
 		}
 		else 

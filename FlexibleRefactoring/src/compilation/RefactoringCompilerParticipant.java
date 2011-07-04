@@ -1,15 +1,14 @@
-package Reconcile;
+package compilation;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.compiler.BuildContext;
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.core.compiler.CompilationParticipant;
+import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-
-import userinterface.RefactoringMarker;
-import ASTree.CompilationUnitManipulationMethod;
 import ASTree.ProjectHistoryCollector;
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -22,31 +21,6 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	public RefactoringCompilerParticipant()
 	{
 		super();
-		System.out.println("participant construction");	
-		
-	/*	IWorkbench workbench= PlatformUI.getWorkbench();
-		IWorkbenchWindow window = workbench.getWorkbenchWindows()[0];
-		IWorkbenchPage page = window.getPages()[0];
-		IEditorPart part = page.getActiveEditor();
-		IEditorSite site = part.getEditorSite();		
-		IActionBars actionBars = site.getActionBars();*/
-	}
-	public void buildFinished(IJavaProject project) 
-	{
-		System.out.println("buildFinished");
-	}
-	
-	public void buildStarting(BuildContext[] files, boolean isBatch) 
-	{
-		System.out.println("buildStarting");
-
-		
-		
-	}
-	
-	public void cleanStarting(IJavaProject project) 
-	{
-		System.out.println("cleanStarting");
 	}
 	
 	public boolean isActive(IJavaProject project) 
@@ -54,28 +28,8 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		return project.isOpen();
 	}
 	
-	public boolean isAnnotationProcessor()
-	{
-		return false;
-	}
-	
-	public void processAnnotations(BuildContext[] files) 
-	{
-		
-	}
-	
 	public void reconcile(ReconcileContext context) 
 	{
-/*		CompilationUnit tree;
-		try {
-			tree = context.getAST3();
-			ICompilationUnit unit = (ICompilationUnit)tree.getJavaElement();
-			RefactoringMarker.createRefactoringMarker(unit, 15, 0 );
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-*/	
 		try {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();

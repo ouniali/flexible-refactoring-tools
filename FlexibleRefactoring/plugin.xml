@@ -53,8 +53,12 @@
    <extension
          point="org.eclipse.jdt.core.compilationParticipant">
       <compilationParticipant
-            class="Reconcile.RefactoringCompilerParticipant"
-            id="RefactoringCompilationParticipation">
+            class="compilation.RefactoringCompilerParticipant"
+            id="compilation.RefactoringCompilerParticipant">
+      </compilationParticipant>
+      <compilationParticipant
+            class="compilation.RefactoringCompilerParticipantAddProblem"
+            id="compilation.CompilationParticipantAddProblem">
       </compilationParticipant>
    </extension>
    <extension
@@ -81,19 +85,11 @@
       </attribute>
    </extension>
    <extension
-         point="org.eclipse.jdt.ui.quickFixProcessors">
-      <quickFixProcessor
-            class="userinterface.RefactoringQuickFixProcessor"
-            id="FlexibleRefactoring.quickFixProcessor1"
-            name="finish automatic refactoring">
-      </quickFixProcessor>
-   </extension>
-   <extension
-         point="org.eclipse.ui.ide.markerResolution">
-      <markerResolutionGenerator
-            class="userinterface.RefactoringResolutionGenerator"
-            markerType="FlexibleRefactoring.refactoringproblem">
-      </markerResolutionGenerator>
+         point="org.eclipse.jdt.ui.quickAssistProcessors">
+      <quickAssistProcessor
+            class="userinterface.RefactoringQuickAssistProcessor"
+            id="userinterface.RefactoringQuickAssistProcessor">
+      </quickAssistProcessor>
    </extension>
 
 </plugin>
