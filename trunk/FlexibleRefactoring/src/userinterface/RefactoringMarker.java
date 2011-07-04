@@ -1,5 +1,6 @@
 package userinterface;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.eclipse.core.resources.IMarker;
@@ -13,6 +14,8 @@ import org.eclipse.jdt.internal.compiler.problem.ProblemSeverities;
 import org.eclipse.jdt.ui.text.java.*;
 import org.eclipse.ui.*;
 import org.eclipse.jdt.internal.compiler.CompilationResult;
+
+import compilation.*;
 
 
 import JavaRefactoringAPI.JavaRefactoringType;
@@ -66,6 +69,7 @@ public class RefactoringMarker {
 						severity, startPosition, endPosition, lineNumber,
 						columnNumber);
 		
+		//RefactoringProblems.addRefactoringProblem(problem);
 	}
 	
 

@@ -7,8 +7,14 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
+import JavaRefactoringAPI.JavaRefactoring;
+
 public class RefactoringProposalExtractMethod extends RefactoringProposal{
 
+	public RefactoringProposalExtractMethod(JavaRefactoring ref)
+	{
+		super(ref);
+	}
 	@Override
 	public void apply(IDocument document) {
 		// TODO Auto-generated method stub

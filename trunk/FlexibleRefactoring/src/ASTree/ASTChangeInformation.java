@@ -126,9 +126,9 @@ public class ASTChangeInformation {
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
 		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
-	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
+	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
-		
+		return 0;
 	}
 
 }

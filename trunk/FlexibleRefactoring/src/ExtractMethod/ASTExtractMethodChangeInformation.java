@@ -11,7 +11,6 @@ import userinterface.RefactoringMarker;
 
 import ASTree.*;
 import JavaRefactoringAPI.*;
-import JavaRefactoringAPI.JavaRefactoringType;
 
 public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 
@@ -95,12 +94,12 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		return null;
 	}
 	
-	public void addRefactoringMarker(ICompilationUnit unit) throws Exception
+	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, insertPlaceNodeIndex);
 		int lineNo = tree.getLineNumber(node.getStartPosition());
-		RefactoringMarker.addAutomaticRefactoringProposal(unit, lineNo + 1, JavaRefactoringType.EXTRACT_METHOD);
+		return lineNo + 1;
 	}
 
 }

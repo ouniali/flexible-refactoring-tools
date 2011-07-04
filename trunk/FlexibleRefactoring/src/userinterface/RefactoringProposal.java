@@ -12,11 +12,18 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
+import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
 
 public abstract class RefactoringProposal implements IJavaCompletionProposal{
 
+	JavaRefactoring refactoring;
+	public RefactoringProposal(JavaRefactoring ref)
+	{
+		super();
+		refactoring = ref;
+	}
 	@Override
 	public abstract void apply(IDocument document);
 	@Override
@@ -32,16 +39,5 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	@Override
 	public int getRelevance(){return Integer.MAX_VALUE;};
 	
-	public static RefactoringProposal getRefactoringProposalByType(int type)
-	{
-		switch(type)
-		{
-		case JavaRefactoringType.RENAME:
-			return new RefactoringProposalRename();
-		case JavaRefactoringType.EXTRACT_METHOD:
-			return new RefactoringProposalExtractMethod();
-		default:
-			return null;
-		}
-	}
+	
 }
