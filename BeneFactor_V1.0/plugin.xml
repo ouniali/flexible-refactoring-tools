@@ -82,11 +82,11 @@
       </super>
    </extension>
    <extension
-         point="org.eclipse.jdt.ui.quickAssistProcessors">
-      <quickAssistProcessor
-            class="userinterface.RefactoringQuickAssistProcessor"
-            id="userinterface.RefactoringQuickAssistProcessor">
-      </quickAssistProcessor>
+         point="org.eclipse.jdt.ui.quickFixProcessors">
+      <quickFixProcessor
+            class="userinterface.RefactoringQuickFixProcessor"
+            id="FlexibleRefactoring.quickFixProcessor1">
+      </quickFixProcessor>
    </extension>
 
 </plugin>

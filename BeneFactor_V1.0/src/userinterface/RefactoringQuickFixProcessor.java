@@ -8,28 +8,27 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.ui.text.java.IInvocationContext;
 import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
 import org.eclipse.jdt.ui.text.java.IProblemLocation;
-import org.eclipse.jdt.ui.text.java.IQuickAssistProcessor;
-
-import compilation.RefactoringChances;
+import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
 import ASTree.ASTreeManipulationMethods;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringExtractMethod;
 import JavaRefactoringAPI.JavaRefactoringRename;
 
-public class RefactoringQuickAssistProcessor implements IQuickAssistProcessor {
+import compilation.RefactoringChances;
 
-	
+public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
+
 	@Override
-	public boolean hasAssists(IInvocationContext context) throws CoreException {
-		
-			return true;
+	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 	@Override
-	public IJavaCompletionProposal[] getAssists(IInvocationContext context,
+	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
-		
+		// TODO Auto-generated method stub
 		ICompilationUnit unit = context.getCompilationUnit();
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		int selection = context.getSelectionOffset();
@@ -51,6 +50,5 @@ public class RefactoringQuickAssistProcessor implements IQuickAssistProcessor {
 		else
 			return null;
 	}
-	
 
 }
