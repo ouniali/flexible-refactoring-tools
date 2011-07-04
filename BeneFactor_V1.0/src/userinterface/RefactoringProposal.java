@@ -25,7 +25,7 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 		refactoring = ref;
 	}
 	@Override
-	public void apply(IDocument document)
+	public final void apply(IDocument document)
 	{
 		new Thread(refactoring).start();
 	}
