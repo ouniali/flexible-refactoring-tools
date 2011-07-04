@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Sample Action Set"
+            visible="true"
+            id="FlexibleRefactoring.actionSet">
+         <menu
+               label="Sample &amp;Menu"
+               id="sampleMenu">
+            <separator
+                  name="sampleGroup">
+            </separator>
+         </menu>
+         <action
+               class="flexiblerefactoring.actions.SampleAction"
+               icon="icons/sample.gif"
+               id="flexiblerefactoring.actions.SampleAction"
+               label="&amp;Sample Action"
+               menubarPath="sampleMenu/sampleGroup"
+               style="push"
+               toolbarPath="sampleGroup"
+               tooltip="Hello, Eclipse world">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="flexiblerefactoring.actions.GetInfo"
+            id="FlexibleRefactoring.GetInfo"
+            name="GetInfo">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="Flexible Refatoring">
+            <command
+                  commandId="FlexibleRefactoring.GetInfo"
+                  label="GetInfor"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.core.compilationParticipant">
+      <compilationParticipant
+            class="compilation.RefactoringCompilerParticipant"
+            id="compilation.RefactoringCompilerParticipant">
+      </compilationParticipant>
+      <compilationParticipant
+            class="compilation.RefactoringCompilerParticipantAddProblem"
+            id="compilation.CompilationParticipantAddProblem">
+      </compilationParticipant>
+   </extension>
+   <extension
+         id="refactoringmarker"
+         point="org.eclipse.core.resources.markers">
+   </extension>
+   <extension
+         id="refactoringproblem"
+         point="org.eclipse.core.resources.markers">
+      <attribute
+            name="refactoringproblem">
+      </attribute>
+      <persistent
+            value="false">
+      </persistent>
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <super
+            type="FlexibleRefactoring.refactoringmarker">
+      </super>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.ui.quickAssistProcessors">
+      <quickAssistProcessor
+            class="userinterface.RefactoringQuickAssistProcessor"
+            id="userinterface.RefactoringQuickAssistProcessor">
+      </quickAssistProcessor>
+   </extension>
+
+</plugin>
