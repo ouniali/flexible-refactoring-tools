@@ -118,7 +118,7 @@ public class CompilationUnitHistoryRecord {
 
 	public String getBindingKey(String fullName) {
 		String path = Directory + File.separator + BindingFileName;
-		String key = null;
+		String key = "";
 		try {
 			FileInputStream fstream = new FileInputStream(path);
 			DataInputStream in = new DataInputStream(fstream);
