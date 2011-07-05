@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.*;
 
-public abstract class JavaRefactoring implements Runnable {
+public abstract class JavaRefactoring implements Runnable{
 
 	private ICompilationUnit unit;
 	public abstract void performRefactoring() throws Exception;

@@ -87,7 +87,7 @@ public class CompilationUnitHistory {
 			refactoring = infor.getRenameRefactoring(unit);
 			if(refactoring != null)
 			{
-				RefactoringChances.addNewRefactoringChance(unit, line, (JavaRefactoring) infor.getRenameRefactoring(unit));
+				RefactoringChances.addNewRefactoringChance(unit, line, refactoring);
 				RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 				System.out.println("Rename detected.");	
 			}
@@ -99,7 +99,7 @@ public class CompilationUnitHistory {
 			refactoring = infor.getJavaExtractMethodRefactoring(unit);
 			if(refactoring != null)
 			{
-				RefactoringChances.addNewRefactoringChance(unit, line, infor.getJavaExtractMethodRefactoring(unit));
+				RefactoringChances.addNewRefactoringChance(unit, line, refactoring);
 				RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 				System.out.println("Extract method detected.");
 			}

@@ -39,6 +39,8 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	public JavaRefactoringRename(ICompilationUnit u, String keyBefore,String keyAfter, String oN, String nN)
 	{
 		super(u);
+		assert(keyBefore!= null && keyAfter != null);
+		System.out.println(keyBefore + " " + keyAfter);
 		bindingKeyBeforeDeclarationChange = keyBefore;
 		bindingKeyAfterDeclarationChange = keyAfter;
 		oldName = oN;
