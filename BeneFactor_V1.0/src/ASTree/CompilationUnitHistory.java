@@ -92,7 +92,7 @@ public class CompilationUnitHistory {
 				System.out.println("Rename detected.");	
 			}
 		}
-		else if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
+		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
 			line = infor.getRefactoringMarkerLine(unit);
@@ -103,10 +103,7 @@ public class CompilationUnitHistory {
 				RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 				System.out.println("Extract method detected.");
 			}
-		}
-		else 
-			return;
-		
+		}		
 	}
 	
 
