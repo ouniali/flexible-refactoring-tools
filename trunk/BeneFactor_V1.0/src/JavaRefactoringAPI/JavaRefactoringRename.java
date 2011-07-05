@@ -40,7 +40,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	{
 		super(u);
 		assert(keyBefore!= null && keyAfter != null);
-		System.out.println(keyBefore + " " + keyAfter);
 		bindingKeyBeforeDeclarationChange = keyBefore;
 		bindingKeyAfterDeclarationChange = keyAfter;
 		oldName = oN;
