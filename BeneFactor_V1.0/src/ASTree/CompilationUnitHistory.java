@@ -79,21 +79,30 @@ public class CompilationUnitHistory {
 	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{
 		int line;
+		JavaRefactoring refactoring;
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
 			line = infor.getRefactoringMarkerLine(unit);
-			RefactoringChances.addNewRefactoringChance(unit, line, (JavaRefactoring) infor.getRenameRefactoring(unit));
-			RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-			System.out.println("Rename detected. " + infor.getNameChangePercentage());	
+			refactoring = infor.getRenameRefactoring(unit);
+			if(refactoring != null)
+			{
+				RefactoringChances.addNewRefactoringChance(unit, line, (JavaRefactoring) infor.getRenameRefactoring(unit));
+				RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+				System.out.println("Rename detected.");	
+			}
 		}
 		else if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
 			line = infor.getRefactoringMarkerLine(unit);
-			RefactoringChances.addNewRefactoringChance(unit, line, infor.getJavaExtractMethodRefactoring(unit));
-			RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-			System.out.println("Extract method detected.");
+			refactoring = infor.getJavaExtractMethodRefactoring(unit);
+			if(refactoring != null)
+			{
+				RefactoringChances.addNewRefactoringChance(unit, line, infor.getJavaExtractMethodRefactoring(unit));
+				RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+				System.out.println("Extract method detected.");
+			}
 		}
 		else 
 			return;

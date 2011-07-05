@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.*;
 
 public abstract class JavaRefactoring implements Runnable {
 
-	static long WAIT_TIME = 2000;
 	private ICompilationUnit unit;
 	public abstract void performRefactoring() throws Exception;
 	protected abstract void performCodeRecovery() throws Exception;
@@ -14,7 +13,6 @@ public abstract class JavaRefactoring implements Runnable {
 	public final void run() {
 		try {
 			performCodeRecovery();
-			Thread.sleep(WAIT_TIME);
 			performRefactoring();
 		} catch (Exception e) {
 			e.printStackTrace();

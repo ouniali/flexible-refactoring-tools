@@ -43,7 +43,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			refactoring.setReplaceDuplicates(true);
 			refactoring.setVisibility(Modifier.PRIVATE);
 			// wait for the underlying resource to be ready
-			
+			Thread.sleep(WAIT_TIME);
 			iniStatus = refactoring.checkInitialConditions(monitor);
 			if (!iniStatus.isOK())
 				return;
