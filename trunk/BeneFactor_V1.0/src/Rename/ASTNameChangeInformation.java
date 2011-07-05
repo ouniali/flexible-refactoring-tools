@@ -124,8 +124,16 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		}
 		else
 		{
-			JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
-			return refactoring;
+			if(this.isRenamingDeclaration())
+			{
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, bindingKeyTwo, bindingKeyTwo ,originalName, modifiedName);
+				return refactoring;
+			}
+			else
+			{
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
+				return refactoring;
+			}
 		}	
 	}
 	
