@@ -10,7 +10,7 @@ public abstract class JavaRefactoring implements Runnable {
 	public abstract void performRefactoring() throws Exception;
 	protected abstract void performCodeRecovery() throws Exception;
 	
-	public final void run() {
+	public final synchronized void run() {
 		try {
 			performCodeRecovery();
 			performRefactoring();
