@@ -103,7 +103,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	
 	public JavaRefactoringRename getRenameRefactoring(ICompilationUnit unit)
 	{
-		if(bindingKeyOne == "")
+		if(bindingKeyOne.equals(""))
 		{
 			ASTNameChangeInformation declarationChange = NameChange.searchDeclarationChangeInHistory(originalNameFull);
 			String keyBefore = declarationChange.getOldNameBindingKey();
