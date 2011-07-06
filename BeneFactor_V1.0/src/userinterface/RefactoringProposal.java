@@ -15,7 +15,6 @@ import org.eclipse.ui.PlatformUI;
 import compilation.RefactoringChances;
 
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.JavaRefactoringType;
 
 
 public abstract class RefactoringProposal implements IJavaCompletionProposal{
