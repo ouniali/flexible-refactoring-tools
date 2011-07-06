@@ -108,9 +108,11 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		if(bindingKeyOne.equals(""))
 		{
 			ASTNameChangeInformation declarationChange = NameChange.searchDeclarationChangeInHistory(originalNameFull);
+			if(declarationChange == null)
+				return null;
 			String keyBefore = declarationChange.getOldNameBindingKey();
 			String keyAfter = declarationChange.getNewNameBindingKey();
-			if(declarationChange != null && !keyBefore.equals("") && !keyAfter.equals(""))
+			if(!keyBefore.equals("") && !keyAfter.equals(""))
 			{
 				JavaRefactoringRename refactoring = new JavaRefactoringRename(
 						unit,
@@ -146,8 +148,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return percentage> PERCENTAGE_THRESHHOLD;
 	}
 	
-	public boolean isRenameComplete()
-	{
+	public boolean isRenameComplete(ICompilationUnit unit)
+	{	
 		return percentage == 1.00;
 	}
 	

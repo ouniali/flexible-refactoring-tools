@@ -41,4 +41,35 @@ public class NamesInJavaProject {
 		else
 			return names;
 	}
+	
+	public Hashtable<String,ArrayList<Name>> getEntireNameBindingTableInProject()
+	{
+		Hashtable<String,ArrayList<Name>> entireTable = new Hashtable<String,ArrayList<Name>>();
+		for(NamesInCompilationUnit unitNames: UnitsNames)
+		{
+			Hashtable<String, ArrayList<Name>> table = unitNames.getEntireBindingTable();
+			entireTable.putAll(table);
+		}	
+		return entireTable;
+	}
+	
+	public ArrayList<Name> getNamesInProject()
+	{
+		ArrayList<Name> allNames = new ArrayList<Name>();
+		for(NamesInCompilationUnit unitNames: UnitsNames)
+		{
+			ArrayList<Name> names = unitNames.getNamesInCompilationUnit();
+			allNames.addAll(names);
+		}
+		return allNames;
+	}
+	public boolean isFullyQualifiedNameExistingInProject(String fullName)
+	{
+		for(NamesInCompilationUnit unitNames: UnitsNames)
+		{
+			if(unitNames.isFullyQuifiedNameExistingInCompilationUnit(fullName))
+				return true;
+		}
+		return false;
+	}
 }
