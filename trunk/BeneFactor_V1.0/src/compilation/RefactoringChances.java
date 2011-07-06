@@ -31,5 +31,12 @@ public class RefactoringChances {
 		return results;
 	}
 	
+	public static void clearRefactoringChances()
+	{
+		files.clear();
+		lineNumbers.clear();
+		refactorings.clear();
+		size = 0;
+	}
 	
 }

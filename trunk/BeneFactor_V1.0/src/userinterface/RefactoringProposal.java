@@ -12,6 +12,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
+import compilation.RefactoringChances;
+
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
@@ -28,6 +30,7 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	public final void apply(IDocument document)
 	{
 		new Thread(refactoring).start();
+		RefactoringChances.clearRefactoringChances();
 	}
 	@Override
 	public Point getSelection(IDocument document){return null;};
@@ -36,11 +39,22 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	@Override
 	public abstract String getDisplayString();
 	@Override
-	public abstract Image getImage();
+	public final Image getImage()
+	{
+		String path = getImagePath();
+		if(new File(path).exists())
+		{
+			Display display = PlatformUI.getWorkbench().getDisplay();
+			Image icon = new Image(display, path);
+			return icon;
+		}
+		else
+			return null;
+	}
 	@Override
 	public IContextInformation getContextInformation() {return null;};
 	@Override
 	public int getRelevance(){return Integer.MAX_VALUE;};
-	
+	abstract protected String getImagePath();
 	
 }

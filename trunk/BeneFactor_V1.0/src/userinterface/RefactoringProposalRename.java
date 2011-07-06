@@ -18,10 +18,10 @@ public class RefactoringProposalRename extends RefactoringProposal{
 		// TODO Auto-generated method stub
 		return "Finish rename refactoring";
 	}
-	public Image getImage() {
+
+	@Override
+	protected String getImagePath() {
 		// TODO Auto-generated method stub
-		Display display = PlatformUI.getWorkbench().getDisplay();
-		Image icon = new Image(display, "C:" +File.separator+ "refactoring.png");
-		return icon;
+		return "C:" +File.separator+ "refactoring.png";
 	}
 }

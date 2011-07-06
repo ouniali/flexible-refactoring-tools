@@ -21,11 +21,9 @@ public class RefactoringProposalExtractMethod extends RefactoringProposal{
 	}
 
 	@Override
-	public Image getImage() {
+	protected String getImagePath() {
 		// TODO Auto-generated method stub
-		Display display = PlatformUI.getWorkbench().getDisplay();
-		Image icon = new Image(display, "C:" +File.separator+ "refactoring.png");
-		return icon;
+		return "C:" +File.separator+ "refactoring.png";
 	}
 
 }
