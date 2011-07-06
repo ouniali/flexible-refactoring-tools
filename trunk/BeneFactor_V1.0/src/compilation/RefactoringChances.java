@@ -47,7 +47,7 @@ public class RefactoringChances {
 		{
 			for(IMarker marker : markers)
 			{
-				if(marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
+				if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
 					marker.delete();
 			}
 		}catch(Exception e)
