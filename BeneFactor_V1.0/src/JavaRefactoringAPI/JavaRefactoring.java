@@ -13,7 +13,7 @@ public abstract class JavaRefactoring implements Runnable{
 	private IMarker marker;
 	private Change undo;
 	
-	public abstract void performRefactoring() throws Exception;
+	protected abstract void performRefactoring() throws Exception;
 	protected abstract void performCodeRecovery() throws Exception;
 	protected final void setUndo(Change u)
 	{
@@ -56,5 +56,13 @@ public abstract class JavaRefactoring implements Runnable{
 	{
 		return marker;
 	}
+	public JavaUndoRefactoring getJavaUndoRefactoring()
+	{
+		if(getUndo()!= null)
+			return new JavaUndoRefactoring(getICompilationUnit(), getLineNumber(), getUndo());
+		else
+			return null;
+	}
+	
 	
 }

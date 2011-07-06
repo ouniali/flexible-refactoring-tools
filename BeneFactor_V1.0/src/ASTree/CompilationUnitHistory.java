@@ -98,7 +98,7 @@ public class CompilationUnitHistory {
 			refactoring = infor.getJavaExtractMethodRefactoring(unit);
 			if(refactoring != null)
 			{
-					RefactoringChances.addNewRefactoringChance(refactoring);
+				RefactoringChances.addNewRefactoringChance(refactoring);
 				System.out.println("Extract method detected.");
 			}
 		}		
