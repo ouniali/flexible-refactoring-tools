@@ -2,6 +2,7 @@ package ASTree;
 
 import java.util.*;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
@@ -80,6 +81,7 @@ public class CompilationUnitHistory {
 	{
 		int line;
 		JavaRefactoring refactoring;
+		IMarker marker;
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
@@ -87,8 +89,8 @@ public class CompilationUnitHistory {
 			refactoring = infor.getRenameRefactoring(unit);
 			if(refactoring != null)
 			{
-				RefactoringChances.addNewRefactoringChance(unit, line, refactoring);
-				RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+				marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+				RefactoringChances.addNewRefactoringChance(unit, line, refactoring, marker);
 				System.out.println("Rename detected.");	
 			}
 		}
@@ -99,8 +101,8 @@ public class CompilationUnitHistory {
 			refactoring = infor.getJavaExtractMethodRefactoring(unit);
 			if(refactoring != null)
 			{
-				RefactoringChances.addNewRefactoringChance(unit, line, refactoring);
-				RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+				marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+				RefactoringChances.addNewRefactoringChance(unit, line, refactoring, marker);
 				System.out.println("Extract method detected.");
 			}
 		}		
