@@ -2,16 +2,20 @@ package JavaRefactoringAPI;
 
 import java.util.ArrayList;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ltk.core.refactoring.Change;
 
 public abstract class JavaRefactoring implements Runnable{
 
 	private ICompilationUnit unit;
+	private int line;
+	private IMarker marker;
 	private Change undo;
+	
 	public abstract void performRefactoring() throws Exception;
 	protected abstract void performCodeRecovery() throws Exception;
-	public final void setUndo(Change u)
+	protected final void setUndo(Change u)
 	{
 		undo = u;
 	}
@@ -28,11 +32,13 @@ public abstract class JavaRefactoring implements Runnable{
 		}	
 	}
 
-	public JavaRefactoring(ICompilationUnit u)
+	public JavaRefactoring(ICompilationUnit u, int l, IMarker m)
 	{
 		unit = u;
+		line = l;
+		marker = m;
 	}
-	protected final ICompilationUnit getICompilationUnit()
+	public final ICompilationUnit getICompilationUnit()
 	{
 		try {
 			unit.makeConsistent(null);
@@ -40,6 +46,15 @@ public abstract class JavaRefactoring implements Runnable{
 			e.printStackTrace();
 		}
 		return unit;
+	}
+	public final int getLineNumber()
+	{
+		return line;
+	}
+	
+	public final IMarker getMarker()
+	{
+		return marker;
 	}
 	
 }

@@ -1,10 +1,10 @@
 package Rename;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
 
 import userinterface.RefactoringMarker;
 import ASTree.*;
-import JavaRefactoringAPI.JavaRefactoringType;
 import JavaRefactoringAPI.*;
 
 public class ASTNameChangeInformation extends ASTChangeInformation {
@@ -101,8 +101,10 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return bindingKeyTwo;
 	}
 	
-	public JavaRefactoringRename getRenameRefactoring(ICompilationUnit unit)
+	public JavaRefactoringRename getRenameRefactoring(ICompilationUnit unit) throws Exception
 	{
+		int line = getRefactoringMarkerLine(unit);
+		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 		if(bindingKeyOne.equals(""))
 		{
 			ASTNameChangeInformation declarationChange = NameChange.searchDeclarationChangeInHistory(originalNameFull);
@@ -112,6 +114,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			{
 				JavaRefactoringRename refactoring = new JavaRefactoringRename(
 						unit,
+						line,
+						marker,
 						keyBefore,
 						keyAfter,
 						originalName,
@@ -126,12 +130,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			if(this.isRenamingDeclaration())
 			{
-				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, bindingKeyOne, bindingKeyTwo ,originalName, modifiedName);
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, line, marker, bindingKeyOne, bindingKeyTwo ,originalName, modifiedName);
 				return refactoring;
 			}
 			else
 			{
-				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, line, marker, bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
 				return refactoring;
 			}
 		}	

@@ -2,6 +2,7 @@ package JavaRefactoringAPI;
 
 import java.util.ArrayList;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -36,9 +37,9 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	ArrayList<Name> namesInProject;
 	boolean renamedBindingKey;
 	
-	public JavaRefactoringRename(ICompilationUnit u, String keyBefore,String keyAfter, String oN, String nN)
+	public JavaRefactoringRename(ICompilationUnit u,int l, IMarker m,String keyBefore,String keyAfter, String oN, String nN)
 	{
-		super(u);
+		super(u, l, m);
 		assert(keyBefore!= null && keyAfter != null);
 		bindingKeyBeforeDeclarationChange = keyBefore;
 		bindingKeyAfterDeclarationChange = keyAfter;

@@ -1,5 +1,6 @@
 package JavaRefactoringAPI;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.Modifier;
@@ -16,8 +17,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	static int extractedMethodCount = -1;
 	long WAIT_TIME = 2000;
 
-	public JavaRefactoringExtractMethod(ICompilationUnit u, ASTExtractMethodChangeInformation info) {
-		super(u);
+	public JavaRefactoringExtractMethod(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) {
+		super(u, l, m);
 		information = info;
 		extractedMethodCount++;
 	}
