@@ -95,6 +95,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		}
 	}
 
+
 	
 	@SuppressWarnings("restriction")
 	private static JavaRenameProcessor getRenameProcessor(IJavaElement element) throws Exception
@@ -160,4 +161,5 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			return null;
 		}
 	}
+
 }

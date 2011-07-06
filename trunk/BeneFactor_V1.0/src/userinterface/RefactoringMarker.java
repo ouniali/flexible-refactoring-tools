@@ -20,12 +20,18 @@ public class RefactoringMarker {
 	public static final String REFACTORING_MARKER_TYPE = "FlexibleRefactoring.refactoringproblem";
 	
 	public static IMarker addRefactoringMarkerIfNo(ICompilationUnit unit,
-			int lineNo) throws Exception {
+			int lineNo) {
+		try{
 		ArrayList<IMarker> markers = getMarkers(unit, lineNo);
 		if(markers.size() == 0)
 			return createRefactoringMarker(unit, lineNo);
 		else
 			return markers.get(0);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static IMarker createRefactoringMarker(ICompilationUnit unit,

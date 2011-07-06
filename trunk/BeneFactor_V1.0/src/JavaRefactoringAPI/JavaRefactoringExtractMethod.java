@@ -69,10 +69,10 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 
 	@Override
 	protected void performCodeRecovery() {
-		// TODO Auto-generated method stub
 		information.recoverICompilationUnitToOldRecord(this.getICompilationUnit());
 		
 	}
+
 
 
 }
