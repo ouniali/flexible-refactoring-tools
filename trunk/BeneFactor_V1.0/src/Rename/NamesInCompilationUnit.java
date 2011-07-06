@@ -33,4 +33,29 @@ public class NamesInCompilationUnit {
 		else
 			return res;
 	}
+	
+	public Hashtable<String, ArrayList<Name>> getEntireBindingTable()
+	{
+		return NameTable;
+	}
+	
+	public ArrayList<Name> getNamesInCompilationUnit()
+	{
+		ArrayList<Name> names = new ArrayList<Name>();
+		Collection<ArrayList<Name>> allArrays = NameTable.values();
+		for(ArrayList<Name> array: allArrays)
+			names.addAll(array);
+		return names;
+	}
+	
+	public boolean isFullyQuifiedNameExistingInCompilationUnit(String fullName)
+	{
+		ArrayList<Name> names = getNamesInCompilationUnit();
+		for(Name name: names)
+		{
+			if(name.getFullyQualifiedName().equals(fullName))
+				return true;
+		}
+		return false;
+	}
 }
