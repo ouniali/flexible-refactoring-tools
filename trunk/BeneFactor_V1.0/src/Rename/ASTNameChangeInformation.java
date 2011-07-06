@@ -132,12 +132,27 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			if(this.isRenamingDeclaration())
 			{
-				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, line, marker, bindingKeyOne, bindingKeyTwo ,originalName, modifiedName);
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(
+						unit, 
+						line, 
+						marker, 
+						bindingKeyOne, 
+						bindingKeyTwo,
+						originalName, 
+						modifiedName);
 				return refactoring;
 			}
 			else
 			{
-				JavaRefactoringRename refactoring = new JavaRefactoringRename(unit, line, marker, bindingKeyOne, bindingKeyOne ,originalName, modifiedName);
+				JavaRefactoringRename refactoring = new JavaRefactoringRename(
+						unit, 
+						line, 
+						marker, 
+						bindingKeyOne, 
+						bindingKeyOne,
+						originalName, 
+						modifiedName
+						);
 				return refactoring;
 			}
 		}	
