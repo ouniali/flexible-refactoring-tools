@@ -85,24 +85,20 @@ public class CompilationUnitHistory {
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
-			line = infor.getRefactoringMarkerLine(unit);
 			refactoring = infor.getRenameRefactoring(unit);
 			if(refactoring != null)
 			{
-				marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-				RefactoringChances.addNewRefactoringChance(unit, line, refactoring, marker);
+				RefactoringChances.addNewRefactoringChance(refactoring);
 				System.out.println("Rename detected.");	
 			}
 		}
 		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
-			line = infor.getRefactoringMarkerLine(unit);
 			refactoring = infor.getJavaExtractMethodRefactoring(unit);
 			if(refactoring != null)
 			{
-				marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-				RefactoringChances.addNewRefactoringChance(unit, line, refactoring, marker);
+					RefactoringChances.addNewRefactoringChance(refactoring);
 				System.out.println("Extract method detected.");
 			}
 		}		

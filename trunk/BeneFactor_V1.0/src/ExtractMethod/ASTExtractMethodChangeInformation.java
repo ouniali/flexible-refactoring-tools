@@ -2,6 +2,7 @@ package ExtractMethod;
 
 import java.util.ArrayList;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -62,9 +63,11 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	
 	
 	
-	public JavaRefactoringExtractMethod getJavaExtractMethodRefactoring(ICompilationUnit unit)
+	public JavaRefactoringExtractMethod getJavaExtractMethodRefactoring(ICompilationUnit unit) throws Exception
 	{
-		return new JavaRefactoringExtractMethod(unit,this);
+		int line = getRefactoringMarkerLine(unit);
+		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+		return new JavaRefactoringExtractMethod(unit, line, marker, this);
 	}
 	
 

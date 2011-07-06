@@ -20,6 +20,7 @@ import JavaRefactoringAPI.JavaRefactoring;
 public abstract class RefactoringProposal implements IJavaCompletionProposal{
 
 	JavaRefactoring refactoring;
+	
 	public RefactoringProposal(JavaRefactoring ref)
 	{
 		super();
@@ -30,6 +31,7 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	{
 		new Thread(refactoring).start();
 		RefactoringChances.clearRefactoringChances();
+		refactoring.getUndo();
 	}
 	@Override
 	public Point getSelection(IDocument document){return null;};
