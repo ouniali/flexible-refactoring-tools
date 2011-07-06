@@ -17,22 +17,27 @@ import org.eclipse.jdt.internal.compiler.CompilationResult;
 
 public class RefactoringMarker {
 
-	public static void addRefactoringMarkerIfNo(ICompilationUnit unit,
+	public static final String REFACTORING_MARKER_TYPE = "FlexibleRefactoring.refactoringproblem";
+	
+	public static IMarker addRefactoringMarkerIfNo(ICompilationUnit unit,
 			int lineNo) throws Exception {
-		if(!isMarkerExisting(unit, lineNo))
-			createRefactoringMarker(unit, lineNo);
+		ArrayList<IMarker> markers = getMarkers(unit, lineNo);
+		if(markers.size() == 0)
+			return createRefactoringMarker(unit, lineNo);
+		else
+			return markers.get(0);
 	}
 
-	public static long createRefactoringMarker(ICompilationUnit unit,
+	public static IMarker createRefactoringMarker(ICompilationUnit unit,
 			int lineNo) throws Exception {
 		String message = "Benefactor message";
 		IMarker marker = unit.getResource().createMarker(
-				"FlexibleRefactoring.refactoringproblem");
+				REFACTORING_MARKER_TYPE);
 		marker.setAttribute(IMarker.LINE_NUMBER, lineNo);
 		marker.setAttribute(IMarker.MESSAGE, message);
 		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
 		marker.setAttribute(IMarker.USER_EDITABLE, false);
-		return marker.getId();
+		return marker;
 	}
 
 
@@ -56,15 +61,16 @@ public class RefactoringMarker {
 		}	
 	}
 	
-	public static boolean isMarkerExisting(ICompilationUnit unit, int line) throws Exception
+	public static ArrayList<IMarker> getMarkers(ICompilationUnit unit, int line) throws Exception
 	{
+		ArrayList<IMarker> markersInLine = new ArrayList<IMarker>();
 		IMarker[] markers = unit.getResource().findMarkers(IMarker.MARKER, true, IResource.DEPTH_INFINITE);
 		for(IMarker marker : markers)
 		{
 			int lineNo = marker.getAttribute(IMarker.LINE_NUMBER, -1);
 			if(line == lineNo)
-				return true;
+				markersInLine.add(marker);
 		}
-		return false;
+		return markersInLine;
 	}
 }
