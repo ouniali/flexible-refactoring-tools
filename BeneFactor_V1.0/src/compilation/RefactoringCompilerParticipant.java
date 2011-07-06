@@ -38,21 +38,5 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-/*	 synchronized void performRefactoring(ICompilationUnit unit)
-	 {
-		 if(!JavaRefactoring.UnhandledRefactorings.isEmpty())
-		{
-			JavaRefactoring refactoring = JavaRefactoring.UnhandledRefactorings.remove(0);
-			JavaRefactoring.UnhandledRefactorings.clear();
-			refactoring.setEnvironment(unit);
-			new Thread(refactoring).start();
-		}
-	 }*/
-	
-
-	
-	
-
+	}	
 }
