@@ -52,7 +52,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			if (!finStatus.isOK())
 				return;
 			Change change = refactoring.createChange(monitor);
-			this.setUndo(change.perform(monitor));
+			Change undo = change.perform(monitor);
+			this.setUndo(undo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

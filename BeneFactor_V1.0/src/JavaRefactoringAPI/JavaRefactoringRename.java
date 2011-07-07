@@ -65,7 +65,8 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			refactoring.checkInitialConditions(monitor);
 			refactoring.checkFinalConditions(monitor);
 			Change change = refactoring.createChange(monitor);
-			this.setUndo(change.perform(monitor));
+			Change undo = change.perform(monitor);
+			this.setUndo(undo);
 			unit.discardWorkingCopy();
 		}
 	}

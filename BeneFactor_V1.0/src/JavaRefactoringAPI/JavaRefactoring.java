@@ -3,6 +3,7 @@ package JavaRefactoringAPI;
 import java.util.ArrayList;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ltk.core.refactoring.Change;
 
@@ -28,13 +29,16 @@ public abstract class JavaRefactoring implements Runnable{
 	}
 	public final synchronized void run() {
 		JavaUndoRefactoring unRef;
+		NullProgressMonitor monitor = new NullProgressMonitor();
 		try {
+			this.getICompilationUnit().becomeWorkingCopy(monitor);
 			performCodeRecovery();
 			performRefactoring();		
 			RefactoringChances.clearRefactoringChances();
 			unRef = getJavaUndoRefactoring();
 			if(unRef!=null)
 				UndoRefactoringChances.addUndoRefactoring(unRef);
+			this.getICompilationUnit().discardWorkingCopy();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

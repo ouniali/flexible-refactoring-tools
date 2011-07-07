@@ -45,10 +45,12 @@ public class JavaUndoRefactoring implements Runnable{
 	}
 	@Override
 	public void run() {		
+		NullProgressMonitor monitor = new NullProgressMonitor();
 		try {
-			NullProgressMonitor monitor = new NullProgressMonitor();
+			this.getICompilationUnit().becomeWorkingCopy(monitor);
 			undo.perform(monitor);
 			UndoRefactoringChances.clearUndos();
+			this.getICompilationUnit().discardWorkingCopy();
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}	
