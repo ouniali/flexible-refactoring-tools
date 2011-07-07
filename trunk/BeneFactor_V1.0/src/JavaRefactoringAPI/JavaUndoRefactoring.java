@@ -2,6 +2,7 @@ package JavaRefactoringAPI;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.ltk.core.refactoring.Change;
 
@@ -44,7 +45,8 @@ public class JavaUndoRefactoring implements Runnable{
 	@Override
 	public void run() {		
 		try {
-			undo.perform(null);
+			NullProgressMonitor monitor = new NullProgressMonitor();
+			undo.perform(monitor);
 			UndoRefactoringChances.clearUndos();
 		} catch (CoreException e) {
 			e.printStackTrace();
