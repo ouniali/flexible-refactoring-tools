@@ -4,6 +4,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jface.text.Assert;
 import org.eclipse.ltk.core.refactoring.Change;
 
 import compilation.UndoRefactoringChances;
@@ -19,7 +20,7 @@ public class JavaUndoRefactoring implements Runnable{
 	int type;
 	
 	public JavaUndoRefactoring(ICompilationUnit u, int l, int type ,Change d)
-	{
+	{	
 		unit = u;
 		line = l;
 		undo = d;
