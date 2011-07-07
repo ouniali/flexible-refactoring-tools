@@ -30,8 +30,6 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	public final void apply(IDocument document)
 	{
 		new Thread(refactoring).start();
-		RefactoringChances.clearRefactoringChances();
-		refactoring.getUndo();
 	}
 	@Override
 	public Point getSelection(IDocument document){return null;};

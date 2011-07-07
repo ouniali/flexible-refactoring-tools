@@ -95,7 +95,12 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		}
 	}
 
-
+	@Override
+	public int getRefactoringType() {
+		// TODO Auto-generated method stub
+		return JavaRefactoringType.RENAME;
+	}
+	
 	
 	@SuppressWarnings("restriction")
 	private static JavaRenameProcessor getRenameProcessor(IJavaElement element) throws Exception
@@ -162,10 +167,5 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		}
 	}
 
-	@Override
-	public int getRefactoringType() {
-		// TODO Auto-generated method stub
-		return JavaRefactoringType.RENAME;
-	}
 
 }
