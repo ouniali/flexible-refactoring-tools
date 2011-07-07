@@ -22,7 +22,7 @@ public abstract class JavaRefactoring implements Runnable{
 	{
 		undo = u;
 	}
-	public final Change getUndo()
+	protected final Change getUndo()
 	{
 		return undo;
 	}
@@ -33,7 +33,8 @@ public abstract class JavaRefactoring implements Runnable{
 			performRefactoring();
 			unRef = getJavaUndoRefactoring();
 			RefactoringChances.clearRefactoringChances();
-			UndoRefactoringChances.addUndoRefactoring(unRef);
+			if(unRef!=null)
+				UndoRefactoringChances.addUndoRefactoring(unRef);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

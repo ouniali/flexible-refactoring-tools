@@ -1,7 +1,10 @@
 package compilation;
 import java.util.ArrayList;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
+
+import userinterface.RefactoringMarker;
 
 import JavaRefactoringAPI.*;
 
@@ -16,6 +19,17 @@ public class UndoRefactoringChances {
 	
 	public static void clearUndos()
 	{
+		try{
+			for(JavaUndoRefactoring u : undos)
+			{
+				IMarker marker = u.getMarker();
+				if(marker != null && marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
+					marker.delete();
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		undos.clear();
 	}
 	
