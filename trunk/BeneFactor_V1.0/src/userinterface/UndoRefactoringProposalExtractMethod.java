@@ -1,5 +1,7 @@
 package userinterface;
 
+import java.io.File;
+
 import JavaRefactoringAPI.JavaUndoRefactoring;
 
 public class UndoRefactoringProposalExtractMethod extends UndoRefactoringProposal{
@@ -10,12 +12,12 @@ public class UndoRefactoringProposalExtractMethod extends UndoRefactoringProposa
 
 	@Override
 	public String getDisplayString() {
-		return "Undo extract method.";
+		return "Undo extract method refactoring.";
 	}
 
 	@Override
 	protected String getImagePath() {
-		return null;
+		return "C:" +File.separator+ "refactoring.png";
 	}
 
 }
