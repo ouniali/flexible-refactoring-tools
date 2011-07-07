@@ -21,9 +21,7 @@ abstract public class UndoRefactoringProposal implements IJavaCompletionProposal
 	}
 	@Override
 	public void apply(IDocument document) {
-		// TODO Auto-generated method stub
 		new Thread(undo).start();
-		
 	}
 
 	@Override

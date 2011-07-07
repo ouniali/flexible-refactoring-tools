@@ -40,7 +40,6 @@ public class UndoRefactoringQuickFixProcessor implements IQuickFixProcessor {
 	
 	public IJavaCompletionProposal getUndoRefactoringProposal(JavaUndoRefactoring undo)
 	{
-		
 		int type = undo.getRefactoringType();
 		switch(type)
 		{
