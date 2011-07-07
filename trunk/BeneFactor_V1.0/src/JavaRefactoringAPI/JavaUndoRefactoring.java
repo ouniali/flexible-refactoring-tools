@@ -35,7 +35,10 @@ public class JavaUndoRefactoring implements Runnable{
 	{
 		return type;
 	}
-	
+	public IMarker getMarker()
+	{
+		return marker;
+	}
 	@Override
 	public void run() {		
 		try {
