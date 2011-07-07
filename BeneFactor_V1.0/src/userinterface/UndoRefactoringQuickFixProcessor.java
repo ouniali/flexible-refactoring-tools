@@ -10,14 +10,13 @@ import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
 import org.eclipse.jdt.ui.text.java.IProblemLocation;
 import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
+import compilation.UndoRefactoringChances;
+
 import ASTree.ASTreeManipulationMethods;
-import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.JavaRefactoringExtractMethod;
-import JavaRefactoringAPI.JavaRefactoringRename;
+import JavaRefactoringAPI.JavaRefactoringType;
+import JavaRefactoringAPI.JavaUndoRefactoring;
 
-import compilation.RefactoringChances;
-
-public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
+public class UndoRefactoringQuickFixProcessor implements IQuickFixProcessor {
 
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
@@ -31,22 +30,25 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		int selection = context.getSelectionOffset();
 		int line = tree.getLineNumber(selection);
-		ArrayList<JavaRefactoring> refactorings = RefactoringChances.getJavaRefactoring(unit, line);
-		int size = refactorings.size();
-		IJavaCompletionProposal[] results = new IJavaCompletionProposal[size];
-		for(int i = 0; i< size; i++)
-			results[i] = getRefactoringProposalRefactoring(refactorings.get(i));	
-		return results;
+		ArrayList<JavaUndoRefactoring> undos = UndoRefactoringChances.getUndoRefactoring(unit, line);
+		IJavaCompletionProposal[] proposals = new IJavaCompletionProposal[undos.size()];
+		for(int i = 0; i< proposals.length; i++)
+			proposals[i] =  getUndoRefactoringProposal(undos.get(i));
+		return proposals;
 	}
-	
-	public static RefactoringProposal getRefactoringProposalRefactoring(JavaRefactoring ref)
+	public IJavaCompletionProposal getUndoRefactoringProposal(JavaUndoRefactoring undo)
 	{
-		if(ref instanceof JavaRefactoringRename)
-			return new RefactoringProposalRename(ref);
-		else if ( ref instanceof JavaRefactoringExtractMethod)
-			return new RefactoringProposalExtractMethod(ref);
-		else
+		
+		int type = undo.getRefactoringType();
+		switch(type)
+		{
+		case JavaRefactoringType.RENAME:
+			return new UndoRefactoringProposalRename(undo);
+		case JavaRefactoringType.EXTRACT_METHOD:	
+			return new UndoRefactoringProposalExtractMethod(undo);
+		default:
 			return null;
+		}
 	}
 
 }

@@ -79,9 +79,7 @@ public class CompilationUnitHistory {
 	
 	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{
-		int line;
 		JavaRefactoring refactoring;
-		IMarker marker;
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);

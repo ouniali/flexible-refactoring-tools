@@ -162,4 +162,10 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		}
 	}
 
+	@Override
+	public int getRefactoringType() {
+		// TODO Auto-generated method stub
+		return JavaRefactoringType.RENAME;
+	}
+
 }

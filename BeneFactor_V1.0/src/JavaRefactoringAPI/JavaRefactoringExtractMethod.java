@@ -74,5 +74,11 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	}
 
 
+	@Override
+	public int getRefactoringType() {
+		return JavaRefactoringType.EXTRACT_METHOD;
+	}
+
+
 
 }

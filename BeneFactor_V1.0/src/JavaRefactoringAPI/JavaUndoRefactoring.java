@@ -13,15 +13,29 @@ public class JavaUndoRefactoring implements Runnable{
 	ICompilationUnit unit;
 	int line;
 	IMarker marker;
+	int type;
 	
-	public JavaUndoRefactoring(ICompilationUnit u, int l ,Change d)
+	public JavaUndoRefactoring(ICompilationUnit u, int l, int type ,Change d)
 	{
 		unit = u;
 		line = l;
 		undo = d;
 		marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 	}
-
+	public ICompilationUnit getICompilationUnit()
+	{
+		return unit;
+	}
+	
+	public int getLineNumber()
+	{
+		return line;
+	}
+	public int getRefactoringType()
+	{
+		return type;
+	}
+	
 	@Override
 	public void run() {		
 		try {
