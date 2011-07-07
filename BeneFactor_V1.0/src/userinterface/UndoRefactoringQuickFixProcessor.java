@@ -25,7 +25,8 @@ public class UndoRefactoringQuickFixProcessor implements IQuickFixProcessor {
 
 	@Override
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
-			IProblemLocation[] locations) throws CoreException {
+			IProblemLocation[] locations) throws CoreException 
+	{
 		ICompilationUnit unit = context.getCompilationUnit();
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		int selection = context.getSelectionOffset();
@@ -36,6 +37,7 @@ public class UndoRefactoringQuickFixProcessor implements IQuickFixProcessor {
 			proposals[i] =  getUndoRefactoringProposal(undos.get(i));
 		return proposals;
 	}
+	
 	public IJavaCompletionProposal getUndoRefactoringProposal(JavaUndoRefactoring undo)
 	{
 		

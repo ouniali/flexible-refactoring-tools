@@ -6,6 +6,9 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ltk.core.refactoring.Change;
 
+import compilation.RefactoringChances;
+import compilation.UndoRefactoringChances;
+
 public abstract class JavaRefactoring implements Runnable{
 
 	private ICompilationUnit unit;
@@ -29,6 +32,8 @@ public abstract class JavaRefactoring implements Runnable{
 			performCodeRecovery();
 			performRefactoring();
 			unRef = getJavaUndoRefactoring();
+			RefactoringChances.clearRefactoringChances();
+			UndoRefactoringChances.addUndoRefactoring(unRef);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
