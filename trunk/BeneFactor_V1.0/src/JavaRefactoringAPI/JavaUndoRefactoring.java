@@ -5,6 +5,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.ltk.core.refactoring.Change;
 
+import compilation.UndoRefactoringChances;
+
 import userinterface.RefactoringMarker;
 
 public class JavaUndoRefactoring implements Runnable{
@@ -43,6 +45,7 @@ public class JavaUndoRefactoring implements Runnable{
 	public void run() {		
 		try {
 			undo.perform(null);
+			UndoRefactoringChances.clearUndos();
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}	
