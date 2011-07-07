@@ -24,9 +24,11 @@ public abstract class JavaRefactoring implements Runnable{
 		return undo;
 	}
 	public final synchronized void run() {
+		JavaUndoRefactoring unRef;
 		try {
 			performCodeRecovery();
 			performRefactoring();
+			unRef = getJavaUndoRefactoring();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -56,13 +58,15 @@ public abstract class JavaRefactoring implements Runnable{
 	{
 		return marker;
 	}
-	public JavaUndoRefactoring getJavaUndoRefactoring()
+	protected JavaUndoRefactoring getJavaUndoRefactoring()
 	{
 		if(getUndo()!= null)
-			return new JavaUndoRefactoring(getICompilationUnit(), getLineNumber(), getUndo());
+			return new JavaUndoRefactoring(getICompilationUnit(), getLineNumber(), getRefactoringType(), getUndo() );
 		else
 			return null;
 	}
+	
+	abstract public int getRefactoringType();
 	
 	
 }

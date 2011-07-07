@@ -85,7 +85,11 @@
          point="org.eclipse.jdt.ui.quickFixProcessors">
       <quickFixProcessor
             class="userinterface.RefactoringQuickFixProcessor"
-            id="FlexibleRefactoring.quickFixProcessor1">
+            id="RefactoringQuickFixProcessor">
+      </quickFixProcessor>
+      <quickFixProcessor
+            class="userinterface.UndoRefactoringQuickFixProcessor"
+            id="UndoRefactoringQuickFixProcessor">
       </quickFixProcessor>
    </extension>
 
