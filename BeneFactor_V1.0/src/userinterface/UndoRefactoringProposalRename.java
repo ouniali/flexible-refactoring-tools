@@ -1,5 +1,7 @@
 package userinterface;
 
+import java.io.File;
+
 import JavaRefactoringAPI.JavaUndoRefactoring;
 
 public class UndoRefactoringProposalRename extends UndoRefactoringProposal{
@@ -16,7 +18,7 @@ public class UndoRefactoringProposalRename extends UndoRefactoringProposal{
 
 	@Override
 	protected String getImagePath() {
-		return null;
+		return "C:" +File.separator+ "refactoring.png";
 	}
 
 }
