@@ -36,9 +36,10 @@ public class NameChange {
 				detectedNameChanges.size());
 		if(lookBack == 0)
 			return null;
+		System.out.println(lookBack);
 		int start = detectedNameChanges.size() - 1;
 		int end = start - lookBack;
-		for (int i = start; i >= end; i--) {
+		for (int i = start; i > end; i--) {
 			ASTNameChangeInformation change = detectedNameChanges.get(i);
 			if (change.isRenamingDeclaration()) {
 				String oldNameFull = change.getOldNameFull();
