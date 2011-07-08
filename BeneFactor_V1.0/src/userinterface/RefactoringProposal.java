@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 import compilation.RefactoringChances;
+import flexiblerefactoring.BeneFactor;
 
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -40,7 +41,7 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	@Override
 	public final Image getImage()
 	{
-		String path = getImagePath();
+		String path = BeneFactor.getIconPath(getImageFileName());
 		if(new File(path).exists())
 		{
 			Display display = PlatformUI.getWorkbench().getDisplay();
@@ -54,6 +55,6 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	public IContextInformation getContextInformation() {return null;};
 	@Override
 	public int getRelevance(){return Integer.MAX_VALUE;};
-	abstract protected String getImagePath();
+	abstract protected String getImageFileName();
 	
 }

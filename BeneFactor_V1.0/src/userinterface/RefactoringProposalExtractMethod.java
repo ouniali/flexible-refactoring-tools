@@ -1,9 +1,15 @@
 package userinterface;
 
 import java.io.File;
+
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.UIPlugin;
+
+import flexiblerefactoring.BeneFactor;
 
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -21,9 +27,8 @@ public class RefactoringProposalExtractMethod extends RefactoringProposal{
 	}
 
 	@Override
-	protected String getImagePath() {
-		// TODO Auto-generated method stub
-		return "C:" +File.separator+ "refactoring.png";
+	protected String getImageFileName() {
+		return "refactoring.png";
 	}
 
 }
