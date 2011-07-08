@@ -17,7 +17,7 @@ public class UndoRefactoringProposalExtractMethod extends UndoRefactoringProposa
 
 	@Override
 	protected String getImageFileName() {
-		return "refactoring.png";
+		return "undo_rename.jpg";
 	}
 
 }

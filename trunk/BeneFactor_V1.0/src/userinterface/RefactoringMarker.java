@@ -45,6 +45,7 @@ public class RefactoringMarker {
 		marker.setAttribute(IMarker.MESSAGE, message);
 		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
 		marker.setAttribute(IMarker.USER_EDITABLE, false);
+		marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
 		return marker;
 	}
 
