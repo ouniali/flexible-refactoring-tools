@@ -28,7 +28,7 @@ public class RefactoringProposalExtractMethod extends RefactoringProposal{
 
 	@Override
 	protected String getImageFileName() {
-		return "refactoring.png";
+		return "rename.jpg";
 	}
 
 }

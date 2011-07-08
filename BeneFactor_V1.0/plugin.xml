@@ -61,6 +61,17 @@
       </compilationParticipant>
    </extension>
    <extension
+         point="org.eclipse.jdt.ui.quickFixProcessors">
+      <quickFixProcessor
+            class="userinterface.RefactoringQuickFixProcessor"
+            id="RefactoringQuickFixProcessor">
+      </quickFixProcessor>
+      <quickFixProcessor
+            class="userinterface.UndoRefactoringQuickFixProcessor"
+            id="UndoRefactoringQuickFixProcessor">
+      </quickFixProcessor>
+   </extension>
+   <extension
          id="refactoringmarker"
          point="org.eclipse.core.resources.markers">
    </extension>
@@ -74,22 +85,27 @@
             value="false">
       </persistent>
       <super
-            type="org.eclipse.core.resources.problemmarker">
+            type="org.eclipse.core.resources.textmarker">
       </super>
       <super
             type="BeneFactor.refactoringmarker">
       </super>
    </extension>
    <extension
-         point="org.eclipse.jdt.ui.quickFixProcessors">
-      <quickFixProcessor
-            class="userinterface.RefactoringQuickFixProcessor"
-            id="RefactoringQuickFixProcessor">
-      </quickFixProcessor>
-      <quickFixProcessor
-            class="userinterface.UndoRefactoringQuickFixProcessor"
-            id="UndoRefactoringQuickFixProcessor">
-      </quickFixProcessor>
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerSeverity="1"
+            markerType="BeneFactor.refactoringproblem"
+            name="refactoringproblemannotation"
+            super="org.eclipse.ui.workbench.texteditor.warning">
+      </type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="refactoringproblemannotation"
+            icon="icons/refactoring.png">
+      </specification>
    </extension>
 
 </plugin>
