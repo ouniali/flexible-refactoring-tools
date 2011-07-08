@@ -17,8 +17,8 @@ public class UndoRefactoringProposalRename extends UndoRefactoringProposal{
 	}
 
 	@Override
-	protected String getImagePath() {
-		return "C:" +File.separator+ "refactoring.png";
+	protected String getImageFileName() {
+		return "refactoring.png";
 	}
 
 }

@@ -15,9 +15,11 @@ import org.eclipse.jdt.ui.text.java.*;
 import org.eclipse.ui.*;
 import org.eclipse.jdt.internal.compiler.CompilationResult;
 
+import flexiblerefactoring.BeneFactor;
+
 public class RefactoringMarker {
 
-	public static final String REFACTORING_MARKER_TYPE = "FlexibleRefactoring.refactoringproblem";
+	public static final String REFACTORING_MARKER_TYPE = BeneFactor.PlugInID + ".refactoringproblem";
 	
 	public static IMarker addRefactoringMarkerIfNo(ICompilationUnit unit,
 			int lineNo) {
@@ -47,26 +49,7 @@ public class RefactoringMarker {
 	}
 
 
-	public static void deleteRefactoringMarker(ICompilationUnit unit,
-			int line) {
-		IMarker[] markers;
-		try {
-			markers = unit.getResource().findMarkers(IMarker.MARKER, true, IResource.DEPTH_INFINITE);
-			int index;
-			for( index = 0; index < markers.length; index++)
-			{
-				IMarker marker = markers[index];
-				int lineNo = marker.getAttribute(IMarker.LINE_NUMBER, -1);
-				if(line == lineNo)
-					break;
-			}
-			if(index<markers.length)
-				markers[index].delete();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}	
-	}
-	
+
 	public static ArrayList<IMarker> getMarkers(ICompilationUnit unit, int line) throws Exception
 	{
 		ArrayList<IMarker> markersInLine = new ArrayList<IMarker>();

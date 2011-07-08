@@ -6,6 +6,8 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+
+import flexiblerefactoring.BeneFactor;
 import JavaRefactoringAPI.JavaRefactoring;
 
 public class RefactoringProposalRename extends RefactoringProposal{
@@ -20,8 +22,8 @@ public class RefactoringProposalRename extends RefactoringProposal{
 	}
 
 	@Override
-	protected String getImagePath() {
+	protected String getImageFileName() {
 		// TODO Auto-generated method stub
-		return "C:" +File.separator+ "refactoring.png";
+		return "refactoring.png";
 	}
 }

@@ -10,6 +10,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
+import flexiblerefactoring.BeneFactor;
+
 import JavaRefactoringAPI.JavaUndoRefactoring;
 
 abstract public class UndoRefactoringProposal implements IJavaCompletionProposal {
@@ -35,7 +37,7 @@ abstract public class UndoRefactoringProposal implements IJavaCompletionProposal
 
 	@Override
 	public Image getImage() {
-		String path = getImagePath();
+		String path = BeneFactor.getIconPath(getImageFileName());
 		if(new File(path).exists())
 		{
 			Display display = PlatformUI.getWorkbench().getDisplay();
@@ -54,6 +56,6 @@ abstract public class UndoRefactoringProposal implements IJavaCompletionProposal
 	@Override
 	public int getRelevance() {	return Integer.MAX_VALUE;}
 	
-	abstract protected String getImagePath();
+	abstract protected String getImageFileName();
 
 }

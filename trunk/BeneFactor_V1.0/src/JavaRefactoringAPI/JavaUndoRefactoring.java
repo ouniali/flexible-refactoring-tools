@@ -19,10 +19,11 @@ public class JavaUndoRefactoring implements Runnable{
 	IMarker marker;
 	int type;
 	
-	public JavaUndoRefactoring(ICompilationUnit u, int l, int type ,Change d)
+	public JavaUndoRefactoring(ICompilationUnit u, int l, int t ,Change d)
 	{	
 		unit = u;
 		line = l;
+		type = t;
 		undo = d;
 		marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 	}
