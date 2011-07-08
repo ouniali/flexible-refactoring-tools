@@ -24,6 +24,6 @@ public class RefactoringProposalRename extends RefactoringProposal{
 	@Override
 	protected String getImageFileName() {
 		// TODO Auto-generated method stub
-		return "refactoring.png";
+		return "rename.jpg";
 	}
 }

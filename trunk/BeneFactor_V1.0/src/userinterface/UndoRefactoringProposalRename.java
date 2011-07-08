@@ -18,7 +18,7 @@ public class UndoRefactoringProposalRename extends UndoRefactoringProposal{
 
 	@Override
 	protected String getImageFileName() {
-		return "refactoring.png";
+		return "undo_rename.jpg";
 	}
 
 }
