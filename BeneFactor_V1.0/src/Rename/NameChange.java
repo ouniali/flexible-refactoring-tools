@@ -34,6 +34,8 @@ public class NameChange {
 	static public ASTNameChangeInformation searchDeclarationChangeInHistory(String fullName) {
 		int lookBack = Math.min(MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY,
 				detectedNameChanges.size());
+		if(lookBack == 0)
+			return null;
 		int start = detectedNameChanges.size() - 1;
 		int end = start - lookBack;
 		for (int i = start; i >= end; i--) {
