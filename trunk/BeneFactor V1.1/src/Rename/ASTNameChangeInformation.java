@@ -106,10 +106,10 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		int line = getRefactoringMarkerLine(unit);
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 		
-		System.out.println(this.originalNameFull);
+	/*	System.out.println(this.originalNameFull);
 		System.out.println(bindingKeyOne);
 		System.out.println(this.modifiedNameFull);
-		System.out.println(bindingKeyTwo);
+		System.out.println(bindingKeyTwo);*/
 		
 		if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
