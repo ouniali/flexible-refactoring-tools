@@ -224,7 +224,7 @@ public class Diff {
 			System.exit(1);
 		}
 		pinfo.symbol[linenum] = node.addSymbol(linebuffer, pinfo == oldinfo,
-				linenum, diff_information);
+				linenum, this);
 	}
 
 	/*
@@ -589,20 +589,21 @@ class node { /* the tree is made up of these nodes */
 	int /* enum linestates */linestate;
 	String line;
 
-	static node panchor = null; /* symtab is a tree hung from this */
-	StringBuffer sBuffer;
+	static node panchor = null;
+	Diff diff;
+	/* symtab is a tree hung from this */
 	/**
 	 * Construct a new symbol table node and fill in its fields.
 	 * 
 	 * @param string
 	 *            A line of the text file
 	 */
-	node(String pline, StringBuffer b) {
+	node(String pline, Diff d) {
 		pleft = pright = null;
 		linestate = freshnode;
 		/* linenum field is not always valid */
 		line = pline;
-		sBuffer = b;
+		diff = d;
 	}
 
 	/**
@@ -612,11 +613,11 @@ class node { /* the tree is made up of these nodes */
 	 *            pline, a line of text If node's linestate == freshnode, then
 	 *            created the node.
 	 */
-	static node matchsymbol(String pline, StringBuffer b) {
+	static node matchsymbol(String pline, Diff d) {
 		int comparison;
 		node pnode = panchor;
 		if (panchor == null)
-			return panchor = new node(pline, b);
+			return panchor = new node(pline, d);
 		for (;;) {
 			comparison = pnode.line.compareTo(pline);
 			if (comparison == 0)
@@ -624,14 +625,14 @@ class node { /* the tree is made up of these nodes */
 
 			if (comparison < 0) {
 				if (pnode.pleft == null) {
-					pnode.pleft = new node(pline, b);
+					pnode.pleft = new node(pline, d);
 					return pnode.pleft;
 				}
 				pnode = pnode.pleft;
 			}
 			if (comparison > 0) {
 				if (pnode.pright == null) {
-					pnode.pright = new node(pline, b);
+					pnode.pright = new node(pline, d);
 					return pnode.pright;
 				}
 				pnode = pnode.pright;
@@ -642,12 +643,11 @@ class node { /* the tree is made up of these nodes */
 
 	/**
 	 * addSymbol(String pline) - Saves line into the symbol table. Returns a
-	 * handle to the symtab entry for that unique line. If inoldfile nonzero,
 	 * then linenum is remembered.
 	 */
-	static node addSymbol(String pline, boolean inoldfile, int linenum, StringBuffer b) {
+	static node addSymbol(String pline, boolean inoldfile, int linenum, Diff d) {
 		node pnode;
-		pnode = matchsymbol(pline, b); /* find the node in the tree */
+		pnode = matchsymbol(pline, d); /* find the node in the tree */
 		if (pnode.linestate == freshnode) {
 			pnode.linestate = inoldfile ? oldonce : newonce;
 		} else {
@@ -675,7 +675,6 @@ class node { /* the tree is made up of these nodes */
 	 * showSymbol Prints the line to stdout.
 	 */
 	void showSymbol() {
-		sBuffer.append(line);
-		sBuffer.append('\n');
+		diff.println(line);
 	}
 }
