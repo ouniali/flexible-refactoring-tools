@@ -157,7 +157,7 @@ public class Diff {
 	public static final String HEADER_END_OF_DIFFERENCE = ">>>> End of differences.";
 	public static final String HEADER_FILES_ARE_IDENTICAL = ">>>> Files are identical.";
 	public static final String HEADER_DELETE_AT = ">>>> DELETE AT ";
-	public static final String HEADER_CHANGED_TO =">>>>     CHANGED TO";
+	public static final String HEADER_CHANGED_TO =">>>> CHANGED TO";
 	public static final String HEADER_INSERT_BEFORE =">>>> INSERT BEFORE ";
 	public static final String TAIL_CHANGED_FROM = " CHANGED FROM";
 	public static final String MIDDLE_MOVED_TO_BEFORE = " MOVED TO BEFORE ";
