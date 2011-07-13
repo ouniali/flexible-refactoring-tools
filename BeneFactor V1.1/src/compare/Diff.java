@@ -24,8 +24,8 @@ class fileInfo {
 		try {
 			file = new DataInputStream(new FileInputStream(filename));
 		} catch (IOException e) {
-			System.err.println("Diff can't read file " + filename);
-			System.err.println("Error Exception was:" + e);
+			System.out.println("Diff can't read file " + filename);
+			System.out.println("Error Exception was:" + e);
 			System.exit(1);
 		}
 	}
@@ -178,7 +178,7 @@ public class Diff {
 			inputscan(oldinfo);
 			inputscan(newinfo);
 		} catch (IOException e) {
-			System.err.println("Read error: " + e);
+			System.out.println("Read error: " + e);
 		}
 
 		/*
@@ -220,7 +220,7 @@ public class Diff {
 	void storeline(String linebuffer, fileInfo pinfo) {
 		int linenum = ++pinfo.maxLine; /* note, no line zero */
 		if (linenum > fileInfo.MAXLINECOUNT) {
-			System.err.println("MAXLINECOUNT exceeded, must stop.");
+			System.out.println("MAXLINECOUNT exceeded, must stop.");
 			System.exit(1);
 		}
 		pinfo.symbol[linenum] = node.addSymbol(linebuffer, pinfo == oldinfo,
@@ -534,7 +534,7 @@ public class Diff {
 		int count;
 		printstatus = idle;
 		if (newinfo.other[printnewline] != printoldline) {
-			System.err.println("BUG IN LINE REFERENCING");
+			System.out.println("BUG IN LINE REFERENCING");
 			System.exit(1);
 		}
 		count = blocklen[printoldline];
