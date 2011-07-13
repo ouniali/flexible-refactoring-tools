@@ -61,8 +61,9 @@ public class CompilationUnitHistoryRecord {
 		FileManipulationMethods.save(Directory + File.separator
 				+ BindingFileName, bVisitor.getBindingInformation());
 		previousRecord = earlierVersionP;
+		
 		if(previousRecord != null)
-			diff = new JavaSourceDiff (Diff.getDiffDescription(previousRecord.getASTFilePath(),ASTFileName));
+			diff = new JavaSourceDiff (Diff.getDiffDescription(previousRecord.getASTFilePath(),this.getASTFilePath()));
 		else 
 			diff = null;
 	}
@@ -213,7 +214,7 @@ public class CompilationUnitHistoryRecord {
 	
 	public String getASTFilePath()
 	{
-		return ASTFileName;
+		return Directory + File.separator + ASTFileName;
 	}
 	
 	public JavaSourceDiff getDiffInformationFromPreviousVersion()
