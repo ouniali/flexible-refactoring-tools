@@ -46,8 +46,10 @@ public class CompilationUnitHistory {
 			if(tree.subtreeMatch(new ASTMatcher(), lastUnit))
 				return false;
 		}
-		
-		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName,System.currentTimeMillis()));
+		String earlierPath = "";
+		if(Records.size()>= 0)
+			earlierPath = Records.get(Records.size()-1).getASTFilePath();
+		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName,System.currentTimeMillis(), earlierPath));
 		
 		detectRefactoringOpportunity(Records, unit);
 		

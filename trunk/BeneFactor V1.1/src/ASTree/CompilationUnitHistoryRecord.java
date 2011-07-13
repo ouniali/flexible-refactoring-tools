@@ -16,7 +16,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 
-import Rename.NamesInCompilationUnit;
+import compare.Diff;
+
 import Rename.*;
 
 public class CompilationUnitHistoryRecord {
@@ -24,6 +25,7 @@ public class CompilationUnitHistoryRecord {
 	static final String root = "AST_FULL";
 	private final long time;
 	private final String Directory;
+	private final String EarlierASTFileName;
 	private final String ASTFileName;
 	private final String BindingFileName;
 	private final String ProjectName;
@@ -32,8 +34,9 @@ public class CompilationUnitHistoryRecord {
 	private final IJavaProject Project;
 	private final ICompilationUnit Unit;
 
+
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
-			ICompilationUnit iu, String pro, String pac, String un, long t)
+			ICompilationUnit iu, String pro, String pac, String un, long t, String earlierVersionP)
 			throws Exception {
 		Project = proj;
 		Unit = iu;
@@ -54,6 +57,7 @@ public class CompilationUnitHistoryRecord {
 		unit.accept(bVisitor);
 		FileManipulationMethods.save(Directory + File.separator
 				+ BindingFileName, bVisitor.getBindingInformation());
+		EarlierASTFileName = earlierVersionP;
 	}
 
 	public String getPackageName() {
@@ -198,6 +202,16 @@ public class CompilationUnitHistoryRecord {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public String getASTFilePath()
+	{
+		return this.ASTFileName;
+	}
+	
+	public String getDiffInformationFromPreviousVersion()
+	{
+		return Diff.getDiffDescription(ASTFileName, EarlierASTFileName);
 	}
 
 }
