@@ -153,6 +153,14 @@ public class Diff {
 	 * stderr and then exit with error to the system.
 	 */
 	protected static StringBuffer description;
+	public static final String HEADER_DIFFERENCE_OF_FILE = ">>>> Difference of file \"";
+	public static final String HEADER_END_OF_DIFFERENCE = ">>>> End of differences.";
+	public static final String HEADER_FILES_ARE_IDENTICAL = ">>>> Files are identical.";
+	public static final String HEADER_DELETE_AT = ">>>> DELETE AT ";
+	public static final String HEADER_CHANGED_TO =">>>>     CHANGED TO";
+	public static final String HEADER_INSERT_BEFORE =">>>> INSERT BEFORE ";
+	public static final String TAIL_CHANGED_FROM = " CHANGED FROM";
+	public static final String MIDDLE_MOVED_TO_BEFORE = " MOVED TO BEFORE ";
 
 	public static String getDiffDescription(String path1, String path2) {
 		description = new StringBuffer();
@@ -163,7 +171,7 @@ public class Diff {
 
 	/** Do one file comparison. Called with both filenames. */
 	public void doDiff(String oldFile, String newFile) {
-		println(">>>> Difference of file \"" + oldFile + "\" and file \""
+		println(HEADER_DIFFERENCE_OF_FILE + oldFile + "\" and file \""
 				+ newFile + "\".\n");
 		oldinfo = new fileInfo(oldFile);
 		newinfo = new fileInfo(newFile);
@@ -402,9 +410,9 @@ public class Diff {
 				showmove();
 		}
 		if (anyprinted == true)
-			println(">>>> End of differences.");
+			println(HEADER_END_OF_DIFFERENCE);
 		else
-			println(">>>> Files are identical.");
+			println(HEADER_FILES_ARE_IDENTICAL);
 	}
 
 	/*
@@ -445,7 +453,7 @@ public class Diff {
 	 */
 	void showdelete() {
 		if (printstatus != delete)
-			println(">>>> DELETE AT " + printoldline);
+			println(HEADER_DELETE_AT + printoldline);
 		printstatus = delete;
 		oldinfo.symbol[printoldline].showSymbol();
 		anyprinted = true;
@@ -457,9 +465,9 @@ public class Diff {
 	 */
 	void showinsert() {
 		if (printstatus == change)
-			println(">>>>     CHANGED TO");
+			println(HEADER_CHANGED_TO);
 		else if (printstatus != insert)
-			println(">>>> INSERT BEFORE " + printoldline);
+			println(HEADER_INSERT_BEFORE + printoldline);
 		printstatus = insert;
 		newinfo.symbol[printnewline].showSymbol();
 		anyprinted = true;
@@ -472,7 +480,7 @@ public class Diff {
 	 */
 	void showchange() {
 		if (printstatus != change)
-			println(">>>> " + printoldline + " CHANGED FROM");
+			println(">>>> " + printoldline + TAIL_CHANGED_FROM);
 		printstatus = change;
 		oldinfo.symbol[printoldline].showSymbol();
 		anyprinted = true;
@@ -542,7 +550,7 @@ public class Diff {
 		else if (oldblock >= newblock) { // assume new's blk moved.
 			blocklen[newother] = -1; // stamp block as "printed".
 			println(">>>> " + newother + " THRU " + (newother + newblock - 1)
-					+ " MOVED TO BEFORE " + printoldline);
+					+ MIDDLE_MOVED_TO_BEFORE + printoldline);
 			for (; newblock > 0; newblock--, printnewline++)
 				newinfo.symbol[printnewline].showSymbol();
 			anyprinted = true;
