@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 
 import compare.Diff;
+import compare.JavaSourceDiff;
 
 import Rename.*;
 
@@ -25,7 +26,6 @@ public class CompilationUnitHistoryRecord {
 	static final String root = "AST_FULL";
 	private final long time;
 	private final String Directory;
-	private final String EarlierASTFileName;
 	private final String ASTFileName;
 	private final String BindingFileName;
 	private final String ProjectName;
@@ -33,10 +33,13 @@ public class CompilationUnitHistoryRecord {
 	private final String UnitName;
 	private final IJavaProject Project;
 	private final ICompilationUnit Unit;
+	
+	private final CompilationUnitHistoryRecord previousRecord;
+	private final JavaSourceDiff diff;
 
 
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
-			ICompilationUnit iu, String pro, String pac, String un, long t, String earlierVersionP)
+			ICompilationUnit iu, String pro, String pac, String un, long t, CompilationUnitHistoryRecord earlierVersionP)
 			throws Exception {
 		Project = proj;
 		Unit = iu;
@@ -57,7 +60,11 @@ public class CompilationUnitHistoryRecord {
 		unit.accept(bVisitor);
 		FileManipulationMethods.save(Directory + File.separator
 				+ BindingFileName, bVisitor.getBindingInformation());
-		EarlierASTFileName = earlierVersionP;
+		previousRecord = earlierVersionP;
+		if(previousRecord != null)
+			diff = new JavaSourceDiff (Diff.getDiffDescription(previousRecord.getASTFilePath(),ASTFileName));
+		else 
+			diff = null;
 	}
 
 	public String getPackageName() {
@@ -206,12 +213,12 @@ public class CompilationUnitHistoryRecord {
 	
 	public String getASTFilePath()
 	{
-		return this.ASTFileName;
+		return ASTFileName;
 	}
 	
-	public String getDiffInformationFromPreviousVersion()
+	public JavaSourceDiff getDiffInformationFromPreviousVersion()
 	{
-		return Diff.getDiffDescription(ASTFileName, EarlierASTFileName);
+		return diff;
 	}
 
 }

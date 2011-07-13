@@ -456,7 +456,7 @@ public class Diff {
 	 */
 	void showdelete() {
 		if (printstatus != delete)
-			println(">>>>DELETE AT " + printoldline);
+			println(">>>> DELETE AT " + printoldline);
 		printstatus = delete;
 		oldinfo.symbol[printoldline].showSymbol();
 		anyprinted = true;
@@ -468,9 +468,9 @@ public class Diff {
 	 */
 	void showinsert() {
 		if (printstatus == change)
-			println(">>>>CHANGED TO");
+			println(">>>> CHANGED TO");
 		else if (printstatus != insert)
-			println(">>>>INSERT BEFORE " + printoldline);
+			println(">>>> INSERT BEFORE " + printoldline);
 		printstatus = insert;
 		newinfo.symbol[printnewline].showSymbol();
 		anyprinted = true;
