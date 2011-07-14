@@ -107,7 +107,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	
 	
 	@SuppressWarnings("restriction")
-	private static JavaRenameProcessor getRenameProcessor(IJavaElement element) throws Exception
+	public static JavaRenameProcessor getRenameProcessor(IJavaElement element) throws Exception
 	{
 		int eleType = element.getElementType();				
 		
