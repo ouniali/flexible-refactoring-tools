@@ -9,10 +9,7 @@ public class SourceDiffDelete extends SourceDiff {
 		deletedSource = dCode;
 	}
 
-	@Override
-	String performUndo(String source) {
-		return null;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -22,6 +19,14 @@ public class SourceDiffDelete extends SourceDiff {
 
 	public String getDeletedCode() {
 		return deletedSource;
+	}
+
+
+
+	@Override
+	public String performChange(String source) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

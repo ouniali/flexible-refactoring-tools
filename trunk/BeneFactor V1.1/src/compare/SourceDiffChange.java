@@ -11,11 +11,7 @@ public class SourceDiffChange extends SourceDiff{
 		afterChange = to;
 	}
 
-	@Override
-	String performUndo(String source) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public String toString() {
@@ -33,6 +29,14 @@ public class SourceDiffChange extends SourceDiff{
 	public String getCodeAfterChange()
 	{
 		return afterChange;
+	}
+
+
+
+	@Override
+	public String performChange(String source) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

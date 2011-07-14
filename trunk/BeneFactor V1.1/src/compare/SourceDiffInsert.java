@@ -9,10 +9,7 @@ public class SourceDiffInsert extends SourceDiff{
 		insertedSource = source;
 	}
 
-	@Override
-	String performUndo(String source) {
-		return null;
-	}
+
 
 	@Override
 	public String toString() {
@@ -23,5 +20,13 @@ public class SourceDiffInsert extends SourceDiff{
 	public String getInsertedCode()
 	{
 		return insertedSource;
+	}
+
+
+
+	@Override
+	public String performChange(String source) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
