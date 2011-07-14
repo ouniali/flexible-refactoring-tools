@@ -161,6 +161,7 @@ public class Diff {
 	public static final String HEADER_INSERT_BEFORE =">>>> INSERT BEFORE ";
 	public static final String TAIL_CHANGED_FROM = " CHANGED FROM";
 	public static final String MIDDLE_MOVED_TO_BEFORE = " MOVED TO BEFORE ";
+	public static final String HEADER_ARROW = ">>>> ";
 
 	public static String getDiffDescription(String path1, String path2) {
 		description = new StringBuffer();
@@ -480,7 +481,7 @@ public class Diff {
 	 */
 	void showchange() {
 		if (printstatus != change)
-			println(">>>> " + printoldline + TAIL_CHANGED_FROM);
+			println(HEADER_ARROW + printoldline + TAIL_CHANGED_FROM);
 		printstatus = change;
 		oldinfo.symbol[printoldline].showSymbol();
 		anyprinted = true;
@@ -549,7 +550,7 @@ public class Diff {
 			skipnew(); // already printed.
 		else if (oldblock >= newblock) { // assume new's blk moved.
 			blocklen[newother] = -1; // stamp block as "printed".
-			println(">>>> " + newother + " THRU " + (newother + newblock - 1)
+			println(HEADER_ARROW + newother + " THRU " + (newother + newblock - 1)
 					+ MIDDLE_MOVED_TO_BEFORE + printoldline);
 			for (; newblock > 0; newblock--, printnewline++)
 				newinfo.symbol[printnewline].showSymbol();
