@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import compare.Diff;
 import compare.JavaSourceDiff;
+import compare.SourceDiff;
 
 import Rename.*;
 
@@ -35,7 +36,7 @@ public class CompilationUnitHistoryRecord {
 	private final ICompilationUnit Unit;
 	
 	private final CompilationUnitHistoryRecord previousRecord;
-	private final JavaSourceDiff diff;
+	private final ArrayList<SourceDiff> diffs;
 
 
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
@@ -63,9 +64,9 @@ public class CompilationUnitHistoryRecord {
 		previousRecord = earlierVersionP;
 		
 		if(previousRecord != null)
-			diff = new JavaSourceDiff (Diff.getDiffDescription(previousRecord.getASTFilePath(),this.getASTFilePath()));
+			diffs = JavaSourceDiff.getSourceDiffs(previousRecord.getASTFilePath(),this.getASTFilePath());
 		else 
-			diff = null;
+			diffs = null;
 	}
 
 	public String getPackageName() {
@@ -217,9 +218,9 @@ public class CompilationUnitHistoryRecord {
 		return Directory + File.separator + ASTFileName;
 	}
 	
-	public JavaSourceDiff getDiffInformationFromPreviousVersion()
+	public ArrayList<SourceDiff> getDiffInformationFromPreviousVersion()
 	{
-		return diff;
+		return diffs;
 	}
 
 }
