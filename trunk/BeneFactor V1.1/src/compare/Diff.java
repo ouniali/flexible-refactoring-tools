@@ -153,15 +153,16 @@ public class Diff {
 	 * stderr and then exit with error to the system.
 	 */
 	protected static StringBuffer description;
-	public static final String HEADER_DIFFERENCE_OF_FILE = ">>>> Difference of file \"";
-	public static final String HEADER_END_OF_DIFFERENCE = ">>>> End of differences.";
-	public static final String HEADER_FILES_ARE_IDENTICAL = ">>>> Files are identical.";
-	public static final String HEADER_DELETE_AT = ">>>> DELETE AT ";
-	public static final String HEADER_CHANGED_TO =">>>> CHANGED TO";
-	public static final String HEADER_INSERT_BEFORE =">>>> INSERT BEFORE ";
+	public static final String HEADER_ARROW = "BENEFACTOR_DIFF_INFO>>>> ";
+	public static final String HEADER_DIFFERENCE_OF_FILE = HEADER_ARROW + "Difference of file \"";
+	public static final String HEADER_END_OF_DIFFERENCE = HEADER_ARROW + "End of differences.";
+	public static final String HEADER_FILES_ARE_IDENTICAL = HEADER_ARROW + "Files are identical.";
+	public static final String HEADER_DELETE_AT = HEADER_ARROW + "DELETE AT ";
+	public static final String HEADER_CHANGED_TO = HEADER_ARROW + "CHANGED TO";
+	public static final String HEADER_INSERT_BEFORE =HEADER_ARROW +"INSERT BEFORE ";
 	public static final String TAIL_CHANGED_FROM = " CHANGED FROM";
 	public static final String MIDDLE_MOVED_TO_BEFORE = " MOVED TO BEFORE ";
-	public static final String HEADER_ARROW = ">>>> ";
+	
 
 	public static String getDiffDescription(String path1, String path2) {
 		description = new StringBuffer();
