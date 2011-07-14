@@ -63,29 +63,25 @@ public class JavaSourceDiff {
 	private static SourceDiffChange getSourceDiffChangeFromDiffDescription(
 			String[] lines, int fromLine, int toLine) {
 		int lineNumber = extractIntegerFromString(lines[fromLine]);
-		StringBuffer fromSource = new StringBuffer();
-		StringBuffer toSource = new StringBuffer();
+		ArrayList<String> fromSource = new ArrayList<String>();
+		ArrayList<String> toSource = new ArrayList<String>();
 
 		for (int i = fromLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;
-			else {
-				fromSource.append(lines[i]);
-				fromSource.append('\n');
-			}
+			else 
+				fromSource.add(lines[i]);
 		}
 
 		for (int i = toLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;
-			else {
-				toSource.append(lines[i]);
-				toSource.append('\n');
-			}
+			else 
+				toSource.add(lines[i]);
 		}
 
-		return new SourceDiffChange(lineNumber, fromSource.toString(),
-				toSource.toString());
+		return new SourceDiffChange(lineNumber, fromSource,
+				toSource);
 	}
 
 	private static ArrayList<SourceDiff> getSourceDiffInserts(String[] lines) {
@@ -126,32 +122,28 @@ public class JavaSourceDiff {
 
 	private static SourceDiffInsert getSourceDiffInsertFromDiffDescription(
 			String[] lines, int insertLine) {
-		StringBuffer source = new StringBuffer();
+		ArrayList<String> source = new ArrayList<String>();
 		int lineNumber = extractIntegerFromString(lines[insertLine]);
 		for (int i = insertLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;
-			else {
-				source.append(lines[i]);
-				source.append('\n');
-			}
+			else 
+				source.add(lines[i]);
 		}
-		return new SourceDiffInsert(lineNumber, source.toString());
+		return new SourceDiffInsert(lineNumber, source);
 	}
 
 	private static SourceDiffDelete getSourceDiffDeleteFromDiffDescription(
 			String[] lines, int deleteLine) {
-		StringBuffer source = new StringBuffer();
+		ArrayList<String> source = new ArrayList<String>();
 		int lineNumber = extractIntegerFromString(lines[deleteLine]);
 		for (int i = deleteLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;
-			else {
-				source.append(lines[i]);
-				source.append('\n');
-			}
+			else 
+				source.add(lines[i]);
 		}
-		return new SourceDiffDelete(lineNumber, source.toString());
+		return new SourceDiffDelete(lineNumber, source);
 	}
 
 }

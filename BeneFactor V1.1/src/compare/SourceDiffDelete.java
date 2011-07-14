@@ -1,10 +1,12 @@
 package compare;
 
+import java.util.ArrayList;
+
 public class SourceDiffDelete extends SourceDiff {
 
-	String deletedSource;
+	ArrayList<String> deletedSource;
 
-	public SourceDiffDelete(int l, String dCode) {
+	public SourceDiffDelete(int l, ArrayList<String> dCode) {
 		super(l);
 		deletedSource = dCode;
 	}
@@ -18,7 +20,7 @@ public class SourceDiffDelete extends SourceDiff {
 	}
 
 	public String getDeletedCode() {
-		return deletedSource;
+		return combineStringArray(deletedSource);
 	}
 
 
