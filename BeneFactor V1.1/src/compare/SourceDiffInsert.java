@@ -14,4 +14,14 @@ public class SourceDiffInsert extends SourceDiff{
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "INSERT at " +getLineNumber() + '\n' + getInsertedCode();
+	}
+	
+	public String getInsertedCode()
+	{
+		return insertedSource;
+	}
 }
