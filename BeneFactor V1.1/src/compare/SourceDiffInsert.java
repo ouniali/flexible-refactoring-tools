@@ -49,4 +49,12 @@ public class SourceDiffInsert extends SourceDiff{
 		
 		return result.toString();
 	}
+
+
+
+	@Override
+	public String skipChange(String source) {
+		// TODO Auto-generated method stub
+		return source;
+	}
 }

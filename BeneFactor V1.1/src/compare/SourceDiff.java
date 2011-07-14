@@ -13,6 +13,7 @@ abstract public class SourceDiff {
 		return lineNumber;
 	}
 	public abstract String performChange(String source);
+	public abstract String skipChange(String source);
 	public abstract String toString();
 	protected static String combineStringArray(ArrayList<String> sArray)
 	{
