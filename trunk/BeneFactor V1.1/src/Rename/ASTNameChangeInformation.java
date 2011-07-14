@@ -101,11 +101,11 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return bindingKeyTwo;
 	}
 	
-	public JavaRefactoringRename getRenameRefactoring(ICompilationUnit unit) throws Exception
+	public JavaRefactoring getRenameRefactoring(ICompilationUnit unit) throws Exception
 	{
 		int line = getRefactoringMarkerLine(unit);
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		
+		boolean usingDiff = true;
 	/*	System.out.println(this.originalNameFull);
 		System.out.println(bindingKeyOne);
 		System.out.println(this.modifiedNameFull);
@@ -121,16 +121,30 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			String keyAfter = declarationChange.getNewNameBindingKey();
 			if(!keyBefore.equals("") && !keyAfter.equals(""))
 			{
-				JavaRefactoringRename refactoring = new JavaRefactoringRename(
-						unit,
-						line,
-						marker,
-						keyBefore,
-						keyAfter,
-						originalName,
-						modifiedName
-						);
-				return refactoring;
+				if(usingDiff)
+				{
+					JavaRefactoringRenameDiff refactoringDiff = new JavaRefactoringRenameDiff(
+							unit,
+							line,
+							marker,
+							declarationChange,
+							modifiedName
+							);
+					return refactoringDiff;
+				}
+				else
+				{
+					JavaRefactoringRename refactoring = new JavaRefactoringRename(
+							unit,
+							line,
+							marker,
+							keyBefore,
+							keyAfter,
+							originalName,
+							modifiedName
+							);
+					return refactoring;
+				}
 			}
 			else
 				return null;
