@@ -49,7 +49,7 @@ public class CompilationUnitHistory {
 		CompilationUnitHistoryRecord earlier = null;
 		if(Records.size()> 0)
 			earlier = Records.get(Records.size()-1);
-		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName,System.currentTimeMillis(), earlier));
+		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName,System.currentTimeMillis(), earlier, this));
 		
 		detectRefactoringOpportunity(Records, unit);
 		
@@ -78,6 +78,15 @@ public class CompilationUnitHistory {
 	{
 		return PackageName;
 	}
+	
+	public CompilationUnitHistoryRecord getMostRecentRecord()
+	{
+		if(Records.size() > 0)
+			return Records.get(Records.size()-1);
+		else
+			return null;
+	}
+	
 	
 	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{

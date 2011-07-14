@@ -116,6 +116,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			ASTNameChangeInformation declarationChange = NameChange.searchDeclarationChangeInHistory(bindingKeyTwo);
 			if(declarationChange == null)
 				return null;
+			
 			String keyBefore = declarationChange.getOldNameBindingKey();
 			String keyAfter = declarationChange.getNewNameBindingKey();
 			if(!keyBefore.equals("") && !keyAfter.equals(""))
