@@ -34,14 +34,14 @@ public class CompilationUnitHistoryRecord {
 	private final String UnitName;
 	private final IJavaProject Project;
 	private final ICompilationUnit Unit;
-	
+
 	private final CompilationUnitHistoryRecord previousRecord;
+	private final CompilationUnitHistory history;
 	private final ArrayList<SourceDiff> diffs;
 
-
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
-			ICompilationUnit iu, String pro, String pac, String un, long t, CompilationUnitHistoryRecord earlierVersionP)
-			throws Exception {
+			ICompilationUnit iu, String pro, String pac, String un, long t,
+			CompilationUnitHistoryRecord earlierVersionP, CompilationUnitHistory his) throws Exception {
 		Project = proj;
 		Unit = iu;
 		ProjectName = pro;
@@ -62,11 +62,14 @@ public class CompilationUnitHistoryRecord {
 		FileManipulationMethods.save(Directory + File.separator
 				+ BindingFileName, bVisitor.getBindingInformation());
 		previousRecord = earlierVersionP;
-		
-		if(previousRecord != null)
-			diffs = JavaSourceDiff.getSourceDiffs(previousRecord.getASTFilePath(),this.getASTFilePath());
-		else 
+
+		if (previousRecord != null)
+			diffs = JavaSourceDiff.getSourceDiffs(
+					previousRecord.getASTFilePath(), this.getASTFilePath());
+		else
 			diffs = null;
+		
+		history = his;
 	}
 
 	public String getPackageName() {
@@ -149,12 +152,11 @@ public class CompilationUnitHistoryRecord {
 		}
 		return "";
 	}
-	public BindingKey getDecodedBindingKey(String fullName)
-	{
+
+	public BindingKey getDecodedBindingKey(String fullName) {
 		String key = getBindingKey(fullName);
 		return new BindingKey(key);
 	}
-	
 
 	public IJavaProject getIJavaProject() {
 		return Project;
@@ -169,10 +171,9 @@ public class CompilationUnitHistoryRecord {
 		ArrayList<ICompilationUnit> allOtherUnits = ASTreeManipulationMethods
 				.getSiblingsOfACompilationUnitInItsProject(Unit, Project);
 
-		for (ICompilationUnit unit : allOtherUnits) {	
+		for (ICompilationUnit unit : allOtherUnits) {
 			NamesInCompilationUnit names = new NamesInCompilationUnit(unit);
-			allCount += names.getNamesOfBindingInCompilatioUnit(binding)
-					.size();
+			allCount += names.getNamesOfBindingInCompilatioUnit(binding).size();
 		}
 		allCount += getBindingCount(binding);
 		return allCount;
@@ -184,8 +185,7 @@ public class CompilationUnitHistoryRecord {
 				.getICompilationUnitsOfAProject(Project);
 		for (ICompilationUnit unit : allUnits) {
 			NamesInCompilationUnit names = new NamesInCompilationUnit(unit);
-			allCount += names.getNamesOfBindingInCompilatioUnit(binding)
-					.size();
+			allCount += names.getNamesOfBindingInCompilatioUnit(binding).size();
 		}
 
 		return allCount;
@@ -212,15 +212,26 @@ public class CompilationUnitHistoryRecord {
 		}
 		return 0;
 	}
-	
-	public String getASTFilePath()
-	{
+
+	public String getASTFilePath() {
 		return Directory + File.separator + ASTFileName;
 	}
+
+	public SourceDiff getSourceDiff() {
+		if (diffs != null && diffs.size() > 0)
+			return diffs.get(0);
+		else
+			return null;
+	}
 	
-	public ArrayList<SourceDiff> getDiffInformationFromPreviousVersion()
+	public CompilationUnitHistoryRecord getPreviousRecord()
 	{
-		return diffs;
+		return previousRecord;
+	}
+	
+	public CompilationUnitHistory getAllHistory()
+	{
+		return history;
 	}
 
 }

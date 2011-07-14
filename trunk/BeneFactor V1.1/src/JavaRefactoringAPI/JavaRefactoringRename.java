@@ -46,7 +46,9 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		oldName = oN;
 		newName = nN;
 		project = u.getJavaProject(); 
-	}
+	}	
+	
+	
 	
 	@SuppressWarnings("restriction")
 	@Override
