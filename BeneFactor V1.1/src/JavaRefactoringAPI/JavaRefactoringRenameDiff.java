@@ -1,32 +1,65 @@
 package JavaRefactoringAPI;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameProcessor;
+import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 
 import compare.SourceDiff;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
 import Rename.ASTNameChangeInformation;
+import Rename.NamesInJavaProject;
 
 public class JavaRefactoringRenameDiff extends JavaRefactoring {
 
 	ASTNameChangeInformation declarationNameChange;
 	String bindingKey;
+	IJavaProject project;
+	String newName;
 
 	public JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
-			ASTNameChangeInformation decChange) 
+			ASTNameChangeInformation decChange, String nN) 
 	{
 		super(u, l, m);
 		declarationNameChange = decChange;
 		bindingKey = decChange.getOldNameBindingKey();
+		project = u.getJavaProject(); 
+		newName = nN;
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	protected void performRefactoring() throws Exception {
 		// TODO Auto-generated method stub
+		NullProgressMonitor monitor = new NullProgressMonitor();
+		RenameRefactoring refactoring;
+		ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKey);	
+		ICompilationUnit unit = this.getICompilationUnit();
+		if(!names.isEmpty())
+		{
+			unit.becomeWorkingCopy(monitor);
+			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+			JavaRenameProcessor processor = JavaRefactoringRename.getRenameProcessor(element);
+			processor.setNewElementName(newName);
+			refactoring = new RenameRefactoring(processor);
+			refactoring.checkInitialConditions(monitor);
+			refactoring.checkFinalConditions(monitor);
+			Change change = refactoring.createChange(monitor);
+			Change undo = change.perform(monitor);
+			this.setUndo(undo);
+			unit.commitWorkingCopy(true, monitor);
+			unit.discardWorkingCopy();
+		}
 
 	}
 
@@ -60,7 +93,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 	@Override
 	public int getRefactoringType() {
 		// TODO Auto-generated method stub
-		return 0;
+		return JavaRefactoringType.RENAME;
 	}
 
 }
