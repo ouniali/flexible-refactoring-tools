@@ -11,4 +11,5 @@ abstract public class SourceDiff {
 		return lineNumber;
 	}
 	abstract String performUndo(String source);
+	public abstract String toString();
 }
