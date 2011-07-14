@@ -1,10 +1,12 @@
 package compare;
 
+import java.util.ArrayList;
+
 public class SourceDiffInsert extends SourceDiff{
 
-	String insertedSource;
+	ArrayList<String> insertedSource;
 	
-	public SourceDiffInsert(int l, String source) {
+	public SourceDiffInsert(int l, ArrayList<String> source) {
 		super(l);
 		insertedSource = source;
 	}
@@ -19,7 +21,7 @@ public class SourceDiffInsert extends SourceDiff{
 	
 	public String getInsertedCode()
 	{
-		return insertedSource;
+		return combineStringArray(insertedSource);
 	}
 
 

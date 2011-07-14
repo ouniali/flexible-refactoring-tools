@@ -1,11 +1,13 @@
 package compare;
 
+import java.util.ArrayList;
+
 public class SourceDiffChange extends SourceDiff{
 
-	String beforeChange;
-	String afterChange;
+	ArrayList<String> beforeChange;
+	ArrayList<String> afterChange;
 	
-	public SourceDiffChange(int l, String from, String to) {
+	public SourceDiffChange(int l, ArrayList<String> from, ArrayList<String> to) {
 		super(l);
 		beforeChange = from;
 		afterChange = to;
@@ -23,12 +25,12 @@ public class SourceDiffChange extends SourceDiff{
 	
 	public String getCodeBeforeChange()
 	{
-		return beforeChange;
+		return combineStringArray(beforeChange);
 	}
 	
 	public String getCodeAfterChange()
 	{
-		return afterChange;
+		return combineStringArray(afterChange);
 	}
 
 
@@ -36,6 +38,9 @@ public class SourceDiffChange extends SourceDiff{
 	@Override
 	public String performChange(String source) {
 		// TODO Auto-generated method stub
+		String[] lines = source.split("\n");
+		
+		
 		return null;
 	}
 	
