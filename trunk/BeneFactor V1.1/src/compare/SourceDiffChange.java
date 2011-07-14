@@ -20,7 +20,7 @@ public class SourceDiffChange extends SourceDiff{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "CHANGE AT" + getLineNumber()+ '\n' + 
+		return "CHANGE at " + getLineNumber()+ '\n' + 
 			"before: \n" + getCodeBeforeChange() +
 			"after: \n" + getCodeAfterChange();
 	}
