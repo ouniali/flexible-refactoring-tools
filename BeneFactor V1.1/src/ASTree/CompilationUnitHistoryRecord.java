@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jface.text.Assert;
 
 import compare.Diff;
 import compare.JavaSourceDiff;
@@ -219,7 +220,9 @@ public class CompilationUnitHistoryRecord {
 
 	public SourceDiff getSourceDiff() {
 		if (diffs != null && diffs.size() > 0)
+		{
 			return diffs.get(0);
+		}
 		else
 			return null;
 	}
