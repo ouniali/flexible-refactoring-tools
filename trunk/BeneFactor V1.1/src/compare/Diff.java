@@ -174,7 +174,7 @@ public class Diff {
 	/** Do one file comparison. Called with both filenames. */
 	public void doDiff(String oldFile, String newFile) {
 		println(HEADER_DIFFERENCE_OF_FILE + oldFile + "\" and file \""
-				+ newFile + "\".\n");
+				+ newFile + "\".");
 		oldinfo = new fileInfo(oldFile);
 		newinfo = new fileInfo(newFile);
 		/* we don't process until we know both files really do exist. */
