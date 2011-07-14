@@ -14,6 +14,7 @@ import ASTree.ASTreeManipulationMethods;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringExtractMethod;
 import JavaRefactoringAPI.JavaRefactoringRename;
+import JavaRefactoringAPI.JavaRefactoringRenameDiff;
 
 import compilation.RefactoringChances;
 
@@ -41,7 +42,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 	
 	public static RefactoringProposal getRefactoringProposalRefactoring(JavaRefactoring ref)
 	{
-		if(ref instanceof JavaRefactoringRename)
+		if(ref instanceof JavaRefactoringRename || ref instanceof JavaRefactoringRenameDiff)
 			return new RefactoringProposalRename(ref);
 		else if ( ref instanceof JavaRefactoringExtractMethod)
 			return new RefactoringProposalExtractMethod(ref);
