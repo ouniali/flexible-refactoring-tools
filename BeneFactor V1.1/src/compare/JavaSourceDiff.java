@@ -33,8 +33,7 @@ public class JavaSourceDiff {
 		ArrayList<SourceDiffChange> diffs = new ArrayList<SourceDiffChange>();
 		for(int i = 0; i< lines.length; i++)
 		{
-			String line = lines
-			if()
+		
 		}
 		return diffs;
 	}
