@@ -38,10 +38,29 @@ public class SourceDiffChange extends SourceDiff{
 	@Override
 	public String performChange(String source) {
 		// TODO Auto-generated method stub
+		int changeLineAt = getLineNumber(); 
 		String[] lines = source.split("\n");
+		StringBuffer result = new StringBuffer();
 		
+		for(int i = 0 ; i< changeLineAt - 1; i++)
+		{
+			result.append(lines[i]);
+			result.append('\n');
+		}
 		
-		return null;
+		for(String s : afterChange)
+		{
+			result.append(s);
+			result.append('\n');
+		}
+		
+		for(int i = changeLineAt + beforeChange.size() -1; i< lines.length; i++)
+		{
+			result.append(lines[i]);
+			result.append('\n');
+		}	
+		
+		return result.toString();
 	}
 	
 }

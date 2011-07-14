@@ -11,8 +11,6 @@ public class SourceDiffDelete extends SourceDiff {
 		deletedSource = dCode;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -23,12 +21,24 @@ public class SourceDiffDelete extends SourceDiff {
 		return combineStringArray(deletedSource);
 	}
 
-
-
 	@Override
 	public String performChange(String source) {
 		// TODO Auto-generated method stub
-		return null;
+		int deleteAt = getLineNumber();
+		String[] lines = source.split("\n");
+		StringBuffer result = new StringBuffer();
+
+		for (int i = 0; i < deleteAt - 1; i++) {
+			result.append(lines[i]);
+			result.append('\n');
+		}
+
+		for (int i = deleteAt + deletedSource.size() - 1; i < lines.length; i++) {
+			result.append(lines[i]);
+			result.append('\n');
+		}
+
+		return result.toString();
 	}
 
 }
