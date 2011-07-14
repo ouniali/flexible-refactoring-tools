@@ -45,6 +45,8 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			currentRecord = currentRecord.getPreviousRecord();
 		}
 		
+		source = startRecord.getSourceDiff().skipChange(source);
+		
 		while(!diffs.isEmpty())
 		{
 			SourceDiff diff= diffs.pop();
