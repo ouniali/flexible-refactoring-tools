@@ -1,5 +1,6 @@
 package utitilies;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,5 +21,17 @@ public class StringUtilities {
 		Matcher matcher = Pattern.compile("\\d+").matcher(s);
 		matcher.find();
 		return Integer.valueOf(matcher.group());
+	}
+	
+	public static String combineStringArray(ArrayList<String> sArray)
+	{
+		StringBuffer buffer = new StringBuffer();
+		for(String s : sArray)
+		{
+			buffer.append(s);
+			buffer.append('\n');
+		}	
+		
+		return buffer.toString();
 	}
 }

@@ -2,6 +2,8 @@ package compare;
 
 import java.util.ArrayList;
 
+import utitilies.StringUtilities;
+
 public class SourceDiffChange extends SourceDiff{
 
 	ArrayList<String> beforeChange;
@@ -25,12 +27,12 @@ public class SourceDiffChange extends SourceDiff{
 	
 	public String getCodeBeforeChange()
 	{
-		return combineStringArray(beforeChange);
+		return StringUtilities.combineStringArray(beforeChange);
 	}
 	
 	public String getCodeAfterChange()
 	{
-		return combineStringArray(afterChange);
+		return StringUtilities.combineStringArray(afterChange);
 	}
 
 
@@ -61,9 +63,7 @@ public class SourceDiffChange extends SourceDiff{
 		}	
 		
 		return result.toString();
-	}
-
-
+	}	
 
 	@Override
 	public String skipChange(String source) {
