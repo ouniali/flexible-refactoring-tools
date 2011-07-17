@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 import org.eclipse.compare.internal.*;
 
+import utitilies.*;
+
 public class JavaSourceDiff {
 
 	public static ArrayList<SourceDiff> getSourceDiffs(String oldPath,
@@ -26,11 +28,7 @@ public class JavaSourceDiff {
 		return diffs;
 	}
 
-	private static int extractIntegerFromString(String s) {
-		Matcher matcher = Pattern.compile("\\d+").matcher(s);
-		matcher.find();
-		return Integer.valueOf(matcher.group());
-	}
+	
 
 	private static ArrayList<SourceDiff> getSourceDiffChanges(String[] lines) {
 		ArrayList<SourceDiff> changes = new ArrayList<SourceDiff>();
@@ -62,7 +60,7 @@ public class JavaSourceDiff {
 
 	private static SourceDiffChange getSourceDiffChangeFromDiffDescription(
 			String[] lines, int fromLine, int toLine) {
-		int lineNumber = extractIntegerFromString(lines[fromLine]);
+		int lineNumber = StringUtilities.extractIntegerFromString(lines[fromLine]);
 		ArrayList<String> fromSource = new ArrayList<String>();
 		ArrayList<String> toSource = new ArrayList<String>();
 
@@ -123,7 +121,7 @@ public class JavaSourceDiff {
 	private static SourceDiffInsert getSourceDiffInsertFromDiffDescription(
 			String[] lines, int insertLine) {
 		ArrayList<String> source = new ArrayList<String>();
-		int lineNumber = extractIntegerFromString(lines[insertLine]);
+		int lineNumber = StringUtilities.extractIntegerFromString(lines[insertLine]);
 		for (int i = insertLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;
@@ -136,7 +134,7 @@ public class JavaSourceDiff {
 	private static SourceDiffDelete getSourceDiffDeleteFromDiffDescription(
 			String[] lines, int deleteLine) {
 		ArrayList<String> source = new ArrayList<String>();
-		int lineNumber = extractIntegerFromString(lines[deleteLine]);
+		int lineNumber = StringUtilities.extractIntegerFromString(lines[deleteLine]);
 		for (int i = deleteLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;
