@@ -15,6 +15,17 @@ public class ExtractMethod {
 	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 	
+	public static boolean isEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord)
+	{
+		int line = newRecord.getSourceDiff().getLineNumber();
+		
+		
+		return true;
+	}
+	
+	
+	
+	
 	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records)
 	{
 		if(Records.size() == 0)
