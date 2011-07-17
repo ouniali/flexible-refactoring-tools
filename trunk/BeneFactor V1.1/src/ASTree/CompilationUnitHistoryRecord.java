@@ -168,6 +168,7 @@ public class CompilationUnitHistoryRecord {
 	public ICompilationUnit getICompilationUnit() {
 		return Unit;
 	}
+	
 
 	public int getNumberOfSameBindingInHistory(String binding) throws Exception {
 		int allCount = 0;

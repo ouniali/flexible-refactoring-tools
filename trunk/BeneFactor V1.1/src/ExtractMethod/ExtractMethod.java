@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.*;
 
+import utitilies.StringUtilities;
+
+import compare.*;
+
 import Rename.ASTNameChangeInformation;
 
 import ASTree.ASTChangeInformationGenerator;
@@ -17,10 +21,27 @@ public class ExtractMethod {
 	
 	public static boolean isEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord)
 	{
-		int line = newRecord.getSourceDiff().getLineNumber();
+		SourceDiff diff = newRecord.getSourceDiff();
+		ASTMethodDeclarationVisitor methodVisitor = new ASTMethodDeclarationVisitor();
+		CompilationUnit tree = newRecord.getASTree();
+		tree.accept(methodVisitor);
 		
+		if (diff instanceof SourceDiffChange )
+		{
+			SourceDiffChange diffChange = (SourceDiffChange) diff;
+			int line = diffChange.getLineNumber();
+			String changeFrom = diffChange.getCodeBeforeChange();
+			if(StringUtilities.isWhiteSpaceString(changeFrom))
+				;
+			
+		}
+		else if (diff instanceof SourceDiffInsert)
+		{
+			SourceDiffInsert diffInsert = (SourceDiffInsert) diff;
+			int line = diffInsert.getLineNumber();
+		}
 		
-		return true;
+		return false;
 	}
 	
 	
