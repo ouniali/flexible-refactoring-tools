@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 
+import utitilies.FileManipulationMethods;
+
 import Rename.*;
 
 public class ASTChangeInformation {
