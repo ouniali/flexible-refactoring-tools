@@ -17,6 +17,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.Assert;
 
+import utitilies.FileManipulationMethods;
+
 import compare.Diff;
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
