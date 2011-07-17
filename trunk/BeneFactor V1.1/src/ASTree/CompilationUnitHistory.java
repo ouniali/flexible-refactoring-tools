@@ -110,7 +110,11 @@ public class CompilationUnitHistory {
 				RefactoringChances.addNewRefactoringChance(refactoring);
 				System.out.println("Extract method detected.");
 			}
-		}		
+		}
+		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())
+		{
+		
+		}
 	}
 	
 
