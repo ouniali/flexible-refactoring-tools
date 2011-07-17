@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import userinterface.RefactoringMarker;
 import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.*;
 
 public class RefactoringChances {
 	
@@ -47,5 +48,31 @@ public class RefactoringChances {
 			e.printStackTrace();
 		}
 	}
+	
+	public static ArrayList<JavaRefactoring> getPendingExtractMethodRefactoring()
+	{
+		ArrayList<JavaRefactoring> extracts = new ArrayList<JavaRefactoring>();
+		
+		for(JavaRefactoring ref : refactorings)
+		{
+			if(ref instanceof JavaRefactoringExtractMethod)
+				extracts.add(ref);
+		}	
+		return extracts;	
+	}
+	
+	public static ArrayList<JavaRefactoring> getPendingRenameRefactoring()
+	{
+		ArrayList<JavaRefactoring> renames = new ArrayList<JavaRefactoring>();
+		
+		for(JavaRefactoring ref : refactorings)
+		{
+			if(ref instanceof JavaRefactoringRename || ref instanceof JavaRefactoringRenameDiff)
+				renames.add(ref);
+		}	
+		return renames;
+		
+	}
+
 	
 }
