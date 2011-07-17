@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 
-import utitilies.FileManipulationMethods;
+import utitilies.*;
 
 import Rename.*;
 
@@ -56,7 +56,7 @@ public class ASTChangeInformation {
 		Directory = root+File.separator+project.getElementName();
 		ChangeFileName = oldRecord.getPackageName()+"_"+oldRecord.getCompilationUnitName()+"_"+oldRecord.getTime()+"_"+newRecord.getTime()+".txt";
 		new File(Directory).mkdirs();
-		FileManipulationMethods.save(Directory + File.separator + ChangeFileName, getChangeInformation(node1, node2));
+		FileUtilities.save(Directory + File.separator + ChangeFileName, getChangeInformation(node1, node2));
 	}
 	
 

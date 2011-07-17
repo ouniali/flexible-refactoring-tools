@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.Assert;
 
-import utitilies.FileManipulationMethods;
+import utitilies.*;
 
 import compare.Diff;
 import compare.JavaSourceDiff;
@@ -56,13 +56,13 @@ public class CompilationUnitHistoryRecord {
 				+ "_bindng.txt";
 		Directory = root + File.separator + ProjectName;
 		new File(Directory).mkdirs();
-		FileManipulationMethods.save(Directory + File.separator + ASTFileName,
+		FileUtilities.save(Directory + File.separator + ASTFileName,
 				iu.getSource());
 		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
 		CompilationUnit unit = ASTreeManipulationMethods
 				.parseICompilationUnit(iu);
 		unit.accept(bVisitor);
-		FileManipulationMethods.save(Directory + File.separator
+		FileUtilities.save(Directory + File.separator
 				+ BindingFileName, bVisitor.getBindingInformation());
 		previousRecord = earlierVersionP;
 

@@ -3,7 +3,7 @@ import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-public class FileManipulationMethods {
+public class FileUtilities {
 
 
 	public static void save(String path, String str) 
