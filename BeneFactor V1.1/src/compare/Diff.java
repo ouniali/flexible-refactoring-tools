@@ -153,7 +153,7 @@ public class Diff {
 	 * stderr and then exit with error to the system.
 	 */
 	protected static StringBuffer description;
-	public static final String HEADER_ARROW = "BENEFACTOR_DIFF_INFO>>>> ";
+	public static final String HEADER_ARROW = "BENEFACTOR_DIFF_INFORMATION>>>> ";
 	public static final String HEADER_DIFFERENCE_OF_FILE = HEADER_ARROW + "Difference of file \"";
 	public static final String HEADER_END_OF_DIFFERENCE = HEADER_ARROW + "End of differences.";
 	public static final String HEADER_FILES_ARE_IDENTICAL = HEADER_ARROW + "Files are identical.";
