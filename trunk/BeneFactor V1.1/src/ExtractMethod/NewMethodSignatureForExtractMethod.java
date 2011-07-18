@@ -29,7 +29,7 @@ public class NewMethodSignatureForExtractMethod {
 
 		lineNumber = line;
 		signature = info;
-		signature = info.replaceAll("(", " ").replaceAll(")", " ");
+		signature = info.replace('(', ' ').replace(')', ' ');
 
 		tokens = new StringTokenizer(signature);
 
