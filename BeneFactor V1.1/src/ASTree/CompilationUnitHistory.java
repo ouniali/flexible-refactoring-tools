@@ -118,7 +118,9 @@ public class CompilationUnitHistory {
 			NewMethodSignatureForExtractMethod newSig = ExtractMethod.getEditingNewMethodSignature(records.get(records.size()-1));
 			if(newSig != null)
 			{
+				System.out.println(newSig);
 				JavaRefactoringExtractMethod pendingEM = (JavaRefactoringExtractMethod) RefactoringChances.getPendingExtractMethodRefactoring().get(0);
+				RefactoringChances.removeRefactoring(pendingEM);
 				int line = newSig.getLineNumber();
 				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 				ASTExtractMethodChangeInformation EMCInformation = pendingEM.getExtractMethodChangeInformation();
