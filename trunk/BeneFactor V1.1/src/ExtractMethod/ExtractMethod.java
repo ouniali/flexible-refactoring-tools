@@ -15,128 +15,128 @@ import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 
 public class ExtractMethod {
-	
+
 	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
-	
-	
-	public static boolean isEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord)
+
+	public static boolean isEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord) 
 	{
 		SourceDiff diff = newRecord.getSourceDiff();
 		ASTMethodDeclarationVisitor methodVisitor = new ASTMethodDeclarationVisitor();
 		CompilationUnit tree = newRecord.getASTree();
 		tree.accept(methodVisitor);
-		
-		if (diff instanceof SourceDiffChange )
-		{
+
+		if (diff instanceof SourceDiffChange) {
 			SourceDiffChange diffChange = (SourceDiffChange) diff;
 			int line = diffChange.getLineNumber();
 			String changeFrom = diffChange.getCodeBeforeChange();
-			return StringUtilities.isWhiteSpaceString(changeFrom) && methodVisitor.getOutsideMethodDeclarationName(line).equals("");
-		}
-		else if (diff instanceof SourceDiffInsert)
-		{
+			return StringUtilities.isWhiteSpaceString(changeFrom)
+					&& methodVisitor.getOutsideMethodDeclarationName(line).equals("");
+		} else if (diff instanceof SourceDiffInsert) {
 			SourceDiffInsert diffInsert = (SourceDiffInsert) diff;
 			int line = diffInsert.getLineNumber();
-			return methodVisitor.getOutsideMethodDeclarationName(line-1).equals("");
-		}
-		else
+			return methodVisitor.getOutsideMethodDeclarationName(line - 1).equals("");
+		} else
 			return false;
 	}
-	
-	
-	
-	
-	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records)
-	{
-		if(Records.size() == 0)
+
+	public static boolean LookingBackForDetectingExtractMethodChange(
+			ArrayList<CompilationUnitHistoryRecord> Records) {
+		if (Records.size() == 0)
 			return false;
-		CompilationUnitHistoryRecord RecordTwo = Records.get(Records.size()-1);
-		
-		if(Records.size()<=1)
+		CompilationUnitHistoryRecord RecordTwo = Records
+				.get(Records.size() - 1);
+
+		if (Records.size() <= 1)
 			return false;
-		
-		int lookBackCount = Math.min(Records.size()-1, MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD);
+
+		int lookBackCount = Math.min(Records.size() - 1,
+				MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD);
 		CompilationUnitHistoryRecord RecordOne;
-		
-		for(int i = 1; i<= lookBackCount; i++)
-		{
-			int index = Records.size()-1-i;
-			RecordOne = Records.get(index);	
-			ASTExtractMethodChangeInformation change = ASTChangeInformationGenerator.getExtractMethodASTChangeInformation(RecordOne,RecordTwo);
-			if(change != null)
-			{
+
+		for (int i = 1; i <= lookBackCount; i++) {
+			int index = Records.size() - 1 - i;
+			RecordOne = Records.get(index);
+			ASTExtractMethodChangeInformation change = ASTChangeInformationGenerator
+					.getExtractMethodASTChangeInformation(RecordOne, RecordTwo);
+			if (change != null) {
 				detectedExtractMethodChanges.add(change);
 				return true;
-			}			
-		}		
-		return false;		
+			}
+		}
+		return false;
 	}
-	
-	public static boolean isExtractMethodChange(ASTNode nodeOne, ASTNode nodeTwo)
-	{
-		if(nodeOne.getNodeType()!= ASTNode.BLOCK)
+
+	public static boolean isExtractMethodChange(ASTNode nodeOne, ASTNode nodeTwo) {
+		if (nodeOne.getNodeType() != ASTNode.BLOCK)
 			return false;
-		
-		if(nodeTwo.getNodeType() != ASTNode.BLOCK)
+
+		if (nodeTwo.getNodeType() != ASTNode.BLOCK)
 			return false;
-		
-		int LastIndexFromStart = getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
-		int FirstIndexFromEnd = getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo);
-		int childrenOneSize = ASTreeManipulationMethods.getChildNodes(nodeOne).size();
-		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo).size();
-	
-		if(childrenOneSize == 0 || childrenTwoSize ==0)
+
+		int LastIndexFromStart = getLengthOfCommonnSubnodesFromStart(nodeOne,
+				nodeTwo);
+		int FirstIndexFromEnd = getLengthOfCommonnSubnodesFromEnd(nodeOne,
+				nodeTwo);
+		int childrenOneSize = ASTreeManipulationMethods.getChildNodes(nodeOne)
+				.size();
+		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo)
+				.size();
+
+		if (childrenOneSize == 0 || childrenTwoSize == 0)
 			return false;
-			
-		if(childrenOneSize> childrenTwoSize && LastIndexFromStart + FirstIndexFromEnd  >= childrenTwoSize)
+
+		if (childrenOneSize > childrenTwoSize
+				&& LastIndexFromStart + FirstIndexFromEnd >= childrenTwoSize)
 			return true;
 		else
 			return false;
 	}
-	
-	public static int getLengthOfCommonnSubnodesFromStart(ASTNode nodeOne, ASTNode nodeTwo)
-	{
+
+	public static int getLengthOfCommonnSubnodesFromStart(ASTNode nodeOne,
+			ASTNode nodeTwo) {
 		int index = -1;
-		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods.getChildNodes(nodeOne);
-		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(nodeTwo);
-		int size = Math.min(childrenOne.size(),childrenTwo.size());
+		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods
+				.getChildNodes(nodeOne);
+		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods
+				.getChildNodes(nodeTwo);
+		int size = Math.min(childrenOne.size(), childrenTwo.size());
 		ASTNode childOne;
 		ASTNode childTwo;
-		
-		for(int i = 0; i< size; i++)
-		{
+
+		for (int i = 0; i < size; i++) {
 			childOne = childrenOne.get(i);
 			childTwo = childrenTwo.get(i);
-			if(childOne.subtreeMatch(new ASTMatcher(), childTwo))
+			if (childOne.subtreeMatch(new ASTMatcher(), childTwo))
 				index = i;
 			else
 				break;
-		}		
-		return index+1;			
+		}
+		return index + 1;
 	}
-	
-	public static int getLengthOfCommonnSubnodesFromEnd(ASTNode nodeOne, ASTNode nodeTwo)
-	{
-		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods.getChildNodes(nodeOne);
-		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(nodeTwo);
+
+	public static int getLengthOfCommonnSubnodesFromEnd(ASTNode nodeOne,
+			ASTNode nodeTwo) {
+		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods
+				.getChildNodes(nodeOne);
+		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods
+				.getChildNodes(nodeTwo);
 		int sizeOne = childrenOne.size();
 		int sizeTwo = childrenTwo.size();
 		int commonSize = Math.min(sizeOne, sizeTwo);
 		ASTNode childOne;
 		ASTNode childTwo;
 		int index = -1;
-		
-		for(int i = 0; i<commonSize; i++)
-		{
-			childOne = childrenOne.get(sizeOne-i-1);
-			childTwo = childrenTwo.get(sizeTwo-i-1);
-			if(childOne.subtreeMatch(new ASTMatcher(), childTwo))
+
+		for (int i = 0; i < commonSize; i++) {
+			childOne = childrenOne.get(sizeOne - i - 1);
+			childTwo = childrenTwo.get(sizeTwo - i - 1);
+			if (childOne.subtreeMatch(new ASTMatcher(), childTwo))
 				index = i;
 			else
 				break;
 		}
-		
-		return index+1;
+
+		return index + 1;
 	}
 }
