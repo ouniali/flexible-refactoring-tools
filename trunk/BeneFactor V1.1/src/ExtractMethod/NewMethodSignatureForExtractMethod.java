@@ -79,15 +79,15 @@ public class NewMethodSignatureForExtractMethod {
 		while (tokens.hasMoreTokens()) {
 			String token = tokens.nextToken();
 
-			if (token.equals(PrimitiveType.BOOLEAN)
-					|| token.equals(PrimitiveType.BYTE)
-					|| token.equals(PrimitiveType.CHAR)
-					|| token.equals(PrimitiveType.DOUBLE)
-					|| token.equals(PrimitiveType.FLOAT)
-					|| token.equals(PrimitiveType.INT)
-					|| token.equals(PrimitiveType.LONG)
-					|| token.equals(PrimitiveType.SHORT)
-					|| token.equals(PrimitiveType.VOID)) {
+			if (token.equals("boolean")
+					|| token.equals("byte")
+					|| token.equals("char")
+					|| token.equals("double")
+					|| token.equals("float")
+					|| token.equals("int")
+					|| token.equals("long")
+					|| token.equals("short")
+					|| token.equals("void")) {
 				returnTypeAvailable = true;
 				returnType = token;
 				return;
@@ -112,9 +112,8 @@ public class NewMethodSignatureForExtractMethod {
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("New Method Signature: " + signature + "\n");
-		if (modifierAvailable) {
+		if (modifierAvailable)
 			buffer.append("Modifer available: " + modifier + "\n");
-		}
 		if (methodNameAvailable)
 			buffer.append("Method name available: " + methodName + "\n");
 		return buffer.toString();
