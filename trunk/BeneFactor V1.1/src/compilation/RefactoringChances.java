@@ -73,6 +73,21 @@ public class RefactoringChances {
 		return renames;
 		
 	}
+	
+	public static void removeRefactoring(JavaRefactoring refactoring)
+	{
+		try
+		{		
+			IMarker marker = refactoring.getMarker();
+			if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
+				marker.delete();
+			refactorings.remove(refactoring);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
 
 	
 }
