@@ -68,7 +68,7 @@ public class CompilationUnitHistoryRecord {
 
 		if (previousRecord != null)
 			diffs = JavaSourceDiff.getSourceDiffs(
-					previousRecord.getASTFilePath(), this.getASTFilePath());
+					previousRecord.getASTFilePath(), getASTFilePath());
 		else
 			diffs = null;
 		
