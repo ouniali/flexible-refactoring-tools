@@ -5,6 +5,8 @@ import java.util.StringTokenizer;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 
+import utitilies.StringUtilities;
+
 public class NewMethodSignatureForExtractMethod {
 	
 	StringTokenizer tokens;
@@ -15,16 +17,22 @@ public class NewMethodSignatureForExtractMethod {
 	boolean returnTypeAvailable;
 	String returnType;
 	
+	boolean methodNameAvailable;
+	String methodName;
 	
 	public NewMethodSignatureForExtractMethod(String info)
 	{
-		tokens = new StringTokenizer(info);	
-	
+		tokens = new StringTokenizer(info, "()\\s", false);	
+
+		
 		modifierAvailable = false;
 		parseModifier();
 		
 		returnTypeAvailable = false;
 		parseReturnType();
+		
+		methodNameAvailable = false;
+		parseMethodName();
 	}
 	
 	private void parseModifier()
@@ -40,7 +48,7 @@ public class NewMethodSignatureForExtractMethod {
 			{
 				modifierAvailable = true;
 				modifier = token;
-				break;
+				return;
 			}
 			else
 				continue;
@@ -65,6 +73,24 @@ public class NewMethodSignatureForExtractMethod {
 			{
 				returnTypeAvailable = true;
 				returnType = token;
+				return;
+			}
+		}
+	}
+	
+	private void parseMethodName()
+	{
+		if(modifierAvailable && returnTypeAvailable)
+		{
+			while(tokens.hasMoreTokens())
+			{
+				String token = tokens.nextToken();
+				if(!token.equals(modifier ) && !token.equals(returnType) && StringUtilities.isJavaIdentifier(token))
+				{
+					methodNameAvailable = true;
+					methodName = token;
+					return;
+				}
 			}
 		}
 	}
