@@ -15,16 +15,19 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	ExtractMethodRefactoring refactoring;
 	ASTExtractMethodChangeInformation information;
 	static int extractedMethodCount = -1;
-	int modifier = Modifier.PRIVATE;
+	int modifier;
 	String returnType;
-	String methodName = getExtractedMethodName();
+	String methodName;
 	
 	
 	
 	public JavaRefactoringExtractMethod(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) {
 		super(u, l, m);
+		modifier = Modifier.PRIVATE;
+		methodName = getExtractedMethodName();
 		information = info;
 		extractedMethodCount++;
+		
 	}
 
 	
@@ -96,6 +99,14 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	public void setMethodName(String m)
 	{
 		methodName = m;
+	}
+	
+	public JavaRefactoringExtractMethod moveRefactoring(IMarker marker, int l)
+	{
+		JavaRefactoringExtractMethod refactoring = new JavaRefactoringExtractMethod(getICompilationUnit(), l, marker, getExtractMethodChangeInformation());
+		refactoring.setMethodModifier(modifier);
+		refactoring.setMethodName(methodName);
+		return refactoring; 
 	}
 
 }
