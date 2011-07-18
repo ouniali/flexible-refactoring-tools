@@ -19,6 +19,7 @@ public class ExtractMethod {
 	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 	
+	
 	public static boolean isEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord)
 	{
 		SourceDiff diff = newRecord.getSourceDiff();
@@ -31,17 +32,16 @@ public class ExtractMethod {
 			SourceDiffChange diffChange = (SourceDiffChange) diff;
 			int line = diffChange.getLineNumber();
 			String changeFrom = diffChange.getCodeBeforeChange();
-			if(StringUtilities.isWhiteSpaceString(changeFrom))
-				;
-			
+			return StringUtilities.isWhiteSpaceString(changeFrom) && methodVisitor.getOutsideMethodDeclarationName(line).equals("");
 		}
 		else if (diff instanceof SourceDiffInsert)
 		{
 			SourceDiffInsert diffInsert = (SourceDiffInsert) diff;
 			int line = diffInsert.getLineNumber();
+			return methodVisitor.getOutsideMethodDeclarationName(line-1).equals("");
 		}
-		
-		return false;
+		else
+			return false;
 	}
 	
 	
