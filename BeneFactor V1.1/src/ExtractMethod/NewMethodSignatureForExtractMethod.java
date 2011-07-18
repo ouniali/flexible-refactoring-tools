@@ -28,7 +28,7 @@ public class NewMethodSignatureForExtractMethod {
 
 		lineNumber = line;
 		signature = info;
-		tokens = new StringTokenizer(signature, "()\\s", false);
+		tokens = new StringTokenizer(signature," ",false);
 
 		modifierAvailable = false;
 		parseModifier();
