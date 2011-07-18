@@ -123,8 +123,7 @@ public class CompilationUnitHistory {
 				RefactoringChances.removeRefactoring(pendingEM);
 				int line = newSig.getLineNumber();
 				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-				ASTExtractMethodChangeInformation EMCInformation = pendingEM.getExtractMethodChangeInformation();
-				JavaRefactoringExtractMethod newEM = new JavaRefactoringExtractMethod(unit,line, marker, EMCInformation);
+				JavaRefactoringExtractMethod newEM = pendingEM.moveExtractMethodRefactoring(marker, line);
 				newSig.setJavaRefactoringExtractMethod(newEM);
 				RefactoringChances.addNewRefactoringChance(newEM);	
 				System.out.println("Extract method continued.");
