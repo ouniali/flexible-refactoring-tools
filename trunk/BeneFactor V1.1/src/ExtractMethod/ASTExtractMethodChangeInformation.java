@@ -32,6 +32,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		
 		insertPlaceNodeIndex = getCuttedASTNodeIndexInNodeTwo(node1, node2);
 	}
+	
 	private int[] getCutASTNodeIndex(ASTNode nodeOne, ASTNode nodeTwo)
 	{
 		int[] index = new int[2];
@@ -52,6 +53,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		index[1] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(lastDiffNode);
 		return index;
 	}
+	
 	private int getCuttedASTNodeIndexInNodeTwo(ASTNode nodeOne, ASTNode nodeTwo)
 	{
 		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
