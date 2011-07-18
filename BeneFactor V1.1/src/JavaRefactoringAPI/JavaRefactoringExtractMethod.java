@@ -101,7 +101,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		methodName = m;
 	}
 	
-	public JavaRefactoringExtractMethod moveRefactoring(IMarker marker, int l)
+	public JavaRefactoringExtractMethod moveExtractMethodRefactoring(IMarker marker, int l)
 	{
 		JavaRefactoringExtractMethod refactoring = new JavaRefactoringExtractMethod(getICompilationUnit(), l, marker, getExtractMethodChangeInformation());
 		refactoring.setMethodModifier(modifier);

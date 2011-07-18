@@ -1,5 +1,6 @@
 package ExtractMethod;
 
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import org.eclipse.jdt.core.dom.Modifier;
@@ -28,7 +29,9 @@ public class NewMethodSignatureForExtractMethod {
 
 		lineNumber = line;
 		signature = info;
-		tokens = new StringTokenizer(signature," ",false);
+		signature = info.replaceAll("(", " ").replaceAll(")", " ");
+
+		tokens = new StringTokenizer(signature);
 
 		modifierAvailable = false;
 		parseModifier();
