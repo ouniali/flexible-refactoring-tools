@@ -19,7 +19,7 @@ public class ExtractMethod {
 	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 
-	public static int getEditingNewMethodSignatureLine(CompilationUnitHistoryRecord newRecord) 
+	public static NewMethodSignatureForExtractMethod getEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord) 
 	{
 		SourceDiff diff = newRecord.getSourceDiff();
 		ASTMethodDeclarationVisitor methodVisitor = new ASTMethodDeclarationVisitor();
@@ -30,18 +30,18 @@ public class ExtractMethod {
 			SourceDiffChange diffChange = (SourceDiffChange) diff;
 			int line = diffChange.getLineNumber();
 			if( methodVisitor.getOutsideMethodDeclarationName(line).equals(""))
-				return line;
+				return new NewMethodSignatureForExtractMethod(line, diffChange.getCodeAfterChange());
 			else
-				return -1;
+				return null;
 		} else if (diff instanceof SourceDiffInsert) {
 			SourceDiffInsert diffInsert = (SourceDiffInsert) diff;
 			int line = diffInsert.getLineNumber();
 			if( methodVisitor.getOutsideMethodDeclarationName(line).equals(""))
-				return line;
+				return new NewMethodSignatureForExtractMethod (line, diffInsert.getInsertedCode());
 			else
-				return -1;
+				return null;
 		} else
-			return -1;
+			return null;
 	}
 
 	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 

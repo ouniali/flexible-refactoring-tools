@@ -5,14 +5,18 @@ import java.util.StringTokenizer;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 
+import JavaRefactoringAPI.JavaRefactoringExtractMethod;
+
 import utitilies.StringUtilities;
 
 public class NewMethodSignatureForExtractMethod {
 	
+	
+	int lineNumber;
 	StringTokenizer tokens;
 	
 	boolean modifierAvailable;
-	String modifier;
+	int modifier;
 	
 	boolean returnTypeAvailable;
 	String returnType;
@@ -20,8 +24,9 @@ public class NewMethodSignatureForExtractMethod {
 	boolean methodNameAvailable;
 	String methodName;
 	
-	public NewMethodSignatureForExtractMethod(String info)
+	public NewMethodSignatureForExtractMethod(int line, String info)
 	{
+		lineNumber = line;
 		tokens = new StringTokenizer(info, "()\\s", false);	
 
 		
@@ -35,19 +40,43 @@ public class NewMethodSignatureForExtractMethod {
 		parseMethodName();
 	}
 	
+	public void setJavaRefactoringExtractMethod(JavaRefactoringExtractMethod em)
+	{
+		if(modifierAvailable)
+			em.setMethodModifier(modifier);
+		if(methodNameAvailable)
+			em.setMethodName(methodName);
+	}
+	
+	
+	public int getLineNumber()
+	{
+		return lineNumber;
+	}
+	
+	
 	private void parseModifier()
 	{
 		while(tokens.hasMoreTokens())
 		{
 			String token = tokens.nextToken();
 		
-			if(token.equals( Modifier.PRIVATE) ||
-				token.equals(Modifier.PUBLIC)||
-				token.equals(Modifier.PROTECTED)
-			)
+			if(token.equals("public"))
 			{
 				modifierAvailable = true;
-				modifier = token;
+				modifier = Modifier.PUBLIC;
+				return;
+			}
+			else if(token.equals("private"))
+			{
+				modifierAvailable = true;
+				modifier = Modifier.PRIVATE;
+				return;
+			}
+			else if(token.equals("protected"))
+			{
+				modifierAvailable = true;
+				modifier = Modifier.PROTECTED;
 				return;
 			}
 			else
@@ -94,5 +123,6 @@ public class NewMethodSignatureForExtractMethod {
 			}
 		}
 	}
+	
 
 }

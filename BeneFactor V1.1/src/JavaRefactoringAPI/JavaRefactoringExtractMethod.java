@@ -15,7 +15,12 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	ExtractMethodRefactoring refactoring;
 	ASTExtractMethodChangeInformation information;
 	static int extractedMethodCount = -1;
-
+	int modifier = Modifier.PRIVATE;
+	String returnType;
+	String methodName = getExtractedMethodName();
+	
+	
+	
 	public JavaRefactoringExtractMethod(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) {
 		super(u, l, m);
 		information = info;
@@ -39,9 +44,9 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			int selectionLength = index[1] - index[0] + 1;
 			refactoring = new ExtractMethodRefactoring(this.getICompilationUnit(), selectionStart,
 					selectionLength);
-			refactoring.setMethodName(getExtractedMethodName());
 			refactoring.setReplaceDuplicates(true);
-			refactoring.setVisibility(Modifier.PRIVATE);
+			refactoring.setVisibility(modifier);
+			refactoring.setMethodName(methodName);
 			// wait for the underlying resource to be ready
 			Thread.sleep(WAIT_TIME);
 			iniStatus = refactoring.checkInitialConditions(monitor);
@@ -77,7 +82,20 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	public int getRefactoringType() {
 		return JavaRefactoringType.EXTRACT_METHOD;
 	}
-
-
+	
+	public ASTExtractMethodChangeInformation getExtractMethodChangeInformation()
+	{
+		return information;
+	}
+	
+	public void setMethodModifier(int m)
+	{
+		modifier = m;
+	}
+	
+	public void setMethodName(String m)
+	{
+		methodName = m;
+	}
 
 }

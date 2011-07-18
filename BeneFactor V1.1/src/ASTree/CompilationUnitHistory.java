@@ -13,7 +13,9 @@ import compilation.RefactoringChances;
 
 import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
+import ExtractMethod.NewMethodSignatureForExtractMethod;
 import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.JavaRefactoringExtractMethod;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChange;
 import Rename.NameChangeCountHistory;
@@ -112,8 +114,19 @@ public class CompilationUnitHistory {
 			}
 		}
 		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())
-		{
-		
+		{		
+			NewMethodSignatureForExtractMethod newSig = ExtractMethod.getEditingNewMethodSignature(records.get(records.size()-1));
+			if(newSig != null)
+			{
+				JavaRefactoringExtractMethod pendingEM = (JavaRefactoringExtractMethod) RefactoringChances.getPendingExtractMethodRefactoring().get(0);
+				int line = newSig.getLineNumber();
+				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+				ASTExtractMethodChangeInformation EMCInformation = pendingEM.getExtractMethodChangeInformation();
+				JavaRefactoringExtractMethod newEM = new JavaRefactoringExtractMethod(unit,line, marker, EMCInformation);
+				newSig.setJavaRefactoringExtractMethod(newEM);
+				RefactoringChances.addNewRefactoringChance(newEM);	
+				System.out.println("Extract method continued.");
+			}
 		}
 	}
 	
