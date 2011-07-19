@@ -20,11 +20,11 @@ public class JavaSourceDiff {
 		diffs.addAll(getSourceDiffChanges(lines));
 		diffs.addAll(getSourceDiffInserts(lines));
 		diffs.addAll(getSourceDiffDeletes(lines));
-
+/*
 		System.out.println(des);
 		for (SourceDiff diff : diffs)
 			System.out.println(diff);
-		
+		*/
 		return diffs;
 	}
 

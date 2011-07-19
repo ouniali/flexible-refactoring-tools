@@ -64,8 +64,8 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(newName);
 			refactoring = new RenameRefactoring(processor);
-			refactoring.checkInitialConditions(monitor);
-			refactoring.checkFinalConditions(monitor);
+			RefactoringStatus  initialStatus = refactoring.checkInitialConditions(monitor);
+			RefactoringStatus  finalStatus = refactoring.checkFinalConditions(monitor);
 			Change change = refactoring.createChange(monitor);
 			Change undo = change.perform(monitor);
 			this.setUndo(undo);
@@ -81,7 +81,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(!bindingKeyBeforeDeclarationChange.equals(bindingKeyAfterDeclarationChange))
 		{		
-			ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKeyAfterDeclarationChange);
+			ArrayList<Name> names = new NamesInJavaProject(unit.getJavaProject()).getNamesOfBindingInJavaProject(bindingKeyAfterDeclarationChange);
 			if(!names.isEmpty())
 			{
 				unit.becomeWorkingCopy(monitor);
