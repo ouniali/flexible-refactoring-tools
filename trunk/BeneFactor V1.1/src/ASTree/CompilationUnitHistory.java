@@ -113,6 +113,7 @@ public class CompilationUnitHistory {
 				System.out.println("Extract method detected.");
 			}
 		}
+		
 		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())
 		{		
 			NewMethodSignatureForExtractMethod newSig = ExtractMethod.getEditingNewMethodSignature(records.get(records.size()-1));
