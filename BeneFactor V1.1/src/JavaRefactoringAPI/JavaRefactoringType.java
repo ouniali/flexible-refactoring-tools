@@ -3,11 +3,12 @@ package JavaRefactoringAPI;
 public class JavaRefactoringType {
 	
 	public static final int UNCERTAIN_LOW = -1;
+	
 	public static final int RENAME =0;
-	public static final int EXTRACT_METHOD = 1;
+	public static final int EXTRACT_METHOD = 1;	
+	public static final int MOVE_CONSTANT = 2;
 	
-	
-	public static final int UNCERTAIN_HIGH = 2;
+	public static final int UNCERTAIN_HIGH = 3;
 	
 	public static String getRefactoringTypeName(int type)
 	{
