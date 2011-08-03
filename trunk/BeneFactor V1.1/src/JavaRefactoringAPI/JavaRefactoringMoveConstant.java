@@ -9,7 +9,7 @@ import org.eclipse.jdt.internal.corext.refactoring.structure.*;
 import org.eclipse.jdt.internal.ui.preferences.JavaPreferencesSettings;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
-import org.eclipse.ltk.core.refactoring.participants.*;;
+import org.eclipse.ltk.core.refactoring.participants.*;
 
 @SuppressWarnings("restriction")
 public class JavaRefactoringMoveConstant extends JavaRefactoring {
