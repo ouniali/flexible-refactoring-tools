@@ -13,5 +13,9 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 			CompilationUnitHistoryRecord nr, ASTNode node2) {
 		super(or, node1, nr, node2);
 	}
+	
+	
+	
+	
 
 }
