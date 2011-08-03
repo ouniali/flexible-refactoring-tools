@@ -16,7 +16,7 @@ public class JavaRefactoringMoveConstant extends JavaRefactoring {
 
 	MoveRefactoring moveRefactoring;
 	MoveStaticMembersProcessor moveProcessor;
-	
+	static int moveit = 0;
 	public JavaRefactoringMoveConstant(ICompilationUnit u, int l, IMarker m) 
 	{
 		super(u, l, m);
@@ -40,6 +40,8 @@ public class JavaRefactoringMoveConstant extends JavaRefactoring {
 		setUndo(undo);
 		unit.commitWorkingCopy(true, monitor);
 		unit.discardWorkingCopy();	
+		
+		moveit = 2;
 	}
 
 	@Override
