@@ -18,6 +18,7 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 		super(or, node1, nr, node2);
 		staticFieldDeclaration = MoveStaticMember.getAddedStaticDeclaration(node1, node2);
 		staticFieldDeclarationIndex = MoveStaticMember.getAddedStaticDeclarationIndex(node2, staticFieldDeclaration);
+		System.out.print(staticFieldDeclaration);
 	}
 	
 	public String getStaticFieldDeclaration()
