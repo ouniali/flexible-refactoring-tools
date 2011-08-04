@@ -20,6 +20,11 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 		staticFieldDeclarationIndex = MoveStaticMember.getAddedStaticDeclarationIndex(node2, staticFieldDeclaration);
 	}
 	
+	public String getStaticFieldDeclaration()
+	{
+		return staticFieldDeclaration;
+	}
+	
 	
 	
 	

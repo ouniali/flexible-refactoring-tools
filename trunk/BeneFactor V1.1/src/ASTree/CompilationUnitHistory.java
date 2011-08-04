@@ -2,6 +2,10 @@ package ASTree;
 
 import java.util.*;
 
+import movestaticmember.ASTChangeInformationAddStaticMember;
+import movestaticmember.ASTChangeInformationDeleteStaticMember;
+import movestaticmember.MoveStaticMember;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
@@ -136,6 +140,24 @@ public class CompilationUnitHistory {
 		}
 		
 		//move static field declaration
+		
+		if(MoveStaticMember.LookingBackForDetectingDeleteStaticDeclarationChange(records))
+		{
+			System.out.println("Delete Static Declaration Detected.");
+		}
+		
+		if(MoveStaticMember.LookingBcckForDetectingAddStaticDeclarationChange(records))
+		{
+			ASTChangeInformationAddStaticMember 
+				addStaticChange = MoveStaticMember.getLatestAddStaticChange();
+			ASTChangeInformationDeleteStaticMember 
+				deleteStaticChange = MoveStaticMember.getLatestDeleteStaticChange();
+			if(addStaticChange.getStaticFieldDeclaration().equals(deleteStaticChange.getStaticFieldDeclaration()))
+			{
+				System.out.println("Move Static Declaration Detected.");
+			}
+			
+		}
 	}
 	
 
