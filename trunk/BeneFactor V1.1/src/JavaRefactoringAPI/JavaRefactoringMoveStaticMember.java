@@ -1,5 +1,8 @@
 package JavaRefactoringAPI;
 
+import movestaticmember.ASTChangeInformationAddStaticMember;
+import movestaticmember.ASTChangeInformationDeleteStaticMember;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -12,14 +15,19 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.participants.*;
 
 @SuppressWarnings("restriction")
-public class JavaRefactoringMoveConstant extends JavaRefactoring {
+public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 
 	MoveRefactoring moveRefactoring;
 	MoveStaticMembersProcessor moveProcessor;
+	ASTChangeInformationDeleteStaticMember deleteChange;
+	ASTChangeInformationAddStaticMember addChange;
+	
 	static int moveit = 0;
-	public JavaRefactoringMoveConstant(ICompilationUnit u, int l, IMarker m) 
+	public JavaRefactoringMoveStaticMember(ICompilationUnit u, int l, IMarker m, ASTChangeInformationDeleteStaticMember delete, ASTChangeInformationAddStaticMember add) 
 	{
 		super(u, l, m);
+		deleteChange = delete;
+		addChange = add;
 	}
 
 	@Override

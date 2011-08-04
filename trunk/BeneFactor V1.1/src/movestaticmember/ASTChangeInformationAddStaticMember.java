@@ -1,9 +1,16 @@
 package movestaticmember;
 
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+
+import userinterface.RefactoringMarker;
 
 import ASTree.ASTChangeInformation;
+import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
+import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
 
 public class ASTChangeInformationAddStaticMember extends ASTChangeInformation 
 {
@@ -26,7 +33,19 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 		return staticFieldDeclaration;
 	}
 	
-	
+	public JavaRefactoringMoveStaticMember getMoveStaticMemberRefactoring(ICompilationUnit unit, ASTChangeInformationDeleteStaticMember deleteChange) throws Exception
+	{
+		int line = getRefactoringMarkerLine(unit);
+		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+		return new JavaRefactoringMoveStaticMember(unit, line, marker, deleteChange ,this);
+	}
+	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
+	{
+		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
+		int lineNo = tree.getLineNumber(node.getStartPosition());
+		return lineNo;
+	}
 	
 	
 
