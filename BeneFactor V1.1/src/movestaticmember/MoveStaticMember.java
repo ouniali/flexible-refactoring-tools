@@ -10,9 +10,27 @@ public class MoveStaticMember {
 
 	static int MAXIMUM_LOOK_BACK_COUNT_ADD_STATIC_DECLARATION = 5;
 	static int MAXIMUM_LOOK_BACK_COUNT_DELETE_STATIC_DECLARATION = 5;
-	static ArrayList<ASTChangeInformationAddStaticMember> detectedAddStaticChange = new ArrayList<ASTChangeInformationAddStaticMember>();
-	static ArrayList<ASTChangeInformationDeleteStaticMember> detectedDeleteStaticChange = new ArrayList<ASTChangeInformationDeleteStaticMember>();
+	public static ArrayList<ASTChangeInformationAddStaticMember> detectedAddStaticChange = new ArrayList<ASTChangeInformationAddStaticMember>();
+	public static ArrayList<ASTChangeInformationDeleteStaticMember> detectedDeleteStaticChange = new ArrayList<ASTChangeInformationDeleteStaticMember>();
 
+	
+	public static ASTChangeInformationAddStaticMember getLatestAddStaticChange()
+	{
+		if(detectedAddStaticChange.size() > 0)
+			return detectedAddStaticChange.get(detectedAddStaticChange.size() -1);
+		else 
+			return null;
+	}
+	
+	public static ASTChangeInformationDeleteStaticMember getLatestDeleteStaticChange()
+	{
+		if(detectedDeleteStaticChange.size() > 0)
+			return detectedDeleteStaticChange.get(detectedDeleteStaticChange.size()-1);
+		else
+			return null;
+	}
+	
+	
 	public static boolean LookingBcckForDetectingAddStaticDeclarationChange(ArrayList<CompilationUnitHistoryRecord> Records) throws Exception
 	{
 		if (Records.size() == 0)
