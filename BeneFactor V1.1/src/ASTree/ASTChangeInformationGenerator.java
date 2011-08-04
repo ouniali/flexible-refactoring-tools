@@ -2,6 +2,10 @@ package ASTree;
 
 import java.util.ArrayList;
 
+import movestaticmember.ASTChangeInformationAddStaticMember;
+import movestaticmember.ASTChangeInformationDeleteStaticMember;
+import movestaticmember.MoveStaticMember;
+
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 
@@ -35,6 +39,25 @@ public class ASTChangeInformationGenerator {
 		else
 			return null;
 	}
+	
+	public static ASTChangeInformationAddStaticMember getAddStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
+	{
+		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
+		if(MoveStaticMember.isAddStaticMemberChange(pair.nodeOne, pair.nodeTwo))
+			return new ASTChangeInformationAddStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
+		else 
+			return null;
+	}
+	
+	public static ASTChangeInformationDeleteStaticMember getDeleteStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
+	{
+		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
+		if(MoveStaticMember.isAddStaticMemberChange(pair.nodeOne, pair.nodeTwo))
+			return new ASTChangeInformationDeleteStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
+		else 
+			return null;
+	}
+	
 	
 	public static NewRootPair getTheDeepestChangedNodePair(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord)
 	{

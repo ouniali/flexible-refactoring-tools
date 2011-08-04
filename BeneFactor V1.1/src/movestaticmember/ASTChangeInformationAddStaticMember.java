@@ -8,7 +8,7 @@ import ASTree.CompilationUnitHistoryRecord;
 public class ASTChangeInformationAddStaticMember extends ASTChangeInformation 
 {
 
-	protected ASTChangeInformationAddStaticMember(
+	public ASTChangeInformationAddStaticMember(
 			CompilationUnitHistoryRecord or, ASTNode node1,
 			CompilationUnitHistoryRecord nr, ASTNode node2) {
 		super(or, node1, nr, node2);
