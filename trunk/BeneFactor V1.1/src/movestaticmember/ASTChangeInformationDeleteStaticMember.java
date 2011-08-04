@@ -7,7 +7,7 @@ import ASTree.CompilationUnitHistoryRecord;
 
 public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation{
 
-	protected ASTChangeInformationDeleteStaticMember(
+	public ASTChangeInformationDeleteStaticMember(
 			CompilationUnitHistoryRecord or, ASTNode node1,
 			CompilationUnitHistoryRecord nr, ASTNode node2) {
 		super(or, node1, nr, node2);

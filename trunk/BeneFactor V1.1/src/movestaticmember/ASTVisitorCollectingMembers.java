@@ -37,7 +37,8 @@ public class ASTVisitorCollectingMembers extends ASTVisitor{
 		StaticFieldDeclarations = new ArrayList<String>();
 	}
 	
-	public boolean visit(FieldDeclaration node) {
+	public boolean visit(FieldDeclaration node) 
+	{
 		int modifiers = node.getModifiers();
 		int index;
 		if(Modifier.isStatic(modifiers))
