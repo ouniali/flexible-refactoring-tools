@@ -52,7 +52,7 @@ public class ASTChangeInformationGenerator {
 	public static ASTChangeInformationDeleteStaticMember getDeleteStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
-		if(MoveStaticMember.isAddStaticMemberChange(pair.nodeOne, pair.nodeTwo))
+		if(MoveStaticMember.isDeleteStaticMemberChange(pair.nodeOne, pair.nodeTwo))
 			return new ASTChangeInformationDeleteStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
 		else 
 			return null;
