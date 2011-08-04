@@ -3,9 +3,74 @@ package movestaticmember;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import ASTree.ASTChangeInformationGenerator;
+import ASTree.CompilationUnitHistoryRecord;
 
 public class MoveStaticMember {
 
+	static int MAXIMUM_LOOK_BACK_COUNT_ADD_STATIC_DECLARATION = 5;
+	static int MAXIMUM_LOOK_BACK_COUNT_DELETE_STATIC_DECLARATION = 5;
+	static ArrayList<ASTChangeInformationAddStaticMember> detectedAddStaticChange = new ArrayList<ASTChangeInformationAddStaticMember>();
+	static ArrayList<ASTChangeInformationDeleteStaticMember> detectedDeleteStaticChange = new ArrayList<ASTChangeInformationDeleteStaticMember>();
+
+	public static boolean LookingBcckForDetectingAddStaticDeclarationChange(ArrayList<CompilationUnitHistoryRecord> Records) throws Exception
+	{
+		if (Records.size() == 0)
+			return false;
+		CompilationUnitHistoryRecord latestRecord = Records
+				.get(Records.size() - 1);
+
+		if (Records.size() <= 1)
+			return false;
+
+		int lookBackCount = Math.min(Records.size() - 1,
+				MAXIMUM_LOOK_BACK_COUNT_ADD_STATIC_DECLARATION);
+		CompilationUnitHistoryRecord oldRecord;
+
+		for (int i = 1; i <= lookBackCount; i++) 
+		{
+			int index = Records.size() - 1 - i;
+			oldRecord = Records.get(index);
+			ASTChangeInformationAddStaticMember change = ASTChangeInformationGenerator.getAddStaticMemberASTChangeInformation(oldRecord, latestRecord);
+			if (change != null) 
+			{
+				detectedAddStaticChange.add(change);
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	public static boolean LookingBackForDetectingDeleteStaticDeclarationChange(ArrayList<CompilationUnitHistoryRecord> Records)
+	{
+		if (Records.size() == 0)
+			return false;
+		CompilationUnitHistoryRecord latestRecord = Records
+				.get(Records.size() - 1);
+
+		if (Records.size() <= 1)
+			return false;
+
+		int lookBackCount = Math.min(Records.size() - 1,
+				MAXIMUM_LOOK_BACK_COUNT_DELETE_STATIC_DECLARATION);
+		CompilationUnitHistoryRecord oldRecord;
+
+		for (int i = 1; i <= lookBackCount; i++) 
+		{
+			int index = Records.size() - 1 - i;
+			oldRecord = Records.get(index);
+			ASTChangeInformationDeleteStaticMember change = ASTChangeInformationGenerator.getDeleteStaticMemberASTChangeInformation(oldRecord, latestRecord);
+			if (change != null) 
+			{
+				detectedDeleteStaticChange.add(change);
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 	public static int getAddedStaticDeclarationIndex(ASTNode node, String memberDeclaration)
 	{
 		ArrayList<String> staticMembersDeclarations = ASTVisitorCollectingMembers.getStaticFieldDeclarations(node);

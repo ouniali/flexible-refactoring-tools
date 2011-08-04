@@ -93,6 +93,8 @@ public class CompilationUnitHistory {
 	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{
 		JavaRefactoring refactoring;
+		
+		//rename
 		if(NameChange.LookingBackForDetectingRenameChange(records))
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
@@ -103,6 +105,8 @@ public class CompilationUnitHistory {
 				System.out.println("Rename detected.");	
 			}
 		}
+		
+		//extract method
 		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
@@ -130,6 +134,8 @@ public class CompilationUnitHistory {
 				System.out.println("Extract method continued.");
 			}
 		}
+		
+		//move static field declaration
 	}
 	
 
