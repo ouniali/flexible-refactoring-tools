@@ -35,9 +35,6 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 	
 	public IMember getMovedStaticField() throws Exception
 	{
-		CompilationUnit tree = getOldCompilationUnitRecord().getASTree();
-		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
-		int position = node.getStartPosition();
 		ICompilationUnit unit = getICompilationUnit();
 		IType type = unit.getAllTypes()[0];
 		IField[] fields = type.getFields();

@@ -156,6 +156,8 @@ public class CompilationUnitHistory {
 			{
 				refactoring =  addStaticChange.getMoveStaticMemberRefactoring(unit, deleteStaticChange);
 				RefactoringChances.addNewRefactoringChance(refactoring);
+				MoveStaticMember.clearAddStaticChange();
+				MoveStaticMember.clearDeleteStaticChange();
 				System.out.println("Move Static Declaration Detected.");
 			}
 			
