@@ -154,6 +154,8 @@ public class CompilationUnitHistory {
 				deleteStaticChange = MoveStaticMember.getLatestDeleteStaticChange();
 			if(addStaticChange.getStaticFieldDeclaration().equals(deleteStaticChange.getStaticFieldDeclaration()))
 			{
+				refactoring =  addStaticChange.getMoveStaticMemberRefactoring(unit, deleteStaticChange);
+				RefactoringChances.addNewRefactoringChance(refactoring);
 				System.out.println("Move Static Declaration Detected.");
 			}
 			
