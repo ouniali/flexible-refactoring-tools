@@ -39,7 +39,7 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
 		int position = node.getStartPosition();
 		ICompilationUnit unit = getICompilationUnit();
-		IType type = (IType)unit.getElementAt(position);
+		IType type = unit.getAllTypes()[0];
 		IField[] fields = type.getFields();
 		for(IField field : fields)
 		{
