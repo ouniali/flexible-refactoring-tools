@@ -22,7 +22,6 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 	ASTChangeInformationDeleteStaticMember deleteChange;
 	ASTChangeInformationAddStaticMember addChange;
 	
-	static int moveit = 0;
 	public JavaRefactoringMoveStaticMember(ICompilationUnit u, int l, IMarker m, ASTChangeInformationDeleteStaticMember delete, ASTChangeInformationAddStaticMember add) 
 	{
 		super(u, l, m);
@@ -38,6 +37,7 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 		ICompilationUnit unit = getICompilationUnit();
 		IJavaProject project = unit.getJavaProject();
 		moveProcessor = new MoveStaticMembersProcessor(members, JavaPreferencesSettings.getCodeGenerationSettings(project));
+		moveProcessor.setDestinationTypeFullyQualifiedName(addChange.getDestinationTypeFullName());
 		moveRefactoring = new MoveRefactoring(moveProcessor);
 		
 		unit.becomeWorkingCopy(monitor);
@@ -48,25 +48,25 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 		setUndo(undo);
 		unit.commitWorkingCopy(true, monitor);
 		unit.discardWorkingCopy();	
-		
-		moveit = 2;
 	}
 
 	@Override
 	protected void performCodeRecovery() throws Exception 
 	{
-		
+		deleteChange.recoverICompilationUnitToOldRecord();
+		addChange.recoverICompilationUnitToOldRecord();
 	}
 
 	@Override
 	public int getRefactoringType() 
 	{
-		return JavaRefactoringType.MOVE_CONSTANT;
+		return JavaRefactoringType.MOVE_STATIC;
 	}
 	
-	private IMember[] getMembersToBeMoved()
+	private IMember[] getMembersToBeMoved() throws Exception
 	{
-		return null;
+		IMember mem = deleteChange.getMovedStaticField();
+		return new IMember[]{mem};
 	}
 	
 

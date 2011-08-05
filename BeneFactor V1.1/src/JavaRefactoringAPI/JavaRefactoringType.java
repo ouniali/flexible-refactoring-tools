@@ -6,7 +6,7 @@ public class JavaRefactoringType {
 	
 	public static final int RENAME =0;
 	public static final int EXTRACT_METHOD = 1;	
-	public static final int MOVE_CONSTANT = 2;
+	public static final int MOVE_STATIC = 2;
 	
 	public static final int UNCERTAIN_HIGH = 3;
 	

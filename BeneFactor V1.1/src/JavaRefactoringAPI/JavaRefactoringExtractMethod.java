@@ -76,7 +76,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 
 	@Override
 	protected void performCodeRecovery() {
-		information.recoverICompilationUnitToOldRecord(this.getICompilationUnit());
+		information.recoverICompilationUnitToOldRecord();
 		
 	}
 
