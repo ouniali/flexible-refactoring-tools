@@ -115,14 +115,14 @@ public class ASTChangeInformation {
 		return nodeTwoIndex;
 	}
 	
-	public void recoverICompilationUnitToOldRecord(ICompilationUnit unit)
+	public void recoverICompilationUnitToOldRecord()
 	{
 		String code = getOldCompilationUnitRecord().getSourceCode();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
 		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
-	public void recoverICompilationUnitToNewRecord(ICompilationUnit unit)
+	public void recoverICompilationUnitToNewRecord()
 	{
 		String code = getNewCompilationUnitRecord().getSourceCode();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);

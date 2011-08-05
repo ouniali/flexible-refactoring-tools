@@ -1,8 +1,13 @@
 package movestaticmember;
 
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IMember;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import ASTree.ASTChangeInformation;
+import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 
 public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation{
@@ -22,6 +27,14 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 	public String getStaticFieldDeclaration()
 	{
 		return staticFieldDeclaration;
+	}
+	
+	public IMember getMovedStaticField() throws Exception
+	{
+		CompilationUnit tree = getOldCompilationUnitRecord().getASTree();
+		int position = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex).getStartPosition();
+		ICompilationUnit unit = getICompilationUnit();
+		return (IMember)unit.getElementAt(position);
 	}
 
 }

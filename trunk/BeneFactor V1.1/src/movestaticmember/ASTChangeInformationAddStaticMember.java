@@ -4,6 +4,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import userinterface.RefactoringMarker;
 
@@ -17,6 +18,7 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 
 	String staticFieldDeclaration;
 	int staticFieldDeclarationIndex;
+	String targetTypeFullyQualifiedName;
 	
 	public ASTChangeInformationAddStaticMember(
 			CompilationUnitHistoryRecord or, ASTNode node1,
@@ -25,6 +27,7 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 		super(or, node1, nr, node2);
 		staticFieldDeclaration = MoveStaticMember.getAddedStaticDeclaration(node1, node2);
 		staticFieldDeclarationIndex = MoveStaticMember.getAddedStaticDeclarationIndex(node2, staticFieldDeclaration);
+		targetTypeFullyQualifiedName =  ((TypeDeclaration) node2).getName().getFullyQualifiedName();
 		System.out.print(staticFieldDeclaration);
 	}
 	
@@ -47,6 +50,9 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 		return lineNo;
 	}
 	
-	
+	public String getDestinationTypeFullName()
+	{
+		return targetTypeFullyQualifiedName;
+	}
 
 }
