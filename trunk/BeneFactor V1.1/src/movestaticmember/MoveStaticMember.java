@@ -10,9 +10,18 @@ public class MoveStaticMember {
 
 	static int MAXIMUM_LOOK_BACK_COUNT_ADD_STATIC_DECLARATION = 5;
 	static int MAXIMUM_LOOK_BACK_COUNT_DELETE_STATIC_DECLARATION = 5;
-	public static ArrayList<ASTChangeInformationAddStaticMember> detectedAddStaticChange = new ArrayList<ASTChangeInformationAddStaticMember>();
-	public static ArrayList<ASTChangeInformationDeleteStaticMember> detectedDeleteStaticChange = new ArrayList<ASTChangeInformationDeleteStaticMember>();
+	static ArrayList<ASTChangeInformationAddStaticMember> detectedAddStaticChange = new ArrayList<ASTChangeInformationAddStaticMember>();
+	static ArrayList<ASTChangeInformationDeleteStaticMember> detectedDeleteStaticChange = new ArrayList<ASTChangeInformationDeleteStaticMember>();
 
+	public static void clearAddStaticChange()
+	{
+		detectedAddStaticChange.clear();
+	}
+	public static void clearDeleteStaticChange()
+	{
+		detectedDeleteStaticChange.clear();
+	}
+	
 	
 	public static ASTChangeInformationAddStaticMember getLatestAddStaticChange()
 	{
