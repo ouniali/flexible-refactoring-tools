@@ -29,15 +29,13 @@ public abstract class JavaRefactoring implements Runnable{
 		return undo;
 	}
 	public final synchronized void run() {
-		JavaUndoRefactoring unRef;
-		NullProgressMonitor monitor = new NullProgressMonitor();
 		try {
 			performCodeRecovery();
 			performRefactoring();		
 			RefactoringChances.clearRefactoringChances();
-			unRef = getJavaUndoRefactoring();
-			if(unRef!=null)
-				UndoRefactoringChances.addUndoRefactoring(unRef);
+			//unRef = getJavaUndoRefactoring();
+			//if(unRef!=null)
+			//	UndoRefactoringChances.addUndoRefactoring(unRef);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
