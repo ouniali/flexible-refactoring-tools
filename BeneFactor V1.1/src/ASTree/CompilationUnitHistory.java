@@ -152,13 +152,16 @@ public class CompilationUnitHistory {
 				addStaticChange = MoveStaticMember.getLatestAddStaticChange();
 			ASTChangeInformationDeleteStaticMember 
 				deleteStaticChange = MoveStaticMember.getLatestDeleteStaticChange();
-			if(addStaticChange.getStaticFieldDeclaration().equals(deleteStaticChange.getStaticFieldDeclaration()))
+			if(addStaticChange != null && deleteStaticChange != null)
 			{
-				refactoring =  addStaticChange.getMoveStaticMemberRefactoring(unit, deleteStaticChange);
-				RefactoringChances.addNewRefactoringChance(refactoring);
-				MoveStaticMember.clearAddStaticChange();
-				MoveStaticMember.clearDeleteStaticChange();
-				System.out.println("Move Static Declaration Detected.");
+				if(addStaticChange.getStaticFieldDeclaration().equals(deleteStaticChange.getStaticFieldDeclaration()))
+				{
+					refactoring =  addStaticChange.getMoveStaticMemberRefactoring(unit, deleteStaticChange);
+					RefactoringChances.addNewRefactoringChance(refactoring);
+					MoveStaticMember.clearAddStaticChange();
+					MoveStaticMember.clearDeleteStaticChange();
+					System.out.println("Move Static Declaration Detected.");
+				}
 			}
 			
 		}
