@@ -119,14 +119,14 @@ public class ASTChangeInformation {
 	{
 		String code = getOldCompilationUnitRecord().getSourceCode();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
 	public void recoverICompilationUnitToNewRecord()
 	{
 		String code = getNewCompilationUnitRecord().getSourceCode();
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
-		CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
+		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
