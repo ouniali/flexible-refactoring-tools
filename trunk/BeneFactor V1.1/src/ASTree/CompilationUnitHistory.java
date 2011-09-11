@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.*;
 import userinterface.RefactoringMarker;
 
 import compilation.RefactoringChances;
+import flexiblerefactoring.BeneFactor;
 
 import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;

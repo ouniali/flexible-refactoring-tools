@@ -22,6 +22,10 @@
             class="userinterface.UndoRefactoringQuickFixProcessor"
             id="UndoRefactoringQuickFixProcessor">
       </quickFixProcessor>
+      <quickFixProcessor
+            class="userinterface.MockQuickFixProcessor"
+            id="MockQuickFixProcessor">
+      </quickFixProcessor>
    </extension>
    <extension
          id="refactoringmarker"

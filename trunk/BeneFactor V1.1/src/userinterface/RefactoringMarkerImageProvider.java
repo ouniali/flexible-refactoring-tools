@@ -7,7 +7,6 @@ import flexiblerefactoring.BeneFactor;
 
 public class RefactoringMarkerImageProvider implements IMarkerImageProvider{
 
-
 	public String getImagePath(IMarker marker) {
 		// TODO Auto-generated method stub
 		return BeneFactor.getIconPath("refactoring.png");
