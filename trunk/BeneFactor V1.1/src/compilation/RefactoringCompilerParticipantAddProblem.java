@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.compiler.BuildContext;
 import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 
+import flexiblerefactoring.BeneFactor;
+
 public class RefactoringCompilerParticipantAddProblem extends CompilationParticipant {
 
 	public RefactoringCompilerParticipantAddProblem() {
@@ -14,7 +16,7 @@ public class RefactoringCompilerParticipantAddProblem extends CompilationPartici
 
 	public boolean isActive(IJavaProject project) 
 	{
-		return project.isOpen();
+		return !BeneFactor.SHUT_DOWN && project.isOpen();
 	}
 	
 	public void reconcile(ReconcileContext context) 
