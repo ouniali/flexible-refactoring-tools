@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+
+import flexiblerefactoring.BeneFactor;
 import ASTree.ProjectHistoryCollector;
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -30,6 +32,8 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
 	public void reconcile(ReconcileContext context) 
 	{
+		if(BeneFactor.SHUT_DOWN)
+			return;
 		try {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
