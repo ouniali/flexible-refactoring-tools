@@ -27,13 +27,11 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
 	public boolean isActive(IJavaProject project) 
 	{
-		return project.isOpen();
+		return !BeneFactor.SHUT_DOWN && project.isOpen();
 	}
 	
 	public void reconcile(ReconcileContext context) 
 	{
-		if(BeneFactor.SHUT_DOWN)
-			return;
 		try {
 			//below is original code
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
