@@ -18,7 +18,7 @@ public class MockQuickFixProcessor implements IQuickFixProcessor{
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override

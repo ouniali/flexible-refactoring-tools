@@ -34,7 +34,7 @@ public class MockProposal implements IJavaCompletionProposal{
 	@Override
 	public Image getImage() {
 		// TODO Auto-generated method stub
-		String path = BeneFactor.getIconPath("rename.jpg");
+		String path = BeneFactor.getIconPath("refactoring.png");
 		if(new File(path).exists())
 		{
 			Display display = PlatformUI.getWorkbench().getDisplay();
