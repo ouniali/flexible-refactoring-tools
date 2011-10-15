@@ -88,10 +88,8 @@ public class CompilationUnitHistoryRecord {
 	}
 
 	public CompilationUnit getASTree() {
-		String path = Directory + File.separator + ASTFileName;
-		String source = readFrom(path);
-		CompilationUnit unit = ASTreeManipulationMethods
-				.parseSourceCode(source);
+		String source = getSourceCode();
+		CompilationUnit unit = ASTreeManipulationMethods.parseSourceCode(source);
 		return unit;
 	}
 
@@ -112,23 +110,6 @@ public class CompilationUnitHistoryRecord {
 			e.printStackTrace();
 		}
 		return bString.toString();
-	}
-
-	private String readFrom(String path) {
-		StringBuffer source = new StringBuffer();
-		try {
-			FileInputStream fstream = new FileInputStream(path);
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			String strLine;
-			while ((strLine = br.readLine()) != null)
-				source.append(strLine);
-			in.close();
-			return source.toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	public long getTime() {
