@@ -87,6 +87,8 @@ public class ExtractMethod {
 		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo)
 				.size();
 
+		
+		
 		if (childrenOneSize == 0 || childrenTwoSize == 0)
 			return false;
 

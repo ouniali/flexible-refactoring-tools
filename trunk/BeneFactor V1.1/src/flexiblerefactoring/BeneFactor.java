@@ -11,7 +11,7 @@ import org.osgi.framework.Bundle;
 
 public class BeneFactor {
 	
-	public static boolean SHUT_DOWN = true;
+	public static boolean SHUT_DOWN = false;
 	
 	public static String getIconPath(String PicFileName)
 	{

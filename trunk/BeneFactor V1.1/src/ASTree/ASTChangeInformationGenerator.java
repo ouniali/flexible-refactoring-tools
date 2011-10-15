@@ -25,6 +25,7 @@ public class ASTChangeInformationGenerator {
 	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
+		System.out.println(pair);
 		if(NameChange.isRenameChange(pair.nodeOne, pair.nodeTwo))
 			return new ASTNameChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);		
 		else

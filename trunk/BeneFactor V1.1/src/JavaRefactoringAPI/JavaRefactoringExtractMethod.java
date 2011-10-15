@@ -1,5 +1,7 @@
 package JavaRefactoringAPI;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -14,7 +16,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	@SuppressWarnings("restriction")
 	ExtractMethodRefactoring refactoring;
 	ASTExtractMethodChangeInformation information;
-	static int extractedMethodCount = -1;
+	
+	static int extractedMethodCount = 0;
 	int modifier;
 	String returnType;
 	String methodName;
@@ -26,7 +29,6 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		modifier = Modifier.PRIVATE;
 		methodName = getExtractedMethodName();
 		information = info;
-		extractedMethodCount++;
 		
 	}
 
@@ -68,10 +70,12 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 
 
 	String getExtractedMethodName() {
-		if (extractedMethodCount == 0)
+		int index = extractedMethodCount;
+		extractedMethodCount ++;
+		if (index == 0)
 			return "extractedMethod";
 		else
-			return "extractedMethod" + extractedMethodCount;
+			return "extractedMethod" + Integer.toString(index);
 	}
 
 	@Override
