@@ -14,4 +14,9 @@ public class NewRootPair
 		nodeOne = one;
 		nodeTwo = two;
 	}
+	
+	public String toString()
+	{
+		return nodeOne + " " + nodeTwo;
+	}
 }

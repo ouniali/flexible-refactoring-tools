@@ -15,25 +15,29 @@ public class MockQuickFixProcessor implements IQuickFixProcessor{
 
 	//int targetLine = 10;
 	IMarker marker; 
+	boolean enable = false;
 	@Override
 	public boolean hasCorrections(ICompilationUnit unit, int problemId) {
 		// TODO Auto-generated method stub
-		return false;
+		return enable;
 	}
 
 	@Override
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
 		// TODO Auto-generated method stub
-		ICompilationUnit unit = context.getCompilationUnit();
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
-		
-		int selection = context.getSelectionOffset();
-		int line = tree.getLineNumber(selection);
-		if(marker !=null && marker.exists())
-			marker.delete();
-		marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		return new IJavaCompletionProposal[]{new MockProposal()};
+		if(enable){
+			ICompilationUnit unit = context.getCompilationUnit();
+			CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+			int selection = context.getSelectionOffset();
+			int line = tree.getLineNumber(selection);
+			if(marker !=null && marker.exists())
+				marker.delete();
+			marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+			return new IJavaCompletionProposal[]{new MockProposal()};
+		}
+		else 
+			return null;
 	}
 
 }

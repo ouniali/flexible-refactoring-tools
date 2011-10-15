@@ -55,6 +55,7 @@ public class ASTreeManipulationMethods {
 	
 	public static CompilationUnit parseICompilationUnit(ICompilationUnit unit) {
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
+		parser.setIgnoreMethodBodies(false);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(unit);
 		parser.setResolveBindings(true);
@@ -64,6 +65,7 @@ public class ASTreeManipulationMethods {
 	public static CompilationUnit parseSourceCode(String code)
 	{
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
+		parser.setIgnoreMethodBodies(false);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(code.toCharArray());
 		parser.setResolveBindings(true);
