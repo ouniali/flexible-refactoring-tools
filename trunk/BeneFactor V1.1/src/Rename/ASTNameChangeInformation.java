@@ -16,10 +16,10 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	String modifiedName;
 	String modifiedNameFull;
 	
-	int originalNameBindingCount;
+//	int originalNameBindingCount;
 	
-	float percentage;
-	final float PERCENTAGE_THRESHHOLD = (float)0.5;
+//	float percentage;
+//	final float PERCENTAGE_THRESHHOLD = (float)0.5;
 	static boolean allowFinishingRenamingAutomatically = true;
 	String bindingKeyOne;
 	String bindingKeyTwo;
@@ -46,7 +46,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		modifiedName = newName.toString();
 		modifiedNameFull = newName.getFullyQualifiedName();
 		
-		originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
+//		originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
 	
 		oldNameNodeIndex = this.getNodeOneIndex();
 		newNameNodeIndex = this.getNodeTwoIndex();
@@ -77,17 +77,19 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 
 	public int getOldNameBindingCount()
 	{
-		return originalNameBindingCount;
+		//return originalNameBindingCount;
+		return 0;
 	}
 	
 	public float getNameChangePercentage()
 	{
-		return percentage;
+		//return percentage;
+		return (float) 0.0;
 	}
 	
 	public void setNameChangePercentage(float per)
 	{
-		percentage = per;
+		//percentage = per;
 	}
 	
 
@@ -177,12 +179,14 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	
 	public boolean isPercentageAboveThreshhold()
 	{
-		return percentage> PERCENTAGE_THRESHHOLD;
+		//return percentage> PERCENTAGE_THRESHHOLD;
+		return false;
 	}
 	
 	public boolean isRenameComplete(ICompilationUnit unit)
 	{	
-		return percentage == 1.00;
+		//return percentage == 1.00;
+		return false;
 	}
 	
 	public boolean isRenamingDeclaration()
