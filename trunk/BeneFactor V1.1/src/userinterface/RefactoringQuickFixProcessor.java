@@ -31,15 +31,30 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 			IProblemLocation[] locations) throws CoreException {
 		ICompilationUnit unit = context.getCompilationUnit();
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		boolean get_all = false;
 		int selection = context.getSelectionOffset();
 		int line = tree.getLineNumber(selection);
-		ArrayList<JavaRefactoring> refactorings = RefactoringChances.getJavaRefactoring(unit, line);
-		int size = refactorings.size();
-		IJavaCompletionProposal[] results = new IJavaCompletionProposal[size];
-		for(int i = 0; i< size; i++)
-			results[i] = getRefactoringProposalRefactoring(refactorings.get(i));	
-		return results;
+		if(get_all)
+		{
+			ArrayList<JavaRefactoring> refactorings = RefactoringChances.getJavaRefactorings(unit, line);
+			int size = refactorings.size();
+			IJavaCompletionProposal[] results = new IJavaCompletionProposal[size];
+			for(int i = 0; i< size; i++)
+				results[i] = getRefactoringProposalRefactoring(refactorings.get(i));	
+			return results;
+		}
+		else
+		{
+			JavaRefactoring refactoring = RefactoringChances.getLatestJavaRefactoring(unit, line);
+			IJavaCompletionProposal[] result = new IJavaCompletionProposal[1];
+			result[0] = getRefactoringProposalRefactoring(refactoring);
+			return result;
+		}
+			
 	}
+	
+
+	
 	
 	public static RefactoringProposal getRefactoringProposalRefactoring(JavaRefactoring ref)
 	{

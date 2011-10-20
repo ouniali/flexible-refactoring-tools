@@ -18,7 +18,7 @@ public class RefactoringChances {
 	{
 		refactorings.add(ref);
 	}
-	public static ArrayList<JavaRefactoring> getJavaRefactoring(ICompilationUnit unit, int line)
+	public static ArrayList<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line)
 	{
 		ArrayList<JavaRefactoring> results = new ArrayList<JavaRefactoring>();
 		
@@ -32,6 +32,12 @@ public class RefactoringChances {
 		return results;	
 	}
 	
+	public static JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line)
+	{
+		ArrayList<JavaRefactoring> refs = getJavaRefactorings(unit, line);
+		int index = refs.size() - 1;
+		return refs.get(index);
+	}
 	public static void clearRefactoringChances()
 	{
 		try
