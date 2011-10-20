@@ -49,6 +49,11 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		{
 			unit.becomeWorkingCopy(monitor);
 			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+			//new way to get element
+			int name_start = names.get(0).getStartPosition();
+			int name_length = names.get(0).getLength();
+			element = unit.codeSelect(name_start, name_length)[0];
+			
 			JavaRenameProcessor processor = JavaRefactoringRename.getRenameProcessor(element);
 			processor.setNewElementName(newName);
 			refactoring = new RenameRefactoring(processor);
@@ -82,7 +87,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		
 		while(!diffs.isEmpty())
 		{
-			SourceDiff diff= diffs.pop();
+			SourceDiff diff = diffs.pop();
 			source = diff.performChange(source);
 		}
 	

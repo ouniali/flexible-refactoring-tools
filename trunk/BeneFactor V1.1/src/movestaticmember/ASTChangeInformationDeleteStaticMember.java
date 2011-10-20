@@ -1,12 +1,16 @@
 package movestaticmember;
 
+import java.util.ArrayList;
+
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMember;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import ASTree.ASTChangeInformation;
@@ -17,6 +21,9 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 
 	String staticFieldDeclaration;
 	int staticFieldDeclarationIndex;
+	int fieldNameIndex;
+	int fieldNameStart;
+	int fieldNameLength;
 	
 	public ASTChangeInformationDeleteStaticMember(
 			CompilationUnitHistoryRecord or, ASTNode node1,
@@ -24,7 +31,7 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 		super(or, node1, nr, node2);
 		staticFieldDeclaration = MoveStaticMember.getAddedStaticDeclaration(node2, node1);
 		staticFieldDeclarationIndex = MoveStaticMember.getAddedStaticDeclarationIndex(node1, staticFieldDeclaration);
-	
+		prepareNameIndex();
 		System.out.print(staticFieldDeclaration);
 	}
 	
@@ -34,6 +41,11 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 	}
 	
 	public IMember getMovedStaticField() throws Exception
+	{
+		return getMovedStaticField2();
+	}
+	
+	public IMember getMovedStaticField1() throws Exception
 	{
 		ICompilationUnit unit = getICompilationUnit();
 		IType type = unit.getAllTypes()[0];
@@ -45,6 +57,31 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 				return field;
 		}
 		return null;
+	}
+	
+	public IMember getMovedStaticField2() throws Exception
+	{
+		ICompilationUnit unit = this.getICompilationUnit();
+		IJavaElement ele = unit.codeSelect(fieldNameStart, fieldNameLength)[0];
+		return (IMember)ele;
+	}
+	
+	private void prepareNameIndex()
+	{
+		CompilationUnit tree = getOldCompilationUnitRecord().getASTree();
+		ASTNode parent = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
+		ArrayList<ASTNode> children = ASTreeManipulationMethods.getChildNodes(parent);
+		for(ASTNode kid: children)
+		{
+			if(kid instanceof Name)
+			{
+				fieldNameIndex = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(kid);
+				fieldNameStart = kid.getStartPosition();
+				fieldNameLength = kid.getLength();
+				return;
+			}
+		}
+		
 	}
 
 }
