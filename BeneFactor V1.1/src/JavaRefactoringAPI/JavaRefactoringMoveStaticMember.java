@@ -40,6 +40,7 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 		moveProcessor.setDestinationTypeFullyQualifiedName(addChange.getDestinationTypeFullName());
 		moveRefactoring = new MoveRefactoring(moveProcessor);
 		
+
 		unit.becomeWorkingCopy(monitor);
 		RefactoringStatus initStatus = moveRefactoring.checkInitialConditions(monitor);
 		RefactoringStatus finalStatus = moveRefactoring.checkFinalConditions(monitor);
