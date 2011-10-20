@@ -33,9 +33,6 @@ public abstract class JavaRefactoring implements Runnable{
 			performCodeRecovery();
 			performRefactoring();		
 			RefactoringChances.clearRefactoringChances();
-			//unRef = getJavaUndoRefactoring();
-			//if(unRef!=null)
-			//	UndoRefactoringChances.addUndoRefactoring(unRef);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	

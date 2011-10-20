@@ -61,6 +61,11 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		{
 			unit.becomeWorkingCopy(monitor);
 			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+			//new way to get element
+			int name_start = names.get(0).getStartPosition();
+			int name_length = names.get(0).getLength();
+			element = unit.codeSelect(name_start, name_length)[0];
+			
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(newName);
 			refactoring = new RenameRefactoring(processor);
@@ -83,14 +88,19 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		{		
 			ArrayList<Name> names = new NamesInJavaProject(unit.getJavaProject()).getNamesOfBindingInJavaProject(bindingKeyAfterDeclarationChange);
 			if(!names.isEmpty())
-			{
-				unit.becomeWorkingCopy(monitor);
-				IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+			{				
+				unit.becomeWorkingCopy(monitor);	
+				IJavaElement element = names.get(0).resolveBinding().getJavaElement();		
+				//new way to get element
+				int name_start = names.get(0).getStartPosition();
+				int name_length = names.get(0).getLength();
+				element = unit.codeSelect(name_start, name_length)[0];
+				
 				JavaRenameProcessor processor = getRenameProcessor(element);
 				processor.setNewElementName(oldName);
 				RenameRefactoring recoverRefactoring = new RenameRefactoring(processor);
-				recoverRefactoring.checkInitialConditions(monitor);
-				recoverRefactoring.checkFinalConditions(monitor);
+				RefactoringStatus  initialStatus = recoverRefactoring.checkInitialConditions(monitor);
+				RefactoringStatus  finalStatus = recoverRefactoring.checkFinalConditions(monitor);
 				recoverRefactoring.createChange(monitor).perform(monitor);
 				unit.commitWorkingCopy(true, monitor);
 				unit.discardWorkingCopy();

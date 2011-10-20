@@ -107,7 +107,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	{
 		int line = getRefactoringMarkerLine(unit);
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		boolean usingDiff = true;
+		boolean usingDiff1 = true;
+		boolean usingDiff2 = false;
 		
 		if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
@@ -119,7 +120,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			String keyAfter = declarationChange.getNewNameBindingKey();
 			if(!keyBefore.equals("") && !keyAfter.equals(""))
 			{
-				if(usingDiff)
+				if(usingDiff1)
 				{
 					JavaRefactoringRenameDiff refactoringDiff = new JavaRefactoringRenameDiff(
 							unit,
@@ -151,15 +152,30 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			if(this.isRenamingDeclaration())
 			{
-				JavaRefactoringRename refactoring = new JavaRefactoringRename(
-						unit, 
-						line, 
-						marker, 
-						bindingKeyOne, 
-						bindingKeyTwo,
-						originalName, 
-						modifiedName);
-				return refactoring;
+				if(usingDiff2)
+				{
+					JavaRefactoringRenameDiff refactoringDiff = new JavaRefactoringRenameDiff(
+							unit,
+							line,
+							marker,
+							this,
+							modifiedName
+							);					
+					return refactoringDiff;
+				}
+				else
+				{
+					JavaRefactoringRename refactoring = new JavaRefactoringRename(
+							unit, 
+							line, 
+							marker, 
+							bindingKeyOne, 
+							bindingKeyTwo,
+							originalName, 
+							modifiedName);
+					return refactoring;
+				}
+				
 			}
 			else
 			{
