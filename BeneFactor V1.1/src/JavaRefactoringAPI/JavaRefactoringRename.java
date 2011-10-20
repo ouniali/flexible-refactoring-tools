@@ -73,8 +73,10 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			//new way to get element
 			int name_start = names.get(0).getStartPosition();
 			int name_length = names.get(0).getLength();
-			element = unit.codeSelect(name_start, name_length)[0];
-			
+			IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
+			if(primary_elements.length != 0)
+				element = primary_elements[0];
+				
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(newName);
 			refactoring = new RenameRefactoring(processor);
@@ -103,7 +105,9 @@ public class JavaRefactoringRename extends JavaRefactoring{
 				//new way to get element
 				int name_start = names.get(0).getStartPosition();
 				int name_length = names.get(0).getLength();
-				element = unit.codeSelect(name_start, name_length)[0];
+				IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
+				if(primary_elements.length != 0)
+					element = primary_elements[0];
 				
 				JavaRenameProcessor processor = getRenameProcessor(element);
 				processor.setNewElementName(oldName);
