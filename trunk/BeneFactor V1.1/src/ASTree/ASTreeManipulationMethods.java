@@ -1,6 +1,7 @@
 package ASTree;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
@@ -121,7 +122,19 @@ public class ASTreeManipulationMethods {
 		return visitor.getTargetNode();
 	}
 	
-	
+	public static ArrayList<ASTNode> getOffsprings (ASTNode node)
+	{
+		ArrayList<ASTNode> offsprings = new ArrayList<ASTNode>();
+		offsprings.add(node);
+		for(int i=0;;i++)
+		{
+			if(i == offsprings.size())
+				break;
+			ASTNode current = offsprings.get(i);
+			offsprings.addAll(getChildNodes(current));
+		}
+		return offsprings;
+	}
 	
 }
 
