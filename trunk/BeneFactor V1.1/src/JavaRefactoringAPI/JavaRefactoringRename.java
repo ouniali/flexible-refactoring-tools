@@ -48,6 +48,15 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		project = u.getJavaProject(); 
 	}	
 	
+	public String getOldName()
+	{
+		return this.oldName;
+	}
+	public String getNewName()
+	{
+		return this.newName;
+	}
+	
 	
 	
 	@SuppressWarnings("restriction")
