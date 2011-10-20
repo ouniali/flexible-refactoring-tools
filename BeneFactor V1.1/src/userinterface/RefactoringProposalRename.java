@@ -9,6 +9,8 @@ import org.eclipse.ui.PlatformUI;
 
 import flexiblerefactoring.BeneFactor;
 import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.JavaRefactoringRename;
+import JavaRefactoringAPI.JavaRefactoringRenameDiff;
 
 public class RefactoringProposalRename extends RefactoringProposal{
 	
@@ -18,7 +20,23 @@ public class RefactoringProposalRename extends RefactoringProposal{
 	}
 	public String getDisplayString() {
 		// TODO Auto-generated method stub
-		return "Finish rename refactoring";
+		JavaRefactoring ref = this.refactoring;
+		String detail;
+		if(ref instanceof JavaRefactoringRename)
+		{
+			JavaRefactoringRename ref1 = (JavaRefactoringRename) ref;
+			detail = ": \"" + ref1.getOldName() +"\" to \"" + ref1.getNewName()+"\"";
+		}
+		else if (ref instanceof JavaRefactoringRenameDiff)
+		{
+			JavaRefactoringRenameDiff ref2 = (JavaRefactoringRenameDiff) ref;
+			detail = ": \"" + ref2.getOldName() +"\" to \"" + ref2.getNewName()+ "\"";
+		}
+		else
+		{
+			detail ="";
+		}
+		return "Finish rename refactoring" + detail;
 	}
 
 	@Override

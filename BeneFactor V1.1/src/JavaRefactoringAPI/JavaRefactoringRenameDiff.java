@@ -26,6 +26,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 	String bindingKey;
 	IJavaProject project;
 	String newName;
+	String oldName;
 
 	public JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
 			ASTNameChangeInformation decChange, String nN) 
@@ -35,8 +36,19 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		bindingKey = decChange.getOldNameBindingKey();
 		project = u.getJavaProject(); 
 		newName = nN;
+		oldName = decChange.getOldName();
 	}
 
+	
+	public String getOldName()
+	{
+		return this.oldName;
+	}
+	public String getNewName()
+	{
+		return this.newName;
+	}
+	
 	@SuppressWarnings("restriction")
 	@Override
 	protected void performRefactoring() throws Exception {

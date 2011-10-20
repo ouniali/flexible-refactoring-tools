@@ -108,7 +108,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		int line = getRefactoringMarkerLine(unit);
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 		boolean usingDiff1 = true;
-		boolean usingDiff2 = false;
+		boolean usingDiff2 = true;
 		
 		if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
