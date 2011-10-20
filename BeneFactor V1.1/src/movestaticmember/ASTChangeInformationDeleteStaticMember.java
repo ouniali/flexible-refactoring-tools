@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import ASTree.ASTChangeInformation;
@@ -21,6 +22,7 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 
 	String staticFieldDeclaration;
 	int staticFieldDeclarationIndex;
+	String fieldName;
 	int fieldNameIndex;
 	int fieldNameStart;
 	int fieldNameLength;
@@ -70,11 +72,13 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 	{
 		CompilationUnit tree = getOldCompilationUnitRecord().getASTree();
 		ASTNode parent = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
-		ArrayList<ASTNode> children = ASTreeManipulationMethods.getChildNodes(parent);
+		ArrayList<ASTNode> children = ASTreeManipulationMethods.getOffsprings(parent);
 		for(ASTNode kid: children)
 		{
-			if(kid instanceof Name)
+			if(kid instanceof SimpleName)
 			{
+				SimpleName name = (SimpleName) kid;
+				fieldName = name.getIdentifier();
 				fieldNameIndex = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(kid);
 				fieldNameStart = kid.getStartPosition();
 				fieldNameLength = kid.getLength();
