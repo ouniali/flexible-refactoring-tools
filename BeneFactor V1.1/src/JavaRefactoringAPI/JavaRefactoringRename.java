@@ -71,11 +71,16 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			unit.becomeWorkingCopy(monitor);
 			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
 			//new way to get element
-			int name_start = names.get(0).getStartPosition();
-			int name_length = names.get(0).getLength();
-			IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
-			if(primary_elements.length != 0)
+			IJavaElement entire_element = element;
+			try{
+				int name_start = names.get(0).getStartPosition();
+				int name_length = names.get(0).getLength();
+				IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
 				element = primary_elements[0];
+			} catch (Exception e){
+				element = entire_element;
+			}
+			//new way to get element
 				
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(newName);
@@ -103,12 +108,17 @@ public class JavaRefactoringRename extends JavaRefactoring{
 				unit.becomeWorkingCopy(monitor);	
 				IJavaElement element = names.get(0).resolveBinding().getJavaElement();		
 				//new way to get element
-				int name_start = names.get(0).getStartPosition();
-				int name_length = names.get(0).getLength();
-				IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
-				if(primary_elements.length != 0)
+				IJavaElement entire_element = element;
+				try{
+					int name_start = names.get(0).getStartPosition();
+					int name_length = names.get(0).getLength();
+					IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
 					element = primary_elements[0];
-				
+				} catch (Exception e){
+					element = entire_element;
+				}
+				//new way to get element
+		
 				JavaRenameProcessor processor = getRenameProcessor(element);
 				processor.setNewElementName(oldName);
 				RenameRefactoring recoverRefactoring = new RenameRefactoring(processor);
