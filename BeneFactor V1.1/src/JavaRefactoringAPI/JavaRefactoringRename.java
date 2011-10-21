@@ -3,21 +3,39 @@ package JavaRefactoringAPI;
 import java.util.ArrayList;
 
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.ILocalVariable;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.ITypeParameter;
 import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.ui.refactoring.*;
-import org.eclipse.ltk.core.refactoring.*;
-import org.eclipse.ltk.core.refactoring.participants.*;
-import org.eclipse.jdt.internal.core.JavaElement;
-import org.eclipse.jdt.internal.corext.refactoring.rename.*;
-import org.eclipse.jdt.internal.corext.util.*;
+import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.MethodChecks;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameCompilationUnitProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameEnumConstProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameFieldProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameJavaProjectProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameLocalVariableProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameNonVirtualMethodProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenamePackageProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameSourceFolderProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameTypeParameterProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameTypeProcessor;
+import org.eclipse.jdt.internal.corext.refactoring.rename.RenameVirtualMethodProcessor;
+import org.eclipse.jdt.internal.corext.util.JdtFlags;
+import org.eclipse.jdt.ui.refactoring.RenameSupport;
+import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 
-import Rename.*;
-
-import ASTree.ASTreeManipulationMethods;
+import Rename.NamesInJavaProject;
 
 
 
@@ -61,14 +79,16 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	
 	@SuppressWarnings("restriction")
 	@Override
-	public void performRefactoring() throws Exception {
-		NullProgressMonitor monitor = new NullProgressMonitor();
+	public void performRefactoring(IProgressMonitor pm) throws Exception {
+		
+		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
+		
 		RenameRefactoring refactoring;
 		ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKeyBeforeDeclarationChange);	
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(!names.isEmpty())
 		{
-			unit.becomeWorkingCopy(monitor);
+			unit.becomeWorkingCopy(monitor.newChild(1));
 			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
 			//new way to get element
 			IJavaElement entire_element = element;
@@ -85,20 +105,23 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(newName);
 			refactoring = new RenameRefactoring(processor);
-			RefactoringStatus  initialStatus = refactoring.checkInitialConditions(monitor);
-			RefactoringStatus  finalStatus = refactoring.checkFinalConditions(monitor);
-			Change change = refactoring.createChange(monitor);
-			Change undo = change.perform(monitor);
+			RefactoringStatus  initialStatus = refactoring.checkInitialConditions(monitor.newChild(1));
+			RefactoringStatus  finalStatus = refactoring.checkFinalConditions(monitor.newChild(1));
+			Change change = refactoring.createChange(monitor.newChild(1));
+			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
-			unit.commitWorkingCopy(true, monitor);
+			unit.commitWorkingCopy(true, monitor.newChild(1));
 			unit.discardWorkingCopy();
 		}
+		
+		monitor.done();
 	}
 	
 	@SuppressWarnings("restriction")
-	protected void performCodeRecovery() throws Exception
+	@Override
+	protected void performCodeRecovery(IProgressMonitor pm) throws Exception
 	{
-		NullProgressMonitor monitor = new NullProgressMonitor();	
+		SubMonitor monitor = SubMonitor.convert(pm,"Recovering Code", 6);	
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(!bindingKeyBeforeDeclarationChange.equals(bindingKeyAfterDeclarationChange))
 		{		
@@ -118,18 +141,19 @@ public class JavaRefactoringRename extends JavaRefactoring{
 					element = entire_element;
 				}
 				//new way to get element
-		
 				JavaRenameProcessor processor = getRenameProcessor(element);
 				processor.setNewElementName(oldName);
 				RenameRefactoring recoverRefactoring = new RenameRefactoring(processor);
-				RefactoringStatus  initialStatus = recoverRefactoring.checkInitialConditions(monitor);
-				RefactoringStatus  finalStatus = recoverRefactoring.checkFinalConditions(monitor);
-				recoverRefactoring.createChange(monitor).perform(monitor);
-				unit.commitWorkingCopy(true, monitor);
+				RefactoringStatus  initialStatus = recoverRefactoring.checkInitialConditions(monitor.newChild(1));
+				RefactoringStatus  finalStatus = recoverRefactoring.checkFinalConditions(monitor.newChild(1));
+				recoverRefactoring.createChange(monitor.newChild(1)).perform(monitor.newChild(1));
+				unit.commitWorkingCopy(true, monitor.newChild(1));
 				unit.discardWorkingCopy();
 			}
 			
 		}
+		
+		monitor.done();
 	}
 
 	@Override

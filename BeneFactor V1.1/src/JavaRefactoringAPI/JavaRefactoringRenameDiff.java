@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
@@ -13,12 +14,12 @@ import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameProcessor;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 
-import compare.SourceDiff;
-
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
 import Rename.ASTNameChangeInformation;
 import Rename.NamesInJavaProject;
+
+import compare.SourceDiff;
 
 public class JavaRefactoringRenameDiff extends JavaRefactoring {
 
@@ -51,15 +52,15 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 	
 	@SuppressWarnings("restriction")
 	@Override
-	protected void performRefactoring() throws Exception {
-		// TODO Auto-generated method stub
-		NullProgressMonitor monitor = new NullProgressMonitor();
+	protected void performRefactoring(IProgressMonitor pm) throws Exception {
+		
+		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		RenameRefactoring refactoring;
 		ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKey);	
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(!names.isEmpty())
 		{
-			unit.becomeWorkingCopy(monitor);
+			unit.becomeWorkingCopy(monitor.newChild(1));
 			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
 			
 			//new way to get element
@@ -77,19 +78,22 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			JavaRenameProcessor processor = JavaRefactoringRename.getRenameProcessor(element);
 			processor.setNewElementName(newName);
 			refactoring = new RenameRefactoring(processor);
-			refactoring.checkInitialConditions(monitor);
-			refactoring.checkFinalConditions(monitor);
-			Change change = refactoring.createChange(monitor);
-			Change undo = change.perform(monitor);
+			refactoring.checkInitialConditions(monitor.newChild(1));
+			refactoring.checkFinalConditions(monitor.newChild(1));
+			Change change = refactoring.createChange(monitor.newChild(1));
+			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
-			unit.commitWorkingCopy(true, monitor);
+			unit.commitWorkingCopy(true, monitor.newChild(1));
 			unit.discardWorkingCopy();
 		}
 
+		monitor.done();
 	}
 
 	@Override
-	protected void performCodeRecovery() throws Exception {
+	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
+		
+		SubMonitor monitor = SubMonitor.convert(pm,"Recovering Code",2);
 		
 		String source = declarationNameChange.getOldCompilationUnitRecord().getSourceCode();
 		Stack<SourceDiff> diffs = new Stack<SourceDiff>();
@@ -110,9 +114,13 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			SourceDiff diff = diffs.pop();
 			source = diff.performChange(source);
 		}
+		
+		monitor.worked(1);
 	
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(),source);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(),source,
+				monitor.newChild(1));
 
+		monitor.done();
 	}
 
 	@Override

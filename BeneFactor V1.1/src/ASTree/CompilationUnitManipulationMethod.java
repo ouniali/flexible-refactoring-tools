@@ -1,33 +1,37 @@
 package ASTree;
 
-import org.eclipse.text.edits.*;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.IBuffer;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.ToolFactory;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
+import org.eclipse.text.edits.ReplaceEdit;
+import org.eclipse.text.edits.TextEdit;
 
 public class CompilationUnitManipulationMethod {
 
 	
-	static public void UpdateICompilationUnit(ICompilationUnit unit, String code)
+	static public void UpdateICompilationUnit(ICompilationUnit unit, String code, IProgressMonitor pm)
 	{	    
+		SubMonitor monitor = SubMonitor.convert(pm,"Performing Code Modification",4);
+		
         try {
-        	NullProgressMonitor monitor = new NullProgressMonitor();
-        	unit.becomeWorkingCopy(monitor);
+        	unit.becomeWorkingCopy(monitor.newChild(1));
         	int oldLen = unit.getSourceRange().getLength();  	
         	ReplaceEdit edit = new ReplaceEdit(0, oldLen, code);   	
-			unit.applyTextEdit(edit, monitor);	
-			unit.commitWorkingCopy(true, monitor);
+			unit.applyTextEdit(edit, monitor.newChild(1));	
+			unit.commitWorkingCopy(true, monitor.newChild(1));
 			unit.discardWorkingCopy();
-			unit.makeConsistent(monitor);
+			unit.makeConsistent(monitor.newChild(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+		
+		monitor.done();
 	}
+	
+	@Deprecated 
 	static public void FormattICompilationUnit(ICompilationUnit unit)
 	{		
 		try {

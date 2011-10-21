@@ -1,29 +1,22 @@
 package ASTree;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.BindingKey;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jface.text.Assert;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import utitilies.*;
+import utitilies.FileUtilities;
+import Rename.NamesInCompilationUnit;
 
-import compare.Diff;
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
-
-import Rename.*;
 
 public class CompilationUnitHistoryRecord {
 
@@ -45,6 +38,7 @@ public class CompilationUnitHistoryRecord {
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
 			ICompilationUnit iu, String pro, String pac, String un, long t,
 			CompilationUnitHistoryRecord earlierVersionP, CompilationUnitHistory his) throws Exception {
+		
 		Project = proj;
 		Unit = iu;
 		ProjectName = pro;
