@@ -1,16 +1,13 @@
 package ASTree;
 
 import java.io.File;
-import java.util.ArrayList;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.ASTNode;
 
-import utitilies.*;
-
-import Rename.*;
+import utitilies.FileUtilities;
 
 public class ASTChangeInformation {
 
@@ -115,17 +112,17 @@ public class ASTChangeInformation {
 		return nodeTwoIndex;
 	}
 	
-	public void recoverICompilationUnitToOldRecord()
+	public void recoverICompilationUnitToOldRecord(IProgressMonitor monitor)
 	{
 		String code = getOldCompilationUnitRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code,monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
-	public void recoverICompilationUnitToNewRecord()
+	public void recoverICompilationUnitToNewRecord(IProgressMonitor monitor)
 	{
 		String code = getNewCompilationUnitRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code,monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception

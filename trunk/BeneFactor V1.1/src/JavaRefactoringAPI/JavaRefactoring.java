@@ -1,16 +1,18 @@
 package JavaRefactoringAPI;
 
-import java.util.ArrayList;
-
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.*;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.ltk.core.refactoring.Change;
 
 import compilation.RefactoringChances;
-import compilation.UndoRefactoringChances;
+import ASTree.CompilationUnitHistory;
 
-public abstract class JavaRefactoring implements Runnable{
+public abstract class JavaRefactoring extends Job{
 
 	private ICompilationUnit unit;
 	private int line;
@@ -18,8 +20,8 @@ public abstract class JavaRefactoring implements Runnable{
 	private Change undo;
 	protected long WAIT_TIME = 2000;
 	
-	protected abstract void performRefactoring() throws Exception;
-	protected abstract void performCodeRecovery() throws Exception;
+	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
+	protected abstract void performCodeRecovery(IProgressMonitor pm) throws Exception;
 	protected final void setUndo(Change u)
 	{
 		undo = u;
@@ -28,18 +30,32 @@ public abstract class JavaRefactoring implements Runnable{
 	{
 		return undo;
 	}
-	public final synchronized void run() {
+	
+	@Override
+	public IStatus run(IProgressMonitor pm) {
+		
+		SubMonitor progress = SubMonitor.convert(pm, "Running refactoring", 100);
+	
 		try {
-			performCodeRecovery();
-			performRefactoring();		
+			
+			performCodeRecovery(progress.newChild(49));
+			
+			performRefactoring(progress.newChild(50));	
+			
 			RefactoringChances.clearRefactoringChances();
+			progress.worked(1);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}finally{
+			progress.done();
+		}
+		
+		return Status.OK_STATUS;
 	}
 
 	public JavaRefactoring(ICompilationUnit u, int l, IMarker m)
 	{
+		super("Java Refactoring Job");
 		unit = u;
 		line = l;
 		marker = m;

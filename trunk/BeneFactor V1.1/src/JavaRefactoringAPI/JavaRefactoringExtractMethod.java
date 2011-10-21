@@ -1,14 +1,15 @@
 package JavaRefactoringAPI;
 
-import java.util.ArrayList;
-
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.Modifier;
-import org.eclipse.jdt.internal.corext.refactoring.code.*;
+import org.eclipse.jdt.internal.corext.refactoring.code.ExtractMethodRefactoring;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
 public class JavaRefactoringExtractMethod extends JavaRefactoring {
@@ -35,9 +36,11 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	
 	@SuppressWarnings("restriction")
 	@Override
-	public void performRefactoring() {
+	public void performRefactoring(IProgressMonitor pm) {
 		// TODO Auto-generated method stub
-		NullProgressMonitor monitor = new NullProgressMonitor();
+
+		SubMonitor monitor = SubMonitor.convert(pm,"Performing Extract Method Refactoring",4);
+		
 		RefactoringStatus iniStatus;
 		RefactoringStatus finStatus;
 		int[] index;
@@ -54,18 +57,20 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			refactoring.setMethodName(methodName);
 			// wait for the underlying resource to be ready
 			Thread.sleep(WAIT_TIME);
-			iniStatus = refactoring.checkInitialConditions(monitor);
+			iniStatus = refactoring.checkInitialConditions(monitor.newChild(1));
 			if (!iniStatus.isOK())
 				return;
-			finStatus = refactoring.checkFinalConditions(monitor);
+			finStatus = refactoring.checkFinalConditions(monitor.newChild(1));
 			if (!finStatus.isOK())
 				return;
-			Change change = refactoring.createChange(monitor);
-			Change undo = change.perform(monitor);
+			Change change = refactoring.createChange(monitor.newChild(1));
+			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		monitor.done();
 	}
 
 
@@ -79,8 +84,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	}
 
 	@Override
-	protected void performCodeRecovery() {
-		information.recoverICompilationUnitToOldRecord();
+	protected void performCodeRecovery(IProgressMonitor monitor) {
+		information.recoverICompilationUnitToOldRecord(monitor);
 		
 	}
 

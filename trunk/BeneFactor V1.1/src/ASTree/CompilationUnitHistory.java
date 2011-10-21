@@ -94,9 +94,8 @@ public class CompilationUnitHistory {
 			return null;
 	}
 	
-	
 	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
-	{
+	{	
 		JavaRefactoring refactoring;
 		
 		//rename
