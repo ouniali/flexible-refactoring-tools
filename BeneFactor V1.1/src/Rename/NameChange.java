@@ -27,7 +27,8 @@ public class NameChange {
 
 	public static final int MAXIMUM_LOOK_BACK_COUNT_RENAME = 5;
 	public static final int MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY = 40;
-
+	public static final int MAXIMUM_LOOK_BACK_SEARCHING_INTERMIDIATE_NAME_CHANGE = 20;
+	
 	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 
@@ -48,6 +49,27 @@ public class NameChange {
 		return null;
 	}
 
+	static public ASTNameChangeInformation searchIntermediateChange(ASTNameChangeInformation current)
+	{
+		int lookBack = Math.min(MAXIMUM_LOOK_BACK_SEARCHING_INTERMIDIATE_NAME_CHANGE,
+				detectedNameChanges.size());
+		int start = detectedNameChanges.size() - 1;
+		int end = start - lookBack;
+		for(int i = start; i> end; i--)
+		{
+			ASTNameChangeInformation change = detectedNameChanges.get(i);
+			String codeOne = change.getNewCompilationUnitRecord().getSourceCode();
+			int indexOne = change.newNameNodeIndex;
+			String codeTwo = current.getOldCompilationUnitRecord().getSourceCode();
+			int indexTwo = current.oldNameNodeIndex;
+			if(codeOne.equals(codeTwo) && indexOne == indexTwo)
+				return change;
+		}
+		
+		return null;
+		
+	}
+	
 	public static boolean isRenameChange(ASTNode node1, ASTNode node2) {
 		if (node1 instanceof Name && node2 instanceof Name)
 			return true;
