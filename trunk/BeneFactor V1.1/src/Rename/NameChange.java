@@ -33,6 +33,7 @@ public class NameChange {
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 
 	static public ArrayList<ASTNameChangeInformation> getSkipedDeclaredNameChangesInHistory(String currentBindingKey) {
+		
 		ArrayList<ASTNameChangeInformation> skips = new ArrayList<ASTNameChangeInformation>();
 		int lookBack = Math.min(MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY,
 				detectedNameChanges.size());
@@ -47,8 +48,11 @@ public class NameChange {
 					skips.add(0, change);
 					break;
 				}
-				else 
+				else
+				{
+					skips.add(0, change);
 					currentBindingKey = change.bindingKeyOne;
+				}
 			}
 
 		}
