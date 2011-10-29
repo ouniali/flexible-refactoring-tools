@@ -28,6 +28,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	int newNameNodeIndex;
 	
 	boolean isDeclarationChange;
+	boolean isIntermediateChange;
 	int declarationNodeIndex;
 	
 	
@@ -47,7 +48,6 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		modifiedNameFull = newName.getFullyQualifiedName();
 		
 //		originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
-	
 		oldNameNodeIndex = this.getNodeOneIndex();
 		newNameNodeIndex = this.getNodeTwoIndex();
 		
@@ -55,6 +55,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			SimpleName sOldName = (SimpleName) oldName; 
 			isDeclarationChange = sOldName.isDeclaration();
+			
+		
 		}
 		else isDeclarationChange = false;
 	}
