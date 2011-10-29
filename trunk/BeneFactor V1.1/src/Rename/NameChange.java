@@ -32,21 +32,27 @@ public class NameChange {
 	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 
-	static public ASTNameChangeInformation searchDeclarationChangeInHistory(String currentBindingKey) {
+	static public ArrayList<ASTNameChangeInformation> getSkipedDeclaredNameChangesInHistory(String currentBindingKey) {
+		ArrayList<ASTNameChangeInformation> skips = new ArrayList<ASTNameChangeInformation>();
 		int lookBack = Math.min(MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY,
 				detectedNameChanges.size());
 		int start = detectedNameChanges.size() - 1;
 		int end = start - lookBack;
 		for (int i = start; i > end; i--) {
 			ASTNameChangeInformation change = detectedNameChanges.get(i);
-			if (change.isRenamingDeclaration()) {
-				String newNameBinding = change.getNewNameBindingKey();
-				if (newNameBinding.equals(currentBindingKey))
-					return change;
+			String newBinding = change.getNewNameBindingKey();
+			if (change.isRenamingDeclaration() && newBinding.equals(currentBindingKey)) {
+				if (!change.hasIntermediateChange)
+				{
+					skips.add(0, change);
+					break;
+				}
+				else 
+					currentBindingKey = change.bindingKeyOne;
 			}
 
 		}
-		return null;
+		return skips;
 	}
 
 	static public ASTNameChangeInformation searchIntermediateChange(ASTNameChangeInformation current)
