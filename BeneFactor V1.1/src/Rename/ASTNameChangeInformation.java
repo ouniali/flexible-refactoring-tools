@@ -28,7 +28,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	int newNameNodeIndex;
 	
 	boolean isDeclarationChange;
-	boolean isIntermediateChange;
+	boolean hasIntermediateChange;
 	int declarationNodeIndex;
 	
 	
@@ -55,8 +55,14 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			SimpleName sOldName = (SimpleName) oldName; 
 			isDeclarationChange = sOldName.isDeclaration();
-			
-		
+			if(isDeclarationChange)
+			{
+				ASTNameChangeInformation change = NameChange.searchIntermediateChange(this);
+				if(change == null)
+					hasIntermediateChange = false;
+				else
+					hasIntermediateChange = true;
+			}
 		}
 		else isDeclarationChange = false;
 	}

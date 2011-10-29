@@ -27,7 +27,7 @@ public class NameChange {
 
 	public static final int MAXIMUM_LOOK_BACK_COUNT_RENAME = 5;
 	public static final int MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY = 40;
-	public static final int MAXIMUM_LOOK_BACK_SEARCHING_INTERMIDIATE_NAME_CHANGE = 20;
+	public static final int MAXIMUM_LOOK_BACK_SEARCHING_INTERMIDIATE_NAME_CHANGE = 5;
 	
 	static public ArrayList<ASTNameChangeInformation> detectedNameChanges = new ArrayList<ASTNameChangeInformation>();
 	static public NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
