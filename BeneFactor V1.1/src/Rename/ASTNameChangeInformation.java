@@ -167,8 +167,9 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			if(this.isRenamingDeclaration())
 			{
-				ArrayList<ASTNameChangeInformation> changes = new ArrayList<ASTNameChangeInformation> ();
+				ArrayList<ASTNameChangeInformation> changes = NameChange.getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);			
 				changes.add(this);
+				
 				if(usingDiff2)
 				{
 					JavaRefactoringRenameDiff refactoringDiff = new JavaRefactoringRenameDiff(
