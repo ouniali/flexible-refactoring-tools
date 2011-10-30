@@ -35,6 +35,13 @@ public class CompilationUnitHistoryRecord {
 	private final CompilationUnitHistory history;
 	private final ArrayList<SourceDiff> diffs;
 
+	public boolean equal(Object o)
+	{
+		CompilationUnitHistoryRecord another = (CompilationUnitHistoryRecord) o;
+		return another.ASTFileName.equals(this.ASTFileName);
+	}
+	
+	
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
 			ICompilationUnit iu, String pro, String pac, String un, long t,
 			CompilationUnitHistoryRecord earlierVersionP, CompilationUnitHistory his) throws Exception {
