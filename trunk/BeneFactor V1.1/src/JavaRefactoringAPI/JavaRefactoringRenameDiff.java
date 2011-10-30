@@ -115,9 +115,10 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			records.add(0, currentRecord);
 			currentRecord = currentRecord.getPreviousRecord();
 		}
+		records.add(0, currentRecord);
 		
 		boolean[] does_skips = new boolean[records.size()];
-		for(int i = 0; i< does_skips.length; i++)
+		for(int i = 1; i< does_skips.length; i++)
 			does_skips[i] = false;
 		
 		for(ASTNameChangeInformation change : dec_changes)
@@ -129,7 +130,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 				does_skips[i] = true;
 		}
 		
-		for(int i = 0; i< records.size(); i++)
+		for(int i = 1 ; i< records.size(); i++)
 		{
 			SourceDiff d = records.get(i).getSourceDiff();
 			if(does_skips[i])
