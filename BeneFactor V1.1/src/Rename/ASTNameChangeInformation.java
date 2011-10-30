@@ -1,4 +1,6 @@
 package Rename;
+import java.util.ArrayList;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
@@ -120,12 +122,17 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		
 		if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
-			ASTNameChangeInformation declarationChange = NameChange.searchDeclarationChangeInHistory(bindingKeyTwo);
-			if(declarationChange == null)
-				return null;
+			//renaming reference when declaration has been changed
+			ArrayList<ASTNameChangeInformation> declarationChanges = NameChange.getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);
 			
-			String keyBefore = declarationChange.getOldNameBindingKey();
-			String keyAfter = declarationChange.getNewNameBindingKey();
+			if(declarationChanges.size() == 0)
+				return null;
+			ASTNameChangeInformation first_change = declarationChanges.get(0);
+			ASTNameChangeInformation last_change = declarationChanges.get(declarationChanges.size()-1);
+				
+			String keyBefore = first_change.getOldNameBindingKey();
+			String keyAfter = last_change.getNewNameBindingKey();
+			
 			if(!keyBefore.equals("") && !keyAfter.equals(""))
 			{
 				if(usingDiff1)
