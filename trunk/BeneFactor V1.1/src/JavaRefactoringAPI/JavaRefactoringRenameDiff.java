@@ -23,21 +23,25 @@ import compare.SourceDiff;
 
 public class JavaRefactoringRenameDiff extends JavaRefactoring {
 
-	ASTNameChangeInformation declarationNameChange;
+	ASTNameChangeInformation first_dec_change;
+	ASTNameChangeInformation last_dec_change;
+	ArrayList<ASTNameChangeInformation> dec_changes;
 	String bindingKey;
 	IJavaProject project;
 	String newName;
 	String oldName;
 
 	public JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
-			ASTNameChangeInformation decChange, String nN) 
+			ArrayList<ASTNameChangeInformation> changes, String nN) 
 	{
 		super(u, l, m);
-		declarationNameChange = decChange;
-		bindingKey = decChange.getOldNameBindingKey();
+		dec_changes = changes;
+		first_dec_change = dec_changes.get(0);
+		last_dec_change = dec_changes.get(dec_changes.size()-1);
+		bindingKey = first_dec_change.getOldNameBindingKey();
 		project = u.getJavaProject(); 
 		newName = nN;
-		oldName = decChange.getOldName();
+		oldName = first_dec_change.getOldName();
 	}
 
 	
@@ -89,36 +93,55 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 
 		monitor.done();
 	}
+	
 
 	@Override
 	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
 		
 		SubMonitor monitor = SubMonitor.convert(pm,"Recovering Code",2);
 		
-		String source = declarationNameChange.getOldCompilationUnitRecord().getSourceCode();
-		Stack<SourceDiff> diffs = new Stack<SourceDiff>();
-		CompilationUnitHistoryRecord startRecord = declarationNameChange.getNewCompilationUnitRecord();
+		if(first_dec_change == null)
+			return;
+			
+		String source = first_dec_change.getOldCompilationUnitRecord().getSourceCode();
+		ArrayList<CompilationUnitHistoryRecord> records = new ArrayList<CompilationUnitHistoryRecord>();
+		CompilationUnitHistoryRecord startRecord = first_dec_change.getOldCompilationUnitRecord();
 		CompilationUnitHistoryRecord endRecord = startRecord.getAllHistory().getMostRecentRecord();
 		CompilationUnitHistoryRecord currentRecord = endRecord;
 
+		
 		while (currentRecord != startRecord && currentRecord != null) 
 		{
-			diffs.push(currentRecord.getSourceDiff());
+			records.add(0, currentRecord);
 			currentRecord = currentRecord.getPreviousRecord();
 		}
 		
-//		source = startRecord.getSourceDiff().skipChange(source);
+		boolean[] does_skips = new boolean[records.size()];
+		for(int i = 0; i< does_skips.length; i++)
+			does_skips[i] = false;
 		
-		while(!diffs.isEmpty())
+		for(ASTNameChangeInformation change : dec_changes)
 		{
-			SourceDiff diff = diffs.pop();
-			source = diff.performChange(source);
+			int start = records.indexOf(change.getOldCompilationUnitRecord());
+			int end = records.indexOf(change.getNewCompilationUnitRecord());
+			
+			for(int i = start ; i<= end; i++)
+				does_skips[i] = true;
+		}
+		
+		for(int i = 0; i< records.size(); i++)
+		{
+			SourceDiff d = records.get(i).getSourceDiff();
+			if(does_skips[i])
+				source = d.skipChange(source);
+			else 
+				source = d.performChange(source);
 		}
 		
 		monitor.worked(1);
 	
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(),source,
-				monitor.newChild(1));
+
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(),source, monitor.newChild(1));
 
 		monitor.done();
 	}
