@@ -141,7 +141,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 							unit,
 							line,
 							marker,
-							declarationChange,
+							declarationChanges,
 							modifiedName
 							);
 					return refactoringDiff;
@@ -167,13 +167,15 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			if(this.isRenamingDeclaration())
 			{
+				ArrayList<ASTNameChangeInformation> changes = new ArrayList<ASTNameChangeInformation> ();
+				changes.add(this);
 				if(usingDiff2)
 				{
 					JavaRefactoringRenameDiff refactoringDiff = new JavaRefactoringRenameDiff(
 							unit,
 							line,
 							marker,
-							this,
+							changes,
 							modifiedName
 							);					
 					return refactoringDiff;
