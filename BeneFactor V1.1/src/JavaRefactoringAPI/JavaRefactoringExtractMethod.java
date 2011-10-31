@@ -5,10 +5,21 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.internal.corext.refactoring.code.ExtractMethodRefactoring;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.link.LinkedModeModel;
+import org.eclipse.jface.text.link.LinkedPosition;
+import org.eclipse.jface.text.link.LinkedPositionGroup;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.AbstractTextEditor;
+
+import utitilies.UserInterfaceUtilities;
 
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
@@ -66,6 +77,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			Change change = refactoring.createChange(monitor.newChild(1));
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
+			this.prepareLinkedEdition();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,6 +128,28 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		refactoring.setMethodModifier(modifier);
 		refactoring.setMethodName(methodName);
 		return refactoring; 
+	}
+	
+	private void prepareLinkedEdition()
+	{
+		try {
+			AbstractTextEditor editor = UserInterfaceUtilities.getActiveTextEditor();
+			if(editor == null)
+				return;
+			IDocument document = editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+			LinkedModeModel model = new LinkedModeModel();
+			LinkedPositionGroup method_name_group = new LinkedPositionGroup();
+			String source = this.getICompilationUnit().getSource();
+			
+			int start = 0; 
+			for(start = source.indexOf(this.methodName, start); start != -1; start ++)
+				method_name_group.addPosition(new LinkedPosition(document, start, this.methodName.length(), 0));
+			model.addGroup(method_name_group);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
