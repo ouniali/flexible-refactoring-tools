@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.internal.corext.refactoring.code.ExtractMethodRefactoring;
+import org.eclipse.jdt.internal.ui.javaeditor.EditorHighlightingSynchronizer;
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.link.LinkedModeModel;
 import org.eclipse.jface.text.link.LinkedPosition;
@@ -130,6 +132,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		return refactoring; 
 	}
 	
+	@SuppressWarnings("restriction")
 	private void prepareLinkedEdition()
 	{
 		try {
@@ -141,11 +144,12 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			LinkedPositionGroup method_name_group = new LinkedPositionGroup();
 			String source = this.getICompilationUnit().getSource();
 			
-			int start = 0; 
-			for(start = source.indexOf(this.methodName, start); start != -1; start ++)
+			int start = source.indexOf(this.methodName, 0);
+			for(; start != -1; start = source.indexOf(this.methodName, start + this.methodName.length() ))
 				method_name_group.addPosition(new LinkedPosition(document, start, this.methodName.length(), 0));
 			model.addGroup(method_name_group);
-
+			model.forceInstall();
+			model.addLinkingListener(new EditorHighlightingSynchronizer((JavaEditor) editor));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
