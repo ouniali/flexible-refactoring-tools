@@ -155,9 +155,9 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			model.addLinkingListener(new EditorHighlightingSynchronizer(editor));
 			
 			ITextViewer viewer = editor.getViewer();
-			LinkedModeUI ui= new EditorLinkedModeUI(model, viewer);
+		//	LinkedModeUI ui= new EditorLinkedModeUI(model, viewer);
 		//	ui.setExitPolicy(new DeleteBlockingExitPolicy(document));
-			ui.enter();
+		//	ui.enter();
 			
 			LinkedPosition p = method_name_group.getPositions()[0];
 			viewer.setSelectedRange(p.offset, p.length);
