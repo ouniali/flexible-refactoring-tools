@@ -11,7 +11,9 @@ import org.eclipse.jdt.internal.corext.refactoring.code.ExtractMethodRefactoring
 import org.eclipse.jdt.internal.ui.javaeditor.EditorHighlightingSynchronizer;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.link.LinkedModeModel;
+import org.eclipse.jface.text.link.LinkedModeUI;
 import org.eclipse.jface.text.link.LinkedPosition;
 import org.eclipse.jface.text.link.LinkedPositionGroup;
 import org.eclipse.ltk.core.refactoring.Change;
@@ -20,6 +22,9 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
+import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
+
+import edu.pdx.cs.multiview.jface.text.LinkModeManager.DeleteBlockingExitPolicy;
 
 import utitilies.UserInterfaceUtilities;
 
@@ -136,7 +141,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	private void prepareLinkedEdition()
 	{
 		try {
-			AbstractTextEditor editor = UserInterfaceUtilities.getActiveTextEditor();
+			JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
 			if(editor == null)
 				return;
 			IDocument document = editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
@@ -149,7 +154,15 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 				method_name_group.addPosition(new LinkedPosition(document, start, this.methodName.length(), 0));
 			model.addGroup(method_name_group);
 			model.forceInstall();
-			model.addLinkingListener(new EditorHighlightingSynchronizer((JavaEditor) editor));
+			model.addLinkingListener(new EditorHighlightingSynchronizer(editor));
+			
+			ITextViewer viewer = editor.getViewer();
+			LinkedModeUI ui= new EditorLinkedModeUI(model, viewer);
+		//	ui.setExitPolicy(new DeleteBlockingExitPolicy(document));
+			ui.enter();
+			
+			LinkedPosition p = method_name_group.getPositions()[0];
+			viewer.setSelectedRange(p.offset, p.length);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
