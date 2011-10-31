@@ -2,6 +2,7 @@ package utitilies;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -29,15 +30,16 @@ public class UserInterfaceUtilities {
 		return pages.toArray(result);
 	}
 	
-	static public AbstractTextEditor getActiveTextEditor()
+	@SuppressWarnings("restriction")
+	static public JavaEditor getActiveJavaEditor()
 	{
 		
 		IWorkbenchPage[] pages = getWorkbenchPages();
 		for(IWorkbenchPage page : pages)
 		{
 			IEditorPart part = page.getActiveEditor();
-			if(part instanceof AbstractTextEditor)
-				return (AbstractTextEditor) part;
+			if(part instanceof JavaEditor)
+				return (JavaEditor) part;
 		}
 		return null;
 	}
