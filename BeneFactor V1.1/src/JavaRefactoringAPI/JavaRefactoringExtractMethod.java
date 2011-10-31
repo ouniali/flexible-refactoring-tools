@@ -24,8 +24,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
-import edu.pdx.cs.multiview.jface.text.LinkModeManager.DeleteBlockingExitPolicy;
-
 import utitilies.UserInterfaceUtilities;
 
 import ExtractMethod.ASTExtractMethodChangeInformation;
