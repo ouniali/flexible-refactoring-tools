@@ -75,6 +75,12 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 		IMember mem = deleteChange.getMovedStaticField();
 		return new IMember[]{mem};
 	}
+
+	@Override
+	public void postProcess() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

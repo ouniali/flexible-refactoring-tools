@@ -167,4 +167,11 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		
 	}
 
+
+	@Override
+	public void postProcess() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
