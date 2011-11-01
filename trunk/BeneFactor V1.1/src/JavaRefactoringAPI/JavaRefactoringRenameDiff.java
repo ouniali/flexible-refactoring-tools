@@ -153,4 +153,11 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		return JavaRefactoringType.RENAME;
 	}
 
+
+	@Override
+	public void postProcess() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

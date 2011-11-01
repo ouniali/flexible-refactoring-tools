@@ -87,6 +87,6 @@ public abstract class JavaRefactoring extends Job{
 	}
 	
 	abstract public int getRefactoringType();
-	
+	abstract public void postProcess();
 	
 }
