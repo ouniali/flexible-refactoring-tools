@@ -30,7 +30,7 @@ public abstract class RefactoringProposal implements IJavaCompletionProposal{
 	@Override
 	public final void apply(IDocument document)
 	{
-		refactoring.schedule();
+		refactoring.schedule();		
 	}
 	@Override
 	public Point getSelection(IDocument document){return null;};

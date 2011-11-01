@@ -18,6 +18,7 @@ import org.eclipse.jface.text.link.LinkedPosition;
 import org.eclipse.jface.text.link.LinkedPositionGroup;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -82,7 +83,6 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			Change change = refactoring.createChange(monitor.newChild(1));
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
-			this.prepareLinkedEdition();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -159,8 +159,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			
 			ui.enter();
 			
-			//LinkedPosition p = method_name_group.getPositions()[0];
-			//viewer.setSelectedRange(p.offset, p.length);
+			LinkedPosition p = method_name_group.getPositions()[0];
+			viewer.setSelectedRange(p.offset, p.length);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -171,6 +171,10 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	@Override
 	public void postProcess() {
 		// TODO Auto-generated method stub
+		Display.getDefault().asyncExec(new Runnable() {
+		       public void run() {prepareLinkedEdition();}
+		}
+		);
 		
 	}
 
