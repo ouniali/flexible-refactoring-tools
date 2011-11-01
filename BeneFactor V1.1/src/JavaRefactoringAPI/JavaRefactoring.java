@@ -43,6 +43,8 @@ public abstract class JavaRefactoring extends Job{
 			performRefactoring(progress.newChild(50));	
 			
 			RefactoringChances.clearRefactoringChances();
+			postProcess();
+			
 			progress.worked(1);
 		} catch (Exception e) {
 			e.printStackTrace();
