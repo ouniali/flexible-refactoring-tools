@@ -72,6 +72,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	
 	private CompilationUnitHistoryRecord getNonRefactoringChangeEnd()
 	{
+		if(non_refactoring_change_end != null)
+			return non_refactoring_change_end;
 		CompilationUnitHistoryRecord latestR = information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
 		String source_after_refactoring = latestR.getSourceCode();
 		String source_after_recovering = information.getOldCompilationUnitRecord().getSourceCode();
