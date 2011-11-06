@@ -1,10 +1,13 @@
 package compare;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.compare.internal.*;
+
+import compare.diff_match_patch.Patch;
 
 import utitilies.*;
 
@@ -28,6 +31,20 @@ public class JavaSourceDiff {
 		return diffs;
 	}
 
+	public static LinkedList<Patch> getPatches(String olds, String news)
+	{
+		diff_match_patch dmp= new diff_match_patch();	
+		return dmp.patch_make(olds, news);
+	}
+	
+	public static String applyPatches(String text, LinkedList<Patch> patches)
+	{
+		Object things[] = new diff_match_patch().patch_apply(patches, text);
+		String newText = (String)things[0];
+		boolean[] results = (boolean[]) things[1];
+		return newText;
+		
+	}
 	
 
 	private static ArrayList<SourceDiff> getSourceDiffChanges(String[] lines) {
