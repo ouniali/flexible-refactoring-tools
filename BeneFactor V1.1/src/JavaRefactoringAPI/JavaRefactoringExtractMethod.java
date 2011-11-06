@@ -44,7 +44,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	@SuppressWarnings("restriction")
 	ExtractMethodRefactoring refactoring;
 	ASTExtractMethodChangeInformation information;
-	
+	CompilationUnitHistoryRecord non_refactoring_change_end;
 	static int extractedMethodCount = 0;
 	int modifier;
 	String returnType;
@@ -60,6 +60,30 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		
 	}
 
+	public void setNonrefactoringChangeEnd(CompilationUnitHistoryRecord r)
+	{
+		non_refactoring_change_end = r;
+	}
+	
+	private CompilationUnitHistoryRecord getNonrefactoringChangeStart()
+	{
+		return information.getNewCompilationUnitRecord();
+	}
+	
+	private CompilationUnitHistoryRecord getNonRefactoringChangeEnd()
+	{
+		CompilationUnitHistoryRecord latestR = information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
+		String source_after_refactoring = latestR.getSourceCode();
+		String source_after_recovering = information.getOldCompilationUnitRecord().getSourceCode();
+		CompilationUnitHistoryRecord endR = latestR;
+		
+		//traceback to before recovering code
+		while(endR.getSourceCode().equals(source_after_refactoring) 
+				|| endR.getSourceCode().equals(source_after_recovering))
+			endR = endR.getPreviousRecord();
+		
+		return endR;
+	}
 	
 	@SuppressWarnings("restriction")
 	@Override
@@ -181,23 +205,9 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 
 	@Override
 	public void postProcess() {
-		// TODO Auto-generated method stub
-		CompilationUnitHistoryRecord latestR = information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
-		CompilationUnitHistoryRecord startR = information.getNewCompilationUnitRecord();
-		CompilationUnitHistoryRecord endR = startR.getAllHistory().getMostRecentRecord();
 		
-		String source_after_refactoring = latestR.getSourceCode();
-		String source_after_recovering = information.getOldCompilationUnitRecord().getSourceCode();
-		
-		//traceback to before recovering code
-		while(endR.getSourceCode().equals(source_after_refactoring) 
-				|| endR.getSourceCode().equals(source_after_recovering))
-			endR = endR.getPreviousRecord();
-		
-		
-		
-		String s1 = startR.getSourceCode();
-		String s2 = endR.getSourceCode();
+		CompilationUnitHistoryRecord startR = this.getNonrefactoringChangeStart();
+		CompilationUnitHistoryRecord endR = this.getNonRefactoringChangeEnd();
 		
 		
 		try{
