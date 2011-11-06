@@ -182,19 +182,43 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	@Override
 	public void postProcess() {
 		// TODO Auto-generated method stub
+		CompilationUnitHistoryRecord latestR = information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
+		CompilationUnitHistoryRecord startR = information.getNewCompilationUnitRecord();
+		CompilationUnitHistoryRecord endR = startR.getAllHistory().getMostRecentRecord();
 		
-		redoUnrefactoringChanges(information.getNewCompilationUnitRecord(), null);
+		String source_after_refactoring = latestR.getSourceCode();
+		String source_after_recovering = information.getOldCompilationUnitRecord().getSourceCode();
+		
+		//traceback to before recovering code
+		while(endR.getSourceCode().equals(source_after_refactoring) 
+				|| endR.getSourceCode().equals(source_after_recovering))
+			endR = endR.getPreviousRecord();
+		
+		
+		
+		String s1 = startR.getSourceCode();
+		String s2 = endR.getSourceCode();
+		
+		
+		try{
+			redoUnrefactoringChanges(startR, endR);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		Display.getDefault().asyncExec(new Runnable() {
 		       public void run() {prepareLinkedEdition();}
 		}
 		);
 	}
 	
-	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord)
+	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord) throws Exception
 	{
-		CompilationUnitHistoryRecord latestRecord = startRecord.getAllHistory().getMostRecentRecord();
+		String source;
+		source = this.getICompilationUnit().getSource();
 		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), endRecord.getSourceCode());
-		String source = JavaSourceDiff.applyPatches(latestRecord.getSourceCode(), patches);
+		source = JavaSourceDiff.applyPatches(source, patches);
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
 	}
 
