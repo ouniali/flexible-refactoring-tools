@@ -234,5 +234,11 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		
 	}
 
+	@Override
+	public void preProcess() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

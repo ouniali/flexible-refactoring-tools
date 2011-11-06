@@ -160,4 +160,11 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		
 	}
 
+
+	@Override
+	public void preProcess() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
