@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -181,13 +182,15 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	@Override
 	public void postProcess() {
 		// TODO Auto-generated method stub
+		
+		redoUnrefactoringChanges(information.getOldCompilationUnitRecord());
 		Display.getDefault().asyncExec(new Runnable() {
 		       public void run() {prepareLinkedEdition();}
 		}
 		);
 	}
 	
-	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, IProgressMonitor monitor)
+	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord)
 	{
 		CompilationUnitHistoryRecord latestRecord = startRecord.getAllHistory().getMostRecentRecord();
 		CompilationUnitHistoryRecord endRecord = latestRecord;
@@ -197,7 +200,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			endRecord = endRecord.getPreviousRecord();
 		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), endRecord.getSourceCode());
 		String source = JavaSourceDiff.applyPatches(latestRecord.getSourceCode(), patches);
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, monitor);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
 	}
 	
 	
