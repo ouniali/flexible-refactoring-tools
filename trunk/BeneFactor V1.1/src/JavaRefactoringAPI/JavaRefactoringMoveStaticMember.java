@@ -16,6 +16,7 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring;
 
 @SuppressWarnings("restriction")
+
 public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 
 	MoveRefactoring moveRefactoring;
@@ -76,14 +77,15 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 		return new IMember[]{mem};
 	}
 
+
 	@Override
-	public void postProcess() {
+	public void preProcess() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void preProcess() {
+	public void postProcess() {
 		// TODO Auto-generated method stub
 		
 	}
