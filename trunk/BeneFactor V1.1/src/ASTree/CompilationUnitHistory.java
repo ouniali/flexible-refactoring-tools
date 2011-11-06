@@ -134,6 +134,7 @@ public class CompilationUnitHistory {
 				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 				JavaRefactoringExtractMethod newEM = pendingEM.moveExtractMethodRefactoring(marker, line);
 				newSig.setJavaRefactoringExtractMethod(newEM);
+				
 				RefactoringChances.addNewRefactoringChance(newEM);	
 				
 				System.out.println("Extract method continued.");
