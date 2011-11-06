@@ -81,6 +81,12 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void preProcess() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

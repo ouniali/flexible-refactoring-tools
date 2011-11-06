@@ -20,6 +20,7 @@ public abstract class JavaRefactoring extends Job{
 	private Change undo;
 	protected long WAIT_TIME = 2000;
 	
+	
 	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
 	protected abstract void performCodeRecovery(IProgressMonitor pm) throws Exception;
 	protected final void setUndo(Change u)
@@ -37,7 +38,8 @@ public abstract class JavaRefactoring extends Job{
 		SubMonitor progress = SubMonitor.convert(pm, "Running refactoring", 100);
 	
 		try {
-			
+		
+			preProcess();
 			performCodeRecovery(progress.newChild(49));
 			
 			performRefactoring(progress.newChild(50));	
@@ -89,6 +91,7 @@ public abstract class JavaRefactoring extends Job{
 	}
 	
 	abstract public int getRefactoringType();
+    abstract public void preProcess();
 	abstract public void postProcess();
 	
 }

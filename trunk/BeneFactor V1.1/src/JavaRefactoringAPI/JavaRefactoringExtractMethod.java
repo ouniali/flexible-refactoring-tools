@@ -183,24 +183,26 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	public void postProcess() {
 		// TODO Auto-generated method stub
 		
-		redoUnrefactoringChanges(information.getOldCompilationUnitRecord());
+		redoUnrefactoringChanges(information.getNewCompilationUnitRecord(), null);
 		Display.getDefault().asyncExec(new Runnable() {
 		       public void run() {prepareLinkedEdition();}
 		}
 		);
 	}
 	
-	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord)
+	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord)
 	{
 		CompilationUnitHistoryRecord latestRecord = startRecord.getAllHistory().getMostRecentRecord();
-		CompilationUnitHistoryRecord endRecord = latestRecord;
-		while(!endRecord.getSourceCode().equals(startRecord.getSourceCode()))
-			endRecord = endRecord.getPreviousRecord();
-		while(endRecord.getSourceCode().equals(startRecord.getSourceCode()))
-			endRecord = endRecord.getPreviousRecord();
 		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), endRecord.getSourceCode());
 		String source = JavaSourceDiff.applyPatches(latestRecord.getSourceCode(), patches);
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
+	}
+
+
+	@Override
+	public void preProcess() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
