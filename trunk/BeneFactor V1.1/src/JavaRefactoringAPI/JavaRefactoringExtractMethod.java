@@ -1,5 +1,8 @@
 package JavaRefactoringAPI;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -25,8 +28,14 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
+import compare.JavaSourceDiff;
+import compare.SourceDiff;
+import compare.diff_match_patch.Patch;
+
 import utitilies.UserInterfaceUtilities;
 
+import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CompilationUnitManipulationMethod;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
 public class JavaRefactoringExtractMethod extends JavaRefactoring {
@@ -81,6 +90,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			if (!finStatus.isOK())
 				return;
 			Change change = refactoring.createChange(monitor.newChild(1));
+			
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
 		} catch (Exception e) {
@@ -175,7 +185,23 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		       public void run() {prepareLinkedEdition();}
 		}
 		);
-		
 	}
+	
+	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, IProgressMonitor monitor)
+	{
+		CompilationUnitHistoryRecord latestRecord = startRecord.getAllHistory().getMostRecentRecord();
+		CompilationUnitHistoryRecord endRecord = latestRecord;
+		while(!endRecord.getSourceCode().equals(startRecord.getSourceCode()))
+			endRecord = endRecord.getPreviousRecord();
+		while(endRecord.getSourceCode().equals(startRecord.getSourceCode()))
+			endRecord = endRecord.getPreviousRecord();
+		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), endRecord.getSourceCode());
+		String source = JavaSourceDiff.applyPatches(latestRecord.getSourceCode(), patches);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, monitor);
+	}
+	
+	
+	
+	
 
 }

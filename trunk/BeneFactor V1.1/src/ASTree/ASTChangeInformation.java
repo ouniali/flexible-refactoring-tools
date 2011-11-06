@@ -115,7 +115,7 @@ public class ASTChangeInformation {
 	public void recoverICompilationUnitToOldRecord(IProgressMonitor monitor)
 	{
 		String code = getOldCompilationUnitRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code,monitor);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code, monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
