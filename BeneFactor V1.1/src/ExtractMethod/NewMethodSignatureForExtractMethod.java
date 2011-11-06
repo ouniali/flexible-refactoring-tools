@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 
+import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoringExtractMethod;
 
 import utitilies.StringUtilities;
@@ -24,6 +25,16 @@ public class NewMethodSignatureForExtractMethod {
 
 	boolean methodNameAvailable;
 	String methodName;
+	
+	static public CompilationUnitHistoryRecord getRecordBeforeTypingNewMethodSignature(CompilationUnitHistoryRecord currentR)
+	{
+		int sig_line = currentR.getSourceDiff().getLineNumber();
+		CompilationUnitHistoryRecord tempR = currentR;
+		while(tempR.getSourceDiff().getLineNumber() == sig_line)
+			tempR = tempR.getPreviousRecord();
+		return tempR;
+		
+	}
 
 	public NewMethodSignatureForExtractMethod(int line, String info) {
 
