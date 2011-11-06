@@ -30,14 +30,14 @@ public class ExtractMethod {
 			SourceDiffChange diffChange = (SourceDiffChange) diff;
 			int line = diffChange.getLineNumber();
 			if( methodVisitor.getOutsideMethodDeclarationName(line).equals(""))
-				return new NewMethodSignatureForExtractMethod(line, diffChange.getCodeAfterChange());
+				return new NewMethodSignatureForExtractMethod(line, diffChange.getCodeAfterChange(), newRecord);
 			else
 				return null;
 		} else if (diff instanceof SourceDiffInsert) {
 			SourceDiffInsert diffInsert = (SourceDiffInsert) diff;
 			int line = diffInsert.getLineNumber();
 			if( methodVisitor.getOutsideMethodDeclarationName(line).equals(""))
-				return new NewMethodSignatureForExtractMethod (line, diffInsert.getInsertedCode());
+				return new NewMethodSignatureForExtractMethod (line, diffInsert.getInsertedCode(), newRecord);
 			else
 				return null;
 		} else
