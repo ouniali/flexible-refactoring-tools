@@ -35,7 +35,7 @@ public class ASTMethodDeclarationVisitor extends ASTVisitor {
 			int start = methodDeclarationStartLine.get(i);
 			int end = methodDeclarationEndLine.get(i);
 			String name = methodNames.get(i);
-			if (i >= start && i <= end)
+			if (line >= start && line <= end)
 				return name;
 		}
 		return "";
