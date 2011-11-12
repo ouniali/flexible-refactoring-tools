@@ -12,7 +12,7 @@ public class NamesInCompilationUnit {
 	
 	CompilationUnit tree;
 	NameBindingInformationVisitor visitor;
-	Hashtable<String, ArrayList<Name>> NameTable;
+	Hashtable<String, ArrayList<Integer>> NameTable;
 	
 	// the compilation unit should be generated directly from ICompilationUnit
 	public NamesInCompilationUnit(ICompilationUnit unit)
@@ -23,37 +23,37 @@ public class NamesInCompilationUnit {
 		NameTable = visitor.getEntireNameBindingTable();
 	}
 	
-	public ArrayList<Name> getNamesOfBindingInCompilatioUnit(String bind)
+	public ArrayList<Integer> getNamesOfBindingInCompilatioUnit(String bind)
 	{
 		if(bind == null || bind.equals(""))
-			return new ArrayList<Name>();
-		ArrayList<Name> res = NameTable.get(bind);
+			return new ArrayList<Integer>();
+		ArrayList<Integer> res = NameTable.get(bind);
 		if(res == null)
-			return new ArrayList<Name>(); 
+			return new ArrayList<Integer>(); 
 		else
 			return res;
 	}
 	
-	public Hashtable<String, ArrayList<Name>> getEntireBindingTable()
+	public Hashtable<String, ArrayList<Integer>> getEntireBindingTable()
 	{
 		return NameTable;
 	}
 	
-	public ArrayList<Name> getNamesInCompilationUnit()
+	public ArrayList<Integer> getNamesInCompilationUnit()
 	{
-		ArrayList<Name> names = new ArrayList<Name>();
-		Collection<ArrayList<Name>> allArrays = NameTable.values();
-		for(ArrayList<Name> array: allArrays)
+		ArrayList<Integer> names = new ArrayList<Integer>();
+		Collection<ArrayList<Integer>> allArrays = NameTable.values();
+		for(ArrayList<Integer> array: allArrays)
 			names.addAll(array);
 		return names;
 	}
 	
-	public boolean isFullyQuifiedNameExistingInCompilationUnit(String fullName)
+	public boolean isNameExistingInCompilationUnit(int index)
 	{
-		ArrayList<Name> names = getNamesInCompilationUnit();
-		for(Name name: names)
+		ArrayList<Integer> names = getNamesInCompilationUnit();
+		for(int name: names)
 		{
-			if(name.getFullyQualifiedName().equals(fullName))
+			if(name == index)
 				return true;
 		}
 		return false;
