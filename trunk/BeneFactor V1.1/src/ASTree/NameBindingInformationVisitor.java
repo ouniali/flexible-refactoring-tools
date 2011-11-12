@@ -6,46 +6,57 @@ import java.util.Map.Entry;
 import org.eclipse.jdt.core.ILocalVariable;
 import org.eclipse.jdt.core.dom.*;
 
-public class NameBindingInformationVisitor extends ASTVisitor {
+public class NameBindingInformationVisitor extends ASTVisitor{
 	
 	
-	Hashtable<String, ArrayList<SimpleName>> VariablesSimple;
-	Hashtable<String, ArrayList<SimpleName>> MethodsSimple;
-	Hashtable<String, ArrayList<SimpleName>> PackagesSimple;
-	Hashtable<String, ArrayList<SimpleName>> TypesSimple;
-	Hashtable<String, ArrayList<SimpleName>> AnnotationsSimple;
-	Hashtable<String, ArrayList<SimpleName>> MemberValuePairsSimple;
+	Hashtable<String, ArrayList<Integer>> VariablesSimple;
+	Hashtable<String, ArrayList<Integer>> MethodsSimple;
+	Hashtable<String, ArrayList<Integer>> PackagesSimple;
+	Hashtable<String, ArrayList<Integer>> TypesSimple;
+	Hashtable<String, ArrayList<Integer>> AnnotationsSimple;
+	Hashtable<String, ArrayList<Integer>> MemberValuePairsSimple;
 	
-	Hashtable<String, ArrayList<QualifiedName>> VariablesQualified;
-	Hashtable<String, ArrayList<QualifiedName>> MethodsQualified;
-	Hashtable<String, ArrayList<QualifiedName>> PackagesQualified;
-	Hashtable<String, ArrayList<QualifiedName>> TypesQualified;
-	Hashtable<String, ArrayList<QualifiedName>> AnnotationsQualified;
-	Hashtable<String, ArrayList<QualifiedName>> MemberValuePairsQualified;
+	Hashtable<String, ArrayList<Integer>> VariablesQualified;
+	Hashtable<String, ArrayList<Integer>> MethodsQualified;
+	Hashtable<String, ArrayList<Integer>> PackagesQualified;
+	Hashtable<String, ArrayList<Integer>> TypesQualified;
+	Hashtable<String, ArrayList<Integer>> AnnotationsQualified;
+	Hashtable<String, ArrayList<Integer>> MemberValuePairsQualified;
+	
+	int current_index;
 	
 	
 	public NameBindingInformationVisitor()
 	{
-		VariablesSimple = new Hashtable<String, ArrayList<SimpleName>>();
-		MethodsSimple = new Hashtable<String, ArrayList<SimpleName>>();
-		PackagesSimple = new Hashtable<String, ArrayList<SimpleName>>();
-		TypesSimple = new Hashtable<String, ArrayList<SimpleName>>();
-		AnnotationsSimple = new Hashtable<String, ArrayList<SimpleName>>();
-		MemberValuePairsSimple = new Hashtable<String, ArrayList<SimpleName>>();
 		
-		VariablesQualified = new Hashtable<String, ArrayList<QualifiedName>>();
-		MethodsQualified = new Hashtable<String, ArrayList<QualifiedName>>();
-		PackagesQualified = new Hashtable<String, ArrayList<QualifiedName>>();
-		TypesQualified = new Hashtable<String, ArrayList<QualifiedName>>();
-		AnnotationsQualified = new Hashtable<String, ArrayList<QualifiedName>>();
-		MemberValuePairsQualified = new Hashtable<String, ArrayList<QualifiedName>>();
+		VariablesSimple = new Hashtable<String, ArrayList<Integer>>();
+		MethodsSimple = new Hashtable<String, ArrayList<Integer>>();
+		PackagesSimple = new Hashtable<String, ArrayList<Integer>>();
+		TypesSimple = new Hashtable<String, ArrayList<Integer>>();
+		AnnotationsSimple = new Hashtable<String, ArrayList<Integer>>();
+		MemberValuePairsSimple = new Hashtable<String, ArrayList<Integer>>();
+		
+		VariablesQualified = new Hashtable<String, ArrayList<Integer>>();
+		MethodsQualified = new Hashtable<String, ArrayList<Integer>>();
+		PackagesQualified = new Hashtable<String, ArrayList<Integer>>();
+		TypesQualified = new Hashtable<String, ArrayList<Integer>>();
+		AnnotationsQualified = new Hashtable<String, ArrayList<Integer>>();
+		MemberValuePairsQualified = new Hashtable<String, ArrayList<Integer>>();
+		
+		current_index = 0;
+		
+	}
+	
+	public void preVisit(ASTNode node)
+	{
+		current_index ++;
 	}
 	@Override
 	public boolean visit(QualifiedName node)
 	{
 		IBinding binding = node.resolveBinding();
-		ArrayList<QualifiedName> list;
-		Hashtable<String, ArrayList<QualifiedName>> correspondingTable;
+		ArrayList<Integer> list;
+		Hashtable<String, ArrayList<Integer>> correspondingTable;
 			
 		if(binding == null)
 			return true;
@@ -78,11 +89,11 @@ public class NameBindingInformationVisitor extends ASTVisitor {
 		list = correspondingTable.get(binding.getKey());
 		if(list != null)
 		{
-			list.add(node);
+			list.add(current_index - 1);
 			return true;
 		}
-		list = new ArrayList<QualifiedName>();
-		list.add(node);
+		list = new ArrayList<Integer>();
+		list.add(current_index - 1);
 		correspondingTable.put(binding.getKey(), list);
 		return true;
 		
@@ -91,8 +102,8 @@ public class NameBindingInformationVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SimpleName node) {
 		IBinding binding = node.resolveBinding();
-		ArrayList<SimpleName> list;
-		Hashtable<String, ArrayList<SimpleName>> correspondingTable;
+		ArrayList<Integer> list;
+		Hashtable<String, ArrayList<Integer>> correspondingTable;
 			
 		if(binding == null)
 			return true;
@@ -124,44 +135,44 @@ public class NameBindingInformationVisitor extends ASTVisitor {
 		list = correspondingTable.get(binding.getKey());
 		if(list != null)
 		{
-			list.add(node);
+			list.add(current_index - 1);
 			return true;
 		}
-		list = new ArrayList<SimpleName>();
-		list.add(node);
+		list = new ArrayList<Integer>();
+		list.add(current_index - 1);
 		correspondingTable.put(binding.getKey(), list);
 		return true;
 		
 	}
 	
-	public Hashtable<String, ArrayList<SimpleName>> getVariablesSimple()
+	public Hashtable<String, ArrayList<Integer>> getVariablesSimple()
 	{
 		return VariablesSimple;
 	}
-	public Hashtable<String, ArrayList<SimpleName>> getMethodsSimple()
+	public Hashtable<String, ArrayList<Integer>> getMethodsSimple()
 	{
 		return MethodsSimple;
 	}
-	public Hashtable<String, ArrayList<SimpleName>> getAnnotationsSimple()
+	public Hashtable<String, ArrayList<Integer>> getAnnotationsSimple()
 	{
 		return AnnotationsSimple;
 	}
-	public Hashtable<String, ArrayList<SimpleName>> getTypesSimple()
+	public Hashtable<String, ArrayList<Integer>> getTypesSimple()
 	{
 		return TypesSimple;
 	}
-	public Hashtable<String, ArrayList<SimpleName>> getPackagesSimple()
+	public Hashtable<String, ArrayList<Integer>> getPackagesSimple()
 	{
 		return PackagesSimple;
 	}
-	public Hashtable<String, ArrayList<SimpleName>> getMemberValuePairsSimple()
+	public Hashtable<String, ArrayList<Integer>> getMemberValuePairsSimple()
 	{
 		return MemberValuePairsSimple;
 	}
 	
-	public Hashtable<String, ArrayList<SimpleName>> getEntireSimpleNameBindingTable()
+	public Hashtable<String, ArrayList<Integer>> getEntireSimpleNameBindingTable()
 	{
-		Hashtable<String, ArrayList<SimpleName>> EntireTable = new Hashtable<String, ArrayList<SimpleName>>();
+		Hashtable<String, ArrayList<Integer>> EntireTable = new Hashtable<String, ArrayList<Integer>>();
 		EntireTable.putAll(VariablesSimple);
 		EntireTable.putAll(MethodsSimple);
 		EntireTable.putAll(TypesSimple);
@@ -171,9 +182,9 @@ public class NameBindingInformationVisitor extends ASTVisitor {
 		return EntireTable;
 	}
 	
-	public Hashtable<String, ArrayList<QualifiedName>> getEntireQualifiedNameBindingTable()
+	public Hashtable<String, ArrayList<Integer>> getEntireQualifiedNameBindingTable()
 	{
-		Hashtable<String, ArrayList<QualifiedName>> EntireTable = new Hashtable<String, ArrayList<QualifiedName>>();
+		Hashtable<String, ArrayList<Integer>> EntireTable = new Hashtable<String, ArrayList<Integer>>();
 		EntireTable.putAll(VariablesQualified);
 		EntireTable.putAll(MethodsQualified);
 		EntireTable.putAll(TypesQualified);
@@ -182,56 +193,47 @@ public class NameBindingInformationVisitor extends ASTVisitor {
 		EntireTable.putAll(AnnotationsQualified);
 		return EntireTable;
 	}
-	public Hashtable<String, ArrayList<Name>> getEntireNameBindingTable()
+	public Hashtable<String, ArrayList<Integer>> getEntireNameBindingTable()
 	{
-		Hashtable<String, ArrayList<Name>> EntireTable = new Hashtable<String, ArrayList<Name>>();
-		Hashtable<String, ArrayList<SimpleName>> SimpleTable = getEntireSimpleNameBindingTable();
-		Hashtable<String, ArrayList<QualifiedName>> QualifiedTable = getEntireQualifiedNameBindingTable();
+		Hashtable<String, ArrayList<Integer>> EntireTable = new Hashtable<String, ArrayList<Integer>>();
+		Hashtable<String, ArrayList<Integer>> SimpleTable = getEntireSimpleNameBindingTable();
+		Hashtable<String, ArrayList<Integer>> QualifiedTable = getEntireQualifiedNameBindingTable();
 		
-		for(Entry<String, ArrayList<SimpleName>> entry: SimpleTable.entrySet())
-		{
-			String key = entry.getKey();
-			ArrayList<Name> nameList = new ArrayList<Name>();
-			for(SimpleName sName: entry.getValue())
-				nameList.add((Name)sName);
-			if(EntireTable.containsKey(key))
-				EntireTable.get(key).addAll(nameList);
-			else 
-				EntireTable.put(key, nameList);
-		}
-		
-		for(Entry<String, ArrayList<QualifiedName>> entry: QualifiedTable.entrySet())
-		{
-			String key = entry.getKey();
-			ArrayList<Name> nameList = new ArrayList<Name>();
-			for(QualifiedName qName: entry.getValue())
-				nameList.add((Name)qName);
-			if(EntireTable.containsKey(key))
-				EntireTable.get(key).addAll(nameList);
-			else 
-				EntireTable.put(key, nameList);
-		}
-		
+		EntireTable.putAll(QualifiedTable);
+		EntireTable.putAll(SimpleTable);
 		return EntireTable;
 	}
 	
 	public String getBindingInformation()
 	{
 		StringBuffer Binding = new StringBuffer();	
-		Hashtable<String, ArrayList<SimpleName>> sTable = getEntireSimpleNameBindingTable();
-		Hashtable<String, ArrayList<QualifiedName>> qTable = getEntireQualifiedNameBindingTable();
-		String sRecord;
-		String qRecord;
-
-		for (Entry<String, ArrayList<SimpleName>> entry: sTable.entrySet())
+		Hashtable<String, ArrayList<Integer>> sTable = getEntireSimpleNameBindingTable();
+		Hashtable<String, ArrayList<Integer>> qTable = getEntireQualifiedNameBindingTable();
+	
+		for (Entry<String, ArrayList<Integer>> entry: sTable.entrySet())
 		{
-			sRecord = entry.getKey()+ ":" + entry.getValue().get(0).getFullyQualifiedName()+":"+entry.getValue().size()+"\n";
+			String key = entry.getKey();
+			ArrayList<Integer> indices = entry.getValue();
+			
+			StringBuffer sRecord = new StringBuffer();
+			sRecord.append(key);
+		
+			for(Integer i : indices)
+				sRecord.append(":" + i);
+			sRecord.append("\n");
 			Binding.append(sRecord);
 		}
 		
-		for (Entry<String, ArrayList<QualifiedName>> entry: qTable.entrySet())
+		for (Entry<String, ArrayList<Integer>> entry: qTable.entrySet())
 		{
-			qRecord = entry.getKey()+ ":" + entry.getValue().get(0).getFullyQualifiedName()+":"+entry.getValue().size()+"\n";
+			StringBuffer qRecord = new StringBuffer();
+			String key = entry.getKey();
+			ArrayList<Integer> indices = entry.getValue();
+			
+			qRecord.append(key);
+			for(Integer i : indices)
+				qRecord.append(":" + i);
+			qRecord.append("\n");
 			Binding.append(qRecord);
 		}
 		return Binding.toString();
