@@ -49,7 +49,6 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		modifiedName = newName.toString();
 		modifiedNameFull = newName.getFullyQualifiedName();
 		
-//		originalNameBindingCount = oldRecord.getNumberOfSameBindingInHistory(bindingKeyOne);
 		oldNameNodeIndex = this.getNodeOneIndex();
 		newNameNodeIndex = this.getNodeTwoIndex();
 		
