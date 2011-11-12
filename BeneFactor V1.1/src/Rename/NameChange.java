@@ -163,10 +163,10 @@ public class NameChange {
 		if (!binding.equals("")) {
 			ArrayList<ICompilationUnit> siblings = ASTreeManipulationMethods
 					.getSiblingsOfACompilationUnitInItsProject(iunit, project);
-			ArrayList<Name> names = new ArrayList<Name>();
+			ArrayList<Integer> names = new ArrayList<Integer>();
 
 			for (ICompilationUnit sib : siblings) {
-				ArrayList<Name> namesInSib = new NamesInCompilationUnit(sib)
+				ArrayList<Integer> namesInSib = new NamesInCompilationUnit(sib)
 						.getNamesOfBindingInCompilatioUnit(binding);
 				if (namesInSib != null)
 					names.addAll(namesInSib);
