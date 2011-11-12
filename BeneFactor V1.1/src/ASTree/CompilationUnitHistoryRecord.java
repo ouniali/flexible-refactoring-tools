@@ -197,7 +197,7 @@ public class CompilationUnitHistoryRecord {
 			while ((strLine = br.readLine()) != null) {
 				String[] strs = strLine.split(":");
 				if (strs[0].equals(binding))
-					count += Integer.parseInt(strs[2]);
+					count += strs.length - 1;
 			}
 			in.close();
 			return count;
