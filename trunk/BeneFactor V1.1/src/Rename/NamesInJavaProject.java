@@ -25,13 +25,13 @@ public class NamesInJavaProject {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<Name> getNamesOfBindingInJavaProject(String binding)
+	public ArrayList<Integer> getNamesOfBindingInJavaProject(String binding)
 	{
-		ArrayList<Name> names = new ArrayList<Name>();
+		ArrayList<Integer> names = new ArrayList<Integer>();
 	
 		for (NamesInCompilationUnit unitNames : UnitsNames)
 		{
-			ArrayList<Name> NameInUnit = unitNames.getNamesOfBindingInCompilatioUnit(binding);
+			ArrayList<Integer> NameInUnit = unitNames.getNamesOfBindingInCompilatioUnit(binding);
 			if(NameInUnit != null)	
 				names.addAll(NameInUnit);
 		}
@@ -42,32 +42,32 @@ public class NamesInJavaProject {
 			return names;
 	}
 	
-	public Hashtable<String,ArrayList<Name>> getEntireNameBindingTableInProject()
+	public Hashtable<String,ArrayList<Integer>> getEntireNameBindingTableInProject()
 	{
-		Hashtable<String,ArrayList<Name>> entireTable = new Hashtable<String,ArrayList<Name>>();
+		Hashtable<String,ArrayList<Integer>> entireTable = new Hashtable<String,ArrayList<Integer>>();
 		for(NamesInCompilationUnit unitNames: UnitsNames)
 		{
-			Hashtable<String, ArrayList<Name>> table = unitNames.getEntireBindingTable();
+			Hashtable<String, ArrayList<Integer>> table = unitNames.getEntireBindingTable();
 			entireTable.putAll(table);
 		}	
 		return entireTable;
 	}
 	
-	public ArrayList<Name> getNamesInProject()
+	public ArrayList<Integer> getNamesInProject()
 	{
-		ArrayList<Name> allNames = new ArrayList<Name>();
+		ArrayList<Integer> allNames = new ArrayList<Integer>();
 		for(NamesInCompilationUnit unitNames: UnitsNames)
 		{
-			ArrayList<Name> names = unitNames.getNamesInCompilationUnit();
+			ArrayList<Integer> names = unitNames.getNamesInCompilationUnit();
 			allNames.addAll(names);
 		}
 		return allNames;
 	}
-	public boolean isFullyQualifiedNameExistingInProject(String fullName)
+	public boolean isNameExistingInProject(int index)
 	{
 		for(NamesInCompilationUnit unitNames: UnitsNames)
 		{
-			if(unitNames.isFullyQuifiedNameExistingInCompilationUnit(fullName))
+			if(unitNames.isNameExistingInCompilationUnit(index))
 				return true;
 		}
 		return false;
