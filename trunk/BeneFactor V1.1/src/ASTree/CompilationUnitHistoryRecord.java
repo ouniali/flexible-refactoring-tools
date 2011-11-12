@@ -121,7 +121,7 @@ public class CompilationUnitHistoryRecord {
 		return time;
 	}
 
-	public String getBindingKey(String fullName) {
+	public String getBindingKey(int index) {
 		String path = Directory + File.separator + BindingFileName;
 		String key = "";
 		try {
@@ -131,8 +131,11 @@ public class CompilationUnitHistoryRecord {
 			String strLine;
 			while ((strLine = br.readLine()) != null) {
 				String[] strs = strLine.split(":");
-				if (strs[1].equals(fullName))
-					key = strs[0];
+				for(int i = 1; i< strs.length ; i++)
+				{
+					if(Integer.parseInt(strs[i]) == index)
+						return strs[0];
+				}		
 			}
 			in.close();
 			return key;
@@ -142,8 +145,8 @@ public class CompilationUnitHistoryRecord {
 		return "";
 	}
 
-	public BindingKey getDecodedBindingKey(String fullName) {
-		String skey = getBindingKey(fullName);
+	public BindingKey getDecodedBindingKey(int index) {
+		String skey = getBindingKey(index);
 		BindingKey key = new BindingKey (skey);
 		return key;
 	}
