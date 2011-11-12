@@ -41,8 +41,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		Name oldName = (Name) r1;
 		Name newName = (Name) r2;
 		
-		bindingKeyOne = oldRecord.getBindingKey(oldName.getFullyQualifiedName());
-		bindingKeyTwo = newRecord.getBindingKey(newName.getFullyQualifiedName());
+		bindingKeyOne = oldRecord.getBindingKey(oldNameNodeIndex);
+		bindingKeyTwo = newRecord.getBindingKey(newNameNodeIndex);
 		
 		originalName = oldName.toString();
 		originalNameFull = oldName.getFullyQualifiedName();
