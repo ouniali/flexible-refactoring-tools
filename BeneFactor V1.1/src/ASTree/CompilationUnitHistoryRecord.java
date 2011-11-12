@@ -59,12 +59,16 @@ public class CompilationUnitHistoryRecord {
 		new File(Directory).mkdirs();
 		FileUtilities.save(Directory + File.separator + ASTFileName,
 				iu.getSource());
-		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
+		
 		CompilationUnit unit = ASTreeManipulationMethods
 				.parseICompilationUnit(iu);
+		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
 		unit.accept(bVisitor);
+		
+		String bInfor = bVisitor.getBindingInformation();
 		FileUtilities.save(Directory + File.separator
-				+ BindingFileName, bVisitor.getBindingInformation());
+				+ BindingFileName, bInfor);
+		System.out.println(bInfor);
 		previousRecord = earlierVersionP;
 
 		if (previousRecord != null)
@@ -139,8 +143,9 @@ public class CompilationUnitHistoryRecord {
 	}
 
 	public BindingKey getDecodedBindingKey(String fullName) {
-		String key = getBindingKey(fullName);
-		return new BindingKey(key);
+		String skey = getBindingKey(fullName);
+		BindingKey key = new BindingKey (skey);
+		return key;
 	}
 
 	public IJavaProject getIJavaProject() {
