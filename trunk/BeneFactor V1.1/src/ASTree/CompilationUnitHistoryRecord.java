@@ -133,7 +133,7 @@ public class CompilationUnitHistoryRecord {
 				for(int i = 1; i< strs.length ; i++)
 				{
 					if(Integer.parseInt(strs[i]) == index)
-						return strs[0];
+						key = strs[0];
 				}		
 			}
 			in.close();
@@ -141,7 +141,7 @@ public class CompilationUnitHistoryRecord {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "";
+		return key;
 	}
 
 	public BindingKey getDecodedBindingKey(int index) {
@@ -196,7 +196,10 @@ public class CompilationUnitHistoryRecord {
 			while ((strLine = br.readLine()) != null) {
 				String[] strs = strLine.split(":");
 				if (strs[0].equals(binding))
-					count += strs.length - 1;
+				{
+					count = strs.length - 1;
+					break;
+				}
 			}
 			in.close();
 			return count;

@@ -50,7 +50,7 @@ public class NameBindingInformationVisitor extends ASTVisitor{
 	public void preVisit(ASTNode node)
 	{
 		if(node instanceof QualifiedName)
-			this.handleQName((QualifiedName)node);
+			this.handleQName((QualifiedName)node);	
 		else if (node instanceof SimpleName)
 			this.handleSName((SimpleName)node);
 			

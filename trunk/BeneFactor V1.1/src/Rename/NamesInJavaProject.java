@@ -26,22 +26,26 @@ public class NamesInJavaProject {
 		}
 	}
 	
-	public ArrayList<Name> getNameWithBindingInProject(String bind)
+	public ArrayList<Name> getNameWithBindingInProject(String binding)
 	{
 		ArrayList<Name> names = new ArrayList<Name>();
 		for(NamesInCompilationUnit nu: UnitsNames)
-			names.addAll(nu.getNamesWithBining(bind));
+			names.addAll(nu.getNamesWithBinding(binding));
 		return names;
 	}
 	
 	public Name getANameWithBinding(String binding)
 	{
-		for(NamesInCompilationUnit nu: UnitsNames)
+		ArrayList<Name> names = getNameWithBindingInProject(binding);
+		
+		return names.get(0);
+		
+	/*	for(NamesInCompilationUnit nu: UnitsNames)
 		{
 			if(nu.isBindingExisting(binding))
-				return nu.getNamesWithBining(binding).get(0);
+				return nu.getNamesWithBinding(binding).get(0);
 		}
-		return null;	
+		return null;	*/
 	}
 
 

@@ -48,10 +48,12 @@ public class NamesInCompilationUnit {
 		return names;
 	}
 	
+	
 
-	public ArrayList<Name> getNamesWithBining(String binding)
+
+	public ArrayList<Name> getNamesWithBinding(String binding)
 	{
-		ArrayList<Integer> indices = this.getNameIndicesInCompilationUnit();
+		ArrayList<Integer> indices = this.getNameIndicesOfBindingInCompilatioUnit(binding);
 		ArrayList<Name> names = new ArrayList<Name> ();
 		for(int index : indices)
 		{
