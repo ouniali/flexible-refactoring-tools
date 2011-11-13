@@ -167,7 +167,7 @@ public class NameChange {
 
 			for (ICompilationUnit sib : siblings) {
 				ArrayList<Integer> namesInSib = new NamesInCompilationUnit(sib)
-						.getNamesOfBindingInCompilatioUnit(binding);
+						.getNameIndicesOfBindingInCompilatioUnit(binding);
 				if (namesInSib != null)
 					names.addAll(namesInSib);
 			}
