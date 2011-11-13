@@ -23,7 +23,7 @@ public class NamesInCompilationUnit {
 		NameTable = visitor.getEntireNameBindingTable();
 	}
 	
-	public ArrayList<Integer> getNamesOfBindingInCompilatioUnit(String bind)
+	public ArrayList<Integer> getNameIndicesOfBindingInCompilatioUnit(String bind)
 	{
 		if(bind == null || bind.equals(""))
 			return new ArrayList<Integer>();
@@ -39,7 +39,7 @@ public class NamesInCompilationUnit {
 		return NameTable;
 	}
 	
-	public ArrayList<Integer> getNamesInCompilationUnit()
+	public ArrayList<Integer> getNameIndicesInCompilationUnit()
 	{
 		ArrayList<Integer> names = new ArrayList<Integer>();
 		Collection<ArrayList<Integer>> allArrays = NameTable.values();
@@ -48,14 +48,16 @@ public class NamesInCompilationUnit {
 		return names;
 	}
 	
-	public boolean isNameExistingInCompilationUnit(int index)
+
+	public ArrayList<Name> getNamesWithBining(String binding)
 	{
-		ArrayList<Integer> names = getNamesInCompilationUnit();
-		for(int name: names)
+		ArrayList<Integer> indices = this.getNameIndicesInCompilationUnit();
+		ArrayList<Name> names = new ArrayList<Name> ();
+		for(int index : indices)
 		{
-			if(name == index)
-				return true;
+			Name name = (Name)ASTreeManipulationMethods.getASTNodeByIndex(tree, index);
+			names.add(name);
 		}
-		return false;
+		return names;
 	}
 }
