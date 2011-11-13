@@ -25,6 +25,24 @@ public class NamesInJavaProject {
 			e.printStackTrace();
 		}
 	}
+	
+	public ArrayList<Name> getNameWithBindingInProject(String bind)
+	{
+		ArrayList<Name> names = new ArrayList<Name>();
+		for(NamesInCompilationUnit nu: UnitsNames)
+			names.addAll(nu.getNamesWithBining(bind));
+		return names;
+	}
+	
+	public Name getANameWithBinding(String binding)
+	{
+		for(NamesInCompilationUnit nu: UnitsNames)
+		{
+			if(nu.isBindingExisting(binding))
+				return nu.getNamesWithBining(binding).get(0);
+		}
+		return null;	
+	}
 
 
 }

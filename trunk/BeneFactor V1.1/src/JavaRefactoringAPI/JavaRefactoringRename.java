@@ -84,17 +84,17 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		
 		RenameRefactoring refactoring;
-		ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKeyBeforeDeclarationChange);	
+		Name name = new NamesInJavaProject(project).getANameWithBinding(bindingKeyBeforeDeclarationChange);	
 		ICompilationUnit unit = this.getICompilationUnit();
-		if(!names.isEmpty())
+		if(name != null)
 		{
 			unit.becomeWorkingCopy(monitor.newChild(1));
-			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+			IJavaElement element = name.resolveBinding().getJavaElement();
 			//new way to get element
 			IJavaElement entire_element = element;
 			try{
-				int name_start = names.get(0).getStartPosition();
-				int name_length = names.get(0).getLength();
+				int name_start = name.getStartPosition();
+				int name_length = name.getLength();
 				IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
 				element = primary_elements[0];
 			} catch (Exception e){
@@ -125,16 +125,16 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(!bindingKeyBeforeDeclarationChange.equals(bindingKeyAfterDeclarationChange))
 		{		
-			ArrayList<Name> names = new NamesInJavaProject(unit.getJavaProject()).getNamesOfBindingInJavaProject(bindingKeyAfterDeclarationChange);
-			if(!names.isEmpty())
+			Name name = new NamesInJavaProject(unit.getJavaProject()).getANameWithBinding(bindingKeyAfterDeclarationChange);
+			if(name != null)
 			{				
 				unit.becomeWorkingCopy(monitor);	
-				IJavaElement element = names.get(0).resolveBinding().getJavaElement();		
+				IJavaElement element = name.resolveBinding().getJavaElement();		
 				//new way to get element
 				IJavaElement entire_element = element;
 				try{
-					int name_start = names.get(0).getStartPosition();
-					int name_length = names.get(0).getLength();
+					int name_start = name.getStartPosition();
+					int name_length = name.getLength();
 					IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
 					element = primary_elements[0];
 				} catch (Exception e){

@@ -60,4 +60,9 @@ public class NamesInCompilationUnit {
 		}
 		return names;
 	}
+	
+	public boolean isBindingExisting(String binding)
+	{
+		return NameTable.keySet().contains(binding);
+	}
 }

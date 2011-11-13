@@ -60,18 +60,18 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		
 		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		RenameRefactoring refactoring;
-		ArrayList<Name> names = new NamesInJavaProject(project).getNamesOfBindingInJavaProject(bindingKey);	
+		Name name= new NamesInJavaProject(project).getANameWithBinding(bindingKey);	
 		ICompilationUnit unit = this.getICompilationUnit();
-		if(!names.isEmpty())
+		if(name != null)
 		{
 			unit.becomeWorkingCopy(monitor.newChild(1));
-			IJavaElement element = names.get(0).resolveBinding().getJavaElement();
+			IJavaElement element = name.resolveBinding().getJavaElement();
 			
 			//new way to get element
 			IJavaElement entire_element = element;
 			try{
-				int name_start = names.get(0).getStartPosition();
-				int name_length = names.get(0).getLength();
+				int name_start = name.getStartPosition();
+				int name_length = name.getLength();
 				IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
 				element = primary_elements[0];
 			} catch (Exception e){
