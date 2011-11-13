@@ -35,17 +35,13 @@ public class NamesInJavaProject {
 	}
 	
 	public Name getANameWithBinding(String binding)
-	{
-		ArrayList<Name> names = getNameWithBindingInProject(binding);
-		
-		return names.get(0);
-		
-	/*	for(NamesInCompilationUnit nu: UnitsNames)
+	{	
+		for(NamesInCompilationUnit nu: UnitsNames)
 		{
 			if(nu.isBindingExisting(binding))
 				return nu.getNamesWithBinding(binding).get(0);
 		}
-		return null;	*/
+		return null;	
 	}
 
 
