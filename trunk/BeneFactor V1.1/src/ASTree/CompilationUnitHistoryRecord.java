@@ -68,7 +68,6 @@ public class CompilationUnitHistoryRecord {
 		String bInfor = bVisitor.getBindingInformation();
 		FileUtilities.save(Directory + File.separator
 				+ BindingFileName, bInfor);
-		System.out.println(bInfor);
 		previousRecord = earlierVersionP;
 
 		if (previousRecord != null)

@@ -60,7 +60,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		
 		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		RenameRefactoring refactoring;
-		Name name= new NamesInJavaProject(project).getANameWithBinding(bindingKey);	
+		Name name = new NamesInJavaProject(project).getANameWithBinding(bindingKey);	
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)
 		{

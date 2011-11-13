@@ -49,17 +49,22 @@ public class NameBindingInformationVisitor extends ASTVisitor{
 	
 	public void preVisit(ASTNode node)
 	{
+		if(node instanceof QualifiedName)
+			this.handleQName((QualifiedName)node);
+		else if (node instanceof SimpleName)
+			this.handleSName((SimpleName)node);
+			
 		current_index ++;
 	}
-	@Override
-	public boolean visit(QualifiedName node)
+	
+	public void handleQName(QualifiedName node)
 	{
 		IBinding binding = node.resolveBinding();
 		ArrayList<Integer> list;
 		Hashtable<String, ArrayList<Integer>> correspondingTable;
 			
 		if(binding == null)
-			return true;
+			return;
 		
 		switch(binding.getKind())
 		{
@@ -89,24 +94,23 @@ public class NameBindingInformationVisitor extends ASTVisitor{
 		list = correspondingTable.get(binding.getKey());
 		if(list != null)
 		{
-			list.add(current_index - 1);
-			return true;
+			list.add(current_index);
+			return;
 		}
 		list = new ArrayList<Integer>();
-		list.add(current_index - 1);
+		list.add(current_index);
 		correspondingTable.put(binding.getKey(), list);
-		return true;
+		return;
 		
 	}
 	
-	@Override
-	public boolean visit(SimpleName node) {
+	public void handleSName(SimpleName node) {
 		IBinding binding = node.resolveBinding();
 		ArrayList<Integer> list;
 		Hashtable<String, ArrayList<Integer>> correspondingTable;
 			
 		if(binding == null)
-			return true;
+			return;
 		switch(binding.getKind())
 		{
 		case IBinding.VARIABLE:
@@ -135,13 +139,13 @@ public class NameBindingInformationVisitor extends ASTVisitor{
 		list = correspondingTable.get(binding.getKey());
 		if(list != null)
 		{
-			list.add(current_index - 1);
-			return true;
+			list.add(current_index);
+			return;
 		}
 		list = new ArrayList<Integer>();
-		list.add(current_index - 1);
+		list.add(current_index);
 		correspondingTable.put(binding.getKey(), list);
-		return true;
+		return;
 		
 	}
 	
