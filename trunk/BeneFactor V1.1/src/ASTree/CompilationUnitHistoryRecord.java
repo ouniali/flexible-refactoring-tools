@@ -167,7 +167,7 @@ public class CompilationUnitHistoryRecord {
 
 		for (ICompilationUnit unit : allOtherUnits) {
 			NamesInCompilationUnit names = new NamesInCompilationUnit(unit);
-			allCount += names.getNamesOfBindingInCompilatioUnit(binding).size();
+			allCount += names.getNameIndicesOfBindingInCompilatioUnit(binding).size();
 		}
 		allCount += getBindingCount(binding);
 		return allCount;
@@ -179,7 +179,7 @@ public class CompilationUnitHistoryRecord {
 				.getICompilationUnitsOfAProject(Project);
 		for (ICompilationUnit unit : allUnits) {
 			NamesInCompilationUnit names = new NamesInCompilationUnit(unit);
-			allCount += names.getNamesOfBindingInCompilatioUnit(binding).size();
+			allCount += names.getNameIndicesOfBindingInCompilatioUnit(binding).size();
 		}
 
 		return allCount;
