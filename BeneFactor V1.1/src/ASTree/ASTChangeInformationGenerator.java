@@ -35,7 +35,7 @@ public class ASTChangeInformationGenerator {
 	public static ASTExtractMethodChangeInformation getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);		
-		if(ExtractMethod.isExtractMethodChange(pair.nodeOne, pair.nodeTwo))
+		if(ExtractMethod.isExtractMethodChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo))
 			return new ASTExtractMethodChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 		else
 			return null;
