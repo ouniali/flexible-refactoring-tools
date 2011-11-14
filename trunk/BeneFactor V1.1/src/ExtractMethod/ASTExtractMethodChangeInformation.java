@@ -58,7 +58,11 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	{
 		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
 		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(nodeTwo);
-		ASTNode node = childrenTwo.get(start-1);
+		ASTNode node; 
+		if(start != 0)
+			node = 	childrenTwo.get(start-1);
+		else
+			node = nodeTwo;
 		int index = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node);
 		return index;		
 	}

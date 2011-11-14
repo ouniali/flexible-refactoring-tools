@@ -71,7 +71,9 @@ public class ExtractMethod {
 		return false;
 	}
 
-	public static boolean isExtractMethodChange(ASTNode nodeOne, ASTNode nodeTwo) {
+	public static boolean isExtractMethodChange(
+			CompilationUnitHistoryRecord oldRecord, ASTNode nodeOne, 
+			CompilationUnitHistoryRecord newRecord, ASTNode nodeTwo) {
 		if (nodeOne.getNodeType() != ASTNode.BLOCK)
 			return false;
 
@@ -87,9 +89,16 @@ public class ExtractMethod {
 		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo)
 				.size();
 
+		if(childrenOneSize == 0)
+			return false;
 		
+		String new_source = newRecord.getSourceCode();
+		int begin = nodeTwo.getStartPosition();
+		int end = begin + nodeTwo.getLength() - 1;
+		String block_source = new_source.substring(begin, end).replace('{', ' ').replace('}', ' ');
+		boolean isBlockEmpty = StringUtilities.isWhiteSpaceString(block_source);
 		
-		if (childrenOneSize == 0 || childrenTwoSize == 0)
+		if (childrenTwoSize == 0 && !isBlockEmpty)
 			return false;
 
 		if (childrenOneSize > childrenTwoSize
