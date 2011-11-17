@@ -3,6 +3,7 @@ package ASTree;
 import java.util.ArrayList;
 import java.util.Queue;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
@@ -51,6 +52,15 @@ public class ASTreeManipulationMethods {
 					result.add(unit);
 			}	
 		}
+		return result;
+	}
+	
+	public static ArrayList<ICompilationUnit> getICompilationUnitOfPackage(IPackageFragment p) throws JavaModelException
+	{
+		Assert.isTrue(p.getKind() == IPackageFragmentRoot.K_SOURCE);
+		ArrayList<ICompilationUnit> result = new ArrayList<ICompilationUnit>();
+		for (ICompilationUnit unit : p.getCompilationUnits())
+			result.add(unit);
 		return result;
 	}
 	

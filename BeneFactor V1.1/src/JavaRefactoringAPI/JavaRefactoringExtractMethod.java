@@ -109,7 +109,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 			refactoring.setVisibility(modifier);
 			refactoring.setMethodName(methodName);
 			// wait for the underlying resource to be ready
-			Thread.sleep(WAIT_TIME);
+			//	Thread.sleep(WAIT_TIME);
+			
 			iniStatus = refactoring.checkInitialConditions(monitor.newChild(1));
 			if (!iniStatus.isOK())
 				return;
