@@ -55,6 +55,15 @@ public class ASTreeManipulationMethods {
 		return result;
 	}
 	
+	public static IPackageFragment getContainingPackage(ICompilationUnit unit)
+	{
+		IJavaElement element = unit.getParent();
+		if(element.getElementType() == IType.PACKAGE_FRAGMENT)
+			return (IPackageFragment)element;
+		else
+			return null;
+	}
+	
 	public static ArrayList<ICompilationUnit> getICompilationUnitOfPackage(IPackageFragment p) throws JavaModelException
 	{
 		Assert.isTrue(p.getKind() == IPackageFragmentRoot.K_SOURCE);
