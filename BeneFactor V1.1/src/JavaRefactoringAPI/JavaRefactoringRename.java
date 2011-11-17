@@ -35,7 +35,9 @@ import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 
+import ASTree.ASTreeManipulationMethods;
 import Rename.NamesInJavaProject;
+import Rename.NamesInPackage;
 
 
 
@@ -84,7 +86,10 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		
 		RenameRefactoring refactoring;
-		Name name = new NamesInJavaProject(project).getANameWithBinding(bindingKeyBeforeDeclarationChange);	
+		Name name; 
+		//name = new NamesInJavaProject(project).getANameWithBinding(bindingKeyBeforeDeclarationChange);	
+		name = new NamesInPackage(ASTreeManipulationMethods.getContainingPackage(getICompilationUnit()))
+		.getNameOfBinding(bindingKeyBeforeDeclarationChange);
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)
 		{
