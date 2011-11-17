@@ -14,10 +14,12 @@ import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameProcessor;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 
+import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
 import Rename.ASTNameChangeInformation;
 import Rename.NamesInJavaProject;
+import Rename.NamesInPackage;
 
 import compare.SourceDiff;
 
@@ -60,7 +62,10 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		
 		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		RenameRefactoring refactoring;
-		Name name = new NamesInJavaProject(project).getANameWithBinding(bindingKey);	
+		Name name;
+	//	name = new NamesInJavaProject(project).getANameWithBinding(bindingKey);	
+		name = new NamesInPackage(ASTreeManipulationMethods.getContainingPackage(getICompilationUnit()))
+		.getNameOfBinding(bindingKey);
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)
 		{
