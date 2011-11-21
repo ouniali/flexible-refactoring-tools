@@ -2,6 +2,7 @@ package utitilies;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -42,5 +43,10 @@ public class UserInterfaceUtilities {
 				return (JavaEditor) part;
 		}
 		return null;
+	}
+	
+	static public void freezeEditor(JavaEditor editor)
+	{
+
 	}
 }

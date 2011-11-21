@@ -63,13 +63,11 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		RenameRefactoring refactoring;
 		Name name;
-	//	name = new NamesInJavaProject(project).getANameWithBinding(bindingKey);	
 		name = new NamesInPackage(ASTreeManipulationMethods.getContainingPackage(getICompilationUnit()))
 		.getNameOfBinding(bindingKey);
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)
 		{
-			unit.becomeWorkingCopy(monitor.newChild(1));
 			IJavaElement element = name.resolveBinding().getJavaElement();
 			
 			//new way to get element
@@ -92,8 +90,6 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			Change change = refactoring.createChange(monitor.newChild(1));
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
-			unit.commitWorkingCopy(true, monitor.newChild(1));
-			unit.discardWorkingCopy();
 		}
 
 		monitor.done();
@@ -147,7 +143,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		monitor.worked(1);
 	
 
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(),source, monitor.newChild(1));
+		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(this.getICompilationUnit(),source, monitor.newChild(1));
 
 		monitor.done();
 	}
