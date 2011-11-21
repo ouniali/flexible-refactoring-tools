@@ -31,6 +31,21 @@ public class CompilationUnitManipulationMethod {
 		monitor.done();
 	}
 	
+	static public void UpdateICompilationUnitWithoutCommit(ICompilationUnit unit, String code, IProgressMonitor pm)
+	{
+		SubMonitor monitor = SubMonitor.convert(pm,"Performing Code Modification",4);
+		
+        try {
+        	int oldLen = unit.getSourceRange().getLength();  	
+        	ReplaceEdit edit = new ReplaceEdit(0, oldLen, code);
+			unit.applyTextEdit(edit, monitor.newChild(1));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		
+		monitor.done();
+	}
+	
 	@Deprecated 
 	static public void FormattICompilationUnit(ICompilationUnit unit)
 	{		

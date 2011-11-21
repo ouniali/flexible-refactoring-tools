@@ -87,15 +87,12 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		
 		RenameRefactoring refactoring;
 		Name name; 
-		//name = new NamesInJavaProject(project).getANameWithBinding(bindingKeyBeforeDeclarationChange);	
 		name = new NamesInPackage(ASTreeManipulationMethods.getContainingPackage(getICompilationUnit()))
 		.getNameOfBinding(bindingKeyBeforeDeclarationChange);
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)
 		{
-			unit.becomeWorkingCopy(monitor.newChild(1));
 			IJavaElement element = name.resolveBinding().getJavaElement();
-			//new way to get element
 			IJavaElement entire_element = element;
 			try{
 				int name_start = name.getStartPosition();
@@ -105,7 +102,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			} catch (Exception e){
 				element = entire_element;
 			}
-			//new way to get element
 				
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(newName);
@@ -115,8 +111,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			Change change = refactoring.createChange(monitor.newChild(1));
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
-			unit.commitWorkingCopy(true, monitor.newChild(1));
-			unit.discardWorkingCopy();
 		}
 		
 		monitor.done();
@@ -133,7 +127,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			Name name = new NamesInJavaProject(unit.getJavaProject()).getANameWithBinding(bindingKeyAfterDeclarationChange);
 			if(name != null)
 			{				
-				unit.becomeWorkingCopy(monitor);	
 				IJavaElement element = name.resolveBinding().getJavaElement();		
 				//new way to get element
 				IJavaElement entire_element = element;
@@ -152,8 +145,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 				RefactoringStatus  initialStatus = recoverRefactoring.checkInitialConditions(monitor.newChild(1));
 				RefactoringStatus  finalStatus = recoverRefactoring.checkFinalConditions(monitor.newChild(1));
 				recoverRefactoring.createChange(monitor.newChild(1)).perform(monitor.newChild(1));
-				unit.commitWorkingCopy(true, monitor.newChild(1));
-				unit.discardWorkingCopy();
 			}
 			
 		}

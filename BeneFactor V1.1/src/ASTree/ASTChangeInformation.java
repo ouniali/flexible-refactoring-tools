@@ -115,14 +115,14 @@ public class ASTChangeInformation {
 	public void recoverICompilationUnitToOldRecord(IProgressMonitor monitor)
 	{
 		String code = getOldCompilationUnitRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code, monitor);
+		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(unit, code, monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
 	public void recoverICompilationUnitToNewRecord(IProgressMonitor monitor)
 	{
 		String code = getNewCompilationUnitRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(unit, code,monitor);
+		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(unit, code,monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception

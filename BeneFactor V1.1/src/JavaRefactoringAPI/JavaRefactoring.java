@@ -9,6 +9,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.ltk.core.refactoring.Change;
 
+import utitilies.UserInterfaceUtilities;
+
 import compilation.RefactoringChances;
 import ASTree.CompilationUnitHistory;
 
@@ -18,7 +20,6 @@ public abstract class JavaRefactoring extends Job{
 	private int line;
 	private IMarker marker;
 	private Change undo;
-	protected long WAIT_TIME = 2000;
 	
 	
 	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
@@ -36,16 +37,20 @@ public abstract class JavaRefactoring extends Job{
 	public IStatus run(IProgressMonitor pm) {
 		
 		SubMonitor progress = SubMonitor.convert(pm, "Running refactoring", 100);
-	
+		ICompilationUnit unit = this.getICompilationUnit();
 		try {
-		
-			preProcess();
+			unit.becomeWorkingCopy(progress.newChild(1));
+			
+			preProcess();			
 			performCodeRecovery(progress.newChild(49));		
 			performRefactoring(progress.newChild(50));	
 			postProcess();
 			
-			RefactoringChances.clearRefactoringChances();			
+			RefactoringChances.clearRefactoringChances();	
+			
 			progress.worked(1);
+			unit.commitWorkingCopy(true, progress.newChild(1));
+			unit.discardWorkingCopy();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
