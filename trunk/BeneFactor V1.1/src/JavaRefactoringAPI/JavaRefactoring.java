@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ui.IEditorInput;
 
 import utitilies.UserInterfaceUtilities;
 
@@ -39,6 +40,8 @@ public abstract class JavaRefactoring extends Job{
 		SubMonitor progress = SubMonitor.convert(pm, "Running refactoring", 100);
 		ICompilationUnit unit = this.getICompilationUnit();
 		try {
+			UserInterfaceUtilities.freezeEditor(UserInterfaceUtilities.getActiveJavaEditor());
+			
 			unit.becomeWorkingCopy(progress.newChild(1));
 			
 			preProcess();			
@@ -51,6 +54,8 @@ public abstract class JavaRefactoring extends Job{
 			progress.worked(1);
 			unit.commitWorkingCopy(true, progress.newChild(1));
 			unit.discardWorkingCopy();
+			
+			UserInterfaceUtilities.wakeUpEditor(UserInterfaceUtilities.getActiveJavaEditor());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
