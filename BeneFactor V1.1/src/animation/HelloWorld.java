@@ -15,6 +15,7 @@ public class HelloWorld {
 		HelloWorld helloWorld = new HelloWorld();
 		Timeline timeline = new Timeline(helloWorld);
 		timeline.addPropertyToInterpolate("value", 0.0f, 1.0f);
+		
 		timeline.play();
 
 		try {
