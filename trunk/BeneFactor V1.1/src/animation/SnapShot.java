@@ -24,10 +24,8 @@ public class SnapShot {
             rect.width = w;
             BufferedImage bi=robot.createScreenCapture(rect);
             ImageIO.write(bi, format, new File(path));
-        } catch (AWTException e) {
+        } catch (Exception e) {
             e.printStackTrace(); 
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     } 
 	
