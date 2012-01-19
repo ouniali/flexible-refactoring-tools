@@ -29,7 +29,7 @@ public class SnapShot {
         }
     } 
 	
-	public static void showImage (int x, int y, int w, int h, String path)
+	public static JFrame showImage (int x, int y, int w, int h, String path)
 	{
 		JFrame f = new JFrame(path);
 		f.getContentPane().add(new javax.swing.JLabel(new javax.swing.ImageIcon(path)));
@@ -39,13 +39,16 @@ public class SnapShot {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setUndecorated(true);
 	    f.setVisible(true);
-	    
+	    return f;
 	}
 	
 	public static void main (String[] args)
 	{
 		SnapShot.captureScreen(100, 100, 200, 200, SnapShot.JPG, "try.jpg");
-		SnapShot.showImage(300,300,200, 200, "try.jpg");
+		JFrame f = SnapShot.showImage(300,300,200, 200, "try.jpg");
+		
+		MovingObject m = new MovingObject(f);
+		m.play();
 	}
 
 
