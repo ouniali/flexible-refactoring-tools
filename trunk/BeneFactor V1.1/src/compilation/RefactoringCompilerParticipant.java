@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import flexiblerefactoring.BeneFactor;
 import ASTree.ProjectHistoryCollector;
 import JavaRefactoringAPI.JavaRefactoring;
+import UserAction.MylynMonitor;
 
 
 
@@ -34,6 +35,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	{
 		try {
 			//below is original code
+			MylynMonitor.addListener();
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
 			collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());		
