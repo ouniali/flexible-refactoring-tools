@@ -8,7 +8,8 @@ public class MylynMonitor {
 	static public void addListener()
 	{
 		MonitorUiPlugin monitor = MonitorUiPlugin.getDefault();
-		monitor.addInteractionListener();
+		monitor.addInteractionListener(new CopyEventListener());
+		monitor.addInteractionListener(new CutEventListener());
 	}
 
 }
