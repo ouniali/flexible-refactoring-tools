@@ -49,9 +49,14 @@ public class MovingObject {
 	public void play()
 	{
 		Timeline line = new Timeline (this);
+		while(true)
+		{
+		
 		line.addPropertyToInterpolate("X", 0, 1000);
 		line.addPropertyToInterpolate("Y", 0, 1000);
 		line.play();
+
+		}
 	}
 	
 }
