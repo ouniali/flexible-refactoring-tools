@@ -7,9 +7,11 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -51,6 +53,9 @@ public class UserInterfaceUtilities {
 		return null;
 	}
 	
+	
+
+	
 	static public void freezeEditor(final JavaEditor editor)
 	{
 		Display.getDefault().asyncExec(new Runnable() {
@@ -72,4 +77,5 @@ public class UserInterfaceUtilities {
 		});
 		
 	}
+	
 }
