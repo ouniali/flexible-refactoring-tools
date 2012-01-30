@@ -30,8 +30,10 @@ public class MovingASTNode {
 		if(h < 0 )
 			h = -h;
 		SnapShot.captureScreen(x, y, w, h, SnapShot.JPG, "try.jpg");
+		m_object = new MovingObject();
 	
 	}
+	
 	
 	
 	
