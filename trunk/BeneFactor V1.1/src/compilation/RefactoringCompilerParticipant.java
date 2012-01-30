@@ -35,7 +35,6 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	{
 		try {
 			//below is original code
-			MylynMonitor.addListener();
 			IJavaProject pro = context.getWorkingCopy().getJavaProject();
 			CompilationUnit tree = context.getAST3();
 			collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());		
