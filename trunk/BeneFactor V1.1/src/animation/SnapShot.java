@@ -1,5 +1,6 @@
 package animation;
 import java.awt.AWTException;
+import java.awt.Canvas;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
@@ -8,6 +9,17 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+
+import abbot.Platform;
 
 public class SnapShot {
 	
@@ -29,7 +41,7 @@ public class SnapShot {
         }
     } 
 	
-	public static JFrame showImage (int x, int y, int w, int h, String path)
+	public static JFrame showImageSwing (int x, int y, int w, int h, String path)
 	{
 		JFrame f = new JFrame(path);
 		f.getContentPane().add(new javax.swing.JLabel(new javax.swing.ImageIcon(path)));
@@ -42,15 +54,48 @@ public class SnapShot {
 	    return f;
 	}
 	
+	public static Shell showImageSWT(int x, int y, int w, int h, String path)
+	{
+		Display display = new Display();
+		Image image = new Image( display, path);
+		Shell shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
+	
+		shell.setBackgroundImage(image);
+		shell.setBounds(x, y, w, h);
+		shell.open ();
+		
+		Display.getDefault().asyncExec(new MaintainShell(display, shell));
+		return shell;
+	}
+	
 	public static void main (String[] args)
 	{
 		SnapShot.captureScreen(100, 100, 200, 200, SnapShot.JPG, "try.jpg");
-		JFrame f = SnapShot.showImage(300,300,200, 200, "try.jpg");
-		
-		MovingObject m = new MovingObject(f);
-		m.play();
+		//JFrame f = SnapShot.showImageSwing(300,300,200, 200, "try.jpg");
+		SnapShot.showImageSWT(200, 200, 200, 200, "try.jpg");
+		//MovingObject m = new MovingObject(s);
+		//m.play();
+		System.out.println("out");
 	}
-
+	
+	static private class MaintainShell extends Thread
+	{
+		Display display;
+		Shell shell;
+		MaintainShell(Display d, Shell s)
+		{
+			super();
+			display = d;
+			shell = s;
+		}
+		public void run ()
+		{
+			while (!shell.isDisposed ()) {
+				if (!display.readAndDispatch ()) display.sleep ();
+			}
+			display.dispose ();	
+		}
+	}
 
 
 

@@ -2,6 +2,7 @@ package animation;
 
 import javax.swing.JFrame;
 
+import org.eclipse.swt.widgets.Shell;
 import org.pushingpixels.trident.Timeline;
 
 public class MovingObject {
@@ -10,7 +11,7 @@ public class MovingObject {
 	int Y;//grid of topleft
 	int Width;
 	int Height;
-	JFrame frame;
+	Shell shell;
 	
 	public void setX(int x) {
 		X = x;
@@ -34,16 +35,17 @@ public class MovingObject {
 	
 	private void alignFramePosition()
 	{
-		frame.setBounds(X, Y, Width, Height);
+		shell.setBounds(X, Y, Width, Height);
 	}
 
-	public MovingObject (JFrame f)
+	public MovingObject (Shell s)
 	{
-		frame = f;
-		X = f.getX();
-		Y = f.getY();
-		Width = f.getWidth();
-		Height = f.getHeight();
+		shell = s;
+	
+		X = s.getX();
+		Y = s.getY();
+		Width = s.getWidth();
+		Height = s.getHeight();
 	}
 
 	public void play()
