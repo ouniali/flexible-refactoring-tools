@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 
-public class MovingASTNode {
+public class FloatingASTNode {
 
 	private Shell shell;
 	Point StartPoint;
@@ -64,7 +64,12 @@ public class MovingASTNode {
 	
 	public void finalize()
 	{
-		FileUtilities.delete(path);
+		try {
+			super.finalize();
+			FileUtilities.delete(path);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 	
 
@@ -84,6 +89,10 @@ public class MovingASTNode {
 		SnapShot.captureScreen(X, Y, width, height, SnapShot.JPG, path);
 		shell = SnapShot.showImageSWT(X, Y, width, height, path);
 	}
+	
+	
+	
+	
 	
 	
 	
