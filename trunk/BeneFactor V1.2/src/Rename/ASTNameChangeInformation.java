@@ -256,5 +256,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		int lineNo = tree.getLineNumber(oldNameNode.getStartPosition());
 		return lineNo;
 	}
+	
+	
 
 }

@@ -63,5 +63,11 @@
             super="org.eclipse.ui.workbench.texteditor.warning">
       </type>
    </extension>
+   <extension
+         point="org.eclipse.mylyn.monitor.ui.user">
+      <osActivityTimer
+            class="UserAction.MylynUserMonitor">
+      </osActivityTimer>
+   </extension>
 
 </plugin>
