@@ -82,6 +82,8 @@ public class FloatingCode implements Runnable{
 		JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
 		Point s = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
 		Point e = UserInterfaceUtilities.getEditorPointInDisplay(end, editor);
+		if(s == null || e == null)
+			return null;
 		int lh = UserInterfaceUtilities.getEditorLineHeight(end, editor);
 		int x = s.x;
 		int y = s.y;
@@ -89,8 +91,9 @@ public class FloatingCode implements Runnable{
 		int w = e.x - s.x;
 		if(x > 0 && y>0 && h >0 && w >0)
 			return new FloatingCode(x, y, w, h);
-		else
-			return null;
+		
+	
+		return null;
 	}
 	
 	@SuppressWarnings("restriction")
@@ -121,15 +124,4 @@ public class FloatingCode implements Runnable{
 		timeline.play();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
