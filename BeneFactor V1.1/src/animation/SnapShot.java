@@ -24,7 +24,7 @@ import abbot.Platform;
 public class SnapShot {
 	
 	public static final String JPG = "jpg";
-	
+	private static Shell shell;
 	
 	public static void captureScreen(int x, int y, int w, int h, String format,String path) {    
         try {
@@ -71,11 +71,8 @@ public class SnapShot {
 	public static void main (String[] args)
 	{
 		SnapShot.captureScreen(100, 100, 200, 200, SnapShot.JPG, "try.jpg");
-		//JFrame f = SnapShot.showImageSwing(300,300,200, 200, "try.jpg");
-		SnapShot.showImageSWT(200, 200, 200, 200, "try.jpg");
-		//MovingObject m = new MovingObject(s);
-		//m.play();
-		System.out.println("out");
+		shell = SnapShot.showImageSWT(200, 200, 200, 200, "try.jpg");	
+		System.out.println("out");	
 	}
 	
 	static private class MaintainShell extends Thread
