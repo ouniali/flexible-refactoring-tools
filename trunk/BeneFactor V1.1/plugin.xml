@@ -2,6 +2,13 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="refactoringproblemannotation"
+            icon="icons/refactoring.png">
+      </specification>
+   </extension>
+   <extension
          point="org.eclipse.jdt.core.compilationParticipant">
       <compilationParticipant
             class="compilation.RefactoringCompilerParticipant"
@@ -55,13 +62,6 @@
             name="refactoringproblemannotation"
             super="org.eclipse.ui.workbench.texteditor.warning">
       </type>
-   </extension>
-   <extension
-         point="org.eclipse.ui.editors.markerAnnotationSpecification">
-      <specification
-            annotationType="refactoringproblemannotation"
-            icon="icons/refactoring.png">
-      </specification>
    </extension>
 
 </plugin>
