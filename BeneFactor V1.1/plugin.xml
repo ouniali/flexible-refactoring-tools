@@ -63,12 +63,5 @@
             icon="icons/refactoring.png">
       </specification>
    </extension>
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="useractions.BeneCopyHandler"
-            commandId="org.eclipse.ui.edit.copy">
-      </handler>
-   </extension>
 
 </plugin>
