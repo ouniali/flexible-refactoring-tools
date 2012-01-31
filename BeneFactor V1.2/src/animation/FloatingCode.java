@@ -8,12 +8,13 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
+import org.pushingpixels.trident.Timeline;
 
 
 import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 
-public class FloatingASTNode {
+public class FloatingCode {
 
 	private Shell shell;
 	Point StartPoint;
@@ -74,10 +75,10 @@ public class FloatingASTNode {
 	
 
 	
-	public MovingASTNode(ASTNode node)
+	public FloatingCode(int s, int e)
 	{
-		int start = node.getStartPosition();
-		int end = node.getLength()+start -1;
+		int start = s;
+		int end = e;
 		JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
 		StartPoint = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
 		EndPoint = UserInterfaceUtilities.getEditorPointInDisplay(end, editor);
@@ -90,6 +91,21 @@ public class FloatingASTNode {
 		shell = SnapShot.showImageSWT(X, Y, width, height, path);
 	}
 	
+	
+	public void MoveCodeTo(Point p)
+	{
+		Timeline timeline = new Timeline(this);
+		timeline.addPropertyToInterpolate("X", X, p.x);
+		timeline.addPropertyToInterpolate("Y", Y, p.y);
+		timeline.play();
+	}
+	
+	
+	
+	public static void main ()
+	{
+		
+	}
 	
 	
 	
