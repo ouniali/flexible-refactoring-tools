@@ -1,18 +1,35 @@
 package animation;
 
+import java.util.Calendar;
+
 import javax.swing.JFrame;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Shell;
 
+
+import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 
 public class MovingASTNode {
 
-	private MovingObject m_object;
+	private Shell shell;
 	Point StartPoint;
 	Point EndPoint;
+	
+	int X;
+	int Y;
+	int width;
+	int height;
+	
+	String path;
+	
+	public void finalize()
+	{
+		FileUtilities.delete(path);
+	}
 	
 	public MovingASTNode(ASTNode node)
 	{
@@ -21,17 +38,13 @@ public class MovingASTNode {
 		JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
 		StartPoint = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
 		EndPoint = UserInterfaceUtilities.getEditorPointInDisplay(end, editor);
-		int x = StartPoint.x;
-		int y = StartPoint.y;
-		int w = EndPoint.x - StartPoint.x;
-		int h = EndPoint.y - StartPoint.y;
-		if(w < 0)
-			w = -w;
-		if(h < 0 )
-			h = -h;
-		SnapShot.captureScreen(x, y, w, h, SnapShot.JPG, "try.jpg");
-		m_object = new MovingObject();
-	
+		X = StartPoint.x;
+		Y = StartPoint.y;
+		width = Math.abs(EndPoint.x - StartPoint.x);
+		height = Math.abs(EndPoint.y - StartPoint.y);
+		path = Calendar.getInstance().getTimeInMillis() +".jpg";
+		SnapShot.captureScreen(X, Y, width, height, SnapShot.JPG, path);
+		shell = SnapShot.showImageSWT(X, Y, width, height, path);
 	}
 	
 	
