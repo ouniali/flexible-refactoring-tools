@@ -1,5 +1,6 @@
 package compilation;
 
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
@@ -9,6 +10,9 @@ import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.swt.graphics.Point;
+
+import animation.FloatingCode;
 
 import flexiblerefactoring.BeneFactor;
 import ASTree.ProjectHistoryCollector;
@@ -33,13 +37,43 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
 	public void reconcile(ReconcileContext context) 
 	{
+		
 		try {
 			//below is original code
-			IJavaProject pro = context.getWorkingCopy().getJavaProject();
-			CompilationUnit tree = context.getAST3();
-			collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());		
+			//originalCode(context);
+			testingFloatingCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}	
+	
+	private void originalCode(ReconcileContext context) throws Exception
+	{
+		IJavaProject pro = context.getWorkingCopy().getJavaProject();
+		CompilationUnit tree = context.getAST3();
+		collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());	
+	}
+	
+	
+	boolean test = true;
+	
+	private void testingFloatingCode()
+	{
+		
+		if(!test)
+			return;
+		FloatingCode fc = FloatingCode.FloatingCodeFactory(0, 10);
+		if(fc == null)
+			return;
+		fc.MoveTo(new Point(300, 300));
+		test = false;
+		return;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

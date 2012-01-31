@@ -60,8 +60,64 @@ public class UserInterfaceUtilities {
 	public static Point getEditorPointInDisplay(int offset, JavaEditor editor)
 	{
 		StyledText st = getStyledText(editor);
-		return st.toDisplay(st.getLocationAtOffset(offset));
+		StyledTextHelper stHelper = new StyledTextHelper(st, offset);
+		Display.getDefault().asyncExec(stHelper);
+		Point p = stHelper.getPoint();
+		return p;
 	}
+	
+	public static int getEditorLineHeight(int offset, JavaEditor editor)
+	{
+		StyledText st = getStyledText(editor);
+		StyledTextHelper stHelper = new StyledTextHelper(st, offset);
+		Display.getDefault().asyncExec(stHelper);
+		return stHelper.line_height;
+	}
+	
+	private static class StyledTextHelper implements Runnable
+	{
+		StyledText st;
+		Point Position;
+		int offset;
+		int line_height;
+		
+		boolean know_offset;
+		
+		public StyledTextHelper(StyledText s, int o)
+		{
+			st = s;
+			offset = o;
+			know_offset = true;
+		}
+		
+		public StyledTextHelper(StyledText s, Point p)
+		{
+			st = s;
+			Position = p;
+			know_offset = false;
+		}
+		
+		public Point getPoint()
+		{
+			return Position;
+		}
+		
+		public int getLineHeight()
+		{
+			return line_height;
+		}
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(know_offset)
+				Position = st.toDisplay(st.getLocationAtOffset(offset));
+			else
+				offset = st.getOffsetAtLocation(st.toControl(Position));
+			line_height = st.getLineHeight(offset);
+		}
+		
+	}
+	
 	
 	 public static StyledText getStyledText(IWorkbenchPart part) {
 	      ITextViewer viewer = (ITextViewer) part.getAdapter(ITextViewer.class);

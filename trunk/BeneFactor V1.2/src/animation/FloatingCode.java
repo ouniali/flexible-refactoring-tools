@@ -7,24 +7,26 @@ import javax.swing.JFrame;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.pushingpixels.trident.Timeline;
+
+
 
 
 import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 
-public class FloatingCode {
+public class FloatingCode implements Runnable{
 
 	private Shell shell;
-	Point StartPoint;
-	Point EndPoint;
 	int X;
 	int Y;
 	int width;
 	int height;
 	
 	String path;
+	Point destination;
 	
 	public int getX() {
 		return X;
@@ -73,39 +75,54 @@ public class FloatingCode {
 		}
 	}
 	
-
-	
-	public FloatingCode(int s, int e)
+	public static FloatingCode FloatingCodeFactory( int s_off, int e_off)
 	{
-		int start = s;
-		int end = e;
+		int start = s_off;
+		int end = e_off;
 		JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
-		StartPoint = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
-		EndPoint = UserInterfaceUtilities.getEditorPointInDisplay(end, editor);
-		X = StartPoint.x;
-		Y = StartPoint.y;
-		width = Math.abs(EndPoint.x - StartPoint.x);
-		height = Math.abs(EndPoint.y - StartPoint.y);
+		Point s = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
+		Point e = UserInterfaceUtilities.getEditorPointInDisplay(end, editor);
+		int lh = UserInterfaceUtilities.getEditorLineHeight(end, editor);
+		int x = s.x;
+		int y = s.y;
+		int h = e.y - s.y +lh;
+		int w = e.x - s.x;
+		if(x > 0 && y>0 && h >0 && w >0)
+			return new FloatingCode(x, y, w, h);
+		else
+			return null;
+	}
+	
+	@SuppressWarnings("restriction")
+	private FloatingCode(int x, int y, int w, int h)
+	{
+		X = x;
+		Y = y;
+		width = w;
+		height = h;
+		
 		path = Calendar.getInstance().getTimeInMillis() +".jpg";
 		SnapShot.captureScreen(X, Y, width, height, SnapShot.JPG, path);
 		shell = SnapShot.showImageSWT(X, Y, width, height, path);
 	}
 	
-	
-	public void MoveCodeTo(Point p)
+	public void MoveTo(Point d)
 	{
+		destination = d;
+		Display.getDefault().asyncExec(this);
+	}
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		Timeline timeline = new Timeline(this);
-		timeline.addPropertyToInterpolate("X", X, p.x);
-		timeline.addPropertyToInterpolate("Y", Y, p.y);
+		timeline.addPropertyToInterpolate("X", X, destination.x);
+		timeline.addPropertyToInterpolate("Y", Y, destination.y);
 		timeline.play();
 	}
 	
 	
 	
-	public static void main ()
-	{
-		
-	}
 	
 	
 	
