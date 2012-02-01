@@ -60,7 +60,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	private void testingFloatingCode()
 	{
 		
-		FloatingCode fc = FloatingCode.FloatingCodeFactory(0, 10);
+		FloatingCode fc = FloatingCode.FloatingCodeFactory(0, 0);
 		if(fc == null)
 			return;
 		System.out.println("before moving");
