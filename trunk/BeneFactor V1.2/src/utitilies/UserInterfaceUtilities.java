@@ -59,8 +59,7 @@ public class UserInterfaceUtilities {
 	
 	public static Point getEditorPointInDisplay(int offset, JavaEditor editor)
 	{
-		StyledText st = getStyledText(editor);
-		StyledTextHelper stHelper = new StyledTextHelper(st, offset);
+		StyledTextHelper stHelper = new StyledTextHelper(editor, offset);
 		Display.getDefault().asyncExec(stHelper);
 		Point p = stHelper.getPoint();
 		return p;
@@ -68,31 +67,30 @@ public class UserInterfaceUtilities {
 	
 	public static int getEditorLineHeight(int offset, JavaEditor editor)
 	{
-		StyledText st = getStyledText(editor);
-		StyledTextHelper stHelper = new StyledTextHelper(st, offset);
+		StyledTextHelper stHelper = new StyledTextHelper(editor, offset);
 		Display.getDefault().asyncExec(stHelper);
 		return stHelper.line_height;
 	}
 	
 	private static class StyledTextHelper implements Runnable
 	{
-		StyledText st;
+		JavaEditor editor;
 		Point Position;
 		int offset;
 		int line_height;
 		
 		boolean know_offset;
 		
-		public StyledTextHelper(StyledText s, int o)
+		public StyledTextHelper(JavaEditor e, int o)
 		{
-			st = s;
+			editor = e;
 			offset = o;
 			know_offset = true;
 		}
 		
-		public StyledTextHelper(StyledText s, Point p)
+		public StyledTextHelper(JavaEditor e, Point p)
 		{
-			st = s;
+			editor = e;
 			Position = p;
 			know_offset = false;
 		}
@@ -109,6 +107,7 @@ public class UserInterfaceUtilities {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
+			StyledText st = getStyledText(editor);
 			if(know_offset)
 				Position = st.toDisplay(st.getLocationAtOffset(offset));
 			else
@@ -116,22 +115,23 @@ public class UserInterfaceUtilities {
 			line_height = st.getLineHeight(offset);
 		}
 		
+		private StyledText getStyledText(IWorkbenchPart part) {
+		      ITextViewer viewer = (ITextViewer) part.getAdapter(ITextViewer.class);
+		      StyledText textWidget = null;
+		      if (viewer == null) {
+		        Control control = (Control) part.getAdapter(Control.class);
+		        if (control instanceof StyledText) {
+		          textWidget = (StyledText) control;
+		        }
+		      } else {
+		        textWidget = viewer.getTextWidget();
+		      }
+		      return textWidget;
+		    }
+		
 	}
 	
 	
-	 public static StyledText getStyledText(IWorkbenchPart part) {
-	      ITextViewer viewer = (ITextViewer) part.getAdapter(ITextViewer.class);
-	      StyledText textWidget = null;
-	      if (viewer == null) {
-	        Control control = (Control) part.getAdapter(Control.class);
-	        if (control instanceof StyledText) {
-	          textWidget = (StyledText) control;
-	        }
-	      } else {
-	        textWidget = viewer.getTextWidget();
-	      }
-	      return textWidget;
-	    }
 
 	
 	static public void freezeEditor(final JavaEditor editor)
