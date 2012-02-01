@@ -78,6 +78,7 @@ public class UserInterfaceUtilities {
 		Point Position;
 		int offset;
 		int line_height;
+		int line_width;
 		
 		boolean know_offset;
 		
