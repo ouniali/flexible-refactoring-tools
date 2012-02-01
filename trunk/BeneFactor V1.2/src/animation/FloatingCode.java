@@ -68,6 +68,7 @@ public class FloatingCode implements Runnable{
 	public void finalize()
 	{
 		try {
+			System.out.println("Finalizing.");
 			super.finalize();
 			FileUtilities.delete(path);
 		} catch (Throwable e) {
