@@ -83,10 +83,12 @@ public class FloatingCode implements Runnable{
 		Point e = UserInterfaceUtilities.getEditorPointInDisplay(end, editor);
 		if(s == null || e == null)
 			return null;
+		System.out.println("Points not null.");
+		
 		int lh = UserInterfaceUtilities.getEditorLineHeight(end, editor);
 		int x = s.x;
 		int y = s.y;
-		int h = e.y - s.y + 20;
+		int h = e.y - s.y + lh;
 		int w = e.x - s.x;
 		if(x > 0 && y>0 && h >0 && w >0)
 			return new FloatingCode(x, y, w, h);
