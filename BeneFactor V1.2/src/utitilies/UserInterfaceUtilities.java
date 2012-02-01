@@ -60,7 +60,7 @@ public class UserInterfaceUtilities {
 	public static Point getEditorPointInDisplay(int offset, JavaEditor editor)
 	{
 		StyledTextHelper stHelper = new StyledTextHelper(editor, offset);
-		Display.getDefault().asyncExec(stHelper);
+		Display.getDefault().syncExec(stHelper);
 		Point p = stHelper.getPoint();
 		return p;
 	}
@@ -68,11 +68,11 @@ public class UserInterfaceUtilities {
 	public static int getEditorLineHeight(int offset, JavaEditor editor)
 	{
 		StyledTextHelper stHelper = new StyledTextHelper(editor, offset);
-		Display.getDefault().asyncExec(stHelper);
+		Display.getDefault().syncExec(stHelper);
 		return stHelper.line_height;
 	}
 	
-	private static class StyledTextHelper implements Runnable
+	private static class StyledTextHelper extends Thread
 	{
 		JavaEditor editor;
 		Point Position;
@@ -113,6 +113,7 @@ public class UserInterfaceUtilities {
 			else
 				offset = st.getOffsetAtLocation(st.toControl(Position));
 			line_height = st.getLineHeight(offset);
+			
 		}
 		
 		private StyledText getStyledText(IWorkbenchPart part) {
