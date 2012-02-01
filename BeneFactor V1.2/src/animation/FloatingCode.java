@@ -13,69 +13,17 @@ import org.pushingpixels.trident.Timeline;
 
 
 
-
 import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 
-public class FloatingCode implements Runnable{
+public class FloatingCode extends Thread{
 
-	private Shell shell;
-	int X;
-	int Y;
-	int width;
-	int height;
-	
-	String path;
+	private MovableShell m_shell;
 	Point destination;
-	
-	public int getX() {
-		return X;
-	}
-	public void setX(int x) {
-		X = x;
-		ResetShell();
-	}
-	public int getY() {
-		return Y;
-	}
-	public void setY(int y) {
-		Y = y;
-		ResetShell();
-	}
-	public int getWidth() {
-		return width;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-		ResetShell();
-	}
-	public int getHeight() {
-		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
-		ResetShell();
-	}
 
 
+	
 
-	private void ResetShell()
-	{
-		shell.setBounds(X, Y, width, height);
-	}
-	
-	
-	public void finalize()
-	{
-		try {
-			System.out.println("Finalizing.");
-			super.finalize();
-			FileUtilities.delete(path);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public static FloatingCode FloatingCodeFactory( int start, int end)
 	{
 		
@@ -99,30 +47,24 @@ public class FloatingCode implements Runnable{
 	
 	@SuppressWarnings("restriction")
 	private FloatingCode(int x, int y, int w, int h)
-	{
-		X = x;
-		Y = y;
-		width = w;
-		height = h;
-		
-		path = Calendar.getInstance().getTimeInMillis() +".jpg";
-		SnapShot.captureScreen(X, Y, width, height, SnapShot.JPG, path);
-		shell = SnapShot.showImageSWT(X, Y, width, height, path);
+	{		
+		String path = Calendar.getInstance().getTimeInMillis() +".jpg";
+		SnapShot.captureScreen(x, y, w, h, SnapShot.JPG, path);
+		m_shell = SnapShot.openImageSWT(x, y, w, h, path);
 	}
 	
 	public void MoveTo(Point d)
 	{
-		destination = d;
-		Display.getDefault().asyncExec(this);
+		//destination = d;
+		//this.start();
 	}
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		Timeline timeline = new Timeline(this);
-		timeline.addPropertyToInterpolate("X", X, destination.x);
-		timeline.addPropertyToInterpolate("Y", Y, destination.y);
-		timeline.play();
+		timeline.addPropertyToInterpolate("X", m_shell.getX(), destination.x);
+		timeline.addPropertyToInterpolate("Y", m_shell.getY(), destination.y);
+		timeline.play();	
 	}
 	
 }

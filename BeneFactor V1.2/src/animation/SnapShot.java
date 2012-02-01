@@ -19,12 +19,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import utitilies.FileUtilities;
+
 import abbot.Platform;
 
 public class SnapShot {
 	
 	public static final String JPG = "jpg";
-	private static Shell shell;
 	
 	public static void captureScreen(int x, int y, int w, int h, String format,String path) {    
         try {
@@ -54,49 +55,20 @@ public class SnapShot {
 	    return f;
 	}
 	
-	public static Shell showImageSWT(int x, int y, int w, int h, String path)
-	{
-		Display display = new Display();
-		Image image = new Image( display, path);
-		Shell shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-	
-		shell.setBackgroundImage(image);
-		shell.setBounds(x, y, w, h);
-		shell.open ();
+	public static MovableShell openImageSWT(int x, int y, int w, int h, String path)
+	{	
 		
-		Display.getDefault().asyncExec(new MaintainShell(display, shell));
-		return shell;
+		MovableShell m_shell = new MovableShell(x, y, w, h, path);
+		Display.getDefault().asyncExec(m_shell);
+		return m_shell;
 	}
 	
 	public static void main (String[] args)
 	{
 		SnapShot.captureScreen(100, 100, 200, 200, SnapShot.JPG, "try.jpg");
-		shell = SnapShot.showImageSWT(200, 200, 200, 200, "try.jpg");	
+		SnapShot.openImageSWT(200, 200, 200, 200, "try.jpg");	
 		System.out.println("out");	
 	}
-	
-	static private class MaintainShell extends Thread
-	{
-		Display display;
-		Shell shell;
-		MaintainShell(Display d, Shell s)
-		{
-			super();
-			display = d;
-			shell = s;
-		}
-		public void run ()
-		{
-			while (!shell.isDisposed ()) {
-				if (!display.readAndDispatch ()) display.sleep ();
-			}
-			display.dispose ();	
-		}
-	}
-
-
-
-
 
 
 }
