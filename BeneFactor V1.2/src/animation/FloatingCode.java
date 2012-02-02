@@ -56,7 +56,7 @@ public class FloatingCode extends Thread{
 	public void MoveTo(Point d)
 	{
 		destination = d;
-		//this.start();
+		m_shell.setX(500);
 	}
 	
 	@Override
