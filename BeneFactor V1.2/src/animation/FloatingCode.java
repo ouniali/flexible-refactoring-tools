@@ -55,7 +55,7 @@ public class FloatingCode extends Thread{
 	
 	public void MoveTo(Point d)
 	{
-		//destination = d;
+		destination = d;
 		//this.start();
 	}
 	

@@ -59,7 +59,6 @@ public class SnapShot {
 	{	
 		
 		MovableShell m_shell = new MovableShell(x, y, w, h, path);
-		Display.getDefault().asyncExec(m_shell);
 		return m_shell;
 	}
 	
