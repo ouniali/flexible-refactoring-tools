@@ -12,25 +12,25 @@ public class MovableShell extends Thread
 	
 	public void setX(int x) {
 		X = x;
-		resetShell();
+		updateShell();
 	}
 
 
 	public void setY(int y) {
 		Y = y;
-		resetShell();
+		updateShell();
 	}
 
 
 	public void setWidth(int w) {
 		this.width = w;
-		resetShell();
+		updateShell();
 	}
 
 
 	public void setHeight(int h) {
 		this.height = h;
-		resetShell();
+		updateShell();
 	}
 
 
@@ -87,7 +87,7 @@ public class MovableShell extends Thread
 	}
 	
 	
-	public void run ()
+	public synchronized void run ()
 	{
 		display = new Display();
 		Image image = new Image( display, path);
@@ -97,7 +97,6 @@ public class MovableShell extends Thread
 		shell.setBounds(X, Y, width, height);
 		shell.open ();
 		
-		
 		 while (!shell.isDisposed()) 
 		 {
 			 if (!display.readAndDispatch ()) 
@@ -106,8 +105,14 @@ public class MovableShell extends Thread
 		 display.dispose();
 	}
 	
-	private synchronized void resetShell()
+	private synchronized void updateShell()
 	{
+		if(shell == null || display == null)
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		display.syncExec(new Runnable()
 		{
 			public void run() {
