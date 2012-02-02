@@ -56,12 +56,13 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
 	
 	boolean test = true;
+	static FloatingCode fc;
 	
 	private void testingFloatingCode()
 	{
 		if(!test)
 			return;
-		FloatingCode fc = FloatingCode.FloatingCodeFactory(0, 0);
+		fc = FloatingCode.FloatingCodeFactory(0, 0);
 		if(fc == null)
 			return;
 		System.out.println("before moving");
