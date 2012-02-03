@@ -55,17 +55,10 @@ public class SnapShot {
 	    return f;
 	}
 	
-	public static MovableShell openImageSWT(int x, int y, int w, int h, String path)
-	{	
-		
-		MovableShell m_shell = new MovableShell(x, y, w, h, path);
-		return m_shell;
-	}
 	
 	public static void main (String[] args)
 	{
 		SnapShot.captureScreen(100, 100, 200, 200, SnapShot.JPG, "try.jpg");
-		SnapShot.openImageSWT(200, 200, 200, 200, "try.jpg");	
 		System.out.println("out");	
 	}
 

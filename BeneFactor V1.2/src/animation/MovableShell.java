@@ -62,9 +62,10 @@ public class MovableShell extends Thread
 	final String path;
 	Shell shell;
 	Display display;
+	Image image;
 	
 	
-	MovableShell(int x, int y, int w, int h, String p)
+	public MovableShell(int x, int y, int w, int h, String p)
 	{
 		super();
 		X = x;
@@ -90,13 +91,13 @@ public class MovableShell extends Thread
 	public synchronized void run ()
 	{
 		display = new Display();
-		Image image = new Image( display, path);
+		image = new Image( display, path);
 		shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
 	
 		shell.setBackgroundImage(image);
 		shell.setBounds(X, Y, width, height);
 		shell.open ();
-		
+	
 		 while (!shell.isDisposed()) 
 		 {
 			 if (!display.readAndDispatch ()) 
@@ -105,14 +106,16 @@ public class MovableShell extends Thread
 		 display.dispose();
 	}
 	
-	private synchronized void updateShell()
+	private synchronized void updateShell() 
 	{
-		if(shell == null || display == null)
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		try{
+			while(display == null || shell == null)
+				sleep(100);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		display.syncExec(new Runnable()
 		{
 			public void run() {
