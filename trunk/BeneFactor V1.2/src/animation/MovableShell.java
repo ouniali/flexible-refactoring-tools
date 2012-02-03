@@ -97,7 +97,7 @@ public class MovableShell extends Thread
 		shell.setBackgroundImage(image);
 		shell.setBounds(X, Y, width, height);
 		shell.open ();
-	
+		notify();
 		 while (!shell.isDisposed()) 
 		 {
 			 if (!display.readAndDispatch ()) 
@@ -109,8 +109,8 @@ public class MovableShell extends Thread
 	private synchronized void updateShell() 
 	{
 		try{
-			while(display == null || shell == null)
-				sleep(100);
+			if(display == null || shell == null)
+				wait();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
