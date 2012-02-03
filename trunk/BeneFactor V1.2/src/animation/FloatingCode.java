@@ -56,11 +56,11 @@ public class FloatingCode extends Thread{
 	public void MoveTo(Point d)
 	{
 		destination = d;
-		m_shell.setX(500);
+		start();
 	}
 	
 	@Override
-	public void run() {
+	public synchronized void run() {
 		Timeline timeline = new Timeline(this);
 		timeline.addPropertyToInterpolate("X", m_shell.getX(), destination.x);
 		timeline.addPropertyToInterpolate("Y", m_shell.getY(), destination.y);
