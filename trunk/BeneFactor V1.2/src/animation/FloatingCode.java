@@ -24,7 +24,7 @@ public class FloatingCode extends Thread{
 
 	
 
-	public static FloatingCode FloatingCodeFactory( int start, int end)
+	public static FloatingCode FloatingCodeFactory(int start, int end)
 	{
 		
 		JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
@@ -50,7 +50,7 @@ public class FloatingCode extends Thread{
 	{		
 		String path = Calendar.getInstance().getTimeInMillis() +".jpg";
 		SnapShot.captureScreen(x, y, w, h, SnapShot.JPG, path);
-		m_shell = SnapShot.openImageSWT(x, y, w, h, path);
+		m_shell = new MovableShell(x, y, w, h, path);
 	}
 	
 	public void MoveTo(Point d)
