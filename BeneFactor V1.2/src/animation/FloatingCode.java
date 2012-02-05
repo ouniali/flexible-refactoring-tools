@@ -26,18 +26,12 @@ public class FloatingCode extends Thread{
 	{
 		
 		JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
-		Point s = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
-		Point e = UserInterfaceUtilities.getEditorPointInDisplay(end, editor);
-		if(s == null || e == null)
-			return null;
-		
-		int lh = UserInterfaceUtilities.getEditorLineHeight(end, editor);
-		
 		Rectangle rect = UserInterfaceUtilities.getTextBounds(start, end, editor);
 		int x = rect.x;
 		int y = rect.y;
 		int h = rect.height;
 		int w = rect.width;
+		System.out.println(x +" "+y+" "+ w+" "+h);
 		if(x > 0 && y>0 && h >0 && w >0)
 			return new FloatingCode(x, y, w, h);
 		
@@ -64,6 +58,7 @@ public class FloatingCode extends Thread{
 	public void run() {
 		Timeline timeline = new Timeline(m_shell);
 		timeline.addPropertyToInterpolate("X", m_shell.getX(), destination.x);
+		timeline.addPropertyToInterpolate("Y", m_shell.getY(), destination.y);
 		timeline.play();
 	}
 	
