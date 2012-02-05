@@ -21,9 +21,6 @@ public class FloatingCode extends Thread{
 	private MovableShell m_shell;
 	Point destination;
 
-
-	
-
 	public static FloatingCode FloatingCodeFactory(int start, int end)
 	{
 		
@@ -51,20 +48,20 @@ public class FloatingCode extends Thread{
 		String path = Calendar.getInstance().getTimeInMillis() +".jpg";
 		SnapShot.captureScreen(x, y, w, h, SnapShot.JPG, path);
 		m_shell = new MovableShell(x, y, w, h, path);
+		
 	}
 	
 	public void MoveTo(Point d)
 	{
-		destination = d;
-		start();
+		destination = d;		
+		this.start();		
 	}
 	
 	@Override
-	public synchronized void run() {
-		Timeline timeline = new Timeline(this);
+	public void run() {
+		Timeline timeline = new Timeline(m_shell);
 		timeline.addPropertyToInterpolate("X", m_shell.getX(), destination.x);
-		timeline.addPropertyToInterpolate("Y", m_shell.getY(), destination.y);
-		timeline.play();	
+		timeline.play();
 	}
 	
 }

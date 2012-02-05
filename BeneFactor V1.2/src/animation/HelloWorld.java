@@ -3,24 +3,25 @@ package animation;
 import org.pushingpixels.trident.Timeline;
 
 public class HelloWorld {
-	private float value;
 
-	public void setValue(float newValue) {
-		System.out.println(this.value + " -> " + newValue);
-		this.value = newValue;
-	}
-
+	static MovableShell mshell;
+	
 	public static void main(String[] args) 
 	{
-		HelloWorld helloWorld = new HelloWorld();
-		Timeline timeline = new Timeline(helloWorld);
-		timeline.addPropertyToInterpolate("value", 0.0f, 1.0f);
 		
-		timeline.play();
-
-		try {
-			Thread.sleep(3000);
-		} catch (Exception exc) {
-		}
+		SnapShot.captureScreen(0, 0, 90, 90, SnapShot.JPG, "Hello.jpg");
+		mshell = new MovableShell(10, 10, 100, 100, "Hello.jpg");
+		new Thread()
+		{
+			public void run()
+			{
+				Timeline nl = new Timeline(mshell);
+				nl.addPropertyToInterpolate("X", 0, 1000);
+				nl.play();
+			}
+			
+		}.start();
+	
+	
 	}
 }
