@@ -1,5 +1,8 @@
 package animation;
 
+import java.util.Calendar;
+import java.util.concurrent.Semaphore;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -23,13 +26,13 @@ public class MovableShell extends Thread
 
 
 	public void setWidth(int w) {
-		this.width = w;
+		width = w;
 		updateShell();
 	}
 
 
 	public void setHeight(int h) {
-		this.height = h;
+		height = h;
 		updateShell();
 	}
 
@@ -64,7 +67,6 @@ public class MovableShell extends Thread
 	Display display;
 	Image image;
 	
-	
 	public MovableShell(int x, int y, int w, int h, String p)
 	{
 		super();
@@ -72,9 +74,14 @@ public class MovableShell extends Thread
 		Y = y;
 		width = w;
 		height = h;
-		path = p;	
-		
-		this.start();
+		path =  p;	
+		start();
+	
+	}
+	
+	public Shell getShell ()
+	{
+		return shell;
 	}
 	
 	public void finalize()
@@ -90,39 +97,36 @@ public class MovableShell extends Thread
 	
 	public synchronized void run ()
 	{
+
 		display = new Display();
 		image = new Image( display, path);
 		shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
-	
 		shell.setBackgroundImage(image);
-		shell.setBounds(X, Y, width, height);
+		shell.setBounds(X, Y, width, height);		
+		
 		shell.open ();
-		notify();
-		 while (!shell.isDisposed()) 
+		
+		 while (!display.isDisposed()) 
 		 {
 			 if (!display.readAndDispatch ()) 
-				 display.sleep ();
+				 display.sleep();
 		 }
 		 display.dispose();
 	}
 	
-	private synchronized void updateShell() 
-	{
+	private void updateShell() 
+	{	
 		try{
-			if(display == null || shell == null)
-				wait();
-		}catch(Exception e)
-		{
+		if(shell == null || display == null)
+			Thread.sleep(100);
+		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		display.syncExec(new Runnable()
-		{
-			public void run() {
-				shell.setBounds(X, Y, width, height);
-			}	
+		display.syncExec(new Runnable(){
+		public void run() {
+			shell.setBounds(X, Y, width, height);
+		}
 		});
 	}
-	
 	
 }

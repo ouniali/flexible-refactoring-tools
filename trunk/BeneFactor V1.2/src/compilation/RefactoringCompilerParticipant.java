@@ -62,11 +62,11 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	{
 		if(!test)
 			return;
-		fc = FloatingCode.FloatingCodeFactory(0, 0);
+		fc = FloatingCode.FloatingCodeFactory(1, 1);
 		if(fc == null)
 			return;
 		System.out.println("before moving");
-		fc.MoveTo(new Point(300, 300));
+		fc.MoveTo(new Point(900, 900));
 		test = false;
 	}
 	
