@@ -11,6 +11,7 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -22,6 +23,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
+
+import StyledTextHelper.StyledTextGetBound;
+import StyledTextHelper.StyledTextGetLineHeight;
+import StyledTextHelper.StyledTextGetPoint;
 
 public class UserInterfaceUtilities {
 
@@ -59,103 +64,37 @@ public class UserInterfaceUtilities {
 	
 	public static Point getEditorPointInDisplay(int offset, JavaEditor editor)
 	{
-		StyledTextHelper stHelper = new StyledTextHelper(editor, offset);
+		StyledTextGetPoint stHelper = new StyledTextGetPoint(offset, editor);
 		Display.getDefault().syncExec(stHelper);
-		Point p = stHelper.getPoint();
-		return p;
+		return stHelper.getPositionToDisplay();
 	}
 	
 	public static int getEditorLineHeight(int offset, JavaEditor editor)
 	{
-		StyledTextHelper stHelper = new StyledTextHelper(editor, offset);
+		StyledTextGetLineHeight stHelper = new StyledTextGetLineHeight(offset, editor);
 		Display.getDefault().syncExec(stHelper);
-		return stHelper.line_height;
+		return stHelper.getLineHeight();
 	}
 	
-	private static class StyledTextHelper extends Thread
+	public static Rectangle getTextBounds(int start, int end, JavaEditor editor)
 	{
-		JavaEditor editor;
-		Point Position;
-		int offset;
-		int line_height;
-		int line_width;
-		
-		boolean know_offset;
-		
-		public StyledTextHelper(JavaEditor e, int o)
-		{
-			editor = e;
-			offset = o;
-			know_offset = true;
-		}
-		
-		public StyledTextHelper(JavaEditor e, Point p)
-		{
-			editor = e;
-			Position = p;
-			know_offset = false;
-		}
-		
-		public Point getPoint()
-		{
-			return Position;
-		}
-		
-		public int getLineHeight()
-		{
-			return line_height;
-		}
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			StyledText st = getStyledText(editor);
-			if(know_offset)
-				Position = st.toDisplay(st.getLocationAtOffset(offset));
-			else
-				offset = st.getOffsetAtLocation(st.toControl(Position));
-			line_height = st.getLineHeight(offset);
-			
-		}
-		
-		private StyledText getStyledText(IWorkbenchPart part) {
-		      ITextViewer viewer = (ITextViewer) part.getAdapter(ITextViewer.class);
-		      StyledText textWidget = null;
-		      if (viewer == null) {
-		        Control control = (Control) part.getAdapter(Control.class);
-		        if (control instanceof StyledText) {
-		          textWidget = (StyledText) control;
-		        }
-		      } else {
-		        textWidget = viewer.getTextWidget();
-		      }
-		      return textWidget;
-		    }
-		
+		StyledTextGetBound stHelper = new StyledTextGetBound(start, end, editor);
+		Display.getDefault().syncExec(stHelper);
+		return stHelper.getTextBound();
 	}
-	
-	
 
-	
-	static public void freezeEditor(final JavaEditor editor)
-	{
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() 
-			{
-				
-			}
-		});
-
-	}
-	
-	static public void wakeUpEditor(final JavaEditor editor)
-	{
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() 
-			{
-				
-			}
-		});
+	public static void freezeEditor(JavaEditor activeJavaEditor) {
+		// TODO Auto-generated method stub
 		
 	}
+
+	public static void wakeUpEditor(JavaEditor activeJavaEditor) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
 	
 }
