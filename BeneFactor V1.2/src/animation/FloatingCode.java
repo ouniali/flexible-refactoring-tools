@@ -22,6 +22,12 @@ public class FloatingCode extends Thread{
 	private MovableShell m_shell;
 	Point destination;
 
+	public static FloatingCode FloatingCodeFactory(ASTNode node)
+	{
+		return FloatingCodeFactory(node.getStartPosition(), node.getStartPosition()+ node.getLength() - 1);
+	}
+	
+	
 	public static FloatingCode FloatingCodeFactory(int start, int end)
 	{
 		
