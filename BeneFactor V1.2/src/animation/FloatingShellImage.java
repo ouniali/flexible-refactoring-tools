@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import utitilies.FileUtilities;
 
-public class MovableShellImage extends Thread
+public class FloatingShellImage extends Thread
 {
 
 
@@ -26,7 +26,7 @@ public class MovableShellImage extends Thread
 	Image image;
 	Path path;
 	
-	public MovableShellImage(int x, int y, int w, int h, Path p)
+	public FloatingShellImage(int x, int y, int w, int h, Path p)
 	{
 		super();
 		X = x;
