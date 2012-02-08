@@ -9,7 +9,7 @@ public class FloatingText extends Thread{
 	MovableShellText m_shell;
 	Point destination;
 	
-	public FloatingText FloatingTextFactory(int x, int y , String s)
+	public static FloatingText FloatingTextFactory(int x, int y , String s)
 	{
 		if(x >0 && y>0)
 			return new FloatingText(x, y, s);
@@ -37,5 +37,10 @@ public class FloatingText extends Thread{
 		timeline.play();
 	}
 	
+	public static void main(String arg[])
+	{
+		FloatingText ft = FloatingTextFactory(10, 10, "LOVE");
+		ft.MoveTo(new Point(300, 300));
+	}
 	
 }

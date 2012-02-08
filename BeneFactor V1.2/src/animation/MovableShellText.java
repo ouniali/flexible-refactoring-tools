@@ -63,7 +63,7 @@ public class MovableShellText extends Thread{
 	
 	public static void main(String arg[])
 	{
-		new MovableShellLabel(10, 10, "LOVE");
+		new MovableShellText(10, 10, "LOVE");
 	}
 	
 	
