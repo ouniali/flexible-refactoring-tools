@@ -41,7 +41,7 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		try {
 			//below is original code
 			originalCode(context);
-			//testingFloatingCode();
+			////testingFloatingCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
