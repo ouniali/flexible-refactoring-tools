@@ -1,7 +1,12 @@
 package animation;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -18,14 +23,12 @@ public class MovableShellLabel extends Thread{
 	Shell shell;
 	Display display;
 	String text;
-	Label label;
+	StyledText styled;
 	
-	public MovableShellLabel(int x, int y, int w, int h, String t)
+	public MovableShellLabel(int x, int y, String t)
 	{
 		X = x;
 		Y = y;
-		width = w;
-		height = h;
 		text = t;
 		start();
 	}
@@ -34,11 +37,20 @@ public class MovableShellLabel extends Thread{
 	{
 		display = new Display ();
 		shell = new Shell (display, SWT.NO_TRIM | SWT.ON_TOP);
-		shell.setBounds(X, Y, width, height);
-	    label = new Label (shell, SWT.CENTER);
-	    label.setText (text);
-	    label.setBounds (shell.getClientArea ());
-	    shell.open ();
+		shell.setLayout(new FillLayout());
+		
+		styled = new StyledText(shell, SWT.NO_BACKGROUND);
+		styled.setText(text);
+	    styled.setEditable(false);
+	    Font font = new Font(shell.getDisplay(), "Times", 11, SWT.BOLD);
+	    styled.setFont(font);
+	    Rectangle rect = styled.getTextBounds(0, text.length()-1);
+	    
+	    height = rect.height;
+	    width = rect.width;
+	    shell.setBounds(X, Y, width, height);
+	    
+		shell.open ();
 	    while (!shell.isDisposed ()) {
 	    	if (!display.readAndDispatch ()) display.sleep ();
 	     }
@@ -48,7 +60,7 @@ public class MovableShellLabel extends Thread{
 	
 	public static void main(String arg[])
 	{
-		new MovableShellLabel(100, 100, 100, 100, "LOVE");
+		new MovableShellLabel(100, 100, "LOVE");
 	}
 	
 	
@@ -99,8 +111,8 @@ public class MovableShellLabel extends Thread{
 	private void updateShell() 
 	{	
 		try{
-		while(shell == null || display == null || label == null)
-			Thread.sleep(100);
+			while(shell == null || display == null || styled == null)
+				Thread.sleep(100);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
