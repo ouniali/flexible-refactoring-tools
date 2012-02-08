@@ -34,7 +34,7 @@ public class MovableShellLabel extends Thread{
 	{
 		display = new Display ();
 		shell = new Shell (display, SWT.NO_TRIM | SWT.ON_TOP);
-		
+		shell.setBounds(X, Y, width, height);
 	    label = new Label (shell, SWT.CENTER);
 	    label.setText (text);
 	    label.setBounds (shell.getClientArea ());
