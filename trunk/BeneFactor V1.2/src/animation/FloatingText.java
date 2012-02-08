@@ -3,7 +3,7 @@ package animation;
 import org.eclipse.swt.graphics.Point;
 import org.pushingpixels.trident.Timeline;
 
-public class FloatingText extends Thread{
+public class FloatingText extends FloatingObject{
 	
 	
 	MovableShellText m_shell;

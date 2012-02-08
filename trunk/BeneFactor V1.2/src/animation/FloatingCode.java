@@ -19,7 +19,7 @@ import org.pushingpixels.trident.Timeline;
 import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 
-public class FloatingCode extends Thread{
+public class FloatingCode extends FloatingObject{
 
 	private MovableShellImage m_shell;
 	Point destination;
@@ -79,6 +79,11 @@ public class FloatingCode extends Thread{
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setVisible()
+	{
+	
 	}
 
 	
