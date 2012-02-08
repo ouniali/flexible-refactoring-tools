@@ -22,16 +22,13 @@ import utitilies.UserInterfaceUtilities;
 
 public class MovableCode extends MovableObject{
 
-	private FloatingShellImage f_shell;
-	Point destination;
 	Path path;
 	
 	public static MovableCode MovableCodeFactory(ASTNode node)
 	{
 		return MovableCodeFactory(node.getStartPosition(), node.getStartPosition()+ node.getLength() - 1);
 	}
-	
-	
+
 	public static MovableCode MovableCodeFactory(int start, int end)
 	{
 		
@@ -55,23 +52,7 @@ public class MovableCode extends MovableObject{
 		path = new Path(p);
 		f_shell = new FloatingShellImage(x, y, w, h, path);
 		
-	}
-	
-	public void MoveTo(Point d)
-	{
-		destination = d;		
-		this.start();		
-	}
-	
-	@Override
-	public void run() {
-		Timeline timeline = new Timeline(f_shell);
-		timeline.addPropertyToInterpolate("X", f_shell.getX(), destination.x);
-		timeline.addPropertyToInterpolate("Y", f_shell.getY(), destination.y);
-		timeline.play();
-	}
-	
-	
+	}	
 	public void finalize()
 	{
 		try {
@@ -81,11 +62,5 @@ public class MovableCode extends MovableObject{
 			e.printStackTrace();
 		}
 	}
-	
-	public void showShell()
-	{
-		f_shell.start();
-	}
-
 	
 }
