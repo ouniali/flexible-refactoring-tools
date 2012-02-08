@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-public class MovableShellText extends Thread{
+public class FloatingShellText extends Thread{
 	
 
 
@@ -27,7 +27,7 @@ public class MovableShellText extends Thread{
 	String text;
 	StyledText styled;
 	
-	public MovableShellText(int x, int y, String t)
+	public FloatingShellText(int x, int y, String t)
 	{
 		X = x;
 		Y = y;

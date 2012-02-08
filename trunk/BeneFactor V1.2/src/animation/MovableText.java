@@ -3,23 +3,23 @@ package animation;
 import org.eclipse.swt.graphics.Point;
 import org.pushingpixels.trident.Timeline;
 
-public class FloatingText extends FloatingObject{
+public class MovableText extends MovableObject{
 	
 	
-	MovableShellText m_shell;
+	FloatingShellText m_shell;
 	Point destination;
 	
-	public static FloatingText FloatingTextFactory(int x, int y , String s)
+	public static MovableText MovableTextFactory(int x, int y , String s)
 	{
 		if(x >0 && y>0)
-			return new FloatingText(x, y, s);
+			return new MovableText(x, y, s);
 		else
 			return null;
 	}
 	
-	private FloatingText(int x, int y, String s)
+	private MovableText(int x, int y, String s)
 	{
-		m_shell = new MovableShellText(x, y, s);
+		m_shell = new FloatingShellText(x, y, s);
 	}
 	
 	public void MoveTo(Point p)
@@ -44,7 +44,7 @@ public class FloatingText extends FloatingObject{
 	
 	public static void main(String arg[])
 	{
-		FloatingText ft = FloatingTextFactory(10, 10, "LOVE");
+		MovableText ft = FloatingTextFactory(10, 10, "LOVE");
 		ft.MoveTo(new Point(300, 300));
 	}
 	
