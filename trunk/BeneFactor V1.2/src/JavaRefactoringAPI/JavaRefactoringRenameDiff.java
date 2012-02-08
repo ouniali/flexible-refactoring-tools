@@ -14,6 +14,8 @@ import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameProcessor;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 
+import animation.AnimatedChange;
+
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
@@ -88,6 +90,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			refactoring.checkInitialConditions(monitor.newChild(1));
 			refactoring.checkFinalConditions(monitor.newChild(1));
 			Change change = refactoring.createChange(monitor.newChild(1));
+			new AnimatedChange(change);
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
 		}

@@ -40,8 +40,8 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		
 		try {
 			//below is original code
-			//originalCode(context);
-			testingFloatingCode();
+			originalCode(context);
+			//testingFloatingCode();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
