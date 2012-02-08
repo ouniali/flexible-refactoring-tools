@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.swt.graphics.Point;
 
-import animation.FloatingCode;
+import animation.MovableCode;
 
 import flexiblerefactoring.BeneFactor;
 import ASTree.ProjectHistoryCollector;
@@ -56,13 +56,13 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
 	
 	boolean test = true;
-	static FloatingCode fc;
+	static MovableCode fc;
 	
 	private void testingFloatingCode()
 	{
 		if(!test)
 			return;
-		fc = FloatingCode.FloatingCodeFactory(0, 400);
+		fc = MovableCode.MovableCodeFactory(0, 400);
 		if(fc == null)
 			return;
 		System.out.println("before moving");
