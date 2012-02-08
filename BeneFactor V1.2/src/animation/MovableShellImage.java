@@ -53,6 +53,7 @@ public class MovableShellImage extends Thread
 		shell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP);
 		shell.setBackgroundImage(image);
 		shell.setBounds(X, Y, width, height);		
+		shell.setVisible(false);
 		
 		shell.open ();
 		
@@ -78,6 +79,12 @@ public class MovableShellImage extends Thread
 		}
 		});
 	}
+	
+	public void setVisible(boolean v)
+	{
+		shell.setVisible(v);
+	}
+	
 	
 	public void setX(int x) {
 		X = x;

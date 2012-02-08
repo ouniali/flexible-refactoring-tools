@@ -40,6 +40,7 @@ public class MovableShellText extends Thread{
 		display = new Display ();
 		shell = new Shell (display, SWT.NO_TRIM | SWT.ON_TOP);
 		shell.setLayout(new FillLayout());
+		shell.setVisible(false);
 		
 		styled = new StyledText(shell, SWT.NO_BACKGROUND);
 		styled.setText(text);
@@ -59,7 +60,11 @@ public class MovableShellText extends Thread{
 	     }
 	    display.dispose ();
 	}
-	
+
+	public void setVisible(boolean v)
+	{
+		shell.setVisible(v);
+	}
 	
 	public static void main(String arg[])
 	{
