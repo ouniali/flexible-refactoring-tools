@@ -6,7 +6,7 @@ import org.pushingpixels.trident.Timeline;
 public class MovableText extends MovableObject{
 	
 	
-	FloatingShellText m_shell;
+	FloatingShellText f_shell;
 	Point destination;
 	
 	public static MovableText MovableTextFactory(int x, int y , String s)
@@ -19,7 +19,7 @@ public class MovableText extends MovableObject{
 	
 	private MovableText(int x, int y, String s)
 	{
-		m_shell = new FloatingShellText(x, y, s);
+		f_shell = new FloatingShellText(x, y, s);
 	}
 	
 	public void MoveTo(Point p)
@@ -31,20 +31,20 @@ public class MovableText extends MovableObject{
 	
 	public void run()
 	{
-		Timeline timeline = new Timeline(m_shell);
-		timeline.addPropertyToInterpolate("X", m_shell.getX(), destination.x);
-		timeline.addPropertyToInterpolate("Y", m_shell.getY(), destination.y);
+		Timeline timeline = new Timeline(f_shell);
+		timeline.addPropertyToInterpolate("X", f_shell.getX(), destination.x);
+		timeline.addPropertyToInterpolate("Y", f_shell.getY(), destination.y);
 		timeline.play();
 	}
 	
 	public void showShell()
 	{
-		m_shell.start();
+		f_shell.start();
 	}
 	
 	public static void main(String arg[])
 	{
-		MovableText ft = FloatingTextFactory(10, 10, "LOVE");
+		MovableText ft = MovableTextFactory(10, 10, "LOVE");
 		ft.MoveTo(new Point(300, 300));
 	}
 	

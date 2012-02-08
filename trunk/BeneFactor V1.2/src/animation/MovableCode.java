@@ -22,7 +22,7 @@ import utitilies.UserInterfaceUtilities;
 
 public class MovableCode extends MovableObject{
 
-	private FloatingShellImage m_shell;
+	private FloatingShellImage f_shell;
 	Point destination;
 	Path path;
 	
@@ -53,7 +53,7 @@ public class MovableCode extends MovableObject{
 		String p = Calendar.getInstance().getTimeInMillis() +".jpg";
 		SnapShot.captureScreen(x, y, w, h, SnapShot.JPG, p);
 		path = new Path(p);
-		m_shell = new FloatingShellImage(x, y, w, h, path);
+		f_shell = new FloatingShellImage(x, y, w, h, path);
 		
 	}
 	
@@ -65,9 +65,9 @@ public class MovableCode extends MovableObject{
 	
 	@Override
 	public void run() {
-		Timeline timeline = new Timeline(m_shell);
-		timeline.addPropertyToInterpolate("X", m_shell.getX(), destination.x);
-		timeline.addPropertyToInterpolate("Y", m_shell.getY(), destination.y);
+		Timeline timeline = new Timeline(f_shell);
+		timeline.addPropertyToInterpolate("X", f_shell.getX(), destination.x);
+		timeline.addPropertyToInterpolate("Y", f_shell.getY(), destination.y);
 		timeline.play();
 	}
 	
@@ -84,7 +84,7 @@ public class MovableCode extends MovableObject{
 	
 	public void showShell()
 	{
-		m_shell.start();
+		f_shell.start();
 	}
 
 	
