@@ -90,6 +90,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			refactoring.checkInitialConditions(monitor.newChild(1));
 			refactoring.checkFinalConditions(monitor.newChild(1));
 			Change change = refactoring.createChange(monitor.newChild(1));
+			//add preview here
 			new AnimatedChange(change);
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
