@@ -37,6 +37,11 @@ public class FloatingText extends FloatingObject{
 		timeline.play();
 	}
 	
+	public void showShell()
+	{
+		m_shell.start();
+	}
+	
 	public static void main(String arg[])
 	{
 		FloatingText ft = FloatingTextFactory(10, 10, "LOVE");
