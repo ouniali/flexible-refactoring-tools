@@ -32,7 +32,6 @@ public class MovableShellText extends Thread{
 		X = x;
 		Y = y;
 		text = t;
-		start();
 	}
 	
 	public synchronized void run ()
@@ -40,7 +39,6 @@ public class MovableShellText extends Thread{
 		display = new Display ();
 		shell = new Shell (display, SWT.NO_TRIM | SWT.ON_TOP);
 		shell.setLayout(new FillLayout());
-		shell.setVisible(false);
 		
 		styled = new StyledText(shell, SWT.NO_BACKGROUND);
 		styled.setText(text);
@@ -48,6 +46,7 @@ public class MovableShellText extends Thread{
 	    styled.setBackground(new Color(display, 255, 255, 255));
 	    Font font = new Font(shell.getDisplay(), "Times", 11, SWT.BOLD);
 	    styled.setFont(font);
+	    
 	    Rectangle rect = styled.getTextBounds(0, text.length()-1);
 	    
 	    height = rect.height;
@@ -61,16 +60,7 @@ public class MovableShellText extends Thread{
 	    display.dispose ();
 	}
 
-	public void setVisible(boolean v)
-	{
-		shell.setVisible(v);
-	}
-	
-	public static void main(String arg[])
-	{
-		new MovableShellText(10, 10, "LOVE");
-	}
-	
+
 	
 	public void setX(int x) {
 		X = x;

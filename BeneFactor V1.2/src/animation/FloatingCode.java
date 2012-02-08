@@ -81,9 +81,9 @@ public class FloatingCode extends FloatingObject{
 		}
 	}
 	
-	public void setVisible()
+	public void showShell()
 	{
-	
+		m_shell.start();
 	}
 
 	
