@@ -13,17 +13,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-public class FloatingShellText extends Thread{
+public class FloatingShellText extends FloatingObject{
 	
-
-
-	int X;
-	int Y;
-	int width;
-	int height;
-	
-	Shell shell;
-	Display display;
 	String text;
 	StyledText styled;
 	
@@ -59,54 +50,10 @@ public class FloatingShellText extends Thread{
 	     }
 	    display.dispose ();
 	}
-
+	
 
 	
-	public void setX(int x) {
-		X = x;
-		updateShell();
-	}
-
-
-	public void setY(int y) {
-		Y = y;
-		updateShell();
-	}
-
-
-	public void setWidth(int w) {
-		width = w;
-		updateShell();
-	}
-
-
-	public void setHeight(int h) {
-		height = h;
-		updateShell();
-	}
-
-
-	
-	public int getX() {
-		return X;
-	}
-
-
-	public int getY() {
-		return Y;
-	}
-
-
-	public int getWidth() {
-		return width;
-	}
-
-
-	public int getHeight() {
-		return height;
-	}
-	
-	private void updateShell() 
+	protected void updateShell() 
 	{	
 		try{
 			while(shell == null || display == null || styled == null)

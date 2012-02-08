@@ -12,17 +12,8 @@ import org.eclipse.swt.widgets.Shell;
 
 import utitilies.FileUtilities;
 
-public class FloatingShellImage extends Thread
+public class FloatingShellImage extends FloatingObject
 {
-
-
-	int X;
-	int Y;
-	int width;
-	int height;
-	
-	Shell shell;
-	Display display;
 	Image image;
 	Path path;
 	
@@ -40,8 +31,6 @@ public class FloatingShellImage extends Thread
 	{
 		return shell;
 	}
-	
-	
 	
 	public synchronized void run ()
 	{
@@ -62,7 +51,7 @@ public class FloatingShellImage extends Thread
 		 display.dispose();
 	}
 	
-	private void updateShell() 
+	protected void updateShell() 
 	{	
 		try{
 		while(shell == null || display == null)
@@ -78,49 +67,4 @@ public class FloatingShellImage extends Thread
 	}
 	
 
-	
-	public void setX(int x) {
-		X = x;
-		updateShell();
-	}
-
-
-	public void setY(int y) {
-		Y = y;
-		updateShell();
-	}
-
-
-	public void setWidth(int w) {
-		width = w;
-		updateShell();
-	}
-
-
-	public void setHeight(int h) {
-		height = h;
-		updateShell();
-	}
-
-
-	
-	public int getX() {
-		return X;
-	}
-
-
-	public int getY() {
-		return Y;
-	}
-
-
-	public int getWidth() {
-		return width;
-	}
-
-
-	public int getHeight() {
-		return height;
-	}
-	
 }
