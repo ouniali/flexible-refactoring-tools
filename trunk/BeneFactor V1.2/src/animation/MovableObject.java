@@ -7,6 +7,7 @@ public class MovableObject extends Thread{
 
 	FloatingObject f_shell;
 	Point destination;
+	int duration = 4000;
 	
 	public void run()
 	{	
@@ -19,6 +20,7 @@ public class MovableObject extends Thread{
 		Timeline timeline = new Timeline(f_shell);
 		timeline.addPropertyToInterpolate("X", f_shell.getX(), destination.x);
 		timeline.addPropertyToInterpolate("Y", f_shell.getY(), destination.y);
+		timeline.setDuration(duration);
 		timeline.play();
 	}
 	

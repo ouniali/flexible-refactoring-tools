@@ -37,7 +37,8 @@ public class RefactoringTextEditorVisitor extends TextEditVisitor{
 	 {
 		 String replacement = edit.getText();
 		 int start = edit.getOffset();
-		 MovableText mt = MovableText.MovableTextFactory(0, 0, replacement);
+		 System.out.println(start);
+		 MovableText mt = MovableText.MovableTextFactory(1, 1, replacement);
 		 JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
 		 Point p = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
 		 mt.setDestination(p);

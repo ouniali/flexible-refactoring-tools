@@ -73,7 +73,7 @@ public class AnimatedChange {
 		TextEditBasedChangeGroup[] group = c.getChangeGroups();
 		for(int i = 0; i < group.length; i++)
 		{
-			TextEdit[] edits = group[0].getTextEdits();
+			TextEdit[] edits = group[i].getTextEdits();
 			for(int j = 0; j < edits.length; j++)
 				edits[j].accept(visitor);
 		}
