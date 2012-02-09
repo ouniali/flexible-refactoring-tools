@@ -60,8 +60,25 @@ public class FloatingObject extends Thread{
 	public int getHeight() {
 		return height;
 	}
+	public Shell getShell()
+	{
+		return shell;
+	}
 	
-	public void run(){}
-	protected void updateShell(){}
+	public Display getDisplay()
+	{
+		return display;
+	}
+	
+	public void run(){}	
+	
+	protected void updateShell() 
+	{	
+		display.syncExec(new Runnable(){
+		public void run() {
+			shell.setBounds(X, Y, width, height);
+		}
+		});
+	}
 	
 }
