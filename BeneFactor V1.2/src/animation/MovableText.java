@@ -7,7 +7,7 @@ public class MovableText extends MovableObject{
 	
 	public static MovableText MovableTextFactory(int x, int y , String s)
 	{
-		if(x >0 && y>0)
+		if(x >= 0 && y>= 0)
 			return new MovableText(x, y, s);
 		else
 			return null;
