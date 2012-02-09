@@ -3,13 +3,15 @@ package animation;
 import org.eclipse.swt.graphics.Point;
 import org.pushingpixels.trident.Timeline;
 
-public class MovableObject extends Thread{
+public class MovableObject{
 
 	FloatingObject f_shell;
 	Point destination;
-	int duration = 4000;
+	int duration = 2000;
+	boolean finish_play = false;
 	
-	public void run()
+	
+	public void play()
 	{	
 		try {
 			while(f_shell.getShell() == null || f_shell.getDisplay() == null)
@@ -22,6 +24,14 @@ public class MovableObject extends Thread{
 		timeline.addPropertyToInterpolate("Y", f_shell.getY(), destination.y);
 		timeline.setDuration(duration);
 		timeline.play();
+		while(!timeline.isDone())
+		{
+			try {		
+				Thread.sleep(100);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void setDestination(Point p)
@@ -38,5 +48,10 @@ public class MovableObject extends Thread{
 	public void dispose()
 	{
 		f_shell.dispose();
+	}
+	
+	public boolean doesPlayFinish()
+	{
+		return finish_play;
 	}
 }
