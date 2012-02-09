@@ -66,7 +66,6 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 		if(fc == null)
 			return;
 		System.out.println("before moving");
-		fc.MoveTo(new Point(300, 300));
 		test = false;
 	}
 	
