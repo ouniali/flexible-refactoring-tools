@@ -21,15 +21,7 @@ public class Animation {
 		for(MovableObject m : mObjects)
 		{
 			m.showShell();
-			m.start();
-			while(m.isAlive())
-			{
-				try {
-					Thread.sleep(10);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			m.play();
 		}
 	}
 	
