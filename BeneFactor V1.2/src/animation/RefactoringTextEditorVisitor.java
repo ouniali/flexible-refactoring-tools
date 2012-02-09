@@ -12,6 +12,11 @@ public class RefactoringTextEditorVisitor extends TextEditVisitor{
 	
 	Animation anim = new Animation();
 	
+	public Animation getAnimation()
+	{
+		return anim;
+	}
+	
 	public void	postVisit(TextEdit edit) 
 	{
 		System.out.println(edit);

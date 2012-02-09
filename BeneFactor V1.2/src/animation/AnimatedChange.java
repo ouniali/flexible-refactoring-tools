@@ -17,12 +17,18 @@ import org.eclipse.text.edits.TextEditVisitor;
 public class AnimatedChange {
 	
 	Change change;
+	Animation animation = new Animation();
 	
 	public AnimatedChange(Change c)
 	{
 		change = c;
 		if(change instanceof CompositeChange)
 			VisitCompositeChangeTree((CompositeChange)change);		
+	}
+	
+	public void play()
+	{
+		animation.play();
 	}
 	
 	private void VisitCompositeChangeTree(CompositeChange cc)
@@ -44,6 +50,7 @@ public class AnimatedChange {
 				VisitChange(c);
 			
 		}
+		
 	}
 	
 	private void VisitChange(Change c) {
@@ -70,6 +77,8 @@ public class AnimatedChange {
 			for(int j = 0; j < edits.length; j++)
 				edits[j].accept(visitor);
 		}
+		animation.mergeAnimation(visitor.getAnimation());
+		
 	}
 	private void VisitChange(NullChange c)
 	{

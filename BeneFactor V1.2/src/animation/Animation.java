@@ -11,6 +11,11 @@ public class Animation {
 		mObjects.add(m);
 	}
 	
+	public void mergeAnimation(Animation a)
+	{
+		mObjects.addAll(a.mObjects);
+	}
+	
 	public void play()
 	{
 		for(MovableObject m : mObjects)
