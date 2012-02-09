@@ -2,11 +2,15 @@ package animation;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.text.edits.*;
+
+import utitilies.UserInterfaceUtilities;
 
 public class RefactoringTextEditorVisitor extends TextEditVisitor{
 	
-	ArrayList<MovableObject> m_objects = new ArrayList<MovableObject>();
+	Animation anim = new Animation();
 	
 	public void	postVisit(TextEdit edit) 
 	{
@@ -28,10 +32,11 @@ public class RefactoringTextEditorVisitor extends TextEditVisitor{
 	 {
 		 String replacement = edit.getText();
 		 int start = edit.getOffset();
-		 int end = edit.getInclusiveEnd();
 		 MovableText mt = MovableText.MovableTextFactory(0, 0, replacement);
-		 mt.setDestination();
-		 m_objects.add(mc);
+		 JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
+		 Point p = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
+		 mt.setDestination(p);
+		 anim.addMovableObject(mt);
 		 return true;
 	 }
 }
