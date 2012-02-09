@@ -23,7 +23,7 @@ public class MovableText extends MovableObject{
 	{
 		MovableText ft = MovableTextFactory(10, 10, "LOVE");
 		ft.showShell();
-		ft.MoveTo(new Point(300, 300));
+		ft.setDestination(new Point(300, 300));
 	}
 	
 }

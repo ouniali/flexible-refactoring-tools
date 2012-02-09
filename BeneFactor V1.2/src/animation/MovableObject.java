@@ -10,16 +10,24 @@ public class MovableObject extends Thread{
 	
 	public void run()
 	{
+		
+		try {
+			while(f_shell.getShell() == null || f_shell.getDisplay() == null)
+				Thread.sleep(100);		
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
 		Timeline timeline = new Timeline(f_shell);
 		timeline.addPropertyToInterpolate("X", f_shell.getX(), destination.x);
 		timeline.addPropertyToInterpolate("Y", f_shell.getY(), destination.y);
 		timeline.play();
 	}
-	public void MoveTo(Point p)
+	
+	public void setDestination(Point p)
 	{
 		destination = p;
-		start();
 	}
+	
 	
 	public void showShell()
 	{

@@ -53,18 +53,5 @@ public class FloatingShellText extends FloatingObject{
 	
 
 	
-	protected void updateShell() 
-	{	
-		try{
-			while(shell == null || display == null || styled == null)
-				Thread.sleep(100);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		display.syncExec(new Runnable(){
-		public void run() {
-			shell.setBounds(X, Y, width, height);
-		}
-		});
-	}
+
 }
