@@ -9,8 +9,7 @@ public class MovableObject extends Thread{
 	Point destination;
 	
 	public void run()
-	{
-		
+	{	
 		try {
 			while(f_shell.getShell() == null || f_shell.getDisplay() == null)
 				Thread.sleep(100);		
