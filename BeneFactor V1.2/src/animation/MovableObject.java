@@ -24,14 +24,14 @@ public class MovableObject{
 		timeline.addPropertyToInterpolate("Y", f_shell.getY(), destination.y);
 		timeline.setDuration(duration);
 		timeline.play();
-		while(!timeline.isDone())
+	/*	while(!timeline.isDone())
 		{
 			try {		
 				Thread.sleep(100);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 	
 	public void setDestination(Point p)

@@ -24,8 +24,12 @@ Require-Bundle: org.eclipse.ui,
  com.instantiations.common.core,
  com.instantiations.eclipse.util,
  org.eclipse.swt,
- org.eclipse.mylyn.monitor.core,
- org.eclipse.mylyn.monitor.ui
+ org.eclipse.mylyn.monitor.core;bundle-version="3.3.0",
+ org.eclipse.mylyn.monitor.ui;bundle-version="3.3.0",
+ org.eclipse.mylyn.context.core;bundle-version="3.2.1",
+ org.eclipse.mylyn.monitor.usage;bundle-version="3.3.2",
+ org.eclipse.mylyn.commons.net;bundle-version="3.3.0",
+ org.eclipse.mylyn.commons.core;bundle-version="3.3.1"
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: BeneFactor;singleton:=true
 Import-Package: org.eclipse.core.resources,
