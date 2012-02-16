@@ -11,19 +11,18 @@ public class CopyEventListener implements IInteractionEventListener {
 	@Override
 	public void interactionObserved(InteractionEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("interactionObserved");
+		if(!event.getOriginId().equals("org.eclipse.ui.edit.copy"))
+			return;
+		System.out.println("copy");
 	}
 
 	@Override
 	public void startMonitoring() {
-		// TODO Auto-generated method stub
-		System.out.println("startMonitoring");
+	
 	}
 
 	@Override
 	public void stopMonitoring() {
-		// TODO Auto-generated method stub
-		System.out.println("stopMonitoring");
 	}
 
 

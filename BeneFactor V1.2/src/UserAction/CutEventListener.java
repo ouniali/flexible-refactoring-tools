@@ -7,20 +7,18 @@ public class CutEventListener implements IInteractionEventListener{
 
 	@Override
 	public void interactionObserved(InteractionEvent event) {
-		// TODO Auto-generated method stub
-		
-	
+		if(!event.getOriginId().equals("org.eclipse.ui.edit.cut"))
+			return;
+		System.out.println("cut");
 	}
 
 	@Override
 	public void startMonitoring() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void stopMonitoring() {
-		// TODO Auto-generated method stub
 		
 	}
 

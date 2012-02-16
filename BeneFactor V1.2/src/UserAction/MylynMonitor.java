@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 
 public class MylynMonitor {
 	
-	static private void addListener()
+	static public void addListener()
 	{
 		String rand = Math.random()+"";
 		ContextCore.getContextManager().activateContext(rand);
