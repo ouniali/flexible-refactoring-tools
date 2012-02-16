@@ -20,22 +20,6 @@ import org.osgi.framework.BundleContext;
 
 public class MylynMonitor {
 	
-	static public void addListener1()
-	{
-		MonitorUiPlugin monitor = MonitorUiPlugin.getDefault();
-		BundleContext context = InternalPlatform.getDefault().getBundleContext();
-		monitor.addInteractionListener(new CopyEventListener());
-		monitor.addInteractionListener(new CutEventListener());
-		try {
-		
-			monitor.setDebugging(true);
-			monitor.start(context);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	static private void addListener()
 	{
 		String rand = Math.random()+"";
@@ -44,32 +28,9 @@ public class MylynMonitor {
 		ContextCore.getContextManager().deleteContext(rand);		
 		
 		
-		MonitorUiPlugin.getDefault().addInteractionListener(new IInteractionEventListener() {	
-			@Override
-			public void interactionObserved(InteractionEvent event) {	
-			}
-		
-		
-			@Override
-			public void startMonitoring() {}
-		
-			@Override
-			public void stopMonitoring() {}
-		});
-		
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		Display display = workbench.getDisplay();
-		
-		Listener listener = new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {							
-			}
-		};
-		
-		display.addFilter(SWT.KeyUp, listener);
-		display.addFilter(SWT.MouseUp, listener);
-		display.addFilter(SWT.Arm, listener);
+		MonitorUiPlugin.getDefault().addInteractionListener(new CopyEventListener());
+		MonitorUiPlugin.getDefault().addInteractionListener(new CutEventListener());
+
 	}
 
 }
