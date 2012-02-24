@@ -14,6 +14,9 @@ import org.eclipse.jdt.internal.ui.preferences.JavaPreferencesSettings;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.participants.MoveRefactoring;
+import org.eclipse.mylyn.monitor.core.InteractionEvent;
+
+import BeneEvent.MoveInvocation;
 
 @SuppressWarnings("restriction")
 
@@ -87,6 +90,12 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 	public void postProcess() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected InteractionEvent getEvent() {
+		// TODO Auto-generated method stub
+		return new MoveInvocation();
 	}
 	
 

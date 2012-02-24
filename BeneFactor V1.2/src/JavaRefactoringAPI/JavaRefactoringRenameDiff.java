@@ -13,12 +13,14 @@ import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameProcessor;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
+import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
 import animation.AnimatedChange;
 
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
+import BeneEvent.RenameInvocation;
 import Rename.ASTNameChangeInformation;
 import Rename.NamesInJavaProject;
 import Rename.NamesInPackage;
@@ -170,6 +172,13 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 	public void preProcess() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	protected InteractionEvent getEvent() {
+		// TODO Auto-generated method stub
+		return new RenameInvocation();
 	}
 
 }
