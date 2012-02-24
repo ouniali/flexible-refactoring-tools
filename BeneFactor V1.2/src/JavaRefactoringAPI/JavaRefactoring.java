@@ -102,11 +102,11 @@ public abstract class JavaRefactoring extends Job{
 	
 	abstract public int getRefactoringType();
 	abstract protected InteractionEvent getEvent();
-    private void preProcess()
+    public void preProcess()
     {
     	
     }
-	private void postProcess()
+	public void postProcess()
 	{
 		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand("Benefactor", "rename"));
 	}
