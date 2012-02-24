@@ -238,11 +238,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	}
 
 
-	@Override
-	public void preProcess() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	protected InteractionEvent getEvent() {

@@ -80,17 +80,7 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 		return new IMember[]{mem};
 	}
 
-	@Override
-	public void preProcess() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void postProcess() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	protected InteractionEvent getEvent() {

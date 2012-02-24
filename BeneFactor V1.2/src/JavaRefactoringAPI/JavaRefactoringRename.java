@@ -226,18 +226,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		}
 	}
 
-	@Override
-	public void postProcess() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void preProcess() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	protected InteractionEvent getEvent() {
 		// TODO Auto-generated method stub
