@@ -22,6 +22,7 @@ import org.eclipse.jface.text.link.LinkedPosition;
 import org.eclipse.jface.text.link.LinkedPositionGroup;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPart;
@@ -211,7 +212,6 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	@Override
 	public void postProcess() {
 		
-		super.postProcess();
 		CompilationUnitHistoryRecord startR = this.getNonrefactoringChangeStart();
 		CompilationUnitHistoryRecord endR = this.getNonRefactoringChangeEnd();
 		
@@ -227,6 +227,8 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		       public void run() {prepareLinkedEdition();}
 		}
 		);
+		
+		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand("Benefactor", "extract method"));
 	}
 	
 	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord) throws Exception
@@ -241,11 +243,6 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 
 
 
-	@Override
-	protected InteractionEvent getEvent() {
-		// TODO Auto-generated method stub
-		return new ExtractMethodInvocation();
-	}
 	
 	
 	
