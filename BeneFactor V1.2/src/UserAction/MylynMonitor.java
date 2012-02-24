@@ -23,14 +23,48 @@ public class MylynMonitor {
 	static public void addListener()
 	{
 		String rand = Math.random()+"";
-		ContextCore.getContextManager().activateContext(rand);
-		ContextCore.getContextManager().deactivateContext(rand);
-		ContextCore.getContextManager().deleteContext(rand);		
-		
-		
+		helper(rand);
 		MonitorUiPlugin.getDefault().addInteractionListener(new CopyEventListener());
 		MonitorUiPlugin.getDefault().addInteractionListener(new CutEventListener());
-
+		MonitorUiPlugin.getDefault().addInteractionListener(new BeneFactorEventListener());
 	}
 
+	private static void helper(String rand) {
+		ContextCore.getContextManager().activateContext(rand);
+		ContextCore.getContextManager().deactivateContext(rand);
+		ContextCore.getContextManager().deleteContext(rand);	
+	}
+	
+
 }
+
+
+
+
+
+
+
+
+
+
+/*
+
+ContextCore.getContextManager().activateContext(rand);
+ContextCore.getContextManager().deactivateContext(rand);
+ContextCore.getContextManager().deleteContext(rand);		*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
