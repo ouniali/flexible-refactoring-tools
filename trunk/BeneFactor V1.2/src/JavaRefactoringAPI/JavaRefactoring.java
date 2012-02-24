@@ -23,7 +23,7 @@ public abstract class JavaRefactoring extends Job{
 	private int line;
 	private IMarker marker;
 	private Change undo;
-	
+	protected final String event_id = "edu.ncsu.BeneFactor";
 	
 	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
 	protected abstract void performCodeRecovery(IProgressMonitor pm) throws Exception;

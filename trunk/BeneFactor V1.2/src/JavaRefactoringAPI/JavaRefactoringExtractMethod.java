@@ -228,7 +228,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		}
 		);
 		
-		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand("Benefactor", "extract method"));
+		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id, "extract method"));
 	}
 	
 	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord) throws Exception

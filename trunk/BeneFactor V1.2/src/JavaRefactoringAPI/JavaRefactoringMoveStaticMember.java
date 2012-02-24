@@ -94,7 +94,7 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 	@Override
 	public void postProcess() {
 		// TODO Auto-generated method stub
-		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand("Benefactor", "move"));
+		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id, "move"));
 	}
 	
 
