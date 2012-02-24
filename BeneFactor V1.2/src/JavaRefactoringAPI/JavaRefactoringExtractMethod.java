@@ -211,7 +211,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	@Override
 	public void postProcess() {
 		
-		postProcess();
+		super.postProcess();
 		CompilationUnitHistoryRecord startR = this.getNonrefactoringChangeStart();
 		CompilationUnitHistoryRecord endR = this.getNonRefactoringChangeEnd();
 		
