@@ -108,7 +108,7 @@ public abstract class JavaRefactoring extends Job{
     }
 	private void postProcess()
 	{
-		MonitorUiPlugin.getDefault().notifyInteractionObserved(getEvent());
+		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand("Benefactor", "rename"));
 	}
 
 	
