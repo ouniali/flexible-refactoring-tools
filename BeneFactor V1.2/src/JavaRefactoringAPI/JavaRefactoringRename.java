@@ -34,10 +34,10 @@ import org.eclipse.jdt.ui.refactoring.RenameSupport;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
+import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
 import ASTree.ASTreeManipulationMethods;
-import BeneEvent.RenameInvocation;
 import Rename.NamesInJavaProject;
 import Rename.NamesInPackage;
 
@@ -226,11 +226,18 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		}
 	}
 
-	
+
+
 	@Override
-	protected InteractionEvent getEvent() {
+	public void preProcess() {
 		// TODO Auto-generated method stub
-		return new RenameInvocation();
+		
+	}
+
+	@Override
+	public void postProcess() {
+		// TODO Auto-generated method stub
+		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand("Benefactor", "rename"));
 	}
 
 
