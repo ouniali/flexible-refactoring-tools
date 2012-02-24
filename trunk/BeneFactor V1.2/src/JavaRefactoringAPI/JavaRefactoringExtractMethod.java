@@ -22,6 +22,7 @@ import org.eclipse.jface.text.link.LinkedPosition;
 import org.eclipse.jface.text.link.LinkedPositionGroup;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -37,6 +38,7 @@ import utitilies.UserInterfaceUtilities;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
+import BeneEvent.ExtractMethodInvocation;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
 public class JavaRefactoringExtractMethod extends JavaRefactoring {
@@ -240,6 +242,12 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	public void preProcess() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected InteractionEvent getEvent() {
+		// TODO Auto-generated method stub
+		return new ExtractMethodInvocation();
 	}
 	
 	
