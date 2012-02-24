@@ -39,7 +39,6 @@ import utitilies.UserInterfaceUtilities;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
-import BeneEvent.ExtractMethodInvocation;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
 public class JavaRefactoringExtractMethod extends JavaRefactoring {
@@ -238,6 +237,12 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), endRecord.getSourceCode());
 		source = JavaSourceDiff.applyPatches(source, patches);
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
+	}
+
+	@Override
+	public void preProcess() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
