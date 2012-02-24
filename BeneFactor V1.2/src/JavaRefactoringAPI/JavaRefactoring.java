@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.ui.IEditorInput;
 
@@ -102,7 +103,10 @@ public abstract class JavaRefactoring extends Job{
 	abstract public int getRefactoringType();
 	abstract protected InteractionEvent getEvent();
     abstract public void preProcess();
-	abstract public void postProcess();
+	public void postProcess()
+	{
+		MonitorUiPlugin.getDefault().notifyInteractionObserved(getEvent());
+	}
 
 	
 }

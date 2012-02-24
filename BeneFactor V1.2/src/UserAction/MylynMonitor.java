@@ -27,7 +27,6 @@ public class MylynMonitor {
 		MonitorUiPlugin.getDefault().addInteractionListener(new CopyEventListener());
 		MonitorUiPlugin.getDefault().addInteractionListener(new CutEventListener());
 		MonitorUiPlugin.getDefault().addInteractionListener(new BeneFactorEventListener());
-		MonitorUiPlugin.getDefault().notifyInteractionObserved();
 	}
 
 	private static void helper(String rand) {
