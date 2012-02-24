@@ -171,7 +171,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 	@Override
 	public void postProcess() {
 		// TODO Auto-generated method stub
-		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand("Benefactor", "rename"));
+		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id, "rename"));
 	}
 
 }
