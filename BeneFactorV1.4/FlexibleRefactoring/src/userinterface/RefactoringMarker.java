@@ -21,6 +21,7 @@ import flexiblerefactoring.BeneFactor;
 public class RefactoringMarker {
 
 	public static final String REFACTORING_MARKER_TYPE = Activator.PLUGIN_ID + ".refactoringproblem";
+	public static final String PREVIEW_MARKER_TYPE = Activator.PLUGIN_ID + ".previewmarker";
 	
 	public static IMarker addRefactoringMarkerIfNo(ICompilationUnit unit,
 			int lineNo) {
@@ -42,6 +43,19 @@ public class RefactoringMarker {
 		String message = "Benefactor message";
 		IMarker marker = unit.getResource().createMarker(
 				REFACTORING_MARKER_TYPE);
+		marker.setAttribute(IMarker.LINE_NUMBER, lineNo);
+		marker.setAttribute(IMarker.MESSAGE, message);
+		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
+		marker.setAttribute(IMarker.USER_EDITABLE, false);
+		marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+		return marker;
+	}
+	
+	public static IMarker createPreviewMarker(ICompilationUnit unit,
+			int lineNo) throws Exception {
+		String message = "Benefactor message";
+		IMarker marker = unit.getResource().createMarker(
+				PREVIEW_MARKER_TYPE);
 		marker.setAttribute(IMarker.LINE_NUMBER, lineNo);
 		marker.setAttribute(IMarker.MESSAGE, message);
 		marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);

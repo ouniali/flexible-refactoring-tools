@@ -7,6 +7,10 @@
             annotationType="refactoringproblemannotation"
             icon="icons/refactoring.png">
       </specification>
+     <specification
+            annotationType="refactoringpreviewannotation"
+            icon="icons/refactoring.png">
+      </specification>
    </extension>
    <extension
          point="org.eclipse.jdt.core.compilationParticipant">
@@ -61,12 +65,37 @@
             type="BeneFactor.refactoringmarker">
       </super>
    </extension>
+   
+    <extension
+         id="refactoringproblem"
+         point="org.eclipse.core.resources.markers">
+      <attribute
+            name="previewmarker">
+      </attribute>
+      <persistent
+            value="false">
+      </persistent>
+      <super
+            type="org.eclipse.core.resources.textmarker">
+      </super>
+      <super
+            type="BeneFactor.refactoringmarker">
+      </super>
+   </extension>
+   
+   
    <extension
          point="org.eclipse.ui.editors.annotationTypes">
       <type
             markerSeverity="1"
             markerType="BeneFactor.refactoringproblem"
             name="refactoringproblemannotation"
+            super="org.eclipse.ui.workbench.texteditor.warning">
+      </type>
+      <type
+            markerSeverity="1"
+            markerType="BeneFactor.previewmarker"
+            name="refactoringpreviewannotation"
             super="org.eclipse.ui.workbench.texteditor.warning">
       </type>
    </extension>
