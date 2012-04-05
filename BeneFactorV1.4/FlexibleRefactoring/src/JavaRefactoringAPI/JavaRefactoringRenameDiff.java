@@ -16,6 +16,7 @@ import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
+import animation.autoedition.AtomicEdition;
 import animation.autoedition.ScalingBar;
 import animation.change.AutoEditionVisitor;
 import animation.change.ChangeAnalyzer;
@@ -100,6 +101,8 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			v = (AutoEditionVisitor) new ChangeAnalyzer(change, v).getVisitor();
 			v.getComposite().addObserver(ScalingBar.getInstance());
 			ScalingBar.getInstance().addObserver(v.getComposite());
+			v.getComposite().adjustToSynchronizedApply();
+			v.getComposite().splitEditions();
 			v.getComposite().applyEditions(unit);
 			Thread.sleep(Integer.MAX_VALUE);
 			//
