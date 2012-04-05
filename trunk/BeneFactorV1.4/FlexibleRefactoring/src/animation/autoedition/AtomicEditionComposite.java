@@ -237,6 +237,8 @@ public class AtomicEditionComposite extends Observable implements Runnable, Obse
 		ArrayList<AtomicEdition> new_editions = new ArrayList<AtomicEdition>();
 		for(AtomicEdition e : editions)
 			new_editions.addAll(e.splitToAtomicEditions());
+		editions = new_editions;
+		undos.clear();
 	}
 	
 	
