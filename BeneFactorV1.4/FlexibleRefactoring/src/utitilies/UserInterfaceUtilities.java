@@ -1,8 +1,14 @@
 package utitilies;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
@@ -14,13 +20,16 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 
@@ -62,6 +71,18 @@ public class UserInterfaceUtilities {
 		}
 		return null;
 	}
+	static public IWorkbenchPage getEditorWorkbenchPage()
+	{
+		
+		IWorkbenchPage[] pages = getWorkbenchPages();
+		for(IWorkbenchPage page : pages)
+		{
+			IEditorPart part = page.getActiveEditor();
+			if(part instanceof JavaEditor)
+				return page;
+		}
+		return null;
+	}
 	
 	public static Point getEditorPointInDisplay(int offset, JavaEditor editor)
 	{
@@ -99,7 +120,18 @@ public class UserInterfaceUtilities {
 		return stHelper.getOffset();
 	}
 	
-
+	public static void openJavaEditorFor(File file) throws Exception
+	{
+		IWorkspace workspace= ResourcesPlugin.getWorkspace();
+		IWorkbenchPage page = getEditorWorkbenchPage();
+		IPath location= Path.fromOSString(file.getAbsolutePath()); 
+		IFile ifile = workspace.getRoot().getFileForLocation(location);
+		IEditorDescriptor desc = PlatformUI.getWorkbench().
+		        getEditorRegistry().getDefaultEditor(ifile.getName());
+		page.openEditor(new FileEditorInput(ifile), desc.getId());
+	}
+	
+	
 	public static void freezeEditor(JavaEditor activeJavaEditor) {
 		// TODO Auto-generated method stub
 		
