@@ -120,7 +120,7 @@ public class UserInterfaceUtilities {
 		return stHelper.getOffset();
 	}
 	
-	public static void openJavaEditorFor(File file) throws Exception
+	public static JavaEditor openJavaEditorFor(File file) throws Exception
 	{
 		IWorkspace workspace= ResourcesPlugin.getWorkspace();
 		IWorkbenchPage page = getEditorWorkbenchPage();
@@ -128,7 +128,12 @@ public class UserInterfaceUtilities {
 		IFile ifile = workspace.getRoot().getFileForLocation(location);
 		IEditorDescriptor desc = PlatformUI.getWorkbench().
 		        getEditorRegistry().getDefaultEditor(ifile.getName());
-		page.openEditor(new FileEditorInput(ifile), desc.getId());
+		return (JavaEditor)page.openEditor(new FileEditorInput(ifile), desc.getId());
+	}
+	
+	public static void closeJavaEditor(JavaEditor editor)
+	{
+		editor.getEditorSite().getPage().closeEditor(editor, false);
 	}
 	
 	
