@@ -17,6 +17,7 @@ import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
 import animation.autoedition.AtomicEdition;
+import animation.autoedition.MultiFileEdition;
 import animation.autoedition.SingleFileEdition;
 import animation.autoedition.ScalingBar;
 import animation.change.AutoEditionVisitor;
@@ -101,18 +102,9 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			//add preview here
 			
 			ArrayList results = new ChangeAnalyzer(change, new AutoEditionVisitorStrategy()).getResults();
-			for(Object o : results)
-			{
-				SingleFileEdition com = (SingleFileEdition)o;
-				ScalingBar.getInstance().addObserver(com);
-				com.addObserver(ScalingBar.getInstance());
-				com.adjustToSynchronizedApply();
-				com.splitEditions();
-				com.applyEditions();
-			}
-			
-		
+			new MultiFileEdition(results).play();
 			Thread.sleep(Integer.MAX_VALUE);
+			
 			//
 			
 			
