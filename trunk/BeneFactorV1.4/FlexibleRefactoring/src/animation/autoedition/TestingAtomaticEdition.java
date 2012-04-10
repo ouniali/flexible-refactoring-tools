@@ -7,11 +7,11 @@ public class TestingAtomaticEdition {
 	
 	private static AtomicEdition delete = new AtomicEdition(1, 1);
 	private static AtomicEdition insertion = new AtomicEdition(1, "d");
-	private static AtomicEditionComposite composite = prepareEditionCompostion();
+	private static SingleFileEdition composite = prepareEditionCompostion();
 	
-	public static AtomicEditionComposite prepareEditionCompostion()
+	public static SingleFileEdition prepareEditionCompostion()
 	{
-		AtomicEditionComposite c = new AtomicEditionComposite();
+		SingleFileEdition c = new SingleFileEdition();
 		for(char ch = 'a'; ch<= 'z'; ch ++)
 		{
 			AtomicEdition e = new AtomicEdition( 0, String.valueOf(ch));
@@ -72,7 +72,7 @@ public class TestingAtomaticEdition {
 		if(composite == null)
 			return;
 		try {
-			AtomicEditionComposite temp = composite;
+			SingleFileEdition temp = composite;
 			composite = null;
 			temp.setICompilationUnit(unit);
 			temp.applyEditions();

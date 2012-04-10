@@ -184,7 +184,7 @@ public class ScalingBar extends Observable implements Observer, Runnable{
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			ScalingBar.getInstance().setChanged();
-			ScalingBar.getInstance().notifyObservers(new Integer(AtomicEditionComposite.PAUSE));
+			ScalingBar.getInstance().notifyObservers(new Integer(SingleFileEdition.PAUSE));
 		}
 		
 	}
@@ -197,7 +197,7 @@ public class ScalingBar extends Observable implements Observer, Runnable{
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			ScalingBar.getInstance().setChanged();
-			ScalingBar.getInstance().notifyObservers(new Integer(AtomicEditionComposite.RESUME));
+			ScalingBar.getInstance().notifyObservers(new Integer(SingleFileEdition.RESUME));
 		}
 		
 	}
@@ -210,7 +210,7 @@ public class ScalingBar extends Observable implements Observer, Runnable{
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			ScalingBar.getInstance().setChanged();
-			ScalingBar.getInstance().notifyObservers(new Integer(AtomicEditionComposite.FASTER));
+			ScalingBar.getInstance().notifyObservers(new Integer(SingleFileEdition.FASTER));
 		}
 		
 	}
@@ -223,7 +223,7 @@ public class ScalingBar extends Observable implements Observer, Runnable{
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			ScalingBar.getInstance().setChanged();
-			ScalingBar.getInstance().notifyObservers(new Integer(AtomicEditionComposite.SLOWER));
+			ScalingBar.getInstance().notifyObservers(new Integer(SingleFileEdition.SLOWER));
 	
 		}
 		

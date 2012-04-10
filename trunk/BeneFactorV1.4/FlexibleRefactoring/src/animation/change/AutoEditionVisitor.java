@@ -10,13 +10,13 @@ import org.eclipse.text.edits.TextEdit;
 import org.eclipse.text.edits.TextEditVisitor;
 
 import animation.autoedition.AtomicEdition;
-import animation.autoedition.AtomicEditionComposite;
+import animation.autoedition.SingleFileEdition;
 
 public class AutoEditionVisitor extends TextEditVisitor{
 	
-	AtomicEditionComposite composite = new AtomicEditionComposite();
+	SingleFileEdition composite = new SingleFileEdition();
 	
-	public AtomicEditionComposite getComposite() {
+	public SingleFileEdition getComposite() {
 		return composite;
 	}
 	

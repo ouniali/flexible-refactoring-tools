@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.junit.Assert;
 
 
-public class AtomicEditionComposite extends Observable implements Runnable, Observer{
+public class SingleFileEdition extends Observable implements Runnable, Observer{
 
 	final private static int NO_REPOSITION = -1; 
 	
@@ -31,18 +31,18 @@ public class AtomicEditionComposite extends Observable implements Runnable, Obse
 	
 	int current_applied = 0;//number of atomic editions that were played 
 	ICompilationUnit unit;
-	AtomicInteger set_finished_count = new AtomicInteger(AtomicEditionComposite.NO_REPOSITION);
+	AtomicInteger set_finished_count = new AtomicInteger(SingleFileEdition.NO_REPOSITION);
 	Thread playing_thread;
 	
 	
 	
-	public AtomicEditionComposite()
+	public SingleFileEdition()
 	{
 		super();
 		editions = new ArrayList<AtomicEdition>();	
 	}
 	
-	private AtomicEditionComposite(ArrayList<AtomicEdition> eds)
+	private SingleFileEdition(ArrayList<AtomicEdition> eds)
 	{
 		super();
 		editions = eds;	
@@ -71,8 +71,8 @@ public class AtomicEditionComposite extends Observable implements Runnable, Obse
 		
 		for(;playNextAtomicEdition();)
 		{
-			int finished_count = set_finished_count.getAndSet(AtomicEditionComposite.NO_REPOSITION);
-			if(finished_count !=  AtomicEditionComposite.NO_REPOSITION)
+			int finished_count = set_finished_count.getAndSet(SingleFileEdition.NO_REPOSITION);
+			if(finished_count !=  SingleFileEdition.NO_REPOSITION)
 				AdjustEditionsProgress(finished_count);
 			try {
 				Thread.sleep(SPEED[interval_index]);
@@ -156,10 +156,10 @@ public class AtomicEditionComposite extends Observable implements Runnable, Obse
 		return true;
 	}
 	
-	public AtomicEditionComposite getUndoEditionComposite()
+	public SingleFileEdition getUndoEditionComposite()
 	{		
 		if(undos.size() == editions.size())
-			return new AtomicEditionComposite(undos);
+			return new SingleFileEdition(undos);
 		else 
 			return null;
 	}
@@ -204,17 +204,17 @@ public class AtomicEditionComposite extends Observable implements Runnable, Obse
 	{
 		switch(code)
 		{
-		case AtomicEditionComposite.PAUSE:
+		case SingleFileEdition.PAUSE:
 			playing_thread.suspend();
 			break;
-		case AtomicEditionComposite.RESUME:
+		case SingleFileEdition.RESUME:
 			playing_thread.resume();
 			break;
-		case AtomicEditionComposite.SLOWER:
+		case SingleFileEdition.SLOWER:
 			if(interval_index + 1 < SPEED.length)
 				interval_index ++;
 			break;
-		case AtomicEditionComposite.FASTER:
+		case SingleFileEdition.FASTER:
 			if(interval_index - 1 >= 0)
 				interval_index --;
 			break;		
