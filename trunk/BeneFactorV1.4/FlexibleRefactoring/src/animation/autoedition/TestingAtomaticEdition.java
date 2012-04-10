@@ -14,7 +14,7 @@ public class TestingAtomaticEdition {
 		AtomicEditionComposite c = new AtomicEditionComposite();
 		for(char ch = 'a'; ch<= 'z'; ch ++)
 		{
-			AtomicEdition e = new AtomicEdition(0, String.valueOf(ch));
+			AtomicEdition e = new AtomicEdition( 0, String.valueOf(ch));
 			c.addEdition(e);
 		}
 		c.addObserver(ScalingBar.getInstance());
@@ -59,7 +59,8 @@ public class TestingAtomaticEdition {
 		try {
 			if(composite == null)
 				return;
-			composite.applyEditions(unit);
+			composite.setICompilationUnit(unit);
+			composite.applyEditions();
 			composite = null;
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -73,9 +74,10 @@ public class TestingAtomaticEdition {
 		try {
 			AtomicEditionComposite temp = composite;
 			composite = null;
-			temp.applyEditions(unit);
+			temp.setICompilationUnit(unit);
+			temp.applyEditions();
 			temp = temp.getUndoEditionComposite();
-			temp.applyEditions(unit);
+			temp.applyEditions();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

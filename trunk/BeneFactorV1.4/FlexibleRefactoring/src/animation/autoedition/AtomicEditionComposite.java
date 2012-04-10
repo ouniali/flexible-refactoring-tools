@@ -23,11 +23,11 @@ public class AtomicEditionComposite extends Observable implements Runnable, Obse
 	final int[] SPEED = {20, 100, 500, 1000, 2000, 2500, 3000};//in millisecond
 	int interval_index = SPEED.length/2;
 	
-	
+
 	
 	ArrayList<AtomicEdition> editions;	
 	ArrayList<AtomicEdition> undos = new ArrayList<AtomicEdition>();
-	
+
 	
 	int current_applied = 0;//number of atomic editions that were played 
 	ICompilationUnit unit;
@@ -108,9 +108,15 @@ public class AtomicEditionComposite extends Observable implements Runnable, Obse
 				return;
 	}
 	
-	public void applyEditions(ICompilationUnit u)
+	public void setICompilationUnit(ICompilationUnit u)
 	{
 		unit = u;
+	}
+	
+	public void applyEditions() throws Exception
+	{
+		if(unit == null)
+			throw new Exception("ICompilationUnit is null");
 		playing_thread = new Thread(this);
 		playing_thread.start();
 	}

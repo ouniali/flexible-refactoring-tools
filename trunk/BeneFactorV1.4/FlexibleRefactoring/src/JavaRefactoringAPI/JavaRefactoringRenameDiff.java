@@ -17,9 +17,11 @@ import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
 import animation.autoedition.AtomicEdition;
+import animation.autoedition.AtomicEditionComposite;
 import animation.autoedition.ScalingBar;
 import animation.change.AutoEditionVisitor;
 import animation.change.ChangeAnalyzer;
+import animation.change.ChangeAnalyzer.*;
 
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
@@ -97,13 +99,18 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			Change change = refactoring.createChange(monitor.newChild(1));
 			
 			//add preview here
-			AutoEditionVisitor v = new AutoEditionVisitor();
-			v = (AutoEditionVisitor) new ChangeAnalyzer(change, v).getVisitor();
-			v.getComposite().addObserver(ScalingBar.getInstance());
-			ScalingBar.getInstance().addObserver(v.getComposite());
-			v.getComposite().adjustToSynchronizedApply();
-			v.getComposite().splitEditions();
-			v.getComposite().applyEditions(unit);
+			
+			ArrayList results = new ChangeAnalyzer(change, new AutoEditionVisitorStrategy()).getResults();
+			for(Object o : results)
+			{
+				AtomicEditionComposite com = (AtomicEditionComposite)o;
+				ScalingBar.getInstance().addObserver(com);
+				com.adjustToSynchronizedApply();
+				com.splitEditions();
+				com.applyEditions();
+			}
+			
+		
 			Thread.sleep(Integer.MAX_VALUE);
 			//
 			
