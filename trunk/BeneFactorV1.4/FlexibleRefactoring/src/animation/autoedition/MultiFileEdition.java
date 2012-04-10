@@ -11,7 +11,7 @@ public class MultiFileEdition {
 		File_Editions = arr;
 	}
 	
-	public void playAutomaticEditions() throws Exception
+	public void play() throws Exception
 	{
 		for(SingleFileEdition edition : File_Editions)
 		{
