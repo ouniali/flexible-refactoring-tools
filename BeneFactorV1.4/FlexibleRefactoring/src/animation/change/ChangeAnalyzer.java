@@ -24,7 +24,7 @@ import org.eclipse.text.edits.TextEdit;
 import org.eclipse.text.edits.TextEditVisitor;
 
 import animation.Animation;
-import animation.autoedition.AtomicEditionComposite;
+import animation.autoedition.SingleFileEdition;
 
 public class ChangeAnalyzer{
 	
@@ -115,7 +115,7 @@ public class ChangeAnalyzer{
 		}
 
 		public Object getResult(TextEditVisitor visitor) {
-			AtomicEditionComposite com = ((AutoEditionVisitor)visitor).getComposite();	
+			SingleFileEdition com = ((AutoEditionVisitor)visitor).getComposite();	
 			return com;
 		}
 
