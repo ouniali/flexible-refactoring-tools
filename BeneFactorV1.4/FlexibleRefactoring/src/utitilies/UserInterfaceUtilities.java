@@ -10,8 +10,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
+import org.eclipse.jdt.ui.IWorkingCopyManager;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
@@ -57,6 +60,35 @@ public class UserInterfaceUtilities {
 		IWorkbenchPage[] result = new IWorkbenchPage[pages.size()];
 		return pages.toArray(result);
 	}
+	
+	static public JavaEditor getJavaEditorFor(ICompilationUnit unit)
+	{
+		
+		IWorkbenchPage[] pages = getWorkbenchPages();
+		for(IWorkbenchPage page : pages)
+		{
+			IEditorPart part = page.getActiveEditor();
+			if(part instanceof CompilationUnitEditor)
+			{
+				CompilationUnitEditor editor = (CompilationUnitEditor) part;
+				ICompilationUnit editor_unit= getConnectedICompilationUnit(editor);
+				if(editor_unit.getPath().toOSString().equals(unit.getPath().toOSString()))
+					return editor;
+			}
+		}	
+		
+		return null;
+	}
+	
+	
+	static public ICompilationUnit getConnectedICompilationUnit(CompilationUnitEditor editor)
+	{
+		IWorkingCopyManager manager= JavaPlugin.getDefault().getWorkingCopyManager();
+		ICompilationUnit unit= manager.getWorkingCopy(editor.getEditorInput());
+		return unit;
+	}
+	
+	
 	
 	@SuppressWarnings("restriction")
 	static public JavaEditor getActiveJavaEditor()

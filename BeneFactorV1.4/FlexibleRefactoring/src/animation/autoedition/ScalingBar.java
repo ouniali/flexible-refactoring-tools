@@ -104,7 +104,6 @@ public class ScalingBar extends Observable implements Observer, Runnable{
 			percentage = 1.0f;
 		display.syncExec( new Runnable()
 		{
-			@Override
 			public void run() {
 				float max = (float) scale.getMaximum();
 				float min = (float) scale.getMinimum();

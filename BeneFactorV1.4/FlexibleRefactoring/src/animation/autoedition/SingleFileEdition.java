@@ -69,6 +69,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			e1.printStackTrace();
 		}
 		
+		openEditor();
 		connect2ScalingBar();
 		
 		for(;playNextAtomicEdition();)
@@ -84,7 +85,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		}
 		
 		disconnectScalingBar();
-		
+		closeEditor();
 		
 		try {
 			unit.commitWorkingCopy(true, null);
@@ -94,6 +95,16 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		}
 	}
 
+	private void openEditor()
+	{
+		
+	}
+
+	private void closeEditor()
+	{
+		
+	}
+	
 	private void connect2ScalingBar() {
 		ScalingBar.getInstance().addObserver(this);
 		this.addObserver(ScalingBar.getInstance());
