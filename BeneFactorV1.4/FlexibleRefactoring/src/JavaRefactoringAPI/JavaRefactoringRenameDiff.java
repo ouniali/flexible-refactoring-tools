@@ -105,6 +105,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			{
 				AtomicEditionComposite com = (AtomicEditionComposite)o;
 				ScalingBar.getInstance().addObserver(com);
+				com.addObserver(ScalingBar.getInstance());
 				com.adjustToSynchronizedApply();
 				com.splitEditions();
 				com.applyEditions();
