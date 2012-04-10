@@ -83,6 +83,8 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			}
 		}
 		
+		disconnectScalingBar();
+		
 		
 		try {
 			unit.commitWorkingCopy(true, null);
@@ -96,6 +98,12 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		ScalingBar.getInstance().addObserver(this);
 		this.addObserver(ScalingBar.getInstance());
 	}
+	
+	private void disconnectScalingBar() {
+		ScalingBar.getInstance().deleteObserver(this);
+		this.deleteObserver(ScalingBar.getInstance());
+	}
+	
 	
 
 	

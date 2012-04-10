@@ -19,7 +19,6 @@ public class MultiFileEdition {
 			edition.splitEditions();
 			edition.applyEditions();
 		}
-		
 	}
 	
 }
