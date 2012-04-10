@@ -1,7 +1,16 @@
 package animation.change;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Stack;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IWorkingCopy;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.CompositeChange;
 import org.eclipse.ltk.core.refactoring.NullChange;
@@ -15,21 +24,24 @@ import org.eclipse.text.edits.TextEdit;
 import org.eclipse.text.edits.TextEditVisitor;
 
 import animation.Animation;
+import animation.autoedition.AtomicEditionComposite;
 
-public class ChangeAnalyzer {
+public class ChangeAnalyzer{
 	
 	Change change;
-	TextEditVisitor visitor;
+	TextVisitorStrategy strategy;
+	ArrayList results;
 	
-	public TextEditVisitor getVisitor() {
-		return visitor;
+	public ArrayList getResults() {
+		return results;
 	}
 
 
-	public ChangeAnalyzer(Change c, TextEditVisitor v)
+	public ChangeAnalyzer(Change c, TextVisitorStrategy s)
 	{
-		visitor = v;
+		strategy = s;
 		change = c;
+		results = new ArrayList();
 		if(change instanceof CompositeChange)
 			VisitCompositeChangeTree((CompositeChange)change);		
 	}
@@ -43,6 +55,7 @@ public class ChangeAnalyzer {
 		while(!stack.empty())
 		{
 			Change c = (Change) stack.pop();
+		
 			if(c instanceof CompositeChange)
 			{
 				CompositeChange com = (CompositeChange) c;
@@ -72,13 +85,68 @@ public class ChangeAnalyzer {
 	
 	private void VisitChange( TextChange c)
 	{
+		ICompilationUnit unit = (ICompilationUnit)c.getModifiedElement();
 		TextEditBasedChangeGroup[] group = c.getChangeGroups();
+		TextEditVisitor visitor = strategy.getTextEditVisitor();
+		strategy.setEnvironment(visitor, unit);
+		
 		for(int i = 0; i < group.length; i++)
 		{
 			TextEdit[] edits = group[i].getTextEdits();
 			for(int j = 0; j < edits.length; j++)
 				edits[j].accept(visitor);
 		}
+		
+		results.add(strategy.getResult(visitor));		
+	}
+	
+
+	
+	public static interface TextVisitorStrategy{
+		public TextEditVisitor getTextEditVisitor();
+		public Object getResult(TextEditVisitor visitor);
+		public void setEnvironment(TextEditVisitor visitor, ICompilationUnit u);
+	}
+	
+	public static class AutoEditionVisitorStrategy implements TextVisitorStrategy
+	{
+		public TextEditVisitor getTextEditVisitor() {
+			return new AutoEditionVisitor();
+		}
+
+		public Object getResult(TextEditVisitor visitor) {
+			AtomicEditionComposite com = ((AutoEditionVisitor)visitor).getComposite();	
+			return com;
+		}
+
+		public void setEnvironment(TextEditVisitor visitor, ICompilationUnit u) {
+			((AutoEditionVisitor)visitor).setEnvironment(u);
+		}	
+	}
+	
+	
+	
+	public static class AnimatedChangeVisitorStrategy implements TextVisitorStrategy
+	{
+		public TextEditVisitor getTextEditVisitor() {
+			return new AnimatedChangeVisitor();
+		}
+		public Object getResult(TextEditVisitor visitor) {
+			return null;
+		}
+		public void setEnvironment(TextEditVisitor visitor, ICompilationUnit u) {
+			
+			
+		}
+		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 }

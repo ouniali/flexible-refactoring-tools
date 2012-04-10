@@ -2,6 +2,7 @@ package animation.change;
 
 import java.util.ArrayList;
 
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.text.edits.DeleteEdit;
 import org.eclipse.text.edits.InsertEdit;
 import org.eclipse.text.edits.ReplaceEdit;
@@ -19,10 +20,16 @@ public class AutoEditionVisitor extends TextEditVisitor{
 		return composite;
 	}
 	
+	public void setEnvironment(ICompilationUnit u)
+	{
+		composite.setICompilationUnit(u);
+	}
+	
 	public void	postVisit(TextEdit edit) 
 	{
 		System.out.println(edit);
 	}
+	
 	public boolean	visit(DeleteEdit edit) 
 	{
 		composite.addEdition(new AtomicEdition(edit));
