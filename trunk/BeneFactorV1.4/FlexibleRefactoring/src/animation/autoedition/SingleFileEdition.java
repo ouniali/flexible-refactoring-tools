@@ -61,13 +61,15 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 
 	
 	@Override
-	public void run() {
+	public synchronized void run() {
 	
 		try {
 			unit.becomeWorkingCopy(null);
 		} catch (JavaModelException e1) {
 			e1.printStackTrace();
 		}
+		
+		connect2ScalingBar();
 		
 		for(;playNextAtomicEdition();)
 		{
@@ -88,6 +90,11 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void connect2ScalingBar() {
+		ScalingBar.getInstance().addObserver(this);
+		this.addObserver(ScalingBar.getInstance());
 	}
 	
 
