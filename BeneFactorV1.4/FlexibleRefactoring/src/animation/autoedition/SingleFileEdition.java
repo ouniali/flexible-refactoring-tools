@@ -33,9 +33,11 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 
 	
 	int current_applied = 0;//number of atomic editions that were played 
-	ICompilationUnit unit;
-	AtomicInteger set_finished_count = new AtomicInteger(SingleFileEdition.NO_REPOSITION);
-	Thread playing_thread;
+	ICompilationUnit unit; //these editions are applied on
+	AtomicInteger set_finished_count = new AtomicInteger(SingleFileEdition.NO_REPOSITION);//value set from scaling bar
+	Thread playing_thread;//playing thread
+	JavaEditor editor;//the editor in which this compilation unit is open
+	boolean editor_open;//is the editor originally open 
 	
 	
 	
@@ -66,50 +68,47 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	@Override
 	public synchronized void run() {
 	
-		try {
+		try {			
+			
 			unit.becomeWorkingCopy(null);
-		} catch (JavaModelException e1) {
-			e1.printStackTrace();
-		}
-		
-		openEditor();
-		connect2ScalingBar();
-		
-		for(;playNextAtomicEdition();)
-		{
-			int finished_count = set_finished_count.getAndSet(SingleFileEdition.NO_REPOSITION);
-			if(finished_count !=  SingleFileEdition.NO_REPOSITION)
-				AdjustEditionsProgress(finished_count);
-			try {
+			openEditor();
+			connect2ScalingBar();
+			
+			for(;playNextAtomicEdition();)
+			{
+				int finished_count = set_finished_count.getAndSet(SingleFileEdition.NO_REPOSITION);
+				if(finished_count !=  SingleFileEdition.NO_REPOSITION)
+					AdjustEditionsProgress(finished_count);		
 				Thread.sleep(SPEED[interval_index]);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
-		}
-		
-		disconnectScalingBar();
-		closeEditor();
-		
-		try {
+			
+			disconnectScalingBar();
+			closeEditor();
 			unit.commitWorkingCopy(true, null);
-		} catch (JavaModelException e) {
-			// TODO Auto-generated catch block
+			unit.discardWorkingCopy();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void openEditor()
+	private void openEditor() throws Exception
 	{
-		JavaEditor editor = UserInterfaceUtilities.getJavaEditorFor(unit);
+		editor = UserInterfaceUtilities.getJavaEditor(unit);
 		if(editor == null)
 		{
-			
+			editor = UserInterfaceUtilities.openJavaEditor(unit);
+			editor.setFocus();
+			editor_open = false;
 		}
+		else
+			editor_open = true;
+		
 	}
 
 	private void closeEditor()
 	{
-		
+		if(!editor_open)
+			UserInterfaceUtilities.closeJavaEditor(editor);
 	}
 	
 	private void connect2ScalingBar() {

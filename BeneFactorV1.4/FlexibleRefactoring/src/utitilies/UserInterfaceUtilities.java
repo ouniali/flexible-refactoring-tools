@@ -63,7 +63,7 @@ public class UserInterfaceUtilities {
 		return pages.toArray(result);
 	}
 	
-	static public JavaEditor getJavaEditorFor(ICompilationUnit unit)
+	static public JavaEditor getJavaEditor(ICompilationUnit unit)
 	{
 		
 		IWorkbenchPage[] pages = getWorkbenchPages();
