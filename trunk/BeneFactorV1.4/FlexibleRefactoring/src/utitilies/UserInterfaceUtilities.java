@@ -34,6 +34,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
@@ -172,8 +173,13 @@ public class UserInterfaceUtilities {
 	
 	public static JavaEditor openJavaEditor(ICompilationUnit unit) throws Exception
 	{
-		JavaEditor editor = (JavaEditor)JavaUI.openInEditor(unit);
-		return editor;
+		IWorkspace workspace= ResourcesPlugin.getWorkspace();
+		IWorkbenchPage page = getEditorWorkbenchPage();
+		IPath location = unit.getPath();
+		IFile ifile = workspace.getRoot().getFileForLocation(location);
+		IEditorDescriptor desc = PlatformUI.getWorkbench().
+		        getEditorRegistry().getDefaultEditor(ifile.getName());
+		return (JavaEditor)page.openEditor(new FileEditorInput(ifile), desc.getId());
 	}
 	
 	
