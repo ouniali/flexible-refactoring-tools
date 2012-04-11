@@ -11,10 +11,12 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jdt.ui.IWorkingCopyManager;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
@@ -152,7 +154,7 @@ public class UserInterfaceUtilities {
 		return stHelper.getOffset();
 	}
 	
-	public static JavaEditor openJavaEditorFor(File file) throws Exception
+	public static JavaEditor openJavaEditor(File file) throws Exception
 	{
 		IWorkspace workspace= ResourcesPlugin.getWorkspace();
 		IWorkbenchPage page = getEditorWorkbenchPage();
@@ -167,6 +169,13 @@ public class UserInterfaceUtilities {
 	{
 		editor.getEditorSite().getPage().closeEditor(editor, false);
 	}
+	
+	public static JavaEditor openJavaEditor(ICompilationUnit unit) throws Exception
+	{
+		JavaEditor editor = (JavaEditor)JavaUI.openInEditor(unit);
+		return editor;
+	}
+	
 	
 	
 	public static void freezeEditor(JavaEditor activeJavaEditor) {

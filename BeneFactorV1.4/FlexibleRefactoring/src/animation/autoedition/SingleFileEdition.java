@@ -8,7 +8,10 @@ import java.util.Observer;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.junit.Assert;
+
+import utitilies.UserInterfaceUtilities;
 
 
 public class SingleFileEdition extends Observable implements Runnable, Observer{
@@ -97,7 +100,11 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 
 	private void openEditor()
 	{
-		
+		JavaEditor editor = UserInterfaceUtilities.getJavaEditorFor(unit);
+		if(editor == null)
+		{
+			
+		}
 	}
 
 	private void closeEditor()
