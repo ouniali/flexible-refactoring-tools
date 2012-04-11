@@ -100,6 +100,10 @@ public class ChangeAnalyzer{
 		results.add(strategy.getResult(visitor));		
 	}
 	
+	private void VisitChange(ResourceChange c)
+	{
+		
+	}
 
 	
 	public static interface TextVisitorStrategy{
