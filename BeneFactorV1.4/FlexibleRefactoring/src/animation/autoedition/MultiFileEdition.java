@@ -13,8 +13,10 @@ public class MultiFileEdition {
 	
 	public void play() throws Exception
 	{
+		int i = File_Editions.size();
 		for(SingleFileEdition edition : File_Editions)
 		{
+			System.out.println(i);
 			edition.adjustToSynchronizedApply();
 			edition.splitEditions();
 			edition.applyEditions();
