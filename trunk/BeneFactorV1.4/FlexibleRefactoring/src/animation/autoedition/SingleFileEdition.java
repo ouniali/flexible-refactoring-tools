@@ -132,12 +132,12 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	
 	void AdjustEditionsProgress(int finished) throws Exception 
 	{
-			if(finished > current_applied)
-				jumpForward(finished - current_applied);
-			else if(finished < current_applied)
-				jumpBackward(current_applied - finished);
-			else 
-				return;
+		if(finished > current_applied)
+			jumpForward(finished - current_applied);
+		else if(finished < current_applied)
+			jumpBackward(current_applied - finished);
+		else 
+			return;
 	}
 	
 	void jumpForward(int step) throws Exception
