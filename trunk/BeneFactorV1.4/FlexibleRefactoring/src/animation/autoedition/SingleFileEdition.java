@@ -97,7 +97,6 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		if(editor == null)
 		{
 			editor = UserInterfaceUtilities.openJavaEditor(unit);
-			editor.setFocus();
 			editor_open = false;
 		}
 		else
