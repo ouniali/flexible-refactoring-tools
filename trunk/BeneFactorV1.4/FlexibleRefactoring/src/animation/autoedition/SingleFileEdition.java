@@ -66,7 +66,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 
 	
 	@Override
-	public synchronized void run() {
+	public void run() {
 	
 		try {			
 			
