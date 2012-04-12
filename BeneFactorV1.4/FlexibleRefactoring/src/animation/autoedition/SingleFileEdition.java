@@ -143,7 +143,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	void jumpForward(int step) throws Exception
 	{
 		AtomicEdition e = AtomicEdition.mergeConsecutiveAtomicEditions
-				(editions, current_applied, current_applied + step - 1);
+				(editions, current_applied, current_applied + step - 1, true);
 		current_applied = current_applied + step;
 		e.applyEdition(unit);
 		AtomicEdition undo = e.getUndoAtomicEdition();
@@ -154,7 +154,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	void jumpBackward(int step) throws Exception
 	{
 		AtomicEdition e = AtomicEdition.mergeConsecutiveAtomicEditions
-			(undos, 0, step -1);
+			(undos, 0, step -1, false);
 		current_applied -= step;
 		e.applyEdition(unit);
 		for(int i = 0; i<step; i++ )
