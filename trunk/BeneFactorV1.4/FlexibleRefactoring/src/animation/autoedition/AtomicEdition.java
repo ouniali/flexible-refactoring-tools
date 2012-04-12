@@ -111,12 +111,8 @@ public class AtomicEdition implements Comparable{
 		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
 		for(TextEdit edit : e.getChildren())
 			eds.add(new AtomicEdition(edit));	
-		return null;
+		return eds;
 	}
-
-	
-	
-	
 	
 	 private static ArrayList<AtomicEdition> splitLongString(int off, String s)
 	 {
@@ -138,24 +134,37 @@ public class AtomicEdition implements Comparable{
 	
 	 public void setOffset(int off) throws Exception
 	 {
-		 undo = null;
-		 
-		 if(edit instanceof ReplaceEdit)
-		 {
-			 edit = new ReplaceEdit(off, ((ReplaceEdit) edit).getLength(),((ReplaceEdit) edit).getText());
-		 }
-		 else if (edit instanceof InsertEdit)
-		 {
-			 edit = new InsertEdit(off, ((InsertEdit) edit).getText());
-		 }
-		 else if(edit instanceof DeleteEdit)
-		 {
-			 edit = new DeleteEdit(off, edit.getLength());
-		 }
-		 else
-			 throw new Exception("Unkown Edit Type.");
+		 undo = null; 
+		 edit = changeOffset(edit, off);
 	 }
 	 
+	 private static TextEdit changeOffset(TextEdit e, int off) throws Exception
+	 {
+		 if(e.getClass().equals(ReplaceEdit.class))
+		 {
+			 return new ReplaceEdit(off, ((ReplaceEdit) e).getLength(),((ReplaceEdit) e).getText());
+		 }
+		 else if (e instanceof InsertEdit)
+		 {
+			 return new InsertEdit(off, ((InsertEdit) e).getText());
+		 }
+		 else if(e instanceof DeleteEdit)
+		 {
+			 return new DeleteEdit(off, e.getLength());
+		 }
+		 else if (e instanceof UndoEdit)
+		 {
+			 if(e.getChildren().length > 1)
+				 throw new Exception("More than one child.");
+			 TextEdit child = e.removeChildren()[0];
+			 TextEdit new_child = changeOffset(e, off);
+			 e.addChild(new_child);
+			 return e;
+		 }
+		 else
+			 throw new Exception("Unkown Edit Type:" + e);
+		 
+	 }
 	 
 	 public int getRangeChange() throws Exception
 	 {
