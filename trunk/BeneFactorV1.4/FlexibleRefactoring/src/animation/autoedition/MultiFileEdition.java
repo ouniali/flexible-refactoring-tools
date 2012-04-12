@@ -1,7 +1,6 @@
 package animation.autoedition;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MultiFileEdition {
 
@@ -19,7 +18,7 @@ public class MultiFileEdition {
 			edition.adjustToSynchronizedApply();
 			edition.splitEditions();
 			edition.applyEditions();
-			edition.getPlayingThread().join();
+			edition.waitFinish();
 		}
 	}
 	
