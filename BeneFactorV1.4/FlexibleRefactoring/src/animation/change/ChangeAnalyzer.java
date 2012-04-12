@@ -37,7 +37,7 @@ public class ChangeAnalyzer{
 	}
 
 
-	public ChangeAnalyzer(Change c, TextVisitorStrategy s)
+	public ChangeAnalyzer(Change c, TextVisitorStrategy s) throws Exception
 	{
 		strategy = s;
 		change = c;
@@ -47,7 +47,7 @@ public class ChangeAnalyzer{
 	}
 	
 
-	private void VisitCompositeChangeTree(CompositeChange cc)
+	private void VisitCompositeChangeTree(CompositeChange cc) throws Exception
 	{
 		Stack<Change> stack = new Stack<Change>();
 		stack.push(cc);
@@ -70,7 +70,7 @@ public class ChangeAnalyzer{
 		
 	}
 	
-	private void VisitChange(Change c) {
+	private void VisitChange(Change c) throws Exception {
 		if(c instanceof TextChange)
 			VisitChange((TextChange)c);
 		else if(c instanceof NullChange)
@@ -100,10 +100,21 @@ public class ChangeAnalyzer{
 		results.add(strategy.getResult(visitor));		
 	}
 	
-	private void VisitChange(ResourceChange c)
+	private void VisitChange(ResourceChange c) throws Exception
 	{
-		
+		throw new Exception("Not implemented");
 	}
+	
+	private void VisitChange(UndoTextFileChange c) throws Exception
+	{
+		throw new Exception("Not implemented");
+	}
+
+	private void VisitChange(NullChange c) throws Exception
+	{
+		throw new Exception("Not implemented");
+	}
+
 
 	
 	public static interface TextVisitorStrategy{
