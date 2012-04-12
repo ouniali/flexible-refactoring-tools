@@ -133,24 +133,30 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	void AdjustEditionsProgress(int finished) throws Exception 
 	{
 			if(finished > current_applied)
-			{
-		/*		while(finished != current_applied)
-					playNextAtomicEdition();
-		*/		
-				AtomicEdition e = AtomicEdition.mergeConsecutiveAtomicEditions
-						(editions, current_applied, finished - 1);
-				current_applied = finished;
-				e.applyEdition(unit);
-				AtomicEdition undo = e.getUndoAtomicEdition();
-			}
+				jumpForward(finished);
 			else if(finished < current_applied)
-			{
-				while(finished != current_applied)
-					undoLatestEdition();
-			}	
+				jumpBackward(finished);
 			else 
 				return;
 	}
+	
+	void jumpForward(int finished) throws Exception
+	{
+		AtomicEdition e = AtomicEdition.mergeConsecutiveAtomicEditions
+				(editions, current_applied, finished - 1);
+		current_applied = finished;
+		e.applyEdition(unit);
+		AtomicEdition undo = e.getUndoAtomicEdition();
+		ArrayList<AtomicEdition> undo_element = undo.splitToAtomicEditions();
+		undos.addAll(0, undo_element);
+	}
+	
+	void jumpBackward(int finished)
+	{
+		while(finished != current_applied)
+			undoLatestEdition();
+	}
+	
 	
 	public void setICompilationUnit(ICompilationUnit u)
 	{
