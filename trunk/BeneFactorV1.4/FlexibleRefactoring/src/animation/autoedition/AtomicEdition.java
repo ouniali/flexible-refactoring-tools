@@ -197,16 +197,23 @@ public class AtomicEdition implements Comparable{
 		return o1 - o2;
 	}
 
-	static public AtomicEdition mergeConsecutiveAtomicEditions(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
+	static public AtomicEdition mergeConsecutiveAtomicEditions(ArrayList<AtomicEdition> editions, int start, int end, boolean offsetAdjust) throws Exception
 	{
+		int adjust;
+		if(offsetAdjust)
+			adjust = 1;
+		else
+			adjust = 0;
+			
 		MultiTextEdit combined = new MultiTextEdit();
 		int off_adjust = 0;
 		for(int i = start; i <= end; i++)
 		{
 			AtomicEdition current = editions.get(i);
-			current.setOffset(current.getOffset() - off_adjust);
+			current.setOffset(current.getOffset() - off_adjust * adjust);
+			System.out.println(current.edit);
 			combined.addChild(current.edit);
-			off_adjust += current.getRangeChange();
+			off_adjust += current.getRangeChange();	
 		}
 		return new AtomicEdition(combined);
 	}
