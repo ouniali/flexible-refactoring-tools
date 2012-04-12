@@ -156,10 +156,9 @@ public class AtomicEdition implements Comparable{
 		 {
 			 if(e.getChildren().length > 1)
 				 throw new Exception("More than one child.");
-			 TextEdit child = e.removeChildren()[0];
-			 TextEdit new_child = changeOffset(e, off);
-			 e.addChild(new_child);
-			 return e;
+			 TextEdit child = e.getChildren()[0];
+			 TextEdit new_child = changeOffset(child, off);
+			 return new_child;
 		 }
 		 else
 			 throw new Exception("Unkown Edit Type:" + e);
