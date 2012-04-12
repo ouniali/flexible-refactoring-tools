@@ -117,6 +117,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	}
 	
 	private void connect2ScalingBar() {
+		ScalingBar.getInstance().setPercentage(0.0f);
 		ScalingBar.getInstance().addObserver(this);
 		this.addObserver(ScalingBar.getInstance());
 	}
