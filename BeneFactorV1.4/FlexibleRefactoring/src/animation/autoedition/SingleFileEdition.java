@@ -123,7 +123,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	
 
 	
-	synchronized void AdjustEditionsProgress(int finished) 
+	void AdjustEditionsProgress(int finished) 
 	{
 			if(finished > current_applied)
 			{
@@ -153,7 +153,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	}
 	
 	
-	synchronized boolean playNextAtomicEdition()
+	boolean playNextAtomicEdition()
 	{
 		if(current_applied >= editions.size())
 			return false;
@@ -171,7 +171,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	}
 	
 	
-	synchronized boolean undoLatestEdition()
+	boolean undoLatestEdition()
 	{
 		if(current_applied <= 0)
 			return false;
