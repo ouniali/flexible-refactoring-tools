@@ -109,15 +109,8 @@ public class AtomicEdition implements Comparable{
 	private static ArrayList<AtomicEdition> splitEdit(UndoEdit e) throws Exception
 	{
 		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
-		//int off_shift = 0;
 		for(TextEdit edit : e.getChildren())
-		{
-			/*AtomicEdition atomic = new AtomicEdition(edit);
-			atomic.setOffset(atomic.getOffset() + off_shift);
-			*/
 			eds.add(new AtomicEdition(edit));
-			//off_shift += atomic.getRangeChange();
-		}	
 		return eds;
 	}
 	
@@ -204,7 +197,8 @@ public class AtomicEdition implements Comparable{
 		return o1 - o2;
 	}
 
-	static public AtomicEdition mergeConsecutiveAtomicEditions(ArrayList<AtomicEdition> editions, int start, int end, boolean offsetAdjust) throws Exception
+	static public AtomicEdition mergeConsecutiveAtomicEditions
+		(ArrayList<AtomicEdition> editions, int start, int end, boolean offsetAdjust) throws Exception
 	{
 		int adjust;
 		if(offsetAdjust)
