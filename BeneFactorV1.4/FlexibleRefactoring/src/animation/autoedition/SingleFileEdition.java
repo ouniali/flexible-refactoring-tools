@@ -90,6 +90,12 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			e.printStackTrace();
 		}
 	}
+	
+	public Thread getPlayingThread()
+	{
+		return playing_thread;
+	}
+	
 
 	private void openEditor() throws Exception
 	{
