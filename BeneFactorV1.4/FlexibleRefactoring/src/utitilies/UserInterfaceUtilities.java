@@ -155,31 +155,35 @@ public class UserInterfaceUtilities {
 		return stHelper.getOffset();
 	}
 	
-	public static JavaEditor openJavaEditor(File file) throws Exception
+
+	
+	public static void closeJavaEditor(final JavaEditor editor)
 	{
-		IWorkspace workspace= ResourcesPlugin.getWorkspace();
-		IWorkbenchPage page = getEditorWorkbenchPage();
-		IPath location= Path.fromOSString(file.getAbsolutePath()); 
-		IFile ifile = workspace.getRoot().getFileForLocation(location);
-		IEditorDescriptor desc = PlatformUI.getWorkbench().
-		        getEditorRegistry().getDefaultEditor(ifile.getName());
-		return (JavaEditor)page.openEditor(new FileEditorInput(ifile), desc.getId());
+		Display.getDefault().syncExec(new Runnable(){
+			public void run()
+			{
+				editor.getEditorSite().getPage().closeEditor(editor, false);
+			}
+		});
+		
 	}
 	
-	public static void closeJavaEditor(JavaEditor editor)
+	public static JavaEditor openJavaEditor(final ICompilationUnit unit) throws Exception
 	{
-		editor.getEditorSite().getPage().closeEditor(editor, false);
-	}
-	
-	public static JavaEditor openJavaEditor(ICompilationUnit unit) throws Exception
-	{
-		IWorkspace workspace= ResourcesPlugin.getWorkspace();
-		IWorkbenchPage page = getEditorWorkbenchPage();
-		IPath location = unit.getPath();
-		IFile ifile = workspace.getRoot().getFileForLocation(location);
-		IEditorDescriptor desc = PlatformUI.getWorkbench().
-		        getEditorRegistry().getDefaultEditor(ifile.getName());
-		return (JavaEditor)page.openEditor(new FileEditorInput(ifile), desc.getId());
+		Runnable open = new Runnable() {			
+			public void run() {
+				try {
+					IWorkbenchPage page = getEditorWorkbenchPage();
+					IEditorPart javaEditor;
+					javaEditor = JavaUI.openInEditor(unit);
+					page.activate(javaEditor);	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		Display.getDefault().syncExec(open);
+		return getActiveJavaEditor();
 	}
 	
 	
