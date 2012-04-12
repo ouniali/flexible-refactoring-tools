@@ -91,9 +91,9 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		}
 	}
 	
-	public Thread getPlayingThread()
+	public void waitFinish() throws Exception
 	{
-		return playing_thread;
+		playing_thread.join();
 	}
 	
 
