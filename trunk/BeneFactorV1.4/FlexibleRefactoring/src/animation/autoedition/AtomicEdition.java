@@ -155,5 +155,18 @@ public class AtomicEdition implements Comparable{
 		return o1 - o2;
 	}
 
+	static public AtomicEdition mergeConsecutiveAtomicEditions(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
+	{
+		MultiTextEdit combined = new MultiTextEdit();
+		int off_adjust = 0;
+		for(int i = start; i <= end; i++)
+		{
+			AtomicEdition current = editions.get(i);
+			current.setOffset(current.getOffset() - off_adjust);
+			combined.addChild(current.edit);
+			off_adjust += current.getRangeChange();
+		}
+		return new AtomicEdition(combined);
+	}
 
 }
