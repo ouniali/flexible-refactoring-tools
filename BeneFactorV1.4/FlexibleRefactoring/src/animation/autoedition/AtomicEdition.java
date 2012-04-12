@@ -13,6 +13,7 @@ import org.eclipse.text.edits.InsertEdit;
 import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
+import org.eclipse.text.edits.UndoEdit;
 
 public class AtomicEdition implements Comparable{
 		
@@ -59,32 +60,65 @@ public class AtomicEdition implements Comparable{
 		return edit.toString();
 	}
 	
+	
+	
+	
 	public ArrayList<AtomicEdition> splitToAtomicEditions() throws Exception
 	{
+		return splitEdit(edit);
+	}
+	
+	private static ArrayList<AtomicEdition> splitEdit(TextEdit e) throws Exception
+	{
 		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
-		
-		if(edit instanceof ReplaceEdit)
-		{
-			 DeleteEdit del = new DeleteEdit(edit.getOffset(), edit.getLength());
-			 eds.add(new AtomicEdition(del));
-			 eds.addAll(splitLongString(edit.getOffset(), ((ReplaceEdit) edit).getText()));
-		}
-		else if (edit instanceof InsertEdit)
-		{
-			eds.addAll(splitLongString(edit.getOffset(), ((InsertEdit) edit).getText()));
-		}
-		else if(edit instanceof DeleteEdit)
-		{
-			undo = null;
-			eds.add(this);
-		}
+		if(e instanceof ReplaceEdit)
+			eds = splitEdit((ReplaceEdit)e);
+		else if (e instanceof InsertEdit)
+			eds = splitEdit((InsertEdit)e);
+		else if(e instanceof DeleteEdit)
+			eds = splitEdit((DeleteEdit)e);
+		else if (e instanceof UndoEdit)
+			eds = splitEdit((UndoEdit)e);
 		else 
-			throw new Exception("Unknown Edit Type.");
-		
+			throw new Exception("Unknown Edit Type.");	
+		return eds;
+	}
+	private static ArrayList<AtomicEdition> splitEdit(ReplaceEdit e)
+	{
+		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
+		DeleteEdit del = new DeleteEdit(e.getOffset(), e.getLength());
+		eds.add(new AtomicEdition(del));
+		eds.addAll(splitLongString(e.getOffset(), e.getText()));
+		return eds;
+	}
+	private static ArrayList<AtomicEdition> splitEdit(InsertEdit e)
+	{
+		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
+		eds.addAll(splitLongString(e.getOffset(), e.getText()));
+		return eds;
+	}
+	private static ArrayList<AtomicEdition> splitEdit(DeleteEdit e)
+	{
+		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
+		AtomicEdition edition = new AtomicEdition(e);
+		edition.undo = null;
+		eds.add(edition);
 		return eds;
 	}
 	
-	 private ArrayList<AtomicEdition> splitLongString(int off, String s)
+	private static ArrayList<AtomicEdition> splitEdit(UndoEdit e) throws Exception
+	{
+		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
+		for(TextEdit edit : e.getChildren())
+			eds.add(new AtomicEdition(edit));	
+		return null;
+	}
+
+	
+	
+	
+	
+	 private static ArrayList<AtomicEdition> splitLongString(int off, String s)
 	 {
 		 char[] chars = s.toCharArray();
 		 ArrayList<AtomicEdition> editions = new ArrayList<AtomicEdition>();
