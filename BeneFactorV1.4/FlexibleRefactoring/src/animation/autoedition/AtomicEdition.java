@@ -60,9 +60,6 @@ public class AtomicEdition implements Comparable{
 		return edit.toString();
 	}
 	
-	
-	
-	
 	public ArrayList<AtomicEdition> splitToAtomicEditions() throws Exception
 	{
 		return splitEdit(edit);
@@ -197,27 +194,30 @@ public class AtomicEdition implements Comparable{
 		return o1 - o2;
 	}
 
-	static public AtomicEdition mergeConsecutiveAtomicEditions
-		(ArrayList<AtomicEdition> editions, int start, int end, boolean offsetAdjust) throws Exception
-	{
-		int adjust;
-		if(offsetAdjust)
-			adjust = 1;
-		else
-			adjust = 0;
-			
+	static public AtomicEdition mergeConsecutiveAtomicEditionsTop2Bottom
+		(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
+	{		
 		MultiTextEdit combined = new MultiTextEdit();
 		int off_adjust = 0;
 		
 		for(int i = start; i <= end; i++)
 		{
 			AtomicEdition current = editions.get(i);
-			current.setOffset(current.getOffset() - off_adjust * adjust);
+			current.setOffset(current.getOffset() - off_adjust);
 			System.out.println(""+ i + end +current.edit);
 			combined.addChild(current.edit);
 			off_adjust += current.getRangeChange();	
 		}
 		return new AtomicEdition(combined);
 	}
+	
+	static public AtomicEdition mergeConsecutiveAtomicEditionsBottom2Top
+		(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
+	{		
+	
+		
+		return null;
+	}
+
 
 }
