@@ -148,6 +148,8 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		e.applyEdition(unit);
 		AtomicEdition undo = e.getUndoAtomicEdition();
 		ArrayList<AtomicEdition> undo_element = undo.splitToAtomicEditions();
+		if(undo_element.size() != step)
+			throw new Exception("Inconsistency");
 		undos.addAll(0, undo_element);
 	}
 	
