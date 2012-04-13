@@ -208,11 +208,12 @@ public class AtomicEdition implements Comparable{
 			
 		MultiTextEdit combined = new MultiTextEdit();
 		int off_adjust = 0;
+		
 		for(int i = start; i <= end; i++)
 		{
 			AtomicEdition current = editions.get(i);
 			current.setOffset(current.getOffset() - off_adjust * adjust);
-			System.out.println(current.edit);
+			System.out.println(""+ i + end +current.edit);
 			combined.addChild(current.edit);
 			off_adjust += current.getRangeChange();	
 		}
