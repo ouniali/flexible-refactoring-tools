@@ -27,7 +27,6 @@ public class AutoEditionVisitor extends TextEditVisitor{
 	
 	public void	postVisit(TextEdit edit) 
 	{
-		System.out.println(edit);
 	}
 	
 	public boolean	visit(DeleteEdit edit) 
