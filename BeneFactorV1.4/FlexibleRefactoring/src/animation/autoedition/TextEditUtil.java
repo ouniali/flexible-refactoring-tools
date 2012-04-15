@@ -30,7 +30,7 @@ public class TextEditUtil {
 		int new_length;
 		if(after.getLength() <= before.getText().length())
 		{
-			new_text = before.getText().substring(after.getLength(), before.getText().length() - 1);
+			new_text = before.getText().substring(after.getLength());
 			new_length = before.getLength();
 		}
 		else
