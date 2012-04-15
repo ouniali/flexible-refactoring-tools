@@ -1,5 +1,12 @@
 package animation.autoedition;
 
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.DeleteEdit;
+import org.eclipse.text.edits.InsertEdit;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
 
 public class TextEditUtil {
@@ -9,26 +16,23 @@ public class TextEditUtil {
 		if(before.getOffset() != after.getOffset())
 			throw new Exception("unmergable replace edit.");
 		
-		String s1 = before.getText();
-		String s2 = before.getText();
-		String final_string;
-		if(s1.length() > s2.length())
-			final_string = s2 + s1.substring(s2.length(), s1.length() - 1);
-		else
-			final_string = s2;
+	
+	
 			
-		if(before.getLength() > s1.length())
-		{
-			
-		}
-		else if(before.getLength() < s1.length())
-		{
-			
-		}
-		else{
-			
-		}
+		
 		return null;
+	}
+	
+	public static void main(String arg[]) throws Exception
+	{
+		  IDocument document= new Document("org");
+          MultiTextEdit edit= new MultiTextEdit();
+          edit.addChild(new DeleteEdit(0, 1));
+          MultiTextEdit sub = new MultiTextEdit(); 
+          sub.addChild(new DeleteEdit(0, 1));
+          edit.addChild(sub);
+          edit.apply(document);
+          System.out.println(document.get());
 	}
 	
 }
