@@ -11,25 +11,26 @@ import org.eclipse.text.edits.ReplaceEdit;
 
 public class TextEditUtil {
 
+	
+	
 	public static ReplaceEdit mergeReplaceEdit(ReplaceEdit before, ReplaceEdit after) throws Exception
 	{
 		if(before.getOffset() != after.getOffset())
-			throw new Exception("unmergable replace edit.");
+			throw new Exception("Unmergable replace edit.");
+		if(0 != after.getLength())
+			throw new Exception("Unmergable replace edit.");
 		
-	
-	
-			
-		
-		return null;
+		String new_text = after.getText() + before.getText();
+		return new ReplaceEdit(before.getOffset(), before.getLength(), new_text);
 	}
 	
 	public static void main(String arg[]) throws Exception
 	{
 		  IDocument document= new Document("org");
           MultiTextEdit edit= new MultiTextEdit();
-          edit.addChild(new DeleteEdit(0, 1));
+          edit.addChild(new ReplaceEdit(0, 0, ""));
           MultiTextEdit sub = new MultiTextEdit(); 
-          sub.addChild(new DeleteEdit(0, 1));
+          sub.addChild(new ReplaceEdit(0, 1, ""));
           edit.addChild(sub);
           edit.apply(document);
           System.out.println(document.get());
