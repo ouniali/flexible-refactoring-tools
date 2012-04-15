@@ -16,7 +16,7 @@ public class TextEditUtil {
 	public static ReplaceEdit mergeReplaceEdit(ReplaceEdit before, ReplaceEdit after) throws Exception
 	{
 		if(before.getOffset() != after.getOffset())
-			throw new Exception("Unmergable replace edit.");
+			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after);
 		if(0 != after.getLength())
 			throw new Exception("Unmergable replace edit.");
 		
