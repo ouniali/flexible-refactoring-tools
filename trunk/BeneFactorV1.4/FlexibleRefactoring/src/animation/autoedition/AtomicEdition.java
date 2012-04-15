@@ -277,14 +277,14 @@ public class AtomicEdition implements Comparable{
 	{
 		if(e instanceof UndoEdit)
 		{
-			if(e.getChildrenSize() > 0)
+			if(e.getChildrenSize() > 1)
 				throw new Exception("UndoEdit has more than one child.");
 			return (ReplaceEdit) e.getChildren()[0];
 		}
 		else if(e instanceof ReplaceEdit)
 			return (ReplaceEdit)e;
 		else
-			throw new Exception("Cannot covert to ReplaceEidt.");
+			throw new Exception("Cannot covert to ReplaceEdit.");
 	}
 	
 	
