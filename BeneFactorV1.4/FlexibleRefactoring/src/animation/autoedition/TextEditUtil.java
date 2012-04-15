@@ -17,30 +17,35 @@ public class TextEditUtil {
 	{
 		if(before.getOffset() != after.getOffset() || 0 != after.getLength())
 			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
-		String new_text;
-		int new_length;
 		if(after.getLength() == 0 )
-		{
-			new_text = after.getText() + before.getText();
-			new_length = before.getLength();
-		}
+			return AfterAsInsert(before, after);
 		else if(after.getText().length() == 0)
-		{
-			if(after.getLength() <= before.getText().length())
-			{
-				new_text = before.getText().substring(after.getLength(), before.getText().length() - 1);
-				new_length = before.getLength();
-			}
-			else
-			{
-				new_text = "";
-				new_length = before.getLength() + (after.getLength() - before.getText().length());
-			}
-			
-		}
+			return AfterAsDelete(before, after);	
 		else 
 			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
-			
+	}
+
+	private static ReplaceEdit AfterAsDelete(ReplaceEdit before, ReplaceEdit after) {
+		String new_text;
+		int new_length;
+		if(after.getLength() <= before.getText().length())
+		{
+			new_text = before.getText().substring(after.getLength(), before.getText().length() - 1);
+			new_length = before.getLength();
+		}
+		else
+		{
+			new_text = "";
+			new_length = before.getLength() + (after.getLength() - before.getText().length());
+		}
+		return new ReplaceEdit(before.getOffset(), new_length, new_text);
+	}
+
+	private static ReplaceEdit AfterAsInsert(ReplaceEdit before, ReplaceEdit after) {
+		String new_text;
+		int new_length;
+		new_text = after.getText() + before.getText();
+		new_length = before.getLength();
 		return new ReplaceEdit(before.getOffset(), new_length, new_text);
 	}
 	
