@@ -214,10 +214,58 @@ public class AtomicEdition implements Comparable{
 	static public AtomicEdition mergeConsecutiveAtomicEditionsBottom2Top
 		(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
 	{		
-	
-		
-		return null;
+		ArrayList<TextEdit> edits = mergeOverlappedTextEdit(toTextEditList(editions, start, end));
+		MultiTextEdit multi = new MultiTextEdit();
+		for(TextEdit e : edits)
+			multi.addChild(e);
+		return new AtomicEdition(multi);
 	}
+	
+	private static ArrayList<TextEdit> toTextEditList(ArrayList<AtomicEdition> atoms, int start, int end)
+	{
+		ArrayList<TextEdit> edits = new ArrayList<TextEdit>();
+		for(int i = start; i <= end; i++)
+			edits.add(atoms.get(i).edit);
+		return edits;
+	}
+	
+	private static ArrayList<TextEdit> mergeOverlappedTextEdit(ArrayList<TextEdit> edits) throws Exception
+	{
+		ArrayList<TextEdit> new_edits = new ArrayList<TextEdit>();
+		int start = 0;
+		while(start < edits.size())
+		{
+			int end = getIndexofSameOffset(edits, start);
+			new_edits.add(mergeEdits(edits, start, end));
+			start = end + 1;
+		}
+		return new_edits;
+	}
+	
+	private static int getIndexofSameOffset(ArrayList<TextEdit> edits, int start)
+	{
+		int off = edits.get(start).getOffset();
+		for(int i = start + 1; i< edits.size(); i++)
+		{
+			if(off != edits.get(i).getOffset())
+				return i - 1;
+		}
+		return edits.size() - 1;
+	}
+	
+	private static TextEdit mergeEdits(ArrayList<TextEdit> edits, int start, int end) throws Exception
+	{
+		ReplaceEdit combined = (ReplaceEdit)edits.get(start);
+		for(int i = start + 1; i < end; i++)
+		{
+			ReplaceEdit re = (ReplaceEdit)edits.get(i);
+			combined = TextEditUtil.mergeReplaceEdit(combined, re);
+		}
+		return combined;
+	}
+	
+	
+	
 
 
 }
