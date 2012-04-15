@@ -15,13 +15,33 @@ public class TextEditUtil {
 	
 	public static ReplaceEdit mergeReplaceEdit(ReplaceEdit before, ReplaceEdit after) throws Exception
 	{
-		if(before.getOffset() != after.getOffset())
-			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after);
-		if(0 != after.getLength())
-			throw new Exception("Unmergable replace edit.");
-		
-		String new_text = after.getText() + before.getText();
-		return new ReplaceEdit(before.getOffset(), before.getLength(), new_text);
+		if(before.getOffset() != after.getOffset() || 0 != after.getLength())
+			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
+		String new_text;
+		int new_length;
+		if(after.getLength() == 0 )
+		{
+			new_text = after.getText() + before.getText();
+			new_length = before.getLength();
+		}
+		else if(after.getText().length() == 0)
+		{
+			if(after.getLength() <= before.getText().length())
+			{
+				new_text = before.getText().substring(after.getLength(), before.getText().length() - 1);
+				new_length = before.getLength();
+			}
+			else
+			{
+				new_text = "";
+				new_length = before.getLength() + (after.getLength() - before.getText().length());
+			}
+			
+		}
+		else 
+			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
+			
+		return new ReplaceEdit(before.getOffset(), new_length, new_text);
 	}
 	
 	public static void main(String arg[]) throws Exception
