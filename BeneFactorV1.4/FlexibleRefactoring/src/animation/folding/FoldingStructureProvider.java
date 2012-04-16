@@ -26,7 +26,6 @@ public class FoldingStructureProvider implements IJavaFoldingStructureProvider, 
 	
 	@Override
 	public void initialize() {	
-		System.out.println("Folding initializing");
 		
 	}
 
@@ -37,12 +36,10 @@ public class FoldingStructureProvider implements IJavaFoldingStructureProvider, 
 		this.viewer = v;
 		installed = true;
 		viewer.addProjectionListener(this);
-		System.out.println("Folding installing");
 	}
 
 	@Override
 	public void uninstall() {
-		System.out.println("Folding uninstalling");
 	}
 
 	
@@ -59,7 +56,6 @@ public class FoldingStructureProvider implements IJavaFoldingStructureProvider, 
 			JavaCore.addElementChangedListener(listener);
 		//	testingFolding();
 		}
-		System.out.println("projection enbled");
 	}
 
 	@Override
@@ -69,7 +65,6 @@ public class FoldingStructureProvider implements IJavaFoldingStructureProvider, 
 			JavaCore.removeElementChangedListener(listener);
 			listener = null;
 		}
-		System.out.println("projection disabled");
 	}
 		
 	

@@ -204,7 +204,6 @@ public class AtomicEdition implements Comparable{
 		{
 			AtomicEdition current = editions.get(i);
 			current.setOffset(current.getOffset() - off_adjust);
-			System.out.println(""+ i + end +current.edit);
 			combined.addChild(current.edit);
 			off_adjust += current.getRangeChange();	
 		}
