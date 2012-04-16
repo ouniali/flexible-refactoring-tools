@@ -213,20 +213,11 @@ public class AtomicEdition implements Comparable{
 	
 	static public AtomicEdition mergeConsecutiveAtomicEditionsBottom2Top
 		(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
-	{		
-		for(AtomicEdition atom : editions)
-		{
-			System.out.println(atom);
-		}
-		
-		
+	{			
 		ArrayList<TextEdit> edits = mergeOverlappedTextEdit(toTextEditList(editions, start, end));
 		MultiTextEdit multi = new MultiTextEdit();
 		for(TextEdit e : edits)
-		{
 			multi.addChild(e);
-			System.out.println(e);
-		}
 		return new AtomicEdition(multi);
 	}
 	
@@ -254,7 +245,7 @@ public class AtomicEdition implements Comparable{
 	private static int getIndexofSameOffset(ArrayList<TextEdit> edits, int start)
 	{
 		int off = edits.get(start).getOffset();
-		for(int i = start + 1; i< edits.size(); i++)
+		for(int i = start + 1; i < edits.size(); i++)
 		{
 			if(off != edits.get(i).getOffset())
 				return i - 1;
