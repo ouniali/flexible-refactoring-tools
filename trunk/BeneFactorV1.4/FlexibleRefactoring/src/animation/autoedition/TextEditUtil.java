@@ -17,15 +17,16 @@ public class TextEditUtil {
 	{
 		if(before.getOffset() != after.getOffset())
 			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
-		if(after.getLength() == 0 )
+		if(0 == after.getLength() )
 			return AfterAsInsert(before, after);
-		else if(after.getText().length() == 0)
+		else if(0 == after.getText().length())
 			return AfterAsDelete(before, after);	
 		else 
 			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
 	}
 
-	private static ReplaceEdit AfterAsDelete(ReplaceEdit before, ReplaceEdit after) {
+	private static ReplaceEdit AfterAsDelete(ReplaceEdit before, ReplaceEdit after) 
+	{
 		String new_text;
 		int new_length;
 		if(after.getLength() <= before.getText().length())
@@ -38,6 +39,7 @@ public class TextEditUtil {
 			new_text = "";
 			new_length = before.getLength() + (after.getLength() - before.getText().length());
 		}
+		
 		return new ReplaceEdit(before.getOffset(), new_length, new_text);
 	}
 
