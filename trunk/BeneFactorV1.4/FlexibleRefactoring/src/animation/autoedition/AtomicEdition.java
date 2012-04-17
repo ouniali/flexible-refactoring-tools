@@ -2,6 +2,7 @@ package animation.autoedition;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaModelException;
@@ -207,17 +208,23 @@ public class AtomicEdition implements Comparable{
 	{		
 		MultiTextEdit combined = new MultiTextEdit();
 		int off_adjust = 0;
-		
-		for(int i = start; i <= end; i++)
+		int index = start;
+		while(index <= end)
 		{
-			AtomicEdition current = editions.get(i);
-			current.setOffset(current.getOffset() - off_adjust);
-			combined.addChild(current.edit);
-			off_adjust += current.getRangeChange();	
+			int group_end = getIndexofSameOffsetAtomic(editions, index);
+			List<AtomicEdition> group = editions.subList(index, group_end);
+			int group_adjust = off_adjust;
+			for(AtomicEdition current: group)
+			{
+				current.setOffset(current.getOffset() - group_adjust);
+				combined.addChild(current.edit);
+				off_adjust += current.getRangeChange();	
+			}
 		}
 		return new AtomicEdition(combined);
 	}
 	
+
 	static public AtomicEdition mergeConsecutiveAtomicEditionsBottom2Top
 		(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
 	{			
@@ -250,6 +257,17 @@ public class AtomicEdition implements Comparable{
 	}
 	
 	private static int getIndexofSameOffset(ArrayList<TextEdit> edits, int start)
+	{
+		int off = edits.get(start).getOffset();
+		for(int i = start + 1; i < edits.size(); i++)
+		{
+			if(off != edits.get(i).getOffset())
+				return i - 1;
+		}
+		return edits.size() - 1;
+	}
+	
+	private static int getIndexofSameOffsetAtomic(ArrayList<AtomicEdition> edits, int start)
 	{
 		int off = edits.get(start).getOffset();
 		for(int i = start + 1; i < edits.size(); i++)
