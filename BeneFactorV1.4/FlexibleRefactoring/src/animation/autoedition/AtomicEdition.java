@@ -106,7 +106,7 @@ public class AtomicEdition implements Comparable{
 	private static ArrayList<AtomicEdition> splitEdit(UndoEdit e) throws Exception
 	{
 		ArrayList<AtomicEdition> editions = new ArrayList<AtomicEdition>();
-		for(int i = e.getChildrenSize() -1 ; i >= 0; i--)
+		for(int i = 0; i < e.getChildrenSize(); i++)
 			editions.add(new AtomicEdition(e.getChildren()[i]));
 		
 		int off = 0;
