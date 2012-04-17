@@ -122,7 +122,6 @@ public class ScalingBar extends Observable implements Observer, Runnable{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("update_bar");
 		if(arg1 instanceof Float)
 		{
 			Float p = (Float) arg1;
