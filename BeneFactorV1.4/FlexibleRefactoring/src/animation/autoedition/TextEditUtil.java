@@ -1,5 +1,7 @@
 package animation.autoedition;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -8,6 +10,7 @@ import org.eclipse.text.edits.InsertEdit;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
+import org.eclipse.text.edits.TextEdit;
 
 public class TextEditUtil {
 
@@ -15,12 +18,23 @@ public class TextEditUtil {
 	
 	public static ReplaceEdit mergeReplaceEdit(ReplaceEdit before, ReplaceEdit after) throws Exception
 	{
+		System.out.println("Before: " + before);
+		System.out.println("After: " + after);
 		if(before.getOffset() != after.getOffset())
 			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
 		if(0 == after.getLength() )
-			return AfterAsInsert(before, after);
+		{
+			ReplaceEdit res =  AfterAsInsert(before, after);
+			System.out.println("Result: " + res);
+			return res;
+		}
+			
 		else if(0 == after.getText().length())
-			return AfterAsDelete(before, after);	
+		{
+			ReplaceEdit res = AfterAsDelete(before, after);
+			System.out.println("Result: " + res);
+			return res;
+		}
 		else 
 			throw new Exception("Unmergable replace edit. Before: " + before + "; After: " + after + ";");
 	}
@@ -51,16 +65,33 @@ public class TextEditUtil {
 		return new ReplaceEdit(before.getOffset(), new_length, new_text);
 	}
 	
+	
+	public static TextEdit transformReplaceEdit(ReplaceEdit edit) throws Exception
+	{
+		if(0 == edit.getText().length())
+			return new DeleteEdit(edit.getOffset(), edit.getLength());
+		else if (0 == edit.getLength())
+			return new InsertEdit(edit.getOffset(), edit.getText());
+		else
+			throw new Exception("Untransformable replace edit.");
+	}
+	
+	
+
+	
+	
+	
+	
 	public static void main(String arg[]) throws Exception
 	{
 		  IDocument document= new Document("org");
           MultiTextEdit edit= new MultiTextEdit();
-          edit.addChild(new ReplaceEdit(0, 0, ""));
-          MultiTextEdit sub = new MultiTextEdit(); 
-          sub.addChild(new ReplaceEdit(0, 1, ""));
-          edit.addChild(sub);
-          edit.apply(document);
+          edit.addChild(new InsertEdit(0, "1"));
+          edit.addChild(new InsertEdit(0, "1"));
+          edit.addChild(new InsertEdit(1, "1"));
+          TextEdit undo = edit.apply(document);
           System.out.println(document.get());
+          System.out.println(undo);
 	}
 	
 }

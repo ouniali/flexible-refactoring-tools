@@ -105,10 +105,18 @@ public class AtomicEdition implements Comparable{
 	
 	private static ArrayList<AtomicEdition> splitEdit(UndoEdit e) throws Exception
 	{
-		ArrayList<AtomicEdition> eds = new ArrayList<AtomicEdition>();
-		for(TextEdit edit : e.getChildren())
-			eds.add(new AtomicEdition(edit));
-		return eds;
+		ArrayList<AtomicEdition> editions = new ArrayList<AtomicEdition>();
+		for(int i = e.getChildrenSize() -1 ; i >= 0; i--)
+			editions.add(new AtomicEdition(e.getChildren()[i]));
+		
+		int off = 0;
+		for(int i = editions.size() - 1 ; i >= 0; i --)
+		{
+			AtomicEdition current = editions.get(i);
+			current.setOffset(current.getOffset() - off);
+			off = current.getRangeChange() + off;
+		}
+		return editions;
 	}
 	
 	 private static ArrayList<AtomicEdition> splitLongString(int off, String s)

@@ -147,10 +147,14 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		current_applied = current_applied + step;
 		e.applyEdition(unit);
 		AtomicEdition undo = e.getUndoAtomicEdition();
-		ArrayList<AtomicEdition> undo_element = undo.splitToAtomicEditions();
-		if(undo_element.size() != step)
+		ArrayList<AtomicEdition> undo_elements = undo.splitToAtomicEditions();
+		if(undo_elements.size() != step)
 			throw new Exception("Inconsistency");
-		undos.addAll(0, undo_element);
+		
+		System.out.println("Jump forward:" + e);
+		for(AtomicEdition ae : undo_elements)
+			System.out.println("Jump forward (Undo):" + ae);
+		undos.addAll(0, undo_elements);
 	}
 	
 	void jumpBackward(int step) throws Exception
@@ -187,7 +191,11 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			AtomicEdition e = editions.get(current_applied);
 			current_applied ++;
 			e.applyEdition(unit);
-			undos.add(0, e.getUndoAtomicEdition());	
+			ArrayList<AtomicEdition> undo_elements = e.getUndoAtomicEdition().splitToAtomicEditions();
+			undos.addAll(0, undo_elements);
+		//	System.out.println("Play Next: " + e);
+			for(AtomicEdition ae : undo_elements)
+				System.out.println("Play Next (undo): " + ae);
 			synchScalingBar();
 		} catch (Exception e1) {
 			e1.printStackTrace();
