@@ -112,12 +112,10 @@ public class AtomicEdition implements Comparable{
 	}
 	
 	private static ArrayList<AtomicEdition> topDown2BottomUp(ArrayList<AtomicEdition> top_downs) throws Exception
-	{
-		
+	{		
 		ArrayList<AtomicEdition> bottom_ups = new ArrayList<AtomicEdition>();
-		int index = top_downs.size() - 1;
 		int shift = 0;
-		while(index >= 0)
+		for(int index = top_downs.size() - 1; index >= 0;)
 		{
 			int end = index;
 			int start = getStartIndexOfSameOffset (top_downs, end);
@@ -125,8 +123,8 @@ public class AtomicEdition implements Comparable{
 			for(int i = start; i <= end; i++)
 			{
 				AtomicEdition current = top_downs.get(i);
+				current.setOffset(current.getOffset() - shift);
 				shift = shift + current.getRangeChange();
-				current.setOffset(current.getOffset() - group_shift);
 				bottom_ups.add(0, current);
 			}
 			index = start - 1;
