@@ -11,6 +11,7 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
+import org.eclipse.text.edits.UndoEdit;
 
 public class TextEditUtil {
 
@@ -77,7 +78,43 @@ public class TextEditUtil {
 	}
 	
 	
-
+	public static int getIndexofSameOffset(ArrayList<TextEdit> edits, int start)
+	{
+		int off = edits.get(start).getOffset();
+		for(int i = start + 1; i < edits.size(); i++)
+		{
+			if(off != edits.get(i).getOffset())
+				return i - 1;
+		}
+		return edits.size() - 1;
+	}
+	
+	public static TextEdit mergeEdits(ArrayList<TextEdit> edits, int start, int end) throws Exception
+	{
+		ReplaceEdit combined = getReplaceEdit(edits.get(start));
+		for(int i = start + 1; i <= end; i++)
+		{
+			ReplaceEdit re = getReplaceEdit(edits.get(i));
+			combined = TextEditUtil.mergeReplaceEdit(combined, re);
+		}
+		return combined;
+	}
+	
+	private static ReplaceEdit getReplaceEdit(TextEdit e) throws Exception
+	{
+		if(e instanceof UndoEdit)
+		{
+			if(e.getChildrenSize() > 1)
+				throw new Exception("UndoEdit has more than one child.");
+			return (ReplaceEdit) e.getChildren()[0];
+		}
+		else if(e instanceof ReplaceEdit)
+			return (ReplaceEdit)e;
+		else
+			throw new Exception("Cannot covert to ReplaceEdit.");
+	}
+	
+	
 	
 	
 	

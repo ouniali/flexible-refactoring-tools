@@ -241,50 +241,14 @@ public class AtomicEdition implements Comparable{
 		int start = 0;
 		while(start < edits.size())
 		{
-			int end = getIndexofSameOffset(edits, start);
-			new_edits.add(mergeEdits(edits, start, end));
+			int end = TextEditUtil.getIndexofSameOffset(edits, start);
+			new_edits.add(TextEditUtil.mergeEdits(edits, start, end));
 			start = end + 1;
 		}
 		return new_edits;
 	}
 	
-	private static int getIndexofSameOffset(ArrayList<TextEdit> edits, int start)
-	{
-		int off = edits.get(start).getOffset();
-		for(int i = start + 1; i < edits.size(); i++)
-		{
-			if(off != edits.get(i).getOffset())
-				return i - 1;
-		}
-		return edits.size() - 1;
-	}
-	
-	private static TextEdit mergeEdits(ArrayList<TextEdit> edits, int start, int end) throws Exception
-	{
-		ReplaceEdit combined = getReplaceEdit(edits.get(start));
-		for(int i = start + 1; i <= end; i++)
-		{
-			ReplaceEdit re = getReplaceEdit(edits.get(i));
-			combined = TextEditUtil.mergeReplaceEdit(combined, re);
-		}
-		return combined;
-	}
-	
-	private static ReplaceEdit getReplaceEdit(TextEdit e) throws Exception
-	{
-		if(e instanceof UndoEdit)
-		{
-			if(e.getChildrenSize() > 1)
-				throw new Exception("UndoEdit has more than one child.");
-			return (ReplaceEdit) e.getChildren()[0];
-		}
-		else if(e instanceof ReplaceEdit)
-			return (ReplaceEdit)e;
-		else
-			throw new Exception("Cannot covert to ReplaceEdit.");
-	}
-	
-	
+
 
 
 }
