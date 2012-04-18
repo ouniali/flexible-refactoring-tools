@@ -121,12 +121,12 @@ public class AtomicEdition implements Comparable{
 		{
 			int end = index;
 			int start = getStartIndexOfSameOffset (top_downs, end);
-			//int group_shift = shift;
+			int group_shift = shift;
 			for(int i = start; i <= end; i++)
 			{
 				AtomicEdition current = top_downs.get(i);
 				shift = shift + current.getRangeChange();
-				current.setOffset(current.getOffset() - shift);
+				current.setOffset(current.getOffset() - group_shift);
 				bottom_ups.add(0, current);
 			}
 			index = start - 1;
@@ -248,15 +248,12 @@ public class AtomicEdition implements Comparable{
 	static public AtomicEdition mergeConsecutiveAtomicEditionsBottom2Top
 		(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
 	{			
-		ArrayList<TextEdit> edits = toTextEditList(editions, start, end);
+		ArrayList<TextEdit> edits = mergeOverlappedTextEdit(toTextEditList(editions, start, end));
 		MultiTextEdit multi = new MultiTextEdit();
-		for(int i = edits.size()-1; i >= 0; i --)
-			multi.addChild(edits.get(i));
+		for(TextEdit e:edits)
+			multi.addChild(e);
 		return new AtomicEdition(multi);
 	}
-	
-	
-	
 	
 	private static ArrayList<TextEdit> toTextEditList(ArrayList<AtomicEdition> atoms, int start, int end)
 	{
