@@ -151,7 +151,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 		if(undo_elements.size() != step)
 			throw new Exception("Inconsistency");
 		
-		System.out.println("Jump forward:" + e);
+		System.out.println("Jump forward:" + undo);
 		for(AtomicEdition ae : undo_elements)
 			System.out.println("Jump forward (Undo):" + ae);
 		undos.addAll(0, undo_elements);
