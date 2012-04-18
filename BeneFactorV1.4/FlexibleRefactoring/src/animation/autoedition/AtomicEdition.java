@@ -108,15 +108,43 @@ public class AtomicEdition implements Comparable{
 		ArrayList<AtomicEdition> editions = new ArrayList<AtomicEdition>();
 		for(int i = 0; i < e.getChildrenSize(); i++)
 			editions.add(new AtomicEdition(e.getChildren()[i]));
+		return topDown2BottomUp(editions);
+	}
+	
+	private static ArrayList<AtomicEdition> topDown2BottomUp(ArrayList<AtomicEdition> top_downs) throws Exception
+	{
 		
-		int off = 0;
-		for(int i = editions.size() - 1 ; i >= 0; i --)
+		ArrayList<AtomicEdition> bottom_ups = new ArrayList<AtomicEdition>();
+		int index = top_downs.size() - 1;
+		int shift = 0;
+		while(index >= 0)
 		{
-			AtomicEdition current = editions.get(i);
-			current.setOffset(current.getOffset() - off);
-			off = current.getRangeChange() + off;
+			int end = index;
+			int start = getStartIndexOfSameOffset (top_downs, end);
+			int group_shift = shift;
+			for(int i = start; i <= end; i++)
+			{
+				AtomicEdition current = top_downs.get(i);
+				shift = shift + current.getRangeChange();
+				current.setOffset(current.getOffset() - group_shift);
+				bottom_ups.add(0, current);
+			}
+			index = start - 1;
 		}
-		return editions;
+		return bottom_ups;		
+		
+	}
+	
+	
+	private static int getStartIndexOfSameOffset(ArrayList<AtomicEdition> editions, int end)
+	{
+		int offset = editions.get(end).getOffset();
+		for(int i = end - 1; i >= 0; i--)
+		{
+			if(editions.get(i).getOffset() != offset)
+				return i + 1;
+		}
+		return 0;
 	}
 	
 	 private static ArrayList<AtomicEdition> splitLongString(int off, String s)
