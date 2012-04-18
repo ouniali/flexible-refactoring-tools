@@ -191,11 +191,9 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			AtomicEdition e = editions.get(current_applied);
 			current_applied ++;
 			e.applyEdition(unit);
-			ArrayList<AtomicEdition> undo_elements = e.getUndoAtomicEdition().splitToAtomicEditions();
-			undos.addAll(0, undo_elements);
-		//	System.out.println("Play Next: " + e);
-			for(AtomicEdition ae : undo_elements)
-				System.out.println("Play Next (undo): " + ae);
+			AtomicEdition undo_element = e.getUndoAtomicEdition();
+			undos.add(0, undo_element);
+			System.out.println("Play Next (undo): " + undo_element);
 			synchScalingBar();
 		} catch (Exception e1) {
 			e1.printStackTrace();
