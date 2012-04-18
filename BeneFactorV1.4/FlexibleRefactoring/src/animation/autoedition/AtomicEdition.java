@@ -248,12 +248,15 @@ public class AtomicEdition implements Comparable{
 	static public AtomicEdition mergeConsecutiveAtomicEditionsBottom2Top
 		(ArrayList<AtomicEdition> editions, int start, int end) throws Exception
 	{			
-		ArrayList<TextEdit> edits = mergeOverlappedTextEdit(toTextEditList(editions, start, end));
+		ArrayList<TextEdit> edits = toTextEditList(editions, start, end);
 		MultiTextEdit multi = new MultiTextEdit();
-		for(TextEdit e : edits)
-			multi.addChild(e);
+		for(int i = edits.size()-1; i >= 0; i --)
+			multi.addChild(edits.get(i));
 		return new AtomicEdition(multi);
 	}
+	
+	
+	
 	
 	private static ArrayList<TextEdit> toTextEditList(ArrayList<AtomicEdition> atoms, int start, int end)
 	{
