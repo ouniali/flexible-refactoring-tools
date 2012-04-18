@@ -10,21 +10,21 @@ public class MylynUserMonitor extends AbstractUserActivityMonitor {
 	@SuppressWarnings("restriction")
 	public MylynUserMonitor() {
 		// TODO Auto-generated constructor stub
-		System.out.println("construction is called");
+		//System.out.println("construction is called");
 		
 	}
 
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		System.out.println("start is called");
+		//System.out.println("start is called");
 	}
 
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
 		
-		System.out.println("stop is called");
+		//System.out.println("stop is called");
 	}
 
 }

@@ -121,12 +121,12 @@ public class AtomicEdition implements Comparable{
 		{
 			int end = index;
 			int start = getStartIndexOfSameOffset (top_downs, end);
-			int group_shift = shift;
+			//int group_shift = shift;
 			for(int i = start; i <= end; i++)
 			{
 				AtomicEdition current = top_downs.get(i);
 				shift = shift + current.getRangeChange();
-				current.setOffset(current.getOffset() - group_shift);
+				current.setOffset(current.getOffset() - shift);
 				bottom_ups.add(0, current);
 			}
 			index = start - 1;

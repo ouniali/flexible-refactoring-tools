@@ -106,7 +106,7 @@ public class CompilationUnitHistory {
 			if(refactoring != null)
 			{
 				RefactoringChances.addNewRefactoringChance(refactoring);
-				System.out.println("Rename detected.");	
+				//System.out.println("Rename detected.");	
 			}
 		}
 		
