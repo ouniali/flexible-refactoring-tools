@@ -136,21 +136,16 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			jumpForward(finished - current_applied);
 		else if(finished < current_applied)
 			jumpBackward(current_applied - finished);
-	/*	{
-			int step =  current_applied - finished;
-			for(int i = 0; i < step; i++)
-				undoLatestEdition();
-		}
-	*/	else 
+		else 
 			return;
 	}
 	
 	void jumpForward(int step) throws Exception
 	{
-		System.out.println("before jump.");
+	/*	System.out.println("before jump.");
 		for(AtomicEdition ee: editions)
 			System.out.println(ee);
-		
+	*/	
 		AtomicEdition e = AtomicEdition.mergeConsecutiveAtomicEditionsTop2Bottom
 				(editions, current_applied, current_applied + step - 1);
 		current_applied = current_applied + step;
@@ -161,16 +156,9 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 			throw new Exception("Inconsistency");
 		undos.addAll(0, undo_elements);
 		
-	/*	for(int i = 0; i< undos.size(); i++)
-		{
-			if(i < undo_elements.size())
-				System.out.println("All Undo (jump):" + undos.get(i));
-			else
-				System.out.println("All Undo:" + undos.get(i));
-		}*/
-		System.out.println("after jump.");
+/*	System.out.println("after jump.");
 		for(AtomicEdition ee: editions)
-			System.out.println(ee);
+			System.out.println(ee);*/
 	}
 	
 	void jumpBackward(int step) throws Exception
