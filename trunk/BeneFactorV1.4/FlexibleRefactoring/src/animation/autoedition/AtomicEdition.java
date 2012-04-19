@@ -115,33 +115,15 @@ public class AtomicEdition implements Comparable{
 	{		
 		ArrayList<AtomicEdition> bottom_ups = new ArrayList<AtomicEdition>();
 		int shift = 0;
-		for(int index = top_downs.size() - 1; index >= 0;)
+		for(int i = top_downs.size() - 1; i >= 0; i--)
 		{
-			int end = index;
-			int start = getStartIndexOfSameOffset (top_downs, end);
-			for(int i = start; i <= end; i++)
-			{
-				AtomicEdition current = top_downs.get(i);
-				current.setOffset(current.getOffset() - shift);
-				shift = shift + current.getRangeChange();
-				bottom_ups.add(0, current);
-			}
-			index = start - 1;
+			AtomicEdition current = top_downs.get(i);
+			current.setOffset(current.getOffset() - shift);
+			shift = shift + current.getRangeChange();
+			bottom_ups.add(0, current);			
 		}
 		return bottom_ups;		
 		
-	}
-	
-	
-	private static int getStartIndexOfSameOffset(ArrayList<AtomicEdition> editions, int end)
-	{
-		int offset = editions.get(end).getOffset();
-		for(int i = end - 1; i >= 0; i--)
-		{
-			if(editions.get(i).getOffset() != offset)
-				return i + 1;
-		}
-		return 0;
 	}
 	
 	 private static ArrayList<AtomicEdition> splitLongString(int off, String s)
