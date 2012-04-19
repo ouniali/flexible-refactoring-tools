@@ -115,6 +115,19 @@ public class TextEditUtil {
 	}
 	
 	
+	public static TextEdit deepCopy(TextEdit root)
+	{
+		if(root instanceof MultiTextEdit)
+		{
+			MultiTextEdit new_root = new MultiTextEdit();
+			for(TextEdit e : root.getChildren())
+				new_root.addChild(deepCopy(e));
+			return new_root;
+		}
+		else
+			return root.copy();
+		
+	}
 	
 	
 	

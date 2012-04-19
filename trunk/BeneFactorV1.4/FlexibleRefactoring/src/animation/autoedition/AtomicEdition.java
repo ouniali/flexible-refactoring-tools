@@ -42,7 +42,7 @@ public class AtomicEdition implements Comparable{
 	
 	public void applyEdition(ICompilationUnit unit) throws Exception
 	{
-		TextEdit original = edit.copy();
+		TextEdit original = TextEditUtil.deepCopy(edit);
 		undo = unit.applyTextEdit(edit, null);
 		edit = original;	
 	}
@@ -119,7 +119,6 @@ public class AtomicEdition implements Comparable{
 		{
 			int end = index;
 			int start = getStartIndexOfSameOffset (top_downs, end);
-			int group_shift = shift;
 			for(int i = start; i <= end; i++)
 			{
 				AtomicEdition current = top_downs.get(i);
@@ -177,7 +176,7 @@ public class AtomicEdition implements Comparable{
 		 }
 		 else if (e instanceof InsertEdit)
 		 {
-			 return new InsertEdit(off, ((InsertEdit) e).getText());
+			 return new InsertEdit(off,((InsertEdit) e).getText());
 		 }
 		 else if(e instanceof DeleteEdit)
 		 {
@@ -235,7 +234,7 @@ public class AtomicEdition implements Comparable{
 		int off_adjust = 0;
 		for(int i = start; i <= end; i++)
 		{
-			AtomicEdition current = editions.get(i);
+			AtomicEdition current = (AtomicEdition)editions.get(i).clone();
 			current.setOffset(current.getOffset() - off_adjust);
 			combined.addChild(current.edit);
 			off_adjust += current.getRangeChange();	
@@ -274,7 +273,13 @@ public class AtomicEdition implements Comparable{
 		return new_edits;
 	}
 	
-
+	public Object clone()
+	{
+		AtomicEdition ae = new AtomicEdition (edit.copy());
+		if(undo != null)
+			ae.undo = undo.copy();
+		return ae;	
+	}
 
 
 }
