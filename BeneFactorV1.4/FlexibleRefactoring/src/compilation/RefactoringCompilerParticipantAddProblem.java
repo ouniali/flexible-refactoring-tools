@@ -11,7 +11,6 @@ import flexiblerefactoring.BeneFactor;
 public class RefactoringCompilerParticipantAddProblem extends CompilationParticipant {
 
 	public RefactoringCompilerParticipantAddProblem() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public boolean isActive(IJavaProject project) 

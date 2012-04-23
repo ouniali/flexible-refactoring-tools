@@ -79,7 +79,6 @@ public class TestingAtomaticEdition {
 			temp = temp.getUndoEditionComposite();
 			temp.applyEditions();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	

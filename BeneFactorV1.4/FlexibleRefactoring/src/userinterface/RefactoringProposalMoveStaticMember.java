@@ -6,7 +6,6 @@ public class RefactoringProposalMoveStaticMember extends RefactoringProposal{
 
 	public RefactoringProposalMoveStaticMember(JavaRefactoring ref) {
 		super(ref);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

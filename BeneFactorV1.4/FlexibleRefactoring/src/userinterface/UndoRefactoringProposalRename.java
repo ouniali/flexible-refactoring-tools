@@ -8,7 +8,6 @@ public class UndoRefactoringProposalRename extends UndoRefactoringProposal{
 
 	public UndoRefactoringProposalRename(JavaUndoRefactoring u) {
 		super(u);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
