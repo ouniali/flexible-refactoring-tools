@@ -15,7 +15,6 @@ public class SourceDiffDelete extends SourceDiff {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "DELETE at " + getLineNumber() + '\n' + getDeletedCode();
 	}
 
@@ -25,7 +24,6 @@ public class SourceDiffDelete extends SourceDiff {
 
 	@Override
 	public String performChange(String source) {
-		// TODO Auto-generated method stub
 		int deleteAt = getLineNumber();
 		String[] lines = source.split("\n");
 		StringBuffer result = new StringBuffer();
@@ -45,7 +43,6 @@ public class SourceDiffDelete extends SourceDiff {
 
 	@Override
 	public String skipChange(String source) {
-		// TODO Auto-generated method stub
 		return source;
 	}
 

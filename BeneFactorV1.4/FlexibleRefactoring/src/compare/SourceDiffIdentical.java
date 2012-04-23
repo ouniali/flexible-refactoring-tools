@@ -8,19 +8,16 @@ public class SourceDiffIdentical extends SourceDiff{
 
 	@Override
 	public String performChange(String source) {
-		// TODO Auto-generated method stub
-		return source;
+			return source;
 	}
 
 	@Override
 	public String skipChange(String source) {
-		// TODO Auto-generated method stub
 		return source;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "Identical";
 	}
 
