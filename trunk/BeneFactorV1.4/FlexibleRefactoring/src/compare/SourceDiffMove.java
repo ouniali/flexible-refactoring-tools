@@ -8,19 +8,16 @@ public class SourceDiffMove extends SourceDiff {
 
 	@Override
 	public String performChange(String source) {
-		// TODO Auto-generated method stub
 		return source;
 	}
 
 	@Override
 	public String skipChange(String source) {
-		// TODO Auto-generated method stub
 		return source;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "Move";
 	}
 
