@@ -4,7 +4,6 @@ public class SourceDiffIdentical extends SourceDiff{
 
 	public SourceDiffIdentical(int l) {
 		super(l);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

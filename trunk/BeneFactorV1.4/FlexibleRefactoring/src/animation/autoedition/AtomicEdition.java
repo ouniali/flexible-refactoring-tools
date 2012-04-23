@@ -203,7 +203,6 @@ public class AtomicEdition implements Comparable{
 
 	@Override
 	public int compareTo(Object e) {
-		// TODO Auto-generated method stub
 		int o1 = edit.getOffset();
 		int o2 = ((AtomicEdition)e).edit.getOffset();
 		return o1 - o2;

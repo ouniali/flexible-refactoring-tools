@@ -97,7 +97,6 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 			cutted = source.substring(offsets[0], offsets[1]+1);
 			return  cutted;
 		} catch (JavaModelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

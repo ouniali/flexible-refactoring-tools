@@ -4,7 +4,6 @@ public class SourceDiffMove extends SourceDiff {
 
 	public SourceDiffMove(int l) {
 		super(l);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
