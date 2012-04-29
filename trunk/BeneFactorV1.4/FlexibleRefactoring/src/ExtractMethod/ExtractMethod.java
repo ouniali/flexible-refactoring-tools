@@ -70,6 +70,13 @@ public class ExtractMethod {
 		}
 		return false;
 	}
+	
+	//TODO: Xi: this should be implemented
+	public static void copyStatements(CompilationUnitHistoryRecord record, int start, int end)
+	{
+		
+	}
+	
 
 	public static boolean isExtractMethodChange(
 			CompilationUnitHistoryRecord oldRecord, ASTNode nodeOne, 

@@ -15,7 +15,7 @@ import JavaRefactoringAPI.*;
 
 public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 
-	int firstCutNodeIndex;
+	int firstCutNodeIndex;	
 	int lastCutNodeIndex;
 	
 	int lastUncutNodeIndexFromStart;

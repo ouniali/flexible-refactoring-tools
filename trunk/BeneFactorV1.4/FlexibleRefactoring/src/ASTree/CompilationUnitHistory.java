@@ -104,10 +104,7 @@ public class CompilationUnitHistory {
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
 			refactoring = infor.getRenameRefactoring(unit);
 			if(refactoring != null)
-			{
 				RefactoringChances.addNewRefactoringChance(refactoring);
-				//System.out.println("Rename detected.");	
-			}
 		}
 		
 		//extract method
@@ -116,10 +113,7 @@ public class CompilationUnitHistory {
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
 			refactoring = infor.getJavaExtractMethodRefactoring(unit);
 			if(refactoring != null)
-			{
 				RefactoringChances.addNewRefactoringChance(refactoring);
-				System.out.println("Extract method detected.");
-			}
 		}
 		
 		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())
