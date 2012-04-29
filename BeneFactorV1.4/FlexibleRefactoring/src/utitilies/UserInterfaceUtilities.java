@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
@@ -18,6 +19,7 @@ import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jdt.ui.IWorkingCopyManager;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.swt.custom.StyledText;
@@ -43,6 +45,7 @@ import StyledTextHelper.StyledTextGetBound;
 import StyledTextHelper.StyledTextGetLineHeight;
 import StyledTextHelper.StyledTextGetPoint;
 import StyledTextHelper.StyledTextOffsetAndLine;
+
 
 public class UserInterfaceUtilities {
 
@@ -106,6 +109,21 @@ public class UserInterfaceUtilities {
 		}
 		return null;
 	}
+	
+
+	/**
+	 * @author Xi Ge
+	 * Get the selected range in the active JavaEditor.
+	 */
+	static public int[] getSelectedRangeInActiveEditor()
+	{
+		JavaEditor editor = getActiveJavaEditor();
+		IRegion re = editor.getHighlightRange();
+		return new int[]{re.getOffset(), re.getOffset() + re.getLength() - 1};
+	}
+	
+	
+	
 	static public IWorkbenchPage getEditorWorkbenchPage()
 	{
 		

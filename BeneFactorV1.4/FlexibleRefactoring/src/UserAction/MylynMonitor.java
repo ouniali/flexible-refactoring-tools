@@ -47,18 +47,6 @@ public class MylynMonitor {
 
 
 
-/*
-
-ContextCore.getContextManager().activateContext(rand);
-ContextCore.getContextManager().deactivateContext(rand);
-ContextCore.getContextManager().deleteContext(rand);		*/
-
-
-
-
-
-
-
 
 
 
