@@ -80,8 +80,22 @@ public class ASTreeManipulationMethods {
 		parser.setSource(unit);
 		parser.setResolveBindings(true);
 		parser.setBindingsRecovery(true);
-		parser.setResolveBindings(true);
 		return (CompilationUnit) parser.createAST(null); // parse
+	}
+	
+
+/**
+ * @author Xi Ge
+ *	This method tries to parse several statements.
+ */
+	public static Block parseStatements(String source)
+	{
+		ASTParser parser = ASTParser.newParser(AST.JLS3);
+		parser.setIgnoreMethodBodies(false);
+		parser.setKind(ASTParser.K_STATEMENTS);
+		parser.setSource(source.toCharArray());
+		parser.setResolveBindings(false);
+		return (Block) parser.createAST(null);
 	}
 	
 	public static CompilationUnit parseSourceCode(String code)

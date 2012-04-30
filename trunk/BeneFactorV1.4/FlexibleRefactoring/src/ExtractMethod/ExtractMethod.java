@@ -72,9 +72,13 @@ public class ExtractMethod {
 	}
 	
 	//TODO: Xi: this should be implemented
-	public static void copyStatements(CompilationUnitHistoryRecord record, int start, int end)
+	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record, int start, int end)
 	{
+		String statements = record.getSourceCode().substring(start, end + 1);
 		
+		
+		
+		return false;
 	}
 	
 
