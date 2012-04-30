@@ -21,6 +21,7 @@ import org.eclipse.jdt.ui.IWorkingCopyManager;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.swt.custom.StyledText;
@@ -133,14 +134,34 @@ public class UserInterfaceUtilities {
 	/**
 	 * @author Xi Ge
 	 * Get the selected range in the active JavaEditor.
+	 * @throws Exception 
 	 */
-	static public int[] getSelectedRangeInActiveEditor()
-	{
-		JavaEditor editor = getActiveJavaEditor();
-		IRegion re = editor.getHighlightRange();
-		if(re == null)
-			return new int[]{0, 0};
-		return new int[]{re.getOffset(), re.getOffset() + re.getLength() - 1};
+	static public int[] getSelectedRangeInActiveEditor() throws Exception
+	{	
+		Runnable temp = new Runnable(){
+			int start;
+			int end;
+			public void run() {
+				JavaEditor editor = getActiveJavaEditor();
+				ITextSelection ts = null;
+				ts = (ITextSelection) editor.getSelectionProvider().getSelection();
+				if(ts == null)
+				{
+					start = 0;
+					end = 0;
+				}
+				else
+				{
+					start = ts.getOffset();
+					end = ts.getOffset() + ts.getLength() - 1;
+					System.out.println(start + " " + end);
+				}
+					
+			}
+		};
+		Display.getDefault().syncExec(temp);
+		return new int[]{temp.getClass().getDeclaredField("start").getInt(temp),
+				temp.getClass().getDeclaredField("end").getInt(temp)};
 	}
 	
 	
