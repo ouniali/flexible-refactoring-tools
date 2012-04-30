@@ -14,6 +14,7 @@ import ASTree.ASTChangeInformationGenerator;
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 
+
 public class ExtractMethod {
 
 	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
@@ -71,7 +72,21 @@ public class ExtractMethod {
 		return false;
 	}
 	
-	//TODO: Xi: if copying several statements
+	
+	public static boolean LookingBackForExtractMethodActivities(ArrayList<CompilationUnitHistoryRecord> records)
+	{	
+		for(int i = records.size() - 1; i>=0; i--)
+		{
+			if(isCopyingStatements(records.get(i)))
+				return true;
+		}
+		return false;
+	}
+	/**
+	 * @author Xi Ge
+	 *
+	 */
+	
 	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record)
 	{
 		int start = record.getSeletectedRegion()[0];
