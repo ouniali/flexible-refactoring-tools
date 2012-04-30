@@ -40,9 +40,7 @@ public class ProjectHistoryCollector {
 			Map.put(project, newHistory);
 		}
 		else
-		{	
 			history.addAST(tree);
-		}
 	}
 	
 }
