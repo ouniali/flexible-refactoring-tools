@@ -11,8 +11,10 @@ import org.eclipse.jdt.core.BindingKey;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jface.text.IRegion;
 
 import utitilies.FileUtilities;
+import utitilies.UserInterfaceUtilities;
 import Rename.NamesInCompilationUnit;
 
 import compare.JavaSourceDiff;
@@ -30,10 +32,12 @@ public class CompilationUnitHistoryRecord {
 	private final String UnitName;
 	private final IJavaProject Project;
 	private final ICompilationUnit Unit;
-
+	private final int[] HighlightedRigion;
+	
 	private final CompilationUnitHistoryRecord previousRecord;
 	private final CompilationUnitHistory history;
 	private final ArrayList<SourceDiff> diffs;
+
 
 	public boolean equal(Object o)
 	{
@@ -59,7 +63,7 @@ public class CompilationUnitHistoryRecord {
 		new File(Directory).mkdirs();
 		FileUtilities.save(Directory + File.separator + ASTFileName,
 				iu.getSource());
-		
+		HighlightedRigion = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
 		CompilationUnit unit = ASTreeManipulationMethods
 				.parseICompilationUnit(iu);
 		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
