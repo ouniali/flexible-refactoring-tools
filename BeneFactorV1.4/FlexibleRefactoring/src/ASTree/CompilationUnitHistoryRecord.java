@@ -98,8 +98,7 @@ public class CompilationUnitHistoryRecord {
 		unit.accept(bVisitor);
 		
 		String bInfor = bVisitor.getBindingInformation();
-		FileUtilities.save(Directory + File.separator
-				+ BindingFileName, bInfor);
+		FileUtilities.save(getBindingTablePath(), bInfor);
 	}
 
 
@@ -254,9 +253,7 @@ public class CompilationUnitHistoryRecord {
 
 	public SourceDiff getSourceDiff() {
 		if (diffs != null && diffs.size() > 0)
-		{
 			return diffs.get(0);
-		}
 		else
 			return null;
 	}
