@@ -24,9 +24,7 @@ public class MylynMonitor {
 	{
 		String rand = Math.random()+"";
 		helper(rand);
-		MonitorUiPlugin.getDefault().addInteractionListener(new CopyEventListener());
-		MonitorUiPlugin.getDefault().addInteractionListener(new CutEventListener());
-		MonitorUiPlugin.getDefault().addInteractionListener(new BeneFactorEventListener());
+		MonitorUiPlugin.getDefault().addInteractionListener(new BeneEventListener());
 	}
 
 	private static void helper(String rand) {

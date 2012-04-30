@@ -7,7 +7,7 @@ import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 
 import utitilies.UserInterfaceUtilities;
 
-public class CopyEventListener implements IInteractionEventListener {
+public class BeneEventListener implements IInteractionEventListener {
 
 
 	@Override
