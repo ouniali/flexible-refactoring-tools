@@ -78,10 +78,10 @@ public class ExtractMethod {
 		String statements = record.getSourceCode().substring(start, start + length);
 		Block block = ASTreeManipulationMethods.parseStatements(statements);
 		
-		System.out.println(block.getStartPosition() + " " + block.getLength());
+		/*System.out.println(block.getStartPosition() + " " + block.getLength());
 		System.out.println(block);
 		System.out.println(start + " " + length);
-		System.out.println(statements);
+		System.out.println(statements);*/
 		
 		if(block.getStartPosition() == start && block.getLength() == length)
 			return true;
