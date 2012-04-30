@@ -18,7 +18,7 @@ import ASTree.CompilationUnitHistoryRecord;
 public class ExtractMethod {
 
 	public static final ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
-	public static final ArrayList<CompilationUnitHistoryRecord> detectedExtractMethodActivities = new ArrayList<CompilationUnitHistoryRecord>();
+	public static final ArrayList<ASTExtractMethodActivity> detectedExtractMethodActivities = new ArrayList<ASTExtractMethodActivity>();
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 
 	public static NewMethodSignatureForExtractMethod getEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord) 
@@ -78,33 +78,16 @@ public class ExtractMethod {
 	{	
 		for(int i = records.size() - 1; i>=0; i--)
 		{
-			if(isCopyingStatements(records.get(i)))
+			if(ASTExtractMethodActivity.isCopyingStatements(records.get(i)))
 			{
-				detectedExtractMethodActivities.add(records.get(i));
+				detectedExtractMethodActivities.add(new ASTExtractMethodActivity(records.get(i)));
 				return true;
 			}
 		}
 		return false;
 	}
-	/**
-	 * @author Xi Ge
-	 *
-	 */
 	
-	private static boolean isCopyingStatements(CompilationUnitHistoryRecord record)
-	{
-		int start = record.getSeletectedRegion()[0];
-		int end = record.getSeletectedRegion()[1];
-		int length = end - start + 1;
-		String statements = StringUtilities.removeWhiteSpace(record.getSourceCode().substring(start, start + length));
-		String block = StringUtilities.removeWhiteSpace(ASTreeManipulationMethods.parseStatements(statements).toString());
-		block = block.substring(1, block.length() - 1);		
-		if(block.equals(statements))
-			return true;
-		else
-			return false;
-	}
-	
+
 
 	public static boolean isExtractMethodChange(
 			CompilationUnitHistoryRecord oldRecord, ASTNode nodeOne, 
