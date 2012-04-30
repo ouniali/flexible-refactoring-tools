@@ -87,7 +87,7 @@ public class ExtractMethod {
 	 *
 	 */
 	
-	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record)
+	private static boolean isCopyingStatements(CompilationUnitHistoryRecord record)
 	{
 		int start = record.getSeletectedRegion()[0];
 		int end = record.getSeletectedRegion()[1];
