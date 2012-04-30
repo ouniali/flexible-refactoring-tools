@@ -35,8 +35,10 @@ public class CompilationUnitHistoryRecord {
 	private final String UnitName;
 	private final IJavaProject Project;
 	private final ICompilationUnit Unit;
-	private final int[] HighlightedRegion;
+	private final int[] seletectedRegion;
 	
+	
+
 	private final CompilationUnitHistoryRecord previousRecord;
 	private final CompilationUnitHistory history;
 	private final ArrayList<SourceDiff> diffs;	
@@ -56,15 +58,15 @@ public class CompilationUnitHistoryRecord {
 		ASTFileName = getSouceFileName();
 		BindingFileName = getBindingTableFileName();
 		Directory = root + File.separator + ProjectName;
-		HighlightedRegion = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
+		seletectedRegion = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
 		history = his;
 		previousRecord = earlierVersionP;
 		saveSourceCode(iu);	
 		saveBindingTable(iu, earlierVersionP);
 		diffs = initializeDiffsBetweenPreviousRecord(previousRecord);
 		UserAction = UserActionData.getPendingEvent();
-		System.out.println(UserAction + ":" + HighlightedRegion[0] + "," + HighlightedRegion[1] + " "
-				+ ExtractMethod.isCopyingStatements(this, HighlightedRegion[0], HighlightedRegion[1]));
+		System.out.println(UserAction + ":" + seletectedRegion[0] + "," + seletectedRegion[1] + " "
+				+ ExtractMethod.isCopyingStatements(this));
 	}
 
 
@@ -121,7 +123,7 @@ public class CompilationUnitHistoryRecord {
 
 	public int[] getHighlightedRegion()
 	{
-		return HighlightedRegion;
+		return seletectedRegion;
 	}
 	public CompilationUnit getASTree() {
 		String source = getSourceCode();
@@ -270,6 +272,10 @@ public class CompilationUnitHistoryRecord {
 
 	public String getUserAction() {
 		return UserAction;
+	}
+
+	public int[] getSeletectedRegion() {
+		return seletectedRegion;
 	}
 
 
