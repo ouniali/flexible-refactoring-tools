@@ -17,7 +17,8 @@ import ASTree.CompilationUnitHistoryRecord;
 
 public class ExtractMethod {
 
-	public static ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
+	public static final ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
+	public static final ArrayList<CompilationUnitHistoryRecord> detectedExtractMethodActivities = new ArrayList<CompilationUnitHistoryRecord>();
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 
 	public static NewMethodSignatureForExtractMethod getEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord) 
