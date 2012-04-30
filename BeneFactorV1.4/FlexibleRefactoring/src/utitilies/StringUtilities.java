@@ -46,4 +46,10 @@ public class StringUtilities {
 	    }
 	    return true;
 	}
+	
+	public static String removeWhiteSpace(String s)
+	{
+		return s.replaceAll("\\s+", "");		 
+	}
+	
 }
