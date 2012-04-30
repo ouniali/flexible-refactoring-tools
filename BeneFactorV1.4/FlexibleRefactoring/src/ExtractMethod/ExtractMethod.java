@@ -74,11 +74,15 @@ public class ExtractMethod {
 	//TODO: Xi: this should be implemented
 	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record, int start, int end)
 	{
-		String statements = record.getSourceCode().substring(start, end + 1);
+		int length = end - start + 1;
+		String statements = record.getSourceCode().substring(start, start + length);
+	
+		Block block = ASTreeManipulationMethods.parseStatements(statements);
 		
-		
-		
-		return false;
+		if(block.getStartPosition() == start && block.getLength() == length)
+			return true;
+		else
+			return false;
 	}
 	
 
