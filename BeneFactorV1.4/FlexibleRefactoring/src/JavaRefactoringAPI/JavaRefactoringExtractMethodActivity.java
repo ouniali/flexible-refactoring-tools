@@ -5,15 +5,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import ASTree.CompilationUnitHistoryRecord;
+import ExtractMethod.ASTExtractMethodActivity;
 
 public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 
-	final CompilationUnitHistoryRecord record;
+	final ASTExtractMethodActivity activity;
 	
 	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, 
-			IMarker m, CompilationUnitHistoryRecord r) {
+			IMarker m, ASTExtractMethodActivity a) {
 		super(u, l, m);
-		record = r;
+		activity = a;
 	}
 
 	@Override

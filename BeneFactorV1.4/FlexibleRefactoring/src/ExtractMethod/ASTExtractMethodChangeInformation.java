@@ -69,11 +69,11 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	
 	
 	
-	public JavaRefactoringExtractMethod getJavaExtractMethodRefactoring(ICompilationUnit unit) throws Exception
+	public JavaRefactoringExtractMethodChange getJavaExtractMethodRefactoring(ICompilationUnit unit) throws Exception
 	{
 		int line = getRefactoringMarkerLine(unit);
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		return new JavaRefactoringExtractMethod(unit, line, marker, this);
+		return new JavaRefactoringExtractMethodChange(unit, line, marker, this);
 	}
 	
 
