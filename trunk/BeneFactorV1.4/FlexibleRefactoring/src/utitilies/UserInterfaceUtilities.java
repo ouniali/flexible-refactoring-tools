@@ -119,6 +119,8 @@ public class UserInterfaceUtilities {
 	{
 		JavaEditor editor = getActiveJavaEditor();
 		IRegion re = editor.getHighlightRange();
+		if(re == null)
+			return new int[]{};
 		return new int[]{re.getOffset(), re.getOffset() + re.getLength() - 1};
 	}
 	

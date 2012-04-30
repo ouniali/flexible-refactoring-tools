@@ -70,7 +70,4 @@
             super="org.eclipse.ui.workbench.texteditor.warning">
       </type>
    </extension>
-
- 
-
 </plugin>
