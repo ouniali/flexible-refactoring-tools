@@ -7,8 +7,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import userinterface.RefactoringMarker;
-import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.*;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 public class RefactoringChances {
 	

@@ -1,4 +1,4 @@
-package JavaRefactoringAPI;
+package JavaRefactoringAPI.extractmethod;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -40,6 +40,8 @@ import utitilies.UserInterfaceUtilities;
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
 import ExtractMethod.ASTExtractMethodChangeInformation;
+import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.JavaRefactoringType;
 
 public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 
@@ -47,17 +49,16 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 	
 	ASTExtractMethodChangeInformation information;
 	CompilationUnitHistoryRecord non_refactoring_change_end;
-	static int extractedMethodCount = 0;
-	int modifier;
-	String returnType;
-	String methodName;
 	
+
+	int modifier;
+	String methodName;
 	
 	
 	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) {
 		super(u, l, m);
 		modifier = Modifier.PRIVATE;
-		methodName = getExtractedMethodName();
+		methodName = JavaRefactoringExtractMethodUtil.getExtractedMethodName(this.getICompilationUnit());
 		information = info;
 		
 	}
@@ -80,8 +81,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 		String source_after_refactoring = latestR.getSourceCode();
 		String source_after_recovering = information.getOldCompilationUnitRecord().getSourceCode();
 		CompilationUnitHistoryRecord endR = latestR;
-		
-		//traceback to before recovering code
+	
 		while(endR.getSourceCode().equals(source_after_refactoring) 
 				|| endR.getSourceCode().equals(source_after_recovering))
 			endR = endR.getPreviousRecord();
@@ -92,54 +92,20 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 	@SuppressWarnings("restriction")
 	@Override
 	public void performRefactoring(IProgressMonitor pm) {
-		// TODO Auto-generated method stub
-
-		SubMonitor monitor = SubMonitor.convert(pm,"Performing Extract Method Refactoring",4);
-		
-		RefactoringStatus iniStatus;
-		RefactoringStatus finStatus;
 		int[] index;
-
 		index = information.getSelectionStartAndEnd(this.getICompilationUnit());
-
 		try {
 			int selectionStart = index[0];
 			int selectionLength = index[1] - index[0] + 1;
-			ExtractMethodRefactoring refactoring;
-			refactoring = new ExtractMethodRefactoring(this.getICompilationUnit(), selectionStart,
-					selectionLength);
-			refactoring.setReplaceDuplicates(true);
-			refactoring.setVisibility(modifier);
-			refactoring.setMethodName(methodName);
-			// wait for the underlying resource to be ready
-			//	Thread.sleep(WAIT_TIME);
-			
-			iniStatus = refactoring.checkInitialConditions(monitor.newChild(1));
-			if (!iniStatus.isOK())
-				return;
-			finStatus = refactoring.checkFinalConditions(monitor.newChild(1));
-			if (!finStatus.isOK())
-				return;
-			Change change = refactoring.createChange(monitor.newChild(1));
-			
-			Change undo = change.perform(monitor.newChild(1));
-			this.setUndo(undo);
+			//TODO:
+			//performEclipseRefactoring();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		monitor.done();
 	}
 
 
-	String getExtractedMethodName() {
-		int index = extractedMethodCount;
-		extractedMethodCount ++;
-		if (index == 0)
-			return "extractedMethod";
-		else
-			return "extractedMethod" + Integer.toString(index);
-	}
 
 	@Override
 	protected void performCodeRecovery(IProgressMonitor monitor) {
@@ -176,37 +142,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 		return refactoring; 
 	}
 	
-	@SuppressWarnings("restriction")
-	private void prepareLinkedEdition()
-	{
-		try {
-			JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
-			if(editor == null)
-				return;
-			IDocument document = editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
-			LinkedModeModel model = new LinkedModeModel();
-			LinkedPositionGroup method_name_group = new LinkedPositionGroup();
-			String source = this.getICompilationUnit().getSource();
-			
-			int start = source.indexOf(this.methodName, 0);
-			for(; start != -1; start = source.indexOf(this.methodName, start + this.methodName.length() ))
-				method_name_group.addPosition(new LinkedPosition(document, start, this.methodName.length(), 0));
-			model.addGroup(method_name_group);
-			model.forceInstall();
-			model.addLinkingListener(new EditorHighlightingSynchronizer(editor));
-			
-			ITextViewer viewer = editor.getViewer();
-			LinkedModeUI ui= new EditorLinkedModeUI(model, viewer);
-			
-			ui.enter();
-			
-			LinkedPosition p = method_name_group.getPositions()[0];
-			viewer.setSelectedRange(p.offset, p.length);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
+
 
 
 	@Override
@@ -224,7 +160,10 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 			e.printStackTrace();
 		}
 		Display.getDefault().asyncExec(new Runnable() {
-		       public void run() {prepareLinkedEdition();}
+		       public void run() {
+		    	   //TODO:
+		    	   //JavaRefactoringExtractMethodUtil.prepareLinkedEdition(, methodName);
+		    	   }
 		}
 		);
 		

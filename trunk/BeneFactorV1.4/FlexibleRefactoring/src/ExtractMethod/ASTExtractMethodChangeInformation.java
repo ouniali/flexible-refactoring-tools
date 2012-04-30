@@ -12,6 +12,7 @@ import userinterface.RefactoringMarker;
 
 import ASTree.*;
 import JavaRefactoringAPI.*;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 

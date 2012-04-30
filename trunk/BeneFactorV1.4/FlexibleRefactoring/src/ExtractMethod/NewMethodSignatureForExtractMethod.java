@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 
 import ASTree.CompilationUnitHistoryRecord;
-import JavaRefactoringAPI.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 import utitilies.StringUtilities;
 

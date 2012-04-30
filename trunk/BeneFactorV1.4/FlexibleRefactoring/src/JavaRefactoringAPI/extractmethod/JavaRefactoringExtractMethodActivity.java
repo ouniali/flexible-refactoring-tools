@@ -1,4 +1,4 @@
-package JavaRefactoringAPI;
+package JavaRefactoringAPI.extractmethod;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ExtractMethod.ASTExtractMethodActivity;
+import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.JavaRefactoringType;
 
 public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 
