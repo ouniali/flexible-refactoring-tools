@@ -4,10 +4,16 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 
+import ASTree.CompilationUnitHistoryRecord;
+
 public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 
-	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, IMarker m) {
+	final CompilationUnitHistoryRecord record;
+	
+	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, 
+			IMarker m, CompilationUnitHistoryRecord r) {
 		super(u, l, m);
+		record = r;
 	}
 
 	@Override
@@ -22,7 +28,7 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 
 	@Override
 	public int getRefactoringType() {
-		return 0;
+		return JavaRefactoringType.EXTRACT_METHOD;
 	}
 
 	@Override
@@ -32,8 +38,7 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 
 	@Override
 	public void postProcess() {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 }
