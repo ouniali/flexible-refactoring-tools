@@ -17,6 +17,7 @@ import org.eclipse.jface.text.IRegion;
 import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 import Rename.NamesInCompilationUnit;
+import UserAction.UserActionData;
 
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
@@ -37,16 +38,10 @@ public class CompilationUnitHistoryRecord {
 	
 	private final CompilationUnitHistoryRecord previousRecord;
 	private final CompilationUnitHistory history;
-	private final ArrayList<SourceDiff> diffs;
+	private final ArrayList<SourceDiff> diffs;	
+	private final String UserAction;
 
 
-	public boolean equal(Object o)
-	{
-		CompilationUnitHistoryRecord another = (CompilationUnitHistoryRecord) o;
-		return another.ASTFileName.equals(this.ASTFileName);
-	}
-	
-	
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
 			ICompilationUnit iu, String pro, String pac, String un, long t,
 			CompilationUnitHistoryRecord earlierVersionP, CompilationUnitHistory his) throws Exception 
@@ -66,6 +61,7 @@ public class CompilationUnitHistoryRecord {
 		saveSourceCode(iu);	
 		saveBindingTable(iu, earlierVersionP);
 		diffs = initializeDiffsBetweenPreviousRecord(previousRecord);
+		UserAction = UserActionData.getPendingEvent();
 	}
 
 
@@ -267,6 +263,20 @@ public class CompilationUnitHistoryRecord {
 	{
 		return history;
 	}
+	
+
+	public String getUserAction() {
+		return UserAction;
+	}
+
+
+	public boolean equal(Object o)
+	{
+		CompilationUnitHistoryRecord another = (CompilationUnitHistoryRecord) o;
+		return another.ASTFileName.equals(this.ASTFileName);
+	}
+	
+	
 	
 
 
