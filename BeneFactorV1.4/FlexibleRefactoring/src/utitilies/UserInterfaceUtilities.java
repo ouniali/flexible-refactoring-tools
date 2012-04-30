@@ -123,7 +123,7 @@ public class UserInterfaceUtilities {
 		try {
 			JavaEditor editor = getActiveJavaEditor();
 			ICompilationUnit unit = getConnectedICompilationUnit ((CompilationUnitEditor)editor);
-			unit.reconcile(AST.JLS3, false, null, null);
+			unit.reconcile(AST.JLS3, true, null, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
