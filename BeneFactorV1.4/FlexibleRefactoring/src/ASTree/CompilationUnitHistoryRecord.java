@@ -17,6 +17,7 @@ import org.eclipse.jface.text.IRegion;
 import utitilies.FileUtilities;
 import utitilies.UserInterfaceUtilities;
 import Rename.NamesInCompilationUnit;
+import ExtractMethod.ExtractMethod;
 import UserAction.UserActionData;
 
 import compare.JavaSourceDiff;
@@ -62,7 +63,8 @@ public class CompilationUnitHistoryRecord {
 		saveBindingTable(iu, earlierVersionP);
 		diffs = initializeDiffsBetweenPreviousRecord(previousRecord);
 		UserAction = UserActionData.getPendingEvent();
-		System.out.println(UserAction + ":" + HighlightedRegion[0] + "," + HighlightedRegion[1]);
+		System.out.println(UserAction + ":" + HighlightedRegion[0] + "," + HighlightedRegion[1]
+				+ ExtractMethod.isCopyingStatements(this, HighlightedRegion[0], HighlightedRegion[1]));
 	}
 
 
