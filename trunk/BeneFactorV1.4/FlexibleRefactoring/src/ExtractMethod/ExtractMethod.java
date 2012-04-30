@@ -79,7 +79,10 @@ public class ExtractMethod {
 		for(int i = records.size() - 1; i>=0; i--)
 		{
 			if(isCopyingStatements(records.get(i)))
+			{
+				detectedExtractMethodActivities.add(records.get(i));
 				return true;
+			}
 		}
 		return false;
 	}
