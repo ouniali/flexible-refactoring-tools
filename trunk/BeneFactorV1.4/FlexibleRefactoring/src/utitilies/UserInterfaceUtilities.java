@@ -154,7 +154,7 @@ public class UserInterfaceUtilities {
 				{
 					start = ts.getOffset();
 					end = ts.getOffset() + ts.getLength() - 1;
-					System.out.println(start + " " + end);
+				//	System.out.println(start + " " + end);
 				}
 					
 			}
