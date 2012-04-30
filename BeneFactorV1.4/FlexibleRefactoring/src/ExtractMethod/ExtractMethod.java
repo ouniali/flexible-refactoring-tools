@@ -72,8 +72,10 @@ public class ExtractMethod {
 	}
 	
 	//TODO: Xi: if copying several statements
-	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record, int start, int end)
+	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record)
 	{
+		int start = record.getSeletectedRegion()[0];
+		int end = record.getSeletectedRegion()[1];
 		int length = end - start + 1;
 		String statements = StringUtilities.removeWhiteSpace(record.getSourceCode().substring(start, start + length));
 		String block = StringUtilities.removeWhiteSpace(ASTreeManipulationMethods.parseStatements(statements).toString());
