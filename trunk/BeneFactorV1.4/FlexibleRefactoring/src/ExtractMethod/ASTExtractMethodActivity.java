@@ -1,11 +1,14 @@
 package ExtractMethod;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 
+import userinterface.RefactoringMarker;
 import utitilies.StringUtilities;
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
-import JavaRefactoringAPI.JavaRefactoringExtractMethod;
+import JavaRefactoringAPI.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.JavaRefactoringExtractMethodActivity;
 
 public class ASTExtractMethodActivity {
 
@@ -15,9 +18,11 @@ public class ASTExtractMethodActivity {
 		record = r;
 	}
 	
-	public JavaRefactoringExtractMethod getJavaExtractMethodRefactoring(ICompilationUnit unit)
+	public JavaRefactoringExtractMethodActivity getJavaExtractMethodRefactoring(ICompilationUnit unit)
 	{
-		return null;
+		int line = 1;
+		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+		return new JavaRefactoringExtractMethodActivity(unit, line, marker, this);
 	}
 	
 	

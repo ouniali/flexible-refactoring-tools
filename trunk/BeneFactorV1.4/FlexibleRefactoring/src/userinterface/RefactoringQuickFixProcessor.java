@@ -12,7 +12,7 @@ import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
 import ASTree.ASTreeManipulationMethods;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.JavaRefactoringExtractMethod;
+import JavaRefactoringAPI.JavaRefactoringExtractMethodChange;
 import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
 import JavaRefactoringAPI.JavaRefactoringRename;
 import JavaRefactoringAPI.JavaRefactoringRenameDiff;
@@ -60,7 +60,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 	{
 		if(ref instanceof JavaRefactoringRename || ref instanceof JavaRefactoringRenameDiff)
 			return new RefactoringProposalRename(ref);
-		else if ( ref instanceof JavaRefactoringExtractMethod)
+		else if ( ref instanceof JavaRefactoringExtractMethodChange)
 			return new RefactoringProposalExtractMethod(ref);
 		else if( ref instanceof JavaRefactoringMoveStaticMember)
 			return new RefactoringProposalMoveStaticMember(ref);

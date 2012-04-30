@@ -41,10 +41,10 @@ import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 
-public class JavaRefactoringExtractMethod extends JavaRefactoring {
+public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 
 	@SuppressWarnings("restriction")
-	ExtractMethodRefactoring refactoring;
+	
 	ASTExtractMethodChangeInformation information;
 	CompilationUnitHistoryRecord non_refactoring_change_end;
 	static int extractedMethodCount = 0;
@@ -54,7 +54,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 	
 	
 	
-	public JavaRefactoringExtractMethod(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) {
+	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) {
 		super(u, l, m);
 		modifier = Modifier.PRIVATE;
 		methodName = getExtractedMethodName();
@@ -105,6 +105,7 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		try {
 			int selectionStart = index[0];
 			int selectionLength = index[1] - index[0] + 1;
+			ExtractMethodRefactoring refactoring;
 			refactoring = new ExtractMethodRefactoring(this.getICompilationUnit(), selectionStart,
 					selectionLength);
 			refactoring.setReplaceDuplicates(true);
@@ -167,9 +168,9 @@ public class JavaRefactoringExtractMethod extends JavaRefactoring {
 		methodName = m;
 	}
 	
-	public JavaRefactoringExtractMethod moveExtractMethodRefactoring(IMarker marker, int l)
+	public JavaRefactoringExtractMethodChange moveExtractMethodRefactoring(IMarker marker, int l)
 	{
-		JavaRefactoringExtractMethod refactoring = new JavaRefactoringExtractMethod(getICompilationUnit(), l, marker, getExtractMethodChangeInformation());
+		JavaRefactoringExtractMethodChange refactoring = new JavaRefactoringExtractMethodChange(getICompilationUnit(), l, marker, getExtractMethodChangeInformation());
 		refactoring.setMethodModifier(modifier);
 		refactoring.setMethodName(methodName);
 		return refactoring; 
