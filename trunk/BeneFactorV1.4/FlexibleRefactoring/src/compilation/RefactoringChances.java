@@ -16,7 +16,8 @@ public class RefactoringChances {
 	
 	public static void addNewRefactoringChance(JavaRefactoring ref)
 	{
-		refactorings.add(ref);
+		if(ref != null)
+			refactorings.add(ref);
 	}
 	public static ArrayList<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line)
 	{

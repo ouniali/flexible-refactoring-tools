@@ -16,6 +16,7 @@ import userinterface.RefactoringMarker;
 import compilation.RefactoringChances;
 import flexiblerefactoring.BeneFactor;
 
+import ExtractMethod.ASTExtractMethodActivity;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
 import ExtractMethod.NewMethodSignatureForExtractMethod;
@@ -96,8 +97,7 @@ public class CompilationUnitHistory {
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
 			refactoring = infor.getRenameRefactoring(unit);
-			if(refactoring != null)
-				RefactoringChances.addNewRefactoringChance(refactoring);
+			RefactoringChances.addNewRefactoringChance(refactoring);
 		}
 		
 		//extract method
@@ -105,9 +105,16 @@ public class CompilationUnitHistory {
 		{
 			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
 			refactoring = infor.getJavaExtractMethodRefactoring(unit);
-			if(refactoring != null)
-				RefactoringChances.addNewRefactoringChance(refactoring);
+			RefactoringChances.addNewRefactoringChance(refactoring);
 		}
+		
+		if(ExtractMethod.LookingBackForExtractMethodActivities(records))
+		{
+			ASTExtractMethodActivity act = ExtractMethod.detectedExtractMethodActivities.get(ExtractMethod.detectedExtractMethodActivities.size() - 1);
+			refactoring = act.getJavaExtractMethodRefactoring(unit);
+			RefactoringChances.addNewRefactoringChance(refactoring);
+		}
+		
 		
 		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())
 		{		
