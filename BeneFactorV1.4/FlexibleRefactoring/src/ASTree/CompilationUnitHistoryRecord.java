@@ -63,7 +63,7 @@ public class CompilationUnitHistoryRecord {
 		saveBindingTable(iu, earlierVersionP);
 		diffs = initializeDiffsBetweenPreviousRecord(previousRecord);
 		UserAction = UserActionData.getPendingEvent();
-		System.out.println(UserAction + ":" + HighlightedRegion[0] + "," + HighlightedRegion[1]
+		System.out.println(UserAction + ":" + HighlightedRegion[0] + "," + HighlightedRegion[1] + " "
 				+ ExtractMethod.isCopyingStatements(this, HighlightedRegion[0], HighlightedRegion[1]));
 	}
 
