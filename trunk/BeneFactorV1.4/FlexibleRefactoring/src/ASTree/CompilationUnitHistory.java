@@ -45,22 +45,15 @@ public class CompilationUnitHistory {
 	}
 	
 	
-	protected boolean addAST(CompilationUnit tree) throws Exception
+	protected void addAST(CompilationUnit tree) throws Exception
 	{
-		if(Records.size()>0)
-		{
-			CompilationUnit lastUnit = Records.get(Records.size()-1).getASTree();
-			if(tree.subtreeMatch(new ASTMatcher(), lastUnit))
-				return false;
-		}
 		CompilationUnitHistoryRecord earlier = null;
 		if(Records.size()> 0)
 			earlier = Records.get(Records.size()-1);
-		Records.add(new CompilationUnitHistoryRecord(Project, unit ,ProjectName, PackageName, UnitName,System.currentTimeMillis(), earlier, this));
+		Records.add(new CompilationUnitHistoryRecord(Project, unit ,
+				ProjectName, PackageName, UnitName, System.currentTimeMillis(), earlier, this));
 		
 		detectRefactoringOpportunity(Records, unit);
-		
-		return true;
 	}
 	
 

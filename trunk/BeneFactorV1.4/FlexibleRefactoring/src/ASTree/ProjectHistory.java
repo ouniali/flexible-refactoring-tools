@@ -24,7 +24,7 @@ public class ProjectHistory {
 	}
 
 
-	public boolean addAST(CompilationUnit tree) throws Exception
+	public void addAST(CompilationUnit tree) throws Exception
 	{
 		String pacName = ASTreeManipulationMethods.getPackageName(tree.getPackage());
 		String unitName = ASTreeManipulationMethods.getCompilationUnitName(tree);
@@ -37,13 +37,8 @@ public class ProjectHistory {
 			histories.add(history);
 		}
 		
-		if(history.addAST(tree))
-		{
-			mostRecentHistory = history;
-			return true;
-		}
-		else
-			return false;
+		history.addAST(tree);
+		mostRecentHistory = history;
 	}
 	
 	public ASTChangeInformation getMostRecentChange()
