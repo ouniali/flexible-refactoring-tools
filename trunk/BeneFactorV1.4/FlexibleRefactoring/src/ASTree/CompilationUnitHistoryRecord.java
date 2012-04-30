@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.eclipse.jdt.core.BindingKey;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.IRegion;
 
@@ -32,7 +33,7 @@ public class CompilationUnitHistoryRecord {
 	private final String UnitName;
 	private final IJavaProject Project;
 	private final ICompilationUnit Unit;
-	private final int[] HighlightedRigion;
+	private final int[] HighlightedRegion;
 	
 	private final CompilationUnitHistoryRecord previousRecord;
 	private final CompilationUnitHistory history;
@@ -48,22 +49,49 @@ public class CompilationUnitHistoryRecord {
 	
 	protected CompilationUnitHistoryRecord(IJavaProject proj,
 			ICompilationUnit iu, String pro, String pac, String un, long t,
-			CompilationUnitHistoryRecord earlierVersionP, CompilationUnitHistory his) throws Exception {
-		
+			CompilationUnitHistoryRecord earlierVersionP, CompilationUnitHistory his) throws Exception 
+	{		
 		Project = proj;
 		Unit = iu;
 		ProjectName = pro;
 		PackageName = pac;
 		UnitName = un;
 		time = t;
-		ASTFileName = PackageName + "_" + UnitName + "_" + time + ".java";
-		BindingFileName = PackageName + "_" + UnitName + "_" + time
-				+ "_bindng.txt";
+		ASTFileName = getSouceFileName();
+		BindingFileName = getBindingTableFileName();
 		Directory = root + File.separator + ProjectName;
-		new File(Directory).mkdirs();
-		FileUtilities.save(Directory + File.separator + ASTFileName,
-				iu.getSource());
-		HighlightedRigion = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
+		HighlightedRegion = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
+		history = his;
+		previousRecord = earlierVersionP;
+		savaSourceCode(iu);	
+		saveBindingTable(iu, earlierVersionP);
+		diffs = initializeDiffsBetweenPreviousRecord(previousRecord);
+	}
+
+
+	
+	private ArrayList<SourceDiff> initializeDiffsBetweenPreviousRecord(CompilationUnitHistoryRecord previousRecord)
+	{
+		if (previousRecord != null)
+			return JavaSourceDiff.getSourceDiffs(previousRecord.getASTFilePath(), getASTFilePath());
+		else
+			return null;
+	}
+	
+	private String getBindingTableFileName() {
+		return PackageName + "_" + UnitName + "_" + time
+				+ "_bindng.txt";
+	}
+
+
+	private String getSouceFileName() {
+		return PackageName + "_" + UnitName + "_" + time + ".java";
+	}
+
+
+	private void saveBindingTable(ICompilationUnit iu,
+			CompilationUnitHistoryRecord earlierVersionP) {
+		
 		CompilationUnit unit = ASTreeManipulationMethods
 				.parseICompilationUnit(iu);
 		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
@@ -72,15 +100,13 @@ public class CompilationUnitHistoryRecord {
 		String bInfor = bVisitor.getBindingInformation();
 		FileUtilities.save(Directory + File.separator
 				+ BindingFileName, bInfor);
-		previousRecord = earlierVersionP;
+	}
 
-		if (previousRecord != null)
-			diffs = JavaSourceDiff.getSourceDiffs(
-					previousRecord.getASTFilePath(), getASTFilePath());
-		else
-			diffs = null;
-		
-		history = his;
+
+	private void savaSourceCode(ICompilationUnit iu) throws JavaModelException {
+		new File(Directory).mkdirs();
+		FileUtilities.save(getASTFilePath(),
+				iu.getSource());
 	}
 
 	public String getPackageName() {
@@ -95,6 +121,10 @@ public class CompilationUnitHistoryRecord {
 		return ProjectName;
 	}
 
+	public int[] getHighlightedRegion()
+	{
+		return HighlightedRegion;
+	}
 	public CompilationUnit getASTree() {
 		String source = getSourceCode();
 		CompilationUnit unit = ASTreeManipulationMethods.parseSourceCode(source);
@@ -102,7 +132,7 @@ public class CompilationUnitHistoryRecord {
 	}
 
 	public String getSourceCode() {
-		String path = Directory + File.separator + ASTFileName;
+		String path = getASTFilePath();
 		StringBuffer bString = new StringBuffer();
 		try {
 			FileInputStream fstream = new FileInputStream(path);
@@ -125,7 +155,7 @@ public class CompilationUnitHistoryRecord {
 	}
 
 	public String getBindingKey(int index) {
-		String path = Directory + File.separator + BindingFileName;
+		String path = getBindingTablePath();
 		String key = "";
 		try {
 			FileInputStream fstream = new FileInputStream(path);
@@ -190,7 +220,7 @@ public class CompilationUnitHistoryRecord {
 
 	int getBindingCount(String binding) {
 
-		String path = Directory + File.separator + BindingFileName;
+		String path = getBindingTablePath();
 		int count = 0;
 		try {
 			FileInputStream fstream = new FileInputStream(path);
@@ -215,6 +245,11 @@ public class CompilationUnitHistoryRecord {
 
 	public String getASTFilePath() {
 		return Directory + File.separator + ASTFileName;
+	}
+	
+	public String getBindingTablePath()
+	{
+		return Directory + File.separator + BindingFileName;
 	}
 
 	public SourceDiff getSourceDiff() {
