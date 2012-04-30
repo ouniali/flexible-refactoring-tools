@@ -63,7 +63,7 @@ public class CompilationUnitHistoryRecord {
 		HighlightedRegion = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
 		history = his;
 		previousRecord = earlierVersionP;
-		savaSourceCode(iu);	
+		saveSourceCode(iu);	
 		saveBindingTable(iu, earlierVersionP);
 		diffs = initializeDiffsBetweenPreviousRecord(previousRecord);
 	}
@@ -102,7 +102,7 @@ public class CompilationUnitHistoryRecord {
 	}
 
 
-	private void savaSourceCode(ICompilationUnit iu) throws JavaModelException {
+	private void saveSourceCode(ICompilationUnit iu) throws JavaModelException {
 		new File(Directory).mkdirs();
 		FileUtilities.save(getASTFilePath(),
 				iu.getSource());
