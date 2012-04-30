@@ -14,7 +14,10 @@ public class BeneEventListener implements IInteractionEventListener {
 	public void interactionObserved(InteractionEvent event) {
 		String id = event.getOriginId();
 		if(UserActionData.isInterestedEvent(id))
+		{
 			UserActionData.setPendingEvent(id);
+			UserInterfaceUtilities.reconcileActiveEditor();
+		}
 	}
 
 	@Override
