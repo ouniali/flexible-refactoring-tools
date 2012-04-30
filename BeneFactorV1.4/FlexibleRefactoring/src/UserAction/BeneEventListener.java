@@ -12,12 +12,9 @@ public class BeneEventListener implements IInteractionEventListener {
 
 	@Override
 	public void interactionObserved(InteractionEvent event) {
-		if(!event.getOriginId().equals("org.eclipse.ui.edit.copy"))
-			return;
-		System.out.println("copy");
-		
-		int[] range = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
-		System.out.println(range[0] + " " + range[1]);
+		String id = event.getOriginId();
+		if(UserActionData.isInterestedEvent(id))
+			UserActionData.setPendingEvent(id);
 	}
 
 	@Override
