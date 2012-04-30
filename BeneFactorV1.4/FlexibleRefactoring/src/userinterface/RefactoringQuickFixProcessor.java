@@ -12,10 +12,10 @@ import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
 import ASTree.ASTreeManipulationMethods;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.JavaRefactoringExtractMethodChange;
 import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
 import JavaRefactoringAPI.JavaRefactoringRename;
 import JavaRefactoringAPI.JavaRefactoringRenameDiff;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 import compilation.RefactoringChances;
 

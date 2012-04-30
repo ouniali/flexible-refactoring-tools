@@ -21,7 +21,7 @@ import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
 import ExtractMethod.NewMethodSignatureForExtractMethod;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChange;
 import Rename.NameChangeCountHistory;

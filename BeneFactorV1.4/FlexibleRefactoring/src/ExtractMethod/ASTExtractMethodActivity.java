@@ -7,8 +7,8 @@ import userinterface.RefactoringMarker;
 import utitilies.StringUtilities;
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
-import JavaRefactoringAPI.JavaRefactoringExtractMethodChange;
-import JavaRefactoringAPI.JavaRefactoringExtractMethodActivity;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodActivity;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 public class ASTExtractMethodActivity {
 
