@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
@@ -45,6 +46,7 @@ import StyledTextHelper.StyledTextGetBound;
 import StyledTextHelper.StyledTextGetLineHeight;
 import StyledTextHelper.StyledTextGetPoint;
 import StyledTextHelper.StyledTextOffsetAndLine;
+
 
 
 public class UserInterfaceUtilities {
@@ -108,6 +110,23 @@ public class UserInterfaceUtilities {
 				return (JavaEditor) part;
 		}
 		return null;
+	}
+	
+	/**
+	 * @author Xi Ge
+	 *	call reconcile explicitly
+	 * 
+	 */
+	
+	static public void reconcileActiveEditor()
+	{
+		try {
+			JavaEditor editor = getActiveJavaEditor();
+			ICompilationUnit unit = getConnectedICompilationUnit ((CompilationUnitEditor)editor);
+			unit.reconcile(AST.JLS3, false, null, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 
