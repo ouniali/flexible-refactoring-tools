@@ -40,18 +40,13 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		super(u, l, m);
 		setMethodName(JavaRefactoringExtractMethodUtil.getExtractedMethodName(this.getICompilationUnit()));
 		modifier = Modifier.PRIVATE;
-		
 	}
 
 	@Override
-	protected void performRefactoring(IProgressMonitor pm) throws Exception {
-		
-	}
+	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
 
 	@Override
-	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
-		
-	}
+	protected abstract void performCodeRecovery(IProgressMonitor pm) throws Exception;
 
 	@Override
 	public final int getRefactoringType() {
@@ -59,16 +54,10 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 	}
 
 	@Override
-	public void preProcess() {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void preProcess();
 
 	@Override
-	public void postProcess() {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void postProcess();
 	
 	public abstract JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception;
 }
