@@ -26,8 +26,17 @@ public class ASTExtractMethodActivity {
 		return new JavaRefactoringExtractMethodActivity(unit, line, marker, this);
 	}
 	
+	public int getCopyStart()
+	{
+		return record.getSeletectedRegion()[0];
+	}
 	
+	public int getCopyLength()
+	{
+		return record.getSeletectedRegion()[1] - record.getSeletectedRegion()[0] + 1;
+	}
 	
+
 	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record)
 	{
 		if(record.hasCopyCommand())
