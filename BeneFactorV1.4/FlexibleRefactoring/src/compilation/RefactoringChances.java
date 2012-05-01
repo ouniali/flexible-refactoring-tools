@@ -1,5 +1,7 @@
 package compilation;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.eclipse.core.resources.IMarker;
@@ -100,6 +102,10 @@ public class RefactoringChances {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static void main()
+	{
 	}
 
 	
