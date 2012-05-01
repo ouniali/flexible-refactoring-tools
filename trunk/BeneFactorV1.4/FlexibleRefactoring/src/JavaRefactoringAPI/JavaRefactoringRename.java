@@ -59,7 +59,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 	ArrayList<Name> namesInProject;
 	boolean renamedBindingKey;
 	
-	public JavaRefactoringRename(ICompilationUnit u,int l, IMarker m,String keyBefore,String keyAfter, String oN, String nN)
+	public JavaRefactoringRename(ICompilationUnit u,int l, IMarker m,String keyBefore,String keyAfter, String oN, String nN) throws Exception
 	{
 		super(u, l, m);
 		assert(keyBefore!= null && keyAfter != null);
