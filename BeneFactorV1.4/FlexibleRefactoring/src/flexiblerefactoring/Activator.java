@@ -38,6 +38,7 @@ public class Activator extends AbstractUIPlugin {
 		// add mylyn monitor
 		FileUtil.deleteFolder(CompilationUnitHistoryRecord.getHistoryFilesRoot());
 		FileUtil.deleteFolder(ASTChangeInformation.getChangeFilesRoot());
+		// delete files for last time
 	}
 
 	/*
