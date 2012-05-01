@@ -103,8 +103,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 
 	@Override
 	protected void performCodeRecovery(IProgressMonitor monitor) {
-		information.recoverICompilationUnitToOldRecord(monitor);
-		
+		information.recoverICompilationUnitToOldRecord(monitor);	
 	}
 
 
@@ -154,6 +153,11 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), endRecord.getSourceCode());
 		source = JavaSourceDiff.applyPatches(source, patches);
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
+	}
+
+	@Override
+	public void preProcess() {
+		
 	}
 	
 	
