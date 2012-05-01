@@ -4,8 +4,8 @@ public class UserActionData {
 	
 	public final static String COPY_ID = "org.eclipse.ui.edit.copy";
 	public final static String CUT_ID = "org.eclipse.ui.edit.cut";
-	public final static String NO_EVENT = "NULL";
-	public static String Pending_Event;
+	public final static String NO_EVENT = "NO_EVENT";
+	public static String Pending_Event = NO_EVENT;
 	
 	
 	public static boolean isInterestedEvent(String id)
