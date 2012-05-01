@@ -97,8 +97,8 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 		try {
 			int selectionStart = index[0];
 			int selectionLength = index[1] - index[0] + 1;
-			//TODO:
-			//performEclipseRefactoring();
+			JavaRefactoringExtractMethodUtil.performEclipseRefactoring
+			(this.getICompilationUnit(), selectionStart, selectionLength, modifier, methodName, pm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -160,13 +160,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 		{
 			e.printStackTrace();
 		}
-		Display.getDefault().asyncExec(new Runnable() {
-		       public void run() {
-		    	   //TODO:
-		    	   //JavaRefactoringExtractMethodUtil.prepareLinkedEdition(, methodName);
-		    	   }
-		}
-		);
+		JavaRefactoringExtractMethodUtil.prepareLinkedEdition(this.getICompilationUnit(), methodName);
 		
 		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id + ".ExtractMethod", "extract method"));
 	}
