@@ -266,12 +266,12 @@ public class CompilationUnitHistoryRecord {
 	{
 		return history;
 	}
-	
 
-	public String getUserAction() {
-		return UserAction;
+	public boolean hasCopyCommand()
+	{
+		return UserAction.equals(UserActionData.COPY_ID);
 	}
-
+	
 	public int[] getSeletectedRegion() {
 		return seletectedRegion;
 	}
