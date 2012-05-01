@@ -77,11 +77,11 @@ public class JavaRefactoringExtractMethodUtil {
 	}
 
 	private static ArrayList<Integer> getUsedIndices(String source) {
-		String[] names = StringUtilities.getMatchedStrings(source, MNAMEPATTERN);
+		ArrayList<String> names = StringUtilities.getMatchedStrings(source, MNAMEPATTERN);
 		ArrayList<Integer> indexes = new ArrayList<Integer>();
-		for(int i = 0; i< names.length; i++)
+		for(String name: names)
 		{
-			String num = names[i].substring(BASENAME.length());
+			String num = name.substring(BASENAME.length());
 			if(!num.isEmpty())
 				indexes.add(Integer.parseInt(num));
 		}

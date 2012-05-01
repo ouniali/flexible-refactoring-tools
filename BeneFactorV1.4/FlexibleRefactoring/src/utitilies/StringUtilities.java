@@ -53,7 +53,7 @@ public class StringUtilities {
 		return s.replaceAll("\\s+", "");		 
 	}
 	
-	public static String[] getMatchedStrings(String s, String reg)
+	public static ArrayList<String> getMatchedStrings(String s, String reg)
 	{
 		ArrayList<String> results = new ArrayList<String>();
 		Pattern p = Pattern.compile(reg);
@@ -63,7 +63,7 @@ public class StringUtilities {
 			 String match = matcher.group();
 			 results.add(match);
 		}
-		return (String[]) results.toArray();
+		return results;
 	}
 	
 	public static void main(String [] args)
