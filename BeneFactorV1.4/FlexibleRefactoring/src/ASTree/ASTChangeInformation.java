@@ -129,5 +129,10 @@ public class ASTChangeInformation {
 	{
 		return 0;
 	}
+	
+	public static String getChangeFilesRoot()
+	{
+		return root;
+	}
 
 }

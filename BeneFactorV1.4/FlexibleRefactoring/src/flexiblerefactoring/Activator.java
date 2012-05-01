@@ -4,6 +4,10 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import utitilies.FileUtil;
+
+import ASTree.ASTChangeInformation;
+import ASTree.CompilationUnitHistoryRecord;
 import UserAction.MylynMonitor;
 
 /**
@@ -32,7 +36,8 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 		MylynMonitor.addListener();
 		// add mylyn monitor
-		
+		FileUtil.deleteFolder(CompilationUnitHistoryRecord.getHistoryFilesRoot());
+		FileUtil.deleteFolder(ASTChangeInformation.getChangeFilesRoot());
 	}
 
 	/*

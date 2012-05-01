@@ -37,11 +37,24 @@ public class FileUtil {
 	            "Delete: directory not empty: " + fileName);
 	    }
 	    boolean success = f.delete();
-
 		    if (!success)
 		      throw new IllegalArgumentException("Delete: deletion failed");
-		 }
-
+	 }
+	 
+	 public static void deleteFolder(String path) {
+		 	File folder = new File(path);
+		    File[] files = folder.listFiles();
+		    if(files!=null) { 
+		        for(File f: files) {
+		            if(f.isDirectory()) {
+		                deleteFolder(f.getAbsolutePath());
+		            } else {
+		                f.delete();
+		            }
+		        }
+		    }
+		    folder.delete();
+		}
 
 	
 }
