@@ -13,6 +13,7 @@ import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 public class ASTExtractMethodActivity {
 
 	private final CompilationUnitHistoryRecord record;
+	
 	public ASTExtractMethodActivity(CompilationUnitHistoryRecord r)
 	{
 		record = r;
