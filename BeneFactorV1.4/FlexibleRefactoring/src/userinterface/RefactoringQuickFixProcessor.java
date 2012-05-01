@@ -15,6 +15,7 @@ import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
 import JavaRefactoringAPI.JavaRefactoringRename;
 import JavaRefactoringAPI.JavaRefactoringRenameDiff;
+import JavaRefactoringAPI.JavaRefactoringType;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 import compilation.RefactoringChances;
@@ -58,14 +59,25 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 	
 	public static RefactoringProposal getRefactoringProposalRefactoring(JavaRefactoring ref)
 	{
-		if(ref instanceof JavaRefactoringRename || ref instanceof JavaRefactoringRenameDiff)
+		int type = ref.getRefactoringType();
+		switch(type)
+		{
+		case JavaRefactoringType.RENAME:
 			return new RefactoringProposalRename(ref);
-		else if ( ref instanceof JavaRefactoringExtractMethodChange)
+		case JavaRefactoringType.EXTRACT_METHOD:
 			return new RefactoringProposalExtractMethod(ref);
-		else if( ref instanceof JavaRefactoringMoveStaticMember)
+		case JavaRefactoringType.MOVE_STATIC:
 			return new RefactoringProposalMoveStaticMember(ref);
-		else
-			return null;
+		default:
+			break;
+		}
+		try{
+			throw new Exception("unknown refactoring type.");
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
