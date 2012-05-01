@@ -43,24 +43,18 @@ import ExtractMethod.ASTExtractMethodChangeInformation;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
-public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
+public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMethodBase {
 
 	@SuppressWarnings("restriction")
 	
 	ASTExtractMethodChangeInformation information;
 	CompilationUnitHistoryRecord non_refactoring_change_end;
 	
-
-	int modifier;
-	String methodName;
 	
 	
 	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) throws Exception{
 		super(u, l, m);
-		modifier = Modifier.PRIVATE;
-		methodName = JavaRefactoringExtractMethodUtil.getExtractedMethodName(this.getICompilationUnit());
-		information = info;
-		
+		information = info;	
 	}
 
 	public void setNonrefactoringChangeEnd(CompilationUnitHistoryRecord r)
@@ -98,7 +92,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 			int selectionStart = index[0];
 			int selectionLength = index[1] - index[0] + 1;
 			JavaRefactoringExtractMethodUtil.performEclipseRefactoring
-			(this.getICompilationUnit(), selectionStart, selectionLength, modifier, methodName, pm);
+			(this.getICompilationUnit(), selectionStart, selectionLength, this.getModifier(), this.getMethodName(), pm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,32 +108,20 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 	}
 
 
-	@Override
-	public int getRefactoringType() {
-		return JavaRefactoringType.EXTRACT_METHOD;
-	}
+
 	
 	public ASTExtractMethodChangeInformation getExtractMethodChangeInformation()
 	{
 		return information;
 	}
 	
-	public void setMethodModifier(int m)
-	{
-		modifier = m;
-	}
-	
-	public void setMethodName(String m)
-	{
-		methodName = m;
-	}
-	
-	public JavaRefactoringExtractMethodChange moveExtractMethodRefactoring(IMarker marker, int l) throws Exception
+
+	public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception
 	{
 		JavaRefactoringExtractMethodChange refactoring = 
 				new JavaRefactoringExtractMethodChange(getICompilationUnit(), l, marker, getExtractMethodChangeInformation());
-		refactoring.setMethodModifier(modifier);
-		refactoring.setMethodName(methodName);
+		refactoring.setModifier(this.getModifier());
+		refactoring.setMethodName(this.getMethodName());
 		return refactoring; 
 	}
 	
@@ -160,7 +142,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 		{
 			e.printStackTrace();
 		}
-		JavaRefactoringExtractMethodUtil.prepareLinkedEdition(this.getICompilationUnit(), methodName);
+		JavaRefactoringExtractMethodUtil.prepareLinkedEdition(this.getICompilationUnit(), this.getMethodName());
 		
 		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id + ".ExtractMethod", "extract method"));
 	}
@@ -173,18 +155,6 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoring {
 		source = JavaSourceDiff.applyPatches(source, patches);
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
 	}
-
-	@Override
-	public void preProcess() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
-	
-	
 	
 	
 

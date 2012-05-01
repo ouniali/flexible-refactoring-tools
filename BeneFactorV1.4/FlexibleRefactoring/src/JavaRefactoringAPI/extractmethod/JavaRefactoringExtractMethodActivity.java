@@ -11,24 +11,21 @@ import ExtractMethod.ASTExtractMethodActivity;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
-public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
+public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtractMethodBase{
 
 	final ASTExtractMethodActivity activity;
-	String methodName;
-	
-	
+		
 	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, 
 			IMarker m, ASTExtractMethodActivity a) throws Exception{
 		super(u, l, m);
 		activity = a;
-		methodName = JavaRefactoringExtractMethodUtil.getExtractedMethodName(this.getICompilationUnit());
 	}
 
 	@Override
 	protected void performRefactoring(IProgressMonitor pm) throws Exception {
 		JavaRefactoringExtractMethodUtil.performEclipseRefactoring(this.getICompilationUnit(), 
 				activity.getCopyStart(), activity.getCopyLength(), 
-				Modifier.PRIVATE, methodName, pm);
+				this.getModifier(), this.getMethodName(), pm);
 	}
 
 	@Override
@@ -36,10 +33,6 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 		return;
 	}
 
-	@Override
-	public int getRefactoringType() {
-		return JavaRefactoringType.EXTRACT_METHOD;
-	}
 
 	@Override
 	public void preProcess() {
@@ -49,6 +42,12 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 	@Override
 	public void postProcess() {
 	
+	}
+
+	@Override
+	public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(
+			IMarker marker, int l) throws Exception {
+		return null;
 	}
 
 }

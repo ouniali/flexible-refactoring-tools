@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 
 import ASTree.CompilationUnitHistoryRecord;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 import utitilies.StringUtil;
@@ -61,7 +62,7 @@ public class NewMethodSignatureForExtractMethod {
 
 	public void setJavaRefactoringExtractMethod(JavaRefactoringExtractMethodChange em) {
 		if (modifierAvailable)
-			em.setMethodModifier(modifier);
+			em.setModifier(modifier);
 		if (methodNameAvailable)
 			em.setMethodName(methodName);
 	}
