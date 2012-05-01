@@ -21,7 +21,7 @@ public class ASTExtractMethodActivity {
 	
 	public JavaRefactoringExtractMethodActivity getJavaExtractMethodRefactoring(ICompilationUnit unit) throws Exception
 	{
-		int line = 1;
+		int line = 10;
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 		return new JavaRefactoringExtractMethodActivity(unit, line, marker, this);
 	}
