@@ -12,7 +12,7 @@ import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.ui.IEditorInput;
 
-import utitilies.UserInterfaceUtilities;
+import utitilies.UIUtil;
 
 import compilation.RefactoringChances;
 import ASTree.CompilationUnitHistory;
@@ -42,7 +42,7 @@ public abstract class JavaRefactoring extends Job{
 		SubMonitor progress = SubMonitor.convert(pm, "Running refactoring", 100);
 		ICompilationUnit unit = this.getICompilationUnit();
 		try {
-			UserInterfaceUtilities.freezeEditor(UserInterfaceUtilities.getActiveJavaEditor());
+			UIUtil.freezeEditor(UIUtil.getActiveJavaEditor());
 			
 			unit.becomeWorkingCopy(progress.newChild(1));
 			
@@ -57,7 +57,7 @@ public abstract class JavaRefactoring extends Job{
 			unit.commitWorkingCopy(true, progress.newChild(1));
 			unit.discardWorkingCopy();
 			
-			UserInterfaceUtilities.wakeUpEditor(UserInterfaceUtilities.getActiveJavaEditor());
+			UIUtil.wakeUpEditor(UIUtil.getActiveJavaEditor());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{

@@ -5,7 +5,7 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.mylyn.monitor.core.InteractionEvent.Kind;
 import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 
-import utitilies.UserInterfaceUtilities;
+import utitilies.UIUtil;
 
 public class BeneEventListener implements IInteractionEventListener {
 
@@ -16,7 +16,7 @@ public class BeneEventListener implements IInteractionEventListener {
 		if(UserActionData.isInterestedEvent(id))
 		{
 			UserActionData.setPendingEvent(id);
-			UserInterfaceUtilities.reconcileActiveEditor();
+			UIUtil.reconcileActiveEditor();
 		}
 	}
 

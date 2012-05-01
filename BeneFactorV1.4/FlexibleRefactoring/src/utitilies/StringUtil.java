@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtilities {
+public class StringUtil {
 	
 	public static boolean isWhiteSpaceString(String source)
 	{
@@ -66,11 +66,6 @@ public class StringUtilities {
 		return results;
 	}
 	
-	public static void main(String [] args)
-	{
-		String s = "extractmethod21  extractmethod22 extractmethod21 dd extractmethod";
-		getMatchedStrings(s, "extractmethod\\d*");
-	}
 	
 	
 }

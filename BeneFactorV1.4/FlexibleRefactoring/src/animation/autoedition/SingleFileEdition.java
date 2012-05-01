@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.junit.Assert;
 
-import utitilies.UserInterfaceUtilities;
+import utitilies.UIUtil;
 
 
 public class SingleFileEdition extends Observable implements Runnable, Observer{
@@ -99,10 +99,10 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 
 	private void openEditor() throws Exception
 	{
-		editor = UserInterfaceUtilities.getJavaEditor(unit);
+		editor = UIUtil.getJavaEditor(unit);
 		if(editor == null)
 		{
-			editor = UserInterfaceUtilities.openJavaEditor(unit);
+			editor = UIUtil.openJavaEditor(unit);
 			editor_open = false;
 		}
 		else
@@ -113,7 +113,7 @@ public class SingleFileEdition extends Observable implements Runnable, Observer{
 	private void closeEditor()
 	{
 		if(!editor_open)
-			UserInterfaceUtilities.closeJavaEditor(editor);
+			UIUtil.closeJavaEditor(editor);
 	}
 	
 	private void connect2ScalingBar() {

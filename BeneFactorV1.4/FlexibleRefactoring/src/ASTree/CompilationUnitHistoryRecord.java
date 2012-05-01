@@ -14,8 +14,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.IRegion;
 
-import utitilies.FileUtilities;
-import utitilies.UserInterfaceUtilities;
+import utitilies.FileUtil;
+import utitilies.UIUtil;
 import Rename.NamesInCompilationUnit;
 import ExtractMethod.ExtractMethod;
 import UserAction.UserActionData;
@@ -58,7 +58,7 @@ public class CompilationUnitHistoryRecord {
 		ASTFileName = getSouceFileName();
 		BindingFileName = getBindingTableFileName();
 		Directory = root + File.separator + ProjectName;
-		seletectedRegion = UserInterfaceUtilities.getSelectedRangeInActiveEditor();
+		seletectedRegion = UIUtil.getSelectedRangeInActiveEditor();
 		history = his;
 		previousRecord = earlierVersionP;
 		saveSourceCode(iu);	
@@ -97,13 +97,13 @@ public class CompilationUnitHistoryRecord {
 		unit.accept(bVisitor);
 		
 		String bInfor = bVisitor.getBindingInformation();
-		FileUtilities.save(getBindingTablePath(), bInfor);
+		FileUtil.save(getBindingTablePath(), bInfor);
 	}
 
 
 	private void saveSourceCode(ICompilationUnit iu) throws JavaModelException {
 		new File(Directory).mkdirs();
-		FileUtilities.save(getASTFilePath(),
+		FileUtil.save(getASTFilePath(),
 				iu.getSource());
 	}
 

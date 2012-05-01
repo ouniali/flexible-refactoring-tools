@@ -3,7 +3,7 @@ package animation.folding;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 
-import utitilies.UserInterfaceUtilities;
+import utitilies.UIUtil;
 
 public class FoldingTester implements Runnable{
 
@@ -23,7 +23,7 @@ public class FoldingTester implements Runnable{
 		ProjectionViewer viewer = listener.getViewer();
 		for(int line = 2; line <15; line ++)
 		{
-			off = UserInterfaceUtilities.getOffsetByLineNumber(2, editor) ;
+			off = UIUtil.getOffsetByLineNumber(2, editor) ;
 			off = viewer.widgetOffset2ModelOffset(off);
 			listener.setHidingArea(0, off);
 			System.out.println(line + " " + off);

@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import utitilies.FileUtilities;
+import utitilies.FileUtil;
 
 public class SnapShot {
 	

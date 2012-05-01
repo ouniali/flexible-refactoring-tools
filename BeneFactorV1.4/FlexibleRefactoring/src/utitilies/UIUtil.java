@@ -50,7 +50,7 @@ import StyledTextHelper.StyledTextOffsetAndLine;
 
 
 
-public class UserInterfaceUtilities {
+public class UIUtil {
 
 	static public IWorkbenchWindow[] getWorkbenchWindows()
 	{

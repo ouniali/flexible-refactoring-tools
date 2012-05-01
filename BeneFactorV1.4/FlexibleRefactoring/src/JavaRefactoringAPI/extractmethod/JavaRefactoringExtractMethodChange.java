@@ -35,7 +35,7 @@ import compare.JavaSourceDiff;
 import compare.SourceDiff;
 import compare.diff_match_patch.Patch;
 
-import utitilies.UserInterfaceUtilities;
+import utitilies.UIUtil;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;

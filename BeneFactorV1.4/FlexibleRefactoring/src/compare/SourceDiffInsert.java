@@ -2,7 +2,7 @@ package compare;
 
 import java.util.ArrayList;
 
-import utitilies.StringUtilities;
+import utitilies.StringUtil;
 
 public class SourceDiffInsert extends SourceDiff{
 
@@ -23,7 +23,7 @@ public class SourceDiffInsert extends SourceDiff{
 	
 	public String getInsertedCode()
 	{
-		return StringUtilities.combineStringArray(insertedSource);
+		return StringUtil.combineStringArray(insertedSource);
 	}
 
 	@Override

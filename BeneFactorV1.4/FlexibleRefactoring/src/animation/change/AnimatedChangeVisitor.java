@@ -9,7 +9,7 @@ import org.eclipse.text.edits.*;
 import animation.Animation;
 import animation.MovableText;
 
-import utitilies.UserInterfaceUtilities;
+import utitilies.UIUtil;
 
 public class AnimatedChangeVisitor extends TextEditVisitor{
 	
@@ -41,8 +41,8 @@ public class AnimatedChangeVisitor extends TextEditVisitor{
 		 int start = edit.getOffset();
 		 System.out.println(start);
 		 MovableText mt = MovableText.MovableTextFactory(1, 1, replacement);
-		 JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
-		 Point p = UserInterfaceUtilities.getEditorPointInDisplay(start, editor);
+		 JavaEditor editor = UIUtil.getActiveJavaEditor();
+		 Point p = UIUtil.getEditorPointInDisplay(start, editor);
 		 mt.setDestination(p);
 		 anim.addMovableObject(mt);
 		 return true;
