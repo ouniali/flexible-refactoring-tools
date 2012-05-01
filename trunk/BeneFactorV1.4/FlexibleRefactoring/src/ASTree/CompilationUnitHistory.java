@@ -21,6 +21,7 @@ import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
 import ExtractMethod.NewMethodSignatureForExtractMethod;
 import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChange;
@@ -130,7 +131,7 @@ public class CompilationUnitHistory {
 				RefactoringChances.removeRefactoring(pendingEM);
 				int line = newSig.getLineNumber();
 				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-				JavaRefactoringExtractMethodChange newEM = pendingEM.moveExtractMethodRefactoring(marker, line);
+				JavaRefactoringExtractMethodChange newEM = (JavaRefactoringExtractMethodChange)pendingEM.moveExtractMethodRefactoring(marker, line);
 				newSig.setJavaRefactoringExtractMethod(newEM);
 				newEM.setNonrefactoringChangeEnd(newSig.getRecordNonRefactoringChangeEnd());
 				RefactoringChances.addNewRefactoringChance(newEM);	
