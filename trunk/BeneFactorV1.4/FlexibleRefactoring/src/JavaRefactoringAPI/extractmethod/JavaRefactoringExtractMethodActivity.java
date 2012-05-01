@@ -14,7 +14,7 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoring{
 	final ASTExtractMethodActivity activity;
 	
 	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, 
-			IMarker m, ASTExtractMethodActivity a) {
+			IMarker m, ASTExtractMethodActivity a) throws Exception{
 		super(u, l, m);
 		activity = a;
 	}

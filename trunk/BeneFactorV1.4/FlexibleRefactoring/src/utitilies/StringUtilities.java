@@ -1,6 +1,7 @@
 package utitilies;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,5 +52,25 @@ public class StringUtilities {
 	{
 		return s.replaceAll("\\s+", "");		 
 	}
+	
+	public static String[] getMatchedStrings(String s, String reg)
+	{
+		ArrayList<String> results = new ArrayList<String>();
+		Pattern p = Pattern.compile(reg);
+		Matcher matcher = p.matcher(s);
+		while(matcher.find())
+		{
+			 String match = matcher.group();
+			 results.add(match);
+		}
+		return (String[]) results.toArray();
+	}
+	
+	public static void main(String [] args)
+	{
+		String s = "extractmethod21  extractmethod22 extractmethod21 dd extractmethod";
+		getMatchedStrings(s, "extractmethod\\d*");
+	}
+	
 	
 }

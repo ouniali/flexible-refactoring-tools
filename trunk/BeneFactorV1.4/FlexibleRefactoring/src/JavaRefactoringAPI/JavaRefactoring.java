@@ -67,7 +67,7 @@ public abstract class JavaRefactoring extends Job{
 		return Status.OK_STATUS;
 	}
 
-	public JavaRefactoring(ICompilationUnit u, int l, IMarker m)
+	public JavaRefactoring(ICompilationUnit u, int l, IMarker m) throws Exception
 	{
 		super("Java Refactoring Job");
 		unit = u;
