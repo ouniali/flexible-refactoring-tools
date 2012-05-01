@@ -44,7 +44,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 	String oldName;
 
 	public JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
-			ArrayList<ASTNameChangeInformation> changes, String nN) 
+			ArrayList<ASTNameChangeInformation> changes, String nN) throws Exception 
 	{
 		super(u, l, m);
 		dec_changes = changes;
