@@ -277,7 +277,7 @@ public class CompilationUnitHistoryRecord {
 	}
 
 
-	public boolean equal(Object o)
+	public boolean equals(Object o)
 	{
 		CompilationUnitHistoryRecord another = (CompilationUnitHistoryRecord) o;
 		return another.ASTFileName.equals(this.ASTFileName);

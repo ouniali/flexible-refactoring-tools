@@ -110,6 +110,7 @@ public class CompilationUnitHistory {
 		
 		if(ExtractMethod.LookingBackForExtractMethodActivities(records))
 		{
+			System.out.println("copy statements.");
 			ASTExtractMethodActivity act = ExtractMethod.detectedExtractMethodActivities.get(ExtractMethod.detectedExtractMethodActivities.size() - 1);
 			refactoring = act.getJavaExtractMethodRefactoring(unit);
 			RefactoringChances.addNewRefactoringChance(refactoring);

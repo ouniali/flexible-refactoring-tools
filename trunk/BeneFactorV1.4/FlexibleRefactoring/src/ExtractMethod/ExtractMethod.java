@@ -77,18 +77,27 @@ public class ExtractMethod {
 	public static boolean LookingBackForExtractMethodActivities(ArrayList<CompilationUnitHistoryRecord> records)
 	{	
 		
-		return false;
-/*		for(int i = records.size() - 1; i>=0; i--)
+	//	return false;
+		int lookBackCount = Math.min(records.size(),
+				MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD);
+	
+		for(int i = records.size() - 1; i >= records.size() - lookBackCount; i--)
 		{
-			if(ASTExtractMethodActivity.isCopyingStatements(records.get(i)))
+			CompilationUnitHistoryRecord current = records.get(i);
+			if(ASTExtractMethodActivity.isCopyingStatements(current))
 			{
-				detectedExtractMethodActivities.add(new ASTExtractMethodActivity(records.get(i)));
-				return true;
+				if(!detectedExtractMethodActivities.contains(current))
+				{
+					detectedExtractMethodActivities.add(new ASTExtractMethodActivity(records.get(i)));
+					return true;
+				}
 			}
 		}
-		return false;*/
+		return false;
 	}
 	
+	
+
 
 
 	public static boolean isExtractMethodChange(
