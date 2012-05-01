@@ -23,7 +23,7 @@ public class ASTExtractMethodActivity {
 	
 	public JavaRefactoringExtractMethodActivity getJavaExtractMethodRefactoring(ICompilationUnit unit) throws Exception
 	{
-		int line = 10;
+		int line = getMarkerLineNumber(getCopyStart()) + 1;
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 		return new JavaRefactoringExtractMethodActivity(unit, line, marker, this);
 	}
