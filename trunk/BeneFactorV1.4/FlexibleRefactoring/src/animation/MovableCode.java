@@ -17,8 +17,8 @@ import org.pushingpixels.trident.Timeline;
 
 
 
-import utitilies.FileUtilities;
-import utitilies.UserInterfaceUtilities;
+import utitilies.FileUtil;
+import utitilies.UIUtil;
 
 public class MovableCode extends MovableObject{
 
@@ -32,8 +32,8 @@ public class MovableCode extends MovableObject{
 	public static MovableCode MovableCodeFactory(int start, int end)
 	{
 		
-		JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
-		Rectangle rect = UserInterfaceUtilities.getTextBounds(start, end, editor);
+		JavaEditor editor = UIUtil.getActiveJavaEditor();
+		Rectangle rect = UIUtil.getTextBounds(start, end, editor);
 		int x = rect.x;
 		int y = rect.y;
 		int h = rect.height;
@@ -57,7 +57,7 @@ public class MovableCode extends MovableObject{
 	{
 		try {
 			super.finalize();
-			FileUtilities.delete(path.toOSString());
+			FileUtil.delete(path.toOSString());
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

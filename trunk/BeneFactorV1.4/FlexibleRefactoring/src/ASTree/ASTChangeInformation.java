@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import utitilies.FileUtilities;
+import utitilies.FileUtil;
 
 public class ASTChangeInformation {
 
@@ -53,7 +53,7 @@ public class ASTChangeInformation {
 		Directory = root+File.separator+project.getElementName();
 		ChangeFileName = oldRecord.getPackageName()+"_"+oldRecord.getCompilationUnitName()+"_"+oldRecord.getTime()+"_"+newRecord.getTime()+".txt";
 		new File(Directory).mkdirs();
-		FileUtilities.save(Directory + File.separator + ChangeFileName, getChangeInformation(node1, node2));
+		FileUtil.save(Directory + File.separator + ChangeFileName, getChangeInformation(node1, node2));
 	}
 	
 

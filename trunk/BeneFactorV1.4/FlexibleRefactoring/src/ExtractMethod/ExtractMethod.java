@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.*;
 
-import utitilies.StringUtilities;
+import utitilies.StringUtil;
 
 import compare.*;
 
@@ -121,7 +121,7 @@ public class ExtractMethod {
 		int begin = nodeTwo.getStartPosition();
 		int end = begin + nodeTwo.getLength() - 1;
 		String block_source = new_source.substring(begin, end).replace('{', ' ').replace('}', ' ');
-		boolean isBlockEmpty = StringUtilities.isWhiteSpaceString(block_source);
+		boolean isBlockEmpty = StringUtil.isWhiteSpaceString(block_source);
 		
 		if (childrenTwoSize == 0 && !isBlockEmpty)
 			return false;

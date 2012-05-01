@@ -2,7 +2,7 @@ package compare;
 
 import java.util.ArrayList;
 
-import utitilies.StringUtilities;
+import utitilies.StringUtil;
 
 public class SourceDiffChange extends SourceDiff{
 
@@ -27,12 +27,12 @@ public class SourceDiffChange extends SourceDiff{
 	
 	public String getCodeBeforeChange()
 	{
-		return StringUtilities.combineStringArray(beforeChange);
+		return StringUtil.combineStringArray(beforeChange);
 	}
 	
 	public String getCodeAfterChange()
 	{
-		return StringUtilities.combineStringArray(afterChange);
+		return StringUtil.combineStringArray(afterChange);
 	}
 
 

@@ -77,7 +77,7 @@ public class JavaSourceDiff {
 
 	private static SourceDiffChange getSourceDiffChangeFromDiffDescription(
 			String[] lines, int fromLine, int toLine) {
-		int lineNumber = StringUtilities.extractIntegerFromString(lines[fromLine]);
+		int lineNumber = StringUtil.extractIntegerFromString(lines[fromLine]);
 		ArrayList<String> fromSource = new ArrayList<String>();
 		ArrayList<String> toSource = new ArrayList<String>();
 
@@ -138,7 +138,7 @@ public class JavaSourceDiff {
 	private static SourceDiffInsert getSourceDiffInsertFromDiffDescription(
 			String[] lines, int insertLine) {
 		ArrayList<String> source = new ArrayList<String>();
-		int lineNumber = StringUtilities.extractIntegerFromString(lines[insertLine]);
+		int lineNumber = StringUtil.extractIntegerFromString(lines[insertLine]);
 		for (int i = insertLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;
@@ -151,7 +151,7 @@ public class JavaSourceDiff {
 	private static SourceDiffDelete getSourceDiffDeleteFromDiffDescription(
 			String[] lines, int deleteLine) {
 		ArrayList<String> source = new ArrayList<String>();
-		int lineNumber = StringUtilities.extractIntegerFromString(lines[deleteLine]);
+		int lineNumber = StringUtil.extractIntegerFromString(lines[deleteLine]);
 		for (int i = deleteLine + 1;; i++) {
 			if (lines[i].startsWith(Diff.HEADER_ARROW))
 				break;

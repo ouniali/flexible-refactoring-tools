@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.PrimitiveType;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
-import utitilies.StringUtilities;
+import utitilies.StringUtil;
 
 public class NewMethodSignatureForExtractMethod {
 
@@ -116,7 +116,7 @@ public class NewMethodSignatureForExtractMethod {
 			while (tokens.hasMoreTokens()) {
 				String token = tokens.nextToken();
 				if (!token.equals(modifier) && !token.equals(returnType)
-						&& StringUtilities.isJavaIdentifier(token)) {
+						&& StringUtil.isJavaIdentifier(token)) {
 					methodNameAvailable = true;
 					methodName = token;
 					return;

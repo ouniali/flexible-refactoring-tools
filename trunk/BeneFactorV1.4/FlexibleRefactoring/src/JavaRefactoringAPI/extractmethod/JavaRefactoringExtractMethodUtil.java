@@ -23,8 +23,8 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
-import utitilies.StringUtilities;
-import utitilies.UserInterfaceUtilities;
+import utitilies.StringUtil;
+import utitilies.UIUtil;
 
 public class JavaRefactoringExtractMethodUtil {
 	
@@ -37,7 +37,7 @@ public class JavaRefactoringExtractMethodUtil {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run(){
 				try{
-					JavaEditor editor = UserInterfaceUtilities.getActiveJavaEditor();
+					JavaEditor editor = UIUtil.getActiveJavaEditor();
 					if(editor == null)
 						return;
 					IDocument document = editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
@@ -77,7 +77,7 @@ public class JavaRefactoringExtractMethodUtil {
 	}
 
 	private static ArrayList<Integer> getUsedIndices(String source) {
-		ArrayList<String> names = StringUtilities.getMatchedStrings(source, MNAMEPATTERN);
+		ArrayList<String> names = StringUtil.getMatchedStrings(source, MNAMEPATTERN);
 		ArrayList<Integer> indexes = new ArrayList<Integer>();
 		for(String name: names)
 		{
