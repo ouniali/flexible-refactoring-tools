@@ -42,4 +42,10 @@ public class ASTExtractMethodActivity {
 			return false;
 	}
 	
+	
+	public boolean equals(Object o)
+	{
+		CompilationUnitHistoryRecord another = ((ASTExtractMethodActivity)o).record;
+		return record.equals(another);
+	}
 }
