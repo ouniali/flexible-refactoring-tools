@@ -103,7 +103,8 @@ public class CompilationUnitHistory {
 		//extract method
 		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
 		{
-			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(ExtractMethod.detectedExtractMethodChanges.size()-1);
+			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(
+					ExtractMethod.detectedExtractMethodChanges.size()-1);
 			refactoring = infor.getJavaExtractMethodRefactoring(unit);
 			RefactoringChances.addNewRefactoringChance(refactoring);
 		}
@@ -111,7 +112,8 @@ public class CompilationUnitHistory {
 		if(ExtractMethod.LookingBackForExtractMethodActivities(records))
 		{
 			System.out.println("copy statements.");
-			ASTExtractMethodActivity act = ExtractMethod.detectedExtractMethodActivities.get(ExtractMethod.detectedExtractMethodActivities.size() - 1);
+			ASTExtractMethodActivity act = ExtractMethod.detectedExtractMethodActivities.get(
+					ExtractMethod.detectedExtractMethodActivities.size() - 1);
 			refactoring = act.getJavaExtractMethodRefactoring(unit);
 			RefactoringChances.addNewRefactoringChance(refactoring);
 		}
@@ -123,7 +125,8 @@ public class CompilationUnitHistory {
 			if(newSig != null)
 			{
 				System.out.println(newSig);
-				JavaRefactoringExtractMethodChange pendingEM = (JavaRefactoringExtractMethodChange) RefactoringChances.getPendingExtractMethodRefactoring().get(0);
+				JavaRefactoringExtractMethodChange pendingEM = (JavaRefactoringExtractMethodChange) 
+						RefactoringChances.getPendingExtractMethodRefactoring().get(0);
 				RefactoringChances.removeRefactoring(pendingEM);
 				int line = newSig.getLineNumber();
 				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
