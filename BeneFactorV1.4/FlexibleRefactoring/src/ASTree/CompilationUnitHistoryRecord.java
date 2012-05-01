@@ -283,7 +283,11 @@ public class CompilationUnitHistoryRecord {
 		return another.ASTFileName.equals(this.ASTFileName);
 	}
 	
-	
+	public void finalize()
+	{	
+		FileUtil.delete(this.getASTFilePath());
+		FileUtil.delete(this.getBindingTablePath());
+	}
 	
 
 

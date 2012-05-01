@@ -13,11 +13,17 @@ import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 public class RefactoringChances {
 	
 	private static ArrayList<JavaRefactoring> refactorings = new ArrayList<JavaRefactoring>();
+	static final int max_size = 2;
 	
 	public static void addNewRefactoringChance(JavaRefactoring ref)
 	{
 		if(ref != null)
+		{
+			if(refactorings.size() == max_size)
+				refactorings.remove(0);
 			refactorings.add(ref);
+		}
+			
 	}
 	public static ArrayList<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line)
 	{
