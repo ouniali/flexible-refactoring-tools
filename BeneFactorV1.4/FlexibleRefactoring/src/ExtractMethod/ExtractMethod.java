@@ -76,7 +76,9 @@ public class ExtractMethod {
 	
 	public static boolean LookingBackForExtractMethodActivities(ArrayList<CompilationUnitHistoryRecord> records)
 	{	
-		for(int i = records.size() - 1; i>=0; i--)
+		
+		return false;
+/*		for(int i = records.size() - 1; i>=0; i--)
 		{
 			if(ASTExtractMethodActivity.isCopyingStatements(records.get(i)))
 			{
@@ -84,7 +86,7 @@ public class ExtractMethod {
 				return true;
 			}
 		}
-		return false;
+		return false;*/
 	}
 	
 
