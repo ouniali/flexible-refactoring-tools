@@ -1,9 +1,14 @@
 package JavaRefactoringAPI.extractmethod;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.corext.refactoring.code.ExtractMethodRefactoring;
 import org.eclipse.jdt.internal.ui.javaeditor.EditorHighlightingSynchronizer;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
@@ -17,10 +22,13 @@ import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
+import utitilies.StringUtilities;
 import utitilies.UserInterfaceUtilities;
 
 public class JavaRefactoringExtractMethodUtil {
 	
+	final static String BASENAME = "extractedmethod";
+	final static String MNAMEPATTERN = BASENAME + "\\d*";
 	
 	@SuppressWarnings("restriction")
 	public static void prepareLinkedEdition(ICompilationUnit unit, String methodName)
@@ -52,13 +60,33 @@ public class JavaRefactoringExtractMethodUtil {
 		
 	}
 	
-	public static String getExtractedMethodName(ICompilationUnit unit) {
-		int index = 0;
-		if (index == 0)
-			return "extractedMethod";
-		else
-			return "extractedMethod" + Integer.toString(index);
+	public static String getExtractedMethodName(ICompilationUnit unit) throws Exception  {
+	
+		ArrayList<Integer> used = getUsedIndices(unit.getSource());
+		for(int min_available = 0; ;min_available++)
+		{
+			if(!used.contains(new Integer(min_available)))
+				return BASENAME + min_available;
+		}	
 	}
+
+	private static ArrayList<Integer> getUsedIndices(String source) {
+		String[] names = StringUtilities.getMatchedStrings(source, MNAMEPATTERN);
+		ArrayList<Integer> indexes = new ArrayList<Integer>();
+		for(int i = 0; i< names.length; i++)
+		{
+			String num = names[i].substring(BASENAME.length());
+			if(!num.isEmpty())
+				indexes.add(Integer.parseInt(num));
+		}
+		
+		return indexes;
+	}
+	
+	
+	
+	
+	
 	
 	@SuppressWarnings("restriction")
 	public static void performEclipseRefactoring(ICompilationUnit unit, int start, 
