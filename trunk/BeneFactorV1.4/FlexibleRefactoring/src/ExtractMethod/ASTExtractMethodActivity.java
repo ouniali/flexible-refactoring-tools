@@ -30,14 +30,19 @@ public class ASTExtractMethodActivity {
 	
 	public static boolean isCopyingStatements(CompilationUnitHistoryRecord record)
 	{
-		int start = record.getSeletectedRegion()[0];
-		int end = record.getSeletectedRegion()[1];
-		int length = end - start + 1;
-		String statements = StringUtilities.removeWhiteSpace(record.getSourceCode().substring(start, start + length));
-		String block = StringUtilities.removeWhiteSpace(ASTreeManipulationMethods.parseStatements(statements).toString());
-		block = block.substring(1, block.length() - 1);		
-		if(block.equals(statements))
-			return true;
+		if(record.hasCopyCommand())
+		{
+			int start = record.getSeletectedRegion()[0];
+			int end = record.getSeletectedRegion()[1];
+			int length = end - start + 1;
+			String statements = StringUtilities.removeWhiteSpace(record.getSourceCode().substring(start, start + length));
+			String block = StringUtilities.removeWhiteSpace(ASTreeManipulationMethods.parseStatements(statements).toString());
+			block = block.substring(1, block.length() - 1);		
+			if(block.equals(statements))
+				return true;
+			else
+				return false;
+		}
 		else
 			return false;
 	}
