@@ -5,8 +5,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 
 import userinterface.RefactoringMarker;
-import utitilies.StringUtil;
-import utitilies.UIUtil;
+import util.StringUtil;
+import util.UIUtil;
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodActivity;
