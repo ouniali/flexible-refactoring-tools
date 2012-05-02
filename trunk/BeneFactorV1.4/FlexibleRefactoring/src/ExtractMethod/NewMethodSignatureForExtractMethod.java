@@ -10,7 +10,7 @@ import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
-import utitilies.StringUtil;
+import util.StringUtil;
 
 public class NewMethodSignatureForExtractMethod {
 

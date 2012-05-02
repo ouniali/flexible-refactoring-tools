@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.*;
 
-import utitilies.StringUtil;
+import util.StringUtil;
 
 import compare.*;
 
