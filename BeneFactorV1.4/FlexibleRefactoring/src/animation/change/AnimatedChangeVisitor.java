@@ -9,7 +9,7 @@ import org.eclipse.text.edits.*;
 import animation.Animation;
 import animation.MovableText;
 
-import utitilies.UIUtil;
+import util.UIUtil;
 
 public class AnimatedChangeVisitor extends TextEditVisitor{
 	

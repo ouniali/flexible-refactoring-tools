@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import utitilies.FileUtil;
+import util.FileUtil;
 
 public class FloatingShellImage extends FloatingObject
 {

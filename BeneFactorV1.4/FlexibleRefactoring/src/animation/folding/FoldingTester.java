@@ -3,7 +3,7 @@ package animation.folding;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 
-import utitilies.UIUtil;
+import util.UIUtil;
 
 public class FoldingTester implements Runnable{
 
