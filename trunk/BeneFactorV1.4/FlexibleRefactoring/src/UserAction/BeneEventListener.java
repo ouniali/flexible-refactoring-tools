@@ -5,7 +5,7 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.mylyn.monitor.core.InteractionEvent.Kind;
 import org.eclipse.mylyn.monitor.core.IInteractionEventListener;
 
-import utitilies.UIUtil;
+import util.UIUtil;
 
 public class BeneEventListener implements IInteractionEventListener {
 
