@@ -37,16 +37,6 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 
 
 	@Override
-	public void preProcess() {
-			
-	}
-
-	@Override
-	public void postProcess() {
-	
-	}
-
-	@Override
 	public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(
 			IMarker marker, int l) throws Exception {
 		return null;

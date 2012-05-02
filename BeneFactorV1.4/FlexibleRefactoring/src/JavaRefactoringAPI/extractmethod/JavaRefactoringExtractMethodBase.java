@@ -113,8 +113,6 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		source = JavaSourceDiff.applyPatches(source, patches);
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
 	}
-
-	
 	
 	public abstract JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception;
 	
