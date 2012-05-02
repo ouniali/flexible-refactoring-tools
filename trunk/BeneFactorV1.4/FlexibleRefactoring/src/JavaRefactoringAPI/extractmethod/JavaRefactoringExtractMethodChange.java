@@ -75,15 +75,10 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 		
 	}
 
-
-
 	@Override
 	protected void performCodeRecovery(IProgressMonitor monitor) {
 		information.recoverICompilationUnitToOldRecord(monitor);	
 	}
-
-
-
 	
 	public ASTExtractMethodChangeInformation getExtractMethodChangeInformation()
 	{
