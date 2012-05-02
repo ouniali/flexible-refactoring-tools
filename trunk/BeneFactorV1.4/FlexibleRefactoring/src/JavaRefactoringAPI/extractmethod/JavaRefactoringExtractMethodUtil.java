@@ -23,8 +23,8 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
-import utitilies.StringUtil;
-import utitilies.UIUtil;
+import util.StringUtil;
+import util.UIUtil;
 
 public class JavaRefactoringExtractMethodUtil {
 	

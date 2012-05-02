@@ -12,7 +12,7 @@ import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.ui.IEditorInput;
 
-import utitilies.UIUtil;
+import util.UIUtil;
 
 import compilation.RefactoringChances;
 import ASTree.CompilationUnitHistory;
