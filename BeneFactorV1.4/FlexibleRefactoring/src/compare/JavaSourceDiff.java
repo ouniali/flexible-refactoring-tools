@@ -9,7 +9,7 @@ import org.eclipse.compare.internal.*;
 
 import compare.diff_match_patch.Patch;
 
-import utitilies.*;
+import util.*;
 
 public class JavaSourceDiff {
 
