@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CompilationUnitManipulationMethod;
 import ExtractMethod.ASTExtractMethodActivity;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
@@ -30,7 +31,8 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 
 	@Override
 	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
-		return;
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(
+				this.getICompilationUnit(), activity.getRecord().getSourceCode(), null);
 	}
 
 
@@ -49,5 +51,24 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 			IMarker marker, int l) throws Exception {
 		return null;
 	}
+
+
+
+	@Override
+	protected CompilationUnitHistoryRecord getRecordAfterRefactoring() {
+		return activity.getRecord().getAllHistory().getMostRecentRecord();
+	}
+
+	@Override
+	protected CompilationUnitHistoryRecord getRecordAfterRecovery() {
+		return activity.getRecord();
+	}
+
+	@Override
+	protected CompilationUnitHistoryRecord getNonrefactoringChangeStart() {
+		return activity.getRecord();
+	}
+
+
 
 }

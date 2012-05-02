@@ -27,7 +27,7 @@ public class RefactoringChances {
 		}
 			
 	}
-	public static ArrayList<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line)
+	public static ArrayList<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
 	{
 		ArrayList<JavaRefactoring> results = new ArrayList<JavaRefactoring>();
 		
@@ -41,7 +41,7 @@ public class RefactoringChances {
 		return results;	
 	}
 	
-	public static JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line)
+	public static JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line) throws Exception
 	{
 		ArrayList<JavaRefactoring> refs = getJavaRefactorings(unit, line);
 		int index = refs.size() - 1;

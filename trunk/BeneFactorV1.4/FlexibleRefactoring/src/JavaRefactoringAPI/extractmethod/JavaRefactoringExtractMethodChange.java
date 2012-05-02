@@ -48,44 +48,20 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 	@SuppressWarnings("restriction")
 	
 	ASTExtractMethodChangeInformation information;
-	CompilationUnitHistoryRecord non_refactoring_change_end;
-	
-	
 	
 	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) throws Exception{
 		super(u, l, m);
 		information = info;	
 	}
-
-	public void setNonrefactoringChangeEnd(CompilationUnitHistoryRecord r)
-	{
-		non_refactoring_change_end = r;
-	}
 	
-	private CompilationUnitHistoryRecord getNonrefactoringChangeStart()
+	protected CompilationUnitHistoryRecord getNonrefactoringChangeStart()
 	{
 		return information.getNewCompilationUnitRecord();
 	}
 	
-	private CompilationUnitHistoryRecord getNonRefactoringChangeEnd()
-	{
-		if(non_refactoring_change_end != null)
-			return non_refactoring_change_end;
-		CompilationUnitHistoryRecord latestR = information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
-		String source_after_refactoring = latestR.getSourceCode();
-		String source_after_recovering = information.getOldCompilationUnitRecord().getSourceCode();
-		CompilationUnitHistoryRecord endR = latestR;
-	
-		while(endR.getSourceCode().equals(source_after_refactoring) 
-				|| endR.getSourceCode().equals(source_after_recovering))
-			endR = endR.getPreviousRecord();
-		
-		return endR;
-	}
-	
 	@SuppressWarnings("restriction")
 	@Override
-	public void performRefactoring(IProgressMonitor pm) {
+	public void performRefactoring(IProgressMonitor pm) throws Exception{
 		int[] index;
 		index = information.getSelectionStartAndEnd(this.getICompilationUnit());
 		try {
@@ -118,7 +94,8 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 	public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception
 	{
 		JavaRefactoringExtractMethodChange refactoring = 
-				new JavaRefactoringExtractMethodChange(getICompilationUnit(), l, marker, getExtractMethodChangeInformation());
+				new JavaRefactoringExtractMethodChange(getICompilationUnit(), 
+						l, marker, getExtractMethodChangeInformation());
 		refactoring.setModifier(this.getModifier());
 		refactoring.setMethodName(this.getMethodName());
 		return refactoring; 
@@ -126,40 +103,12 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 	
 
 
-
 	@Override
-	public void postProcess() {
-		
-		CompilationUnitHistoryRecord startR = this.getNonrefactoringChangeStart();
-		CompilationUnitHistoryRecord endR = this.getNonRefactoringChangeEnd();
-		
-		
-		try{
-			redoUnrefactoringChanges(startR, endR);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		JavaRefactoringExtractMethodUtil.prepareLinkedEdition(this.getICompilationUnit(), this.getMethodName());
-		
-		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id + ".ExtractMethod", "extract method"));
+	protected CompilationUnitHistoryRecord getRecordAfterRefactoring() {
+		return  information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
 	}
-	
-	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord) throws Exception
-	{
-		String source;
-		source = this.getICompilationUnit().getSource();
-		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), endRecord.getSourceCode());
-		source = JavaSourceDiff.applyPatches(source, patches);
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(this.getICompilationUnit(), source, new NullProgressMonitor());
-	}
-
 	@Override
-	public void preProcess() {
-		
+	protected CompilationUnitHistoryRecord getRecordAfterRecovery() {
+		return information.getOldCompilationUnitRecord();
 	}
-	
-	
-
 }

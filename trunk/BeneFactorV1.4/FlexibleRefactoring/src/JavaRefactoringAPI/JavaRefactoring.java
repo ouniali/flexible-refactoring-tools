@@ -40,8 +40,9 @@ public abstract class JavaRefactoring extends Job{
 	public IStatus run(IProgressMonitor pm) {
 		
 		SubMonitor progress = SubMonitor.convert(pm, "Running refactoring", 100);
-		ICompilationUnit unit = this.getICompilationUnit();
+		
 		try {
+			ICompilationUnit unit = this.getICompilationUnit();
 			UIUtil.freezeEditor(UIUtil.getActiveJavaEditor());
 			
 			unit.becomeWorkingCopy(progress.newChild(1));
@@ -74,13 +75,9 @@ public abstract class JavaRefactoring extends Job{
 		line = l;
 		marker = m;
 	}
-	public final ICompilationUnit getICompilationUnit()
+	public final ICompilationUnit getICompilationUnit() throws Exception
 	{
-		try {
-			unit.makeConsistent(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		unit.makeConsistent(null);
 		return unit;
 	}
 	public final int getLineNumber()
@@ -92,7 +89,7 @@ public abstract class JavaRefactoring extends Job{
 	{
 		return marker;
 	}
-	protected JavaUndoRefactoring getJavaUndoRefactoring()
+	protected JavaUndoRefactoring getJavaUndoRefactoring() throws Exception
 	{
 		if(getUndo()!= null)
 			return new JavaUndoRefactoring(getICompilationUnit(), getLineNumber(), getRefactoringType(), getUndo() );
@@ -101,6 +98,6 @@ public abstract class JavaRefactoring extends Job{
 	}
 	
 	abstract public int getRefactoringType();
-    public abstract void preProcess();
-	public abstract void postProcess();	
+    public abstract void preProcess() throws Exception;
+	public abstract void postProcess() throws Exception;	
 }
