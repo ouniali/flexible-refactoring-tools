@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import utitilies.FileUtil;
+import util.FileUtil;
 
 public class ASTChangeInformation {
 
