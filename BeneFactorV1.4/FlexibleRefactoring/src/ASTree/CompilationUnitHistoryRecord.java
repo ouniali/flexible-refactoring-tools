@@ -14,8 +14,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.IRegion;
 
-import utitilies.FileUtil;
-import utitilies.UIUtil;
+import util.FileUtil;
+import util.UIUtil;
 import Rename.NamesInCompilationUnit;
 import ExtractMethod.ExtractMethod;
 import UserAction.UserActionData;
