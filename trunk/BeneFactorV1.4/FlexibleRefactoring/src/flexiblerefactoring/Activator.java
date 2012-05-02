@@ -4,7 +4,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import utitilies.FileUtil;
+import util.FileUtil;
 
 import ASTree.ASTChangeInformation;
 import ASTree.CompilationUnitHistoryRecord;
