@@ -17,8 +17,8 @@ import org.pushingpixels.trident.Timeline;
 
 
 
-import utitilies.FileUtil;
-import utitilies.UIUtil;
+import util.FileUtil;
+import util.UIUtil;
 
 public class MovableCode extends MovableObject{
 

@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.junit.Assert;
 
-import utitilies.UIUtil;
+import util.UIUtil;
 
 
 public class SingleFileEdition extends Observable implements Runnable, Observer{
