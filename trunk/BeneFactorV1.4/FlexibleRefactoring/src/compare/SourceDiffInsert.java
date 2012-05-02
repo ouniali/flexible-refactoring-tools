@@ -2,7 +2,7 @@ package compare;
 
 import java.util.ArrayList;
 
-import utitilies.StringUtil;
+import util.StringUtil;
 
 public class SourceDiffInsert extends SourceDiff{
 
