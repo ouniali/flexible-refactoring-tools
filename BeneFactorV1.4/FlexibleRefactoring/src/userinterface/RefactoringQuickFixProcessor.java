@@ -30,6 +30,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 	@Override
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
+		try{
 		ICompilationUnit unit = context.getCompilationUnit();
 		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
 		boolean get_all = false;
@@ -51,7 +52,11 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 			result[0] = getRefactoringProposalRefactoring(refactoring);
 			return result;
 		}
-			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 

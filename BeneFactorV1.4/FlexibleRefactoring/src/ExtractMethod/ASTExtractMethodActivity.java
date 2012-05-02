@@ -16,6 +16,10 @@ public class ASTExtractMethodActivity {
 
 	private final CompilationUnitHistoryRecord record;
 	
+	public CompilationUnitHistoryRecord getRecord() {
+		return record;
+	}
+
 	public ASTExtractMethodActivity(CompilationUnitHistoryRecord r)
 	{
 		record = r;
@@ -64,6 +68,8 @@ public class ASTExtractMethodActivity {
 		else
 			return false;
 	}
+	
+	
 	
 	
 	public boolean equals(Object o)
