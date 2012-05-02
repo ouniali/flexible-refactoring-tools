@@ -39,7 +39,11 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 	@Override
 	public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(
 			IMarker marker, int l) throws Exception {
-		return null;
+		JavaRefactoringExtractMethodActivity ref = new JavaRefactoringExtractMethodActivity
+				(this.getICompilationUnit(), l, marker, activity);
+		ref.setMethodName(getMethodName());
+		ref.setModifier(getModifier());
+		return ref;
 	}
 
 
