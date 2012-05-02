@@ -70,7 +70,7 @@ public class RefactoringChances {
 		
 		for(JavaRefactoring ref : refactorings)
 		{
-			if(ref instanceof JavaRefactoringExtractMethodChange)
+			if(ref.getRefactoringType() == JavaRefactoringType.EXTRACT_METHOD)
 				extracts.add(ref);
 		}	
 		return extracts;	
@@ -82,7 +82,7 @@ public class RefactoringChances {
 		
 		for(JavaRefactoring ref : refactorings)
 		{
-			if(ref instanceof JavaRefactoringRename || ref instanceof JavaRefactoringRenameDiff)
+			if(ref.getRefactoringType() == JavaRefactoringType.RENAME)
 				renames.add(ref);
 		}	
 		return renames;
