@@ -32,8 +32,7 @@ public class ExtractMethod {
 				break;
 			String s = MethodSignaturehelper(current);
 			if(!s.equals(""))
-				return new NewMethodSignatureForExtractMethod (s, current);
-			
+				return new NewMethodSignatureForExtractMethod (s, current);		
 		}
 		return null;
 	}
@@ -64,9 +63,6 @@ public class ExtractMethod {
 		else
 			return "";
 	}
-	
-	
-	
 	
 
 	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 
