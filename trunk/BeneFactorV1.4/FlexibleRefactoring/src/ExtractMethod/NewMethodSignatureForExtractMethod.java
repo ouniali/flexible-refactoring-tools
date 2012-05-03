@@ -48,9 +48,9 @@ public class NewMethodSignatureForExtractMethod {
 		
 	}
 
-	public NewMethodSignatureForExtractMethod(int line, String info, CompilationUnitHistoryRecord cr) {
+	public NewMethodSignatureForExtractMethod(String info, CompilationUnitHistoryRecord cr) {
 
-		lineNumber = line;
+		lineNumber = cr.getSourceDiff().getLineNumber();
 		signature = info;
 		signature = info.replace('(', ' ').replace(')', ' ');
 

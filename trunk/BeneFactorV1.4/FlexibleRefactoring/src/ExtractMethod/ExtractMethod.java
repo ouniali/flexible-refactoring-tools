@@ -20,10 +20,26 @@ public class ExtractMethod {
 	public static final ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
 	public static final ArrayList<ASTExtractMethodActivity> detectedExtractMethodActivities = new ArrayList<ASTExtractMethodActivity>();
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
+	public static final int MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE = 5;
 
 	public static NewMethodSignatureForExtractMethod getEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord) 
 	{
-		SourceDiff diff = newRecord.getSourceDiff();
+		
+		CompilationUnitHistoryRecord current = newRecord;
+		for(int i = 0; i <MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE; i ++)
+		{
+			if(current == null)
+				break;
+			String s = MethodSignaturehelper(current);
+			if(!s.equals(""))
+				return new NewMethodSignatureForExtractMethod (s, current);
+		}
+		return null;
+		
+		
+		
+		
+/*		SourceDiff diff = newRecord.getSourceDiff();
 		ASTMethodDeclarationVisitor methodVisitor = new ASTMethodDeclarationVisitor();
 		CompilationUnit tree = newRecord.getASTree();
 		tree.accept(methodVisitor);
@@ -31,20 +47,51 @@ public class ExtractMethod {
 		if (diff instanceof SourceDiffChange) {
 			SourceDiffChange diffChange = (SourceDiffChange) diff;
 			int line = diffChange.getLineNumber();
-			if( methodVisitor.getOutsideMethodDeclarationName(line).equals(""))
+			if( methodVisitor.getMethodDeclarationName(line).equals(""))
 				return new NewMethodSignatureForExtractMethod(line, diffChange.getCodeAfterChange(), newRecord);
 			else
 				return null;
 		} else if (diff instanceof SourceDiffInsert) {
 			SourceDiffInsert diffInsert = (SourceDiffInsert) diff;
 			int line = diffInsert.getLineNumber();
-			if( methodVisitor.getOutsideMethodDeclarationName(line).equals(""))
+			if( methodVisitor.getMethodDeclarationName(line).equals(""))
 				return new NewMethodSignatureForExtractMethod (line, diffInsert.getInsertedCode(), newRecord);
 			else
 				return null;
 		} else
-			return null;
+			return null;*/
 	}
+	
+	private static String MethodSignaturehelper(CompilationUnitHistoryRecord record)
+	{
+		SourceDiff diff = record.getSourceDiff();
+		if(diff == null)
+			return "";
+		CompilationUnit tree = record.getASTree();
+		ASTMethodDeclarationVisitor mVisitor = new ASTMethodDeclarationVisitor();
+		tree.accept(mVisitor);
+		int line = diff.getLineNumber();
+		if(mVisitor.isInMethod(line))
+			return "";
+		else
+			return getCode(diff);
+	}
+	
+	private static String getCode(SourceDiff diff)
+	{
+		if (diff instanceof SourceDiffChange) {
+			return ((SourceDiffChange) diff).getCodeAfterChange();
+		}
+		else if(diff instanceof SourceDiffInsert){
+			return ((SourceDiffInsert) diff).getInsertedCode();
+		}
+		else
+			return "";
+	}
+	
+	
+	
+	
 
 	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 
 	{
