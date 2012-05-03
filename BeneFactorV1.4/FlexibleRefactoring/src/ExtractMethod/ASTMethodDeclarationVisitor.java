@@ -30,7 +30,7 @@ public class ASTMethodDeclarationVisitor extends ASTVisitor {
 		return false;
 	}
 
-	public String getOutsideMethodDeclarationName(int line) {
+	public String getMethodDeclarationName(int line) {
 		for (int i = 0; i < methodDeclarationStartLine.size(); i++) {
 			int start = methodDeclarationStartLine.get(i);
 			int end = methodDeclarationEndLine.get(i);
@@ -39,6 +39,11 @@ public class ASTMethodDeclarationVisitor extends ASTVisitor {
 				return name;
 		}
 		return "";
+	}
+	
+	public boolean isInMethod(int line)
+	{
+		return !getMethodDeclarationName(line).equals("");
 	}
 	
 
