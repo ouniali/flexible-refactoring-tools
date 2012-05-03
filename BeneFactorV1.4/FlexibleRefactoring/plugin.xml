@@ -77,7 +77,7 @@
             state="false" 
             lightweight="true" 
             icon="icons/refactoring.png" 
-            class="com.xyz.LightweightDecoratorContributor"
+            class="animation.autoedition.FileChangeDecorator"
             location="TOP_LEFT"> 
             <enablement>
                 <objectClass name="org.eclipse.core.resources.IResource"/> 
