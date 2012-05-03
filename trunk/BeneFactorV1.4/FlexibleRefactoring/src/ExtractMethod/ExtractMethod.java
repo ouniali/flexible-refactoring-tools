@@ -26,40 +26,16 @@ public class ExtractMethod {
 	{
 		
 		CompilationUnitHistoryRecord current = newRecord;
-		for(int i = 0; i <MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE; i ++)
+		for(int i = 0; i < MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE; i ++, current = current.getPreviousRecord())
 		{
 			if(current == null)
 				break;
 			String s = MethodSignaturehelper(current);
 			if(!s.equals(""))
 				return new NewMethodSignatureForExtractMethod (s, current);
+			
 		}
 		return null;
-		
-		
-		
-		
-/*		SourceDiff diff = newRecord.getSourceDiff();
-		ASTMethodDeclarationVisitor methodVisitor = new ASTMethodDeclarationVisitor();
-		CompilationUnit tree = newRecord.getASTree();
-		tree.accept(methodVisitor);
-
-		if (diff instanceof SourceDiffChange) {
-			SourceDiffChange diffChange = (SourceDiffChange) diff;
-			int line = diffChange.getLineNumber();
-			if( methodVisitor.getMethodDeclarationName(line).equals(""))
-				return new NewMethodSignatureForExtractMethod(line, diffChange.getCodeAfterChange(), newRecord);
-			else
-				return null;
-		} else if (diff instanceof SourceDiffInsert) {
-			SourceDiffInsert diffInsert = (SourceDiffInsert) diff;
-			int line = diffInsert.getLineNumber();
-			if( methodVisitor.getMethodDeclarationName(line).equals(""))
-				return new NewMethodSignatureForExtractMethod (line, diffInsert.getInsertedCode(), newRecord);
-			else
-				return null;
-		} else
-			return null;*/
 	}
 	
 	private static String MethodSignaturehelper(CompilationUnitHistoryRecord record)
