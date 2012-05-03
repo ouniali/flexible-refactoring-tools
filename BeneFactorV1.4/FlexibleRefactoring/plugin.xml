@@ -70,4 +70,19 @@
             super="org.eclipse.ui.workbench.texteditor.warning">
       </type>
    </extension>
+ 	<extension point="org.eclipse.ui.decorators"> 
+        <decorator
+            id="edu.ncsu.benefactor.decorator" 
+            label="decorators for will-be modified files" 
+            state="false" 
+            lightweight="true" 
+            icon="icons/refactoring.png" 
+            class="com.xyz.LightweightDecoratorContributor"
+            location="TOP_LEFT"> 
+            <enablement>
+                <objectClass name="org.eclipse.core.resources.IResource"/> 
+            </enablement>
+        </decorator>
+    </extension>
+  
 </plugin>
