@@ -32,11 +32,10 @@ public class NewMethodSignatureForExtractMethod {
 	
 	public CompilationUnitHistoryRecord getRecordNonRefactoringChangeEnd()
 	{
-		int sig_line = lineNumber;
 		CompilationUnitHistoryRecord current = current_record;
 		CompilationUnitHistoryRecord after = null;
 		while(current != null && current.getSourceDiff() != null
-				&& current.getSourceDiff().getLineNumber() == sig_line)
+				&& current.getSourceDiff().getLineNumber() == lineNumber)
 		{
 			after = current;
 			current = current.getPreviousRecord();
