@@ -23,8 +23,7 @@ public class ExtractMethod {
 	public static final int MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE = 5;
 
 	public static NewMethodSignatureForExtractMethod getEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord) 
-	{
-		
+	{	
 		CompilationUnitHistoryRecord current = newRecord;
 		for(int i = 0; i < MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE; i ++, current = current.getPreviousRecord())
 		{
