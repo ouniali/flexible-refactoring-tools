@@ -33,10 +33,18 @@ public class NewMethodSignatureForExtractMethod {
 	public CompilationUnitHistoryRecord getRecordNonRefactoringChangeEnd()
 	{
 		int sig_line = current_record.getSourceDiff().getLineNumber();
-		CompilationUnitHistoryRecord tempR = current_record;
-		while(tempR.getSourceDiff().getLineNumber() == sig_line)
-			tempR = tempR.getPreviousRecord();
-		return tempR;
+		CompilationUnitHistoryRecord current = current_record;
+		CompilationUnitHistoryRecord after = null;
+		while(current != null && current.getSourceDiff() != null
+				&& current.getSourceDiff().getLineNumber() == sig_line)
+		{
+			after = current;
+			current = current.getPreviousRecord();
+		}
+		if(current == null)
+			return after;
+		else
+			return current;
 		
 	}
 
@@ -60,7 +68,7 @@ public class NewMethodSignatureForExtractMethod {
 		current_record = cr;
 	}
 
-	public void setJavaRefactoringExtractMethod(JavaRefactoringExtractMethodChange em) {
+	public void setJavaRefactoringExtractMethod(JavaRefactoringExtractMethodBase em) {
 		if (modifierAvailable)
 			em.setModifier(modifier);
 		if (methodNameAvailable)

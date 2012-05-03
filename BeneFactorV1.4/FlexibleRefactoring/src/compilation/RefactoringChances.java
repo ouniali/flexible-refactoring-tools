@@ -15,7 +15,7 @@ import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 public class RefactoringChances {
 	
 	private static ArrayList<JavaRefactoring> refactorings = new ArrayList<JavaRefactoring>();
-	static final int max_size = 2;
+	static final int max_size = 5;
 	
 	public static void addNewRefactoringChance(JavaRefactoring ref)
 	{

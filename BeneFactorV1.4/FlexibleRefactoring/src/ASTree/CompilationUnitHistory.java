@@ -126,12 +126,12 @@ public class CompilationUnitHistory {
 			if(newSig != null)
 			{
 				System.out.println(newSig);
-				JavaRefactoringExtractMethodChange pendingEM = (JavaRefactoringExtractMethodChange) 
+				JavaRefactoringExtractMethodBase pendingEM = (JavaRefactoringExtractMethodBase) 
 						RefactoringChances.getPendingExtractMethodRefactoring().get(0);
 				RefactoringChances.removeRefactoring(pendingEM);
 				int line = newSig.getLineNumber();
 				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-				JavaRefactoringExtractMethodChange newEM = (JavaRefactoringExtractMethodChange)pendingEM.moveExtractMethodRefactoring(marker, line);
+				JavaRefactoringExtractMethodBase newEM = pendingEM.moveExtractMethodRefactoring(marker, line);
 				newSig.setJavaRefactoringExtractMethod(newEM);
 				newEM.setNonrefactoringChangeEnd(newSig.getRecordNonRefactoringChangeEnd());
 				RefactoringChances.addNewRefactoringChance(newEM);	
