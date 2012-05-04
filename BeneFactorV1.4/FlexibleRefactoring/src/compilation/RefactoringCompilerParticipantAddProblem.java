@@ -15,7 +15,7 @@ public class RefactoringCompilerParticipantAddProblem extends CompilationPartici
 
 	public boolean isActive(IJavaProject project) 
 	{
-		return !BeneFactor.SHUT_DOWN && project.isOpen();
+		return !BeneFactor.isShutDown() && project.isOpen();
 	}
 	
 	public void reconcile(ReconcileContext context) 
