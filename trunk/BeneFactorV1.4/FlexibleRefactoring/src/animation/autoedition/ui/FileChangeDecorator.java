@@ -5,6 +5,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.IDecoration;
@@ -22,10 +24,13 @@ import abbot.Platform;
 public class FileChangeDecorator implements ILightweightLabelDecorator{
 
 	static ArrayList<ICompilationUnit> changedUnits = new ArrayList<ICompilationUnit>(); 	
+	static ArrayList<IJavaElement> changedParents = new ArrayList<IJavaElement>();
 	
 	public static void addModifiedUnit(ICompilationUnit u)
 	{
-		changedUnits.add(u);
+		changedUnits.add(u);		
+		for(IJavaElement par = u.getParent(); !(par instanceof IJavaProject); par = par.getParent())
+			changedParents.add(par);
 	}
 	
 	public static void clearModifiedUnit()
@@ -55,9 +60,8 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 
 	@Override
 	public void decorate(Object ob, IDecoration dec) {
-		
 		ImageDescriptor des = Activator.getImageDescriptor(Activator.DECORATOR_ID);
-		if(ob instanceof ICompilationUnit && changedUnits.contains(ob))
+		if(changedUnits.contains(ob) || changedParents.contains(ob))
 		{
 			dec.addOverlay(des, IDecoration.TOP_RIGHT);
 		}
