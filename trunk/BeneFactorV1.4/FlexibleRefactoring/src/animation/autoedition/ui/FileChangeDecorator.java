@@ -36,6 +36,7 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 	public static void clearModifiedUnit()
 	{
 		changedUnits.clear();
+		changedParents.clear();
 	}
 	
 	@Override
