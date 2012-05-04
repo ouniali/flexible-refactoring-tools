@@ -1,7 +1,13 @@
 package flexiblerefactoring;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import util.FileUtil;
@@ -17,7 +23,8 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "BeneFactor"; //$NON-NLS-1$
-
+	public static final String ICON_ID = "BeneFactorIcon";
+	
 	// The shared instance
 	private static Activator plugin;
 	
@@ -58,7 +65,22 @@ public class Activator extends AbstractUIPlugin {
 	public static Activator getDefault() {
 		return plugin;
 	}
+	
+	
+	protected void initializeImageRegistry(ImageRegistry registry) {
+        super.initializeImageRegistry(registry);
+        Bundle bundle = Platform.getBundle(PLUGIN_ID);
 
+        ImageDescriptor myImage = ImageDescriptor.createFromURL(
+              FileLocator.find(bundle,
+                               new Path("icons/refactoring.png"),
+                                        null));
+        registry.put(ICON_ID, myImage);
+    }
+	
+	
+	
+	
 	/**
 	 * Returns an image descriptor for the image file at the given
 	 * plug-in relative path
@@ -66,7 +88,11 @@ public class Activator extends AbstractUIPlugin {
 	 * @param path the path
 	 * @return the image descriptor
 	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	public static ImageDescriptor getImageDescriptor(String image_id) {
+		AbstractUIPlugin plugin = Activator.getDefault();
+		ImageRegistry imageRegistry = plugin.getImageRegistry();
+		Image ima = imageRegistry.get(image_id);
+		return ImageDescriptor.createFromImage(ima);
+	
 	}
 }
