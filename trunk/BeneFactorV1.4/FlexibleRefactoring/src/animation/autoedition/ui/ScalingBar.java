@@ -1,4 +1,4 @@
-package animation.autoedition;
+package animation.autoedition.ui;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
+
+import animation.autoedition.SingleFileEdition;
 
 public class ScalingBar extends Observable implements Observer, Runnable{
 

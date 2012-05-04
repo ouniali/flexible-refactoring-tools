@@ -1,4 +1,4 @@
-package animation.autoedition;
+package animation.autoedition.ui;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jface.resource.ImageDescriptor;
