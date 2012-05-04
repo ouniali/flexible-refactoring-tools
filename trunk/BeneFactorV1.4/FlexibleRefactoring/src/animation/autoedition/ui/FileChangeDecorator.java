@@ -62,9 +62,7 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 	public void decorate(Object ob, IDecoration dec) {
 		ImageDescriptor des = Activator.getImageDescriptor(Activator.DECORATOR_ID);
 		if(changedUnits.contains(ob) || changedParents.contains(ob))
-		{
 			dec.addOverlay(des, IDecoration.TOP_RIGHT);
-		}
 	}
 
 }
