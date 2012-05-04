@@ -11,7 +11,7 @@ import org.osgi.framework.Bundle;
 
 public class BeneFactor {
 	
-	public static boolean SHUT_DOWN = false;
+	private static boolean SHUT_DOWN = false;
 	
 	public static String getIconPath(String PicFileName)
 	{
@@ -37,5 +37,10 @@ public class BeneFactor {
 	public static void start()
 	{
 		SHUT_DOWN = false;
+	}
+	
+	public static boolean isShutDown()
+	{
+		return SHUT_DOWN;
 	}
 }
