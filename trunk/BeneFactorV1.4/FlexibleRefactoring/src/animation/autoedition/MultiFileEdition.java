@@ -25,6 +25,7 @@ public class MultiFileEdition extends Observable{
 			edition.applyEditions();
 			edition.waitFinish();
 		}
+		FileChangeDecorator.clearModifiedUnit();
 	}
 	
 }
