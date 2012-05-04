@@ -28,6 +28,11 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 		changedUnits.add(u);
 	}
 	
+	public static void clearModifiedUnit()
+	{
+		changedUnits.clear();
+	}
+	
 	@Override
 	public void addListener(ILabelProviderListener arg0) {
 	
