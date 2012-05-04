@@ -24,6 +24,7 @@ public class Activator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "BeneFactor"; //$NON-NLS-1$
 	public static final String ICON_ID = "BeneFactorIcon";
+	public static final String DECORATOR_ID = "BeneFactorDecorator";
 	
 	// The shared instance
 	private static Activator plugin;
@@ -71,11 +72,11 @@ public class Activator extends AbstractUIPlugin {
         super.initializeImageRegistry(registry);
         Bundle bundle = Platform.getBundle(PLUGIN_ID);
 
-        ImageDescriptor myImage = ImageDescriptor.createFromURL(
-              FileLocator.find(bundle,
-                               new Path("icons/refactoring.png"),
-                                        null));
+        ImageDescriptor myImage = ImageDescriptor.createFromURL(FileLocator.find(bundle, new Path("icons/refactoring.png"), null));
         registry.put(ICON_ID, myImage);
+        myImage = ImageDescriptor.createFromURL(FileLocator.find(bundle, new Path("icons/decorator.png"), null));
+        registry.put(DECORATOR_ID, myImage);
+        
     }
 	
 	
