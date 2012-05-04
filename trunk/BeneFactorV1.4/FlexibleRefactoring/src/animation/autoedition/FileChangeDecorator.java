@@ -1,13 +1,18 @@
 package animation.autoedition;
 
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
+import abbot.Platform;
+
 public class FileChangeDecorator implements ILightweightLabelDecorator{
 
+		
 	@Override
 	public void addListener(ILabelProviderListener arg0) {
 	
@@ -29,9 +34,12 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 	}
 
 	@Override
-	public void decorate(Object arg0, IDecoration arg1) {
-		System.out.println(arg0.getClass());
-		arg1.setBackgroundColor(new Color(Display.getCurrent(), 0, 0, 0));
+	public void decorate(Object ob, IDecoration dec) {
+		if(ob instanceof ICompilationUnit)
+		{
+			
+			dec.addSuffix(":affected");
+		}
 	}
 
 }
