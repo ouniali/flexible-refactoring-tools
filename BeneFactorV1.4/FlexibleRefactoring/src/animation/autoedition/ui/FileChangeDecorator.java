@@ -12,6 +12,7 @@ import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -25,6 +26,7 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 
 	static ArrayList<ICompilationUnit> changedUnits = new ArrayList<ICompilationUnit>(); 	
 	static ArrayList<IJavaElement> changedParents = new ArrayList<IJavaElement>();
+	ArrayList<ILabelProviderListener> listeners = new ArrayList<ILabelProviderListener>();
 	
 	public static void addModifiedUnit(ICompilationUnit u)
 	{
@@ -40,8 +42,8 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 	}
 	
 	@Override
-	public void addListener(ILabelProviderListener arg0) {
-	
+	public void addListener(ILabelProviderListener lis) {
+		listeners.add(lis);
 	}
 
 	@Override
@@ -55,8 +57,8 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 	}
 
 	@Override
-	public void removeListener(ILabelProviderListener arg0) {
-		
+	public void removeListener(ILabelProviderListener lis) {
+		listeners.remove(lis);
 	}
 
 	@Override
@@ -64,6 +66,12 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 		ImageDescriptor des = Activator.getImageDescriptor(Activator.DECORATOR_ID);
 		if(changedUnits.contains(ob) || changedParents.contains(ob))
 			dec.addOverlay(des, IDecoration.TOP_RIGHT);
+	}
+	//TODO: not finished yet
+	private void refresh()
+	{
+		for(ILabelProviderListener lis : listeners)
+			lis.labelProviderChanged(null);
 	}
 
 }
