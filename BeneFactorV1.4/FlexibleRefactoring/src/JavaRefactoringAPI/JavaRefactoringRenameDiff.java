@@ -19,7 +19,7 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import animation.autoedition.AtomicEdition;
 import animation.autoedition.MultiFileEdition;
 import animation.autoedition.SingleFileEdition;
-import animation.autoedition.ScalingBar;
+import animation.autoedition.ui.ScalingBar;
 import animation.change.AutoEditionVisitor;
 import animation.change.ChangeAnalyzer;
 import animation.change.ChangeAnalyzer.*;

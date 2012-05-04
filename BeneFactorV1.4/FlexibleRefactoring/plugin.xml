@@ -77,7 +77,7 @@
             state="true" 
             lightweight="true" 
             icon="icons/refactoring.png" 
-            class="animation.autoedition.FileChangeDecorator"
+            class="animation.autoedition.ui.FileChangeDecorator"
             location="UNDERLAY"> 
             <enablement>
                 <objectClass name="org.eclipse.jdt.core.IJavaElement"/> 

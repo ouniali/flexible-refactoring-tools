@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.junit.Assert;
 
+import animation.autoedition.ui.ScalingBar;
+
 import util.UIUtil;
 
 

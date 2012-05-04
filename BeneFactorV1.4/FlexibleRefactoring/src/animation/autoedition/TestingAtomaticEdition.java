@@ -2,6 +2,8 @@ package animation.autoedition;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 
+import animation.autoedition.ui.ScalingBar;
+
 public class TestingAtomaticEdition {
 
 	
