@@ -171,21 +171,18 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 
 	@Override
 	public int getRefactoringType() {
-		// TODO Auto-generated method stub
 		return JavaRefactoringType.RENAME;
 	}
 
 
 	@Override
 	public void preProcess() {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
 	public void postProcess() {
-		// TODO Auto-generated method stub
 		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id+".rename", "rename"));
 	}
 
