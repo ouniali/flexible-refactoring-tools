@@ -1,14 +1,19 @@
 package animation.autoedition;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class MultiFileEdition {
+import animation.autoedition.ui.FileChangeDecorator;
+
+public class MultiFileEdition extends Observable{
 
 	ArrayList<SingleFileEdition> File_Editions;
 	
 	public MultiFileEdition(ArrayList arr)
 	{
 		File_Editions = arr;
+		for(SingleFileEdition se : File_Editions)
+			FileChangeDecorator.addModifiedUnit(se.unit);
 	}
 	
 	public void play() throws Exception

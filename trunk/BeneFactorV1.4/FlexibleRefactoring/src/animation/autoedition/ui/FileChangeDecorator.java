@@ -1,5 +1,9 @@
 package animation.autoedition.ui;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -17,7 +21,13 @@ import abbot.Platform;
 
 public class FileChangeDecorator implements ILightweightLabelDecorator{
 
-		
+	static ArrayList<ICompilationUnit> changedUnits = new ArrayList<ICompilationUnit>(); 	
+	
+	public static void addModifiedUnit(ICompilationUnit u)
+	{
+		changedUnits.add(u);
+	}
+	
 	@Override
 	public void addListener(ILabelProviderListener arg0) {
 	
@@ -42,7 +52,7 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 	public void decorate(Object ob, IDecoration dec) {
 		
 		ImageDescriptor des = Activator.getImageDescriptor(Activator.DECORATOR_ID);
-		if(ob instanceof ICompilationUnit)
+		if(ob instanceof ICompilationUnit && changedUnits.contains(ob))
 		{
 			dec.addOverlay(des, IDecoration.TOP_RIGHT);
 		}
