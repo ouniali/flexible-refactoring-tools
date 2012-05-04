@@ -44,7 +44,7 @@ public class FileChangeDecorator implements ILightweightLabelDecorator{
 		ImageDescriptor des = Activator.getImageDescriptor(Activator.DECORATOR_ID);
 		if(ob instanceof ICompilationUnit)
 		{
-			dec.addOverlay(des, IDecoration.BOTTOM_RIGHT);
+			dec.addOverlay(des, IDecoration.TOP_RIGHT);
 		}
 	}
 
