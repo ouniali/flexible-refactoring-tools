@@ -27,4 +27,15 @@ public class BeneFactor {
 		}
 		return null;
 	}
+	
+	
+	public static void shutDown()
+	{
+		SHUT_DOWN = true;
+	}
+	
+	public static void start()
+	{
+		SHUT_DOWN = false;
+	}
 }

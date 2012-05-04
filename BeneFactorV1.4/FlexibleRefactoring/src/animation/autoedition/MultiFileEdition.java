@@ -3,6 +3,8 @@ package animation.autoedition;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import flexiblerefactoring.BeneFactor;
+
 import animation.autoedition.ui.FileChangeDecorator;
 
 public class MultiFileEdition extends Observable{
@@ -18,6 +20,7 @@ public class MultiFileEdition extends Observable{
 	
 	public void play() throws Exception
 	{
+		BeneFactor.shutDown();
 		for(SingleFileEdition edition : File_Editions)
 		{
 			edition.adjustToSynchronizedApply();
@@ -26,6 +29,7 @@ public class MultiFileEdition extends Observable{
 			edition.waitFinish();
 		}
 		FileChangeDecorator.clearModifiedUnit();
+		BeneFactor.start();
 	}
 	
 }
