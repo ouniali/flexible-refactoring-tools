@@ -13,10 +13,10 @@ package org.eclipse.mylyn.monitor.ui;
 
 /**
  * Extend to monitor periods of user activity and inactivity.
- * 
+ *
  * @author Mik Kersten
  * @author Rob Elves
- * @since 2.0
+ * @since 3.7
  */
 public abstract class AbstractUserActivityMonitor {
 

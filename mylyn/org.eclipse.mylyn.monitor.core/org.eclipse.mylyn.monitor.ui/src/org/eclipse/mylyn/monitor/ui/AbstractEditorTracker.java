@@ -16,9 +16,9 @@ import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * Tracks interaction with workbench editors.
- * 
+ *
  * @author Mik Kersten
- * @since 2.0
+ * @since 3.7
  */
 public abstract class AbstractEditorTracker extends AbstractPartTracker {
 
