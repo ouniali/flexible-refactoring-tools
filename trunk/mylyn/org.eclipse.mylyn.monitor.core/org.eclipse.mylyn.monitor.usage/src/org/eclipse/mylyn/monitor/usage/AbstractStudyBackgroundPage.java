@@ -12,16 +12,16 @@
 
 package org.eclipse.mylyn.monitor.usage;
 
-import java.io.File;
-
 import org.eclipse.jface.wizard.IWizardPage;
+
+import java.io.File;
 
 /**
  * Extend to provide a custom background page.
- * 
+ *
  * @author Leah Findlater
  * @author Mik Kersten
- * @since 2.0
+ * @since 3.7
  */
 public abstract class AbstractStudyBackgroundPage implements IWizardPage {
 

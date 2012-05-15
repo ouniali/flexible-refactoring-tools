@@ -11,15 +11,15 @@
 
 package org.eclipse.mylyn.monitor.usage;
 
-import java.io.File;
-
 import org.eclipse.jface.wizard.WizardPage;
+
+import java.io.File;
 
 /**
  * Extend to provide a custom questionnaire page.
- * 
+ *
  * @author Mik Kersten
- * @since 2.0
+ * @since 3.7
  */
 public abstract class AbstractStudyQuestionnairePage extends WizardPage {
 
