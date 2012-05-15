@@ -104,9 +104,6 @@ public class RefactoringChances {
 		
 	}
 	
-	public static void main()
-	{
-	}
-
+	
 	
 }
