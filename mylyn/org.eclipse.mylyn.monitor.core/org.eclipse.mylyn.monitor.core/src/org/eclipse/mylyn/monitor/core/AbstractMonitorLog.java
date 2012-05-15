@@ -11,20 +11,20 @@
 
 package org.eclipse.mylyn.monitor.core;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.mylyn.commons.core.StatusHandler;
 import org.eclipse.mylyn.internal.monitor.core.IMonitorCoreConstants;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Used for logging interaction events.
- * 
+ *
  * @author Mik Kersten
- * @since 2.0
+ * @since 3.7
  */
 public abstract class AbstractMonitorLog {
 
@@ -65,8 +65,8 @@ public abstract class AbstractMonitorLog {
 			}
 			started = false;
 		} catch (IOException e) {
-			StatusHandler.log(new Status(IStatus.ERROR, IMonitorCoreConstants.ID_PLUGIN,
-					"Could not close interaction event stream", e)); //$NON-NLS-1$
+			StatusHandler.log(new Status(
+					IStatus.ERROR, IMonitorCoreConstants.ID_PLUGIN, "Could not close interaction event stream", e)); //$NON-NLS-1$
 		}
 	}
 
@@ -84,8 +84,8 @@ public abstract class AbstractMonitorLog {
 			}
 			this.outputFile = newFile;
 		} catch (Exception e) {
-			StatusHandler.log(new Status(IStatus.ERROR, IMonitorCoreConstants.ID_PLUGIN,
-					"Could not set logger output file", e)); //$NON-NLS-1$
+			StatusHandler.log(
+					new Status(IStatus.ERROR, IMonitorCoreConstants.ID_PLUGIN, "Could not set logger output file", e)); //$NON-NLS-1$
 		}
 		startMonitoring();
 		return newFile;
