@@ -20,7 +20,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import flexiblerefactoring.Activator;
 
-import abbot.Platform;
+
 
 public class FileChangeDecorator implements ILightweightLabelDecorator{
 
