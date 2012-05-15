@@ -11,17 +11,17 @@
 
 package org.eclipse.mylyn.monitor.core;
 
+import org.eclipse.core.runtime.Assert;
+
 import java.util.Calendar;
 import java.util.Date;
-
-import org.eclipse.core.runtime.Assert;
 
 /**
  * Immutable. Encapsulates interaction made by the user or on behalf of the user. Also see:
  * http://wiki.eclipse.org/index.php/Mylyn_Integrator_Reference#Monitor_API
- * 
+ *
  * @author Mik Kersten
- * @since 2.0
+ * @since 3.7
  */
 public class InteractionEvent {
 
@@ -179,7 +179,11 @@ public class InteractionEvent {
 	/**
 	 * For parameter description see this class's getters.
 	 */
-	public InteractionEvent(Kind kind, String structureKind, String handle, String originId, String navigatedRelation,
+	public InteractionEvent(Kind kind,
+			String structureKind,
+			String handle,
+			String originId,
+			String navigatedRelation,
 			float interestContribution) {
 		this(kind, structureKind, handle, originId, navigatedRelation, "null", interestContribution); //$NON-NLS-1$
 	}
@@ -195,9 +199,15 @@ public class InteractionEvent {
 	 * For parameter description see this class's getters.
 	 */
 	public static InteractionEvent makeCopy(InteractionEvent originalEvent, float newInterestContribution) {
-		return new InteractionEvent(originalEvent.getKind(), originalEvent.getStructureKind(),
-				originalEvent.getStructureHandle(), originalEvent.getOriginId(), originalEvent.getNavigation(),
-				originalEvent.getDelta(), newInterestContribution, originalEvent.getDate(), originalEvent.getEndDate());
+		return new InteractionEvent(originalEvent.getKind(),
+				originalEvent.getStructureKind(),
+				originalEvent.getStructureHandle(),
+				originalEvent.getOriginId(),
+				originalEvent.getNavigation(),
+				originalEvent.getDelta(),
+				newInterestContribution,
+				originalEvent.getDate(),
+				originalEvent.getEndDate());
 	}
 
 	/**
@@ -211,7 +221,8 @@ public class InteractionEvent {
 	/**
 	 * For parameter description see this class's getters.
 	 */
-	public InteractionEvent(Kind kind, String structureKind, String handle, String originId, float interestContribution) {
+	public InteractionEvent(
+			Kind kind, String structureKind, String handle, String originId, float interestContribution) {
 		this(kind, structureKind, handle, originId, "null", "null", interestContribution); // default //$NON-NLS-1$ //$NON-NLS-2$
 		// contribution
 	}
@@ -219,23 +230,54 @@ public class InteractionEvent {
 	/**
 	 * For parameter description see this class's getters.
 	 */
-	public InteractionEvent(Kind kind, String structureKind, String handle, String originId, String navigatedRelation,
-			String delta, float interestContribution) {
-		this(kind, structureKind, handle, originId, navigatedRelation, delta, interestContribution,
+	public InteractionEvent(Kind kind,
+			String structureKind,
+			String handle,
+			String originId,
+			String navigatedRelation,
+			String delta,
+			float interestContribution) {
+		this(kind,
+				structureKind,
+				handle,
+				originId,
+				navigatedRelation,
+				delta,
+				interestContribution,
 				Calendar.getInstance().getTime());
 	}
 
-	private InteractionEvent(Kind kind, String structureKind, String handle, String originId, String navigatedRelation,
-			String delta, float interestContribution, Date startDate) {
-		this(kind, structureKind, handle, originId, navigatedRelation, delta, interestContribution, startDate,
+	private InteractionEvent(Kind kind,
+			String structureKind,
+			String handle,
+			String originId,
+			String navigatedRelation,
+			String delta,
+			float interestContribution,
+			Date startDate) {
+		this(kind,
+				structureKind,
+				handle,
+				originId,
+				navigatedRelation,
+				delta,
+				interestContribution,
+				startDate,
 				startDate);
 	}
 
 	/**
 	 * For parameter description see this class's getters.
 	 */
-	public InteractionEvent(Kind kind, String structureKind, String handle, String originId, String navigatedRelation,
-			String delta, float interestContribution, Date startDate, Date endDate) {
+	public InteractionEvent(Kind kind,
+			String structureKind,
+			String handle,
+			String originId,
+			String navigatedRelation,
+			String delta,
+			float interestContribution,
+			Date startDate,
+			Date endDate) {
 		Assert.isNotNull(kind);
 		Assert.isNotNull(originId);
 		Assert.isNotNull(startDate);
@@ -257,9 +299,8 @@ public class InteractionEvent {
 			return false;
 		}
 		InteractionEvent event = (InteractionEvent) object;
-		return (date == null ? event.date == null : date.equals(event.date))
-				&& (endDate == null ? event.endDate == null : endDate.equals(event.endDate))
-				&& (kind == null ? event.kind == null : kind.equals(event.kind))
+		return (date == null ? event.date == null : date.equals(event.date)) && (endDate == null ? event.endDate == null
+				: endDate.equals(event.endDate)) && (kind == null ? event.kind == null : kind.equals(event.kind))
 				&& (structureKind == null ? event.structureKind == null : structureKind.equals(event.structureKind))
 				&& (structureHandle == null ? event.structureHandle == null
 						: structureHandle.equals(event.structureHandle))
@@ -331,7 +372,7 @@ public class InteractionEvent {
 
 	/**
 	 * Can be used for extensibility, e.g. by adding an XML-encoded String.
-	 * 
+	 *
 	 * @return Additional information relevant to interaction monitoring.
 	 */
 	public String getDelta() {
