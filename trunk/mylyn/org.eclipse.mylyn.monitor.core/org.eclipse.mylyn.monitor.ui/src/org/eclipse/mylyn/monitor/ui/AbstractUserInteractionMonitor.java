@@ -27,10 +27,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 
 /**
  * Self-registering on construction. Encapsulates users' interaction with the context model.
- * 
+ *
  * @author Mik Kersten
  * @author Shawn Minto
- * @since 2.0
+ * @since 3.7
  */
 public abstract class AbstractUserInteractionMonitor implements ISelectionListener {
 
@@ -73,14 +73,14 @@ public abstract class AbstractUserInteractionMonitor implements ISelectionListen
 		}
 	}
 
-	protected abstract void handleWorkbenchPartSelection(IWorkbenchPart part, ISelection selection,
-			boolean contributeToContext);
+	protected abstract void handleWorkbenchPartSelection(
+			IWorkbenchPart part, ISelection selection, boolean contributeToContext);
 
 	/**
 	 * Intended to be called back by subclasses.
 	 */
-	protected InteractionEvent handleElementSelection(IWorkbenchPart part, Object selectedElement,
-			boolean contributeToContext) {
+	protected InteractionEvent handleElementSelection(
+			IWorkbenchPart part, Object selectedElement, boolean contributeToContext) {
 		return handleElementSelection(part.getSite().getId(), selectedElement, contributeToContext);
 	}
 
@@ -94,21 +94,22 @@ public abstract class AbstractUserInteractionMonitor implements ISelectionListen
 	/**
 	 * Intended to be called back by subclasses.
 	 */
-	protected void handleNavigation(IWorkbenchPart part, Object targetElement, String kind, boolean contributeToContext) {
+	protected void handleNavigation(
+			IWorkbenchPart part, Object targetElement, String kind, boolean contributeToContext) {
 		handleNavigation(part.getSite().getId(), targetElement, kind, contributeToContext);
 	}
 
 	/**
 	 * Intended to be called back by subclasses. *
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void handleNavigation(String partId, Object targetElement, String kind, boolean contributeToContext) {
 		AbstractContextStructureBridge adapter = ContextCore.getStructureBridge(targetElement);
 		if (adapter.getContentType() != null) {
 			String handleIdentifier = adapter.getHandleIdentifier(targetElement);
-			InteractionEvent navigationEvent = new InteractionEvent(InteractionEvent.Kind.SELECTION,
-					adapter.getContentType(), handleIdentifier, partId, kind);
+			InteractionEvent navigationEvent = new InteractionEvent(
+					InteractionEvent.Kind.SELECTION, adapter.getContentType(), handleIdentifier, partId, kind);
 			if (handleIdentifier != null && contributeToContext) {
 				ContextCore.getContextManager().processInteractionEvent(navigationEvent);
 			}
@@ -118,7 +119,7 @@ public abstract class AbstractUserInteractionMonitor implements ISelectionListen
 
 	/**
 	 * Intended to be called back by subclasses.
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	protected void handleElementEdit(String partId, Object selectedElement, boolean contributeToContext) {
@@ -127,8 +128,8 @@ public abstract class AbstractUserInteractionMonitor implements ISelectionListen
 		}
 		AbstractContextStructureBridge bridge = ContextCore.getStructureBridge(selectedElement);
 		String handleIdentifier = bridge.getHandleIdentifier(selectedElement);
-		InteractionEvent editEvent = new InteractionEvent(InteractionEvent.Kind.EDIT, bridge.getContentType(),
-				handleIdentifier, partId);
+		InteractionEvent editEvent = new InteractionEvent(
+				InteractionEvent.Kind.EDIT, bridge.getContentType(), handleIdentifier, partId);
 		if (handleIdentifier != null && contributeToContext) {
 			ContextCore.getContextManager().processInteractionEvent(editEvent);
 		}
@@ -137,10 +138,11 @@ public abstract class AbstractUserInteractionMonitor implements ISelectionListen
 
 	/**
 	 * Intended to be called back by subclasses. *
-	 * 
+	 *
 	 * @since 3.1
 	 */
-	protected InteractionEvent handleElementSelection(String partId, Object selectedElement, boolean contributeToContext) {
+	protected InteractionEvent handleElementSelection(
+			String partId, Object selectedElement, boolean contributeToContext) {
 		if (selectedElement == null || selectedElement.equals(lastSelectedElement)) {
 			return null;
 		}
@@ -148,8 +150,8 @@ public abstract class AbstractUserInteractionMonitor implements ISelectionListen
 		String handleIdentifier = bridge.getHandleIdentifier(selectedElement);
 		InteractionEvent selectionEvent;
 		if (bridge.getContentType() != null) {
-			selectionEvent = new InteractionEvent(InteractionEvent.Kind.SELECTION, bridge.getContentType(),
-					handleIdentifier, partId);
+			selectionEvent = new InteractionEvent(
+					InteractionEvent.Kind.SELECTION, bridge.getContentType(), handleIdentifier, partId);
 		} else {
 			selectionEvent = new InteractionEvent(InteractionEvent.Kind.SELECTION, null, null, partId);
 		}

@@ -13,7 +13,7 @@ package org.eclipse.mylyn.monitor.ui;
 
 /**
  * @author Rob Elves
- * @since 3.0
+ * @since 3.7
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
