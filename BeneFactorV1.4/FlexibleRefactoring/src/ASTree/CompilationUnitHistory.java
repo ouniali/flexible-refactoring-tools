@@ -29,62 +29,62 @@ import Rename.NameChangeCountHistory;
 
 public class CompilationUnitHistory {
 	
-	String ProjectName;
-	String PackageName;
-	String UnitName;
-	IJavaProject Project;
-	ICompilationUnit unit;
-	ArrayList<CompilationUnitHistoryRecord> Records;
+	private String projectName;
+	private String packageName;
+	private String unitName;
+	private IJavaProject project;
+	private ICompilationUnit unit;
+	private ArrayList<CompilationUnitHistoryRecord> records;
 	
 	protected CompilationUnitHistory(IJavaProject proj, ICompilationUnit u, String pro, String pac, String un)
 	{
 		unit = u;
-		Project = proj;
-		ProjectName = pro;
-		PackageName = pac;
-		UnitName = un;
-		Records = new ArrayList<CompilationUnitHistoryRecord>();
+		project = proj;
+		projectName = pro;
+		packageName = pac;
+		unitName = un;
+		records = new ArrayList<CompilationUnitHistoryRecord>();
 	}
 	
 	
 	protected void addAST(CompilationUnit tree) throws Exception
 	{
 		CompilationUnitHistoryRecord earlier = null;
-		if(Records.size()> 0)
-			earlier = Records.get(Records.size()-1);
-		Records.add(new CompilationUnitHistoryRecord(Project, unit ,
-				ProjectName, PackageName, UnitName, System.currentTimeMillis(), earlier, this));
+		if(records.size()> 0)
+			earlier = records.get(records.size()-1);
+		records.add(new CompilationUnitHistoryRecord(project, unit ,
+				projectName, packageName, unitName, System.currentTimeMillis(), earlier, this));
 		
-		detectRefactoringOpportunity(Records, unit);
+		detectRefactoringOpportunity(records, unit);
 	}
 	
 
 	
 	protected ASTChangeInformation getMostRecentASTGeneralChange()
 	{
-		CompilationUnitHistoryRecord newRecord = Records.get(Records.size()-1);
+		CompilationUnitHistoryRecord newRecord = records.get(records.size()-1);
 		CompilationUnitHistoryRecord oldRecord = null;
 		
-		if(Records.size()<=1)
+		if(records.size()<=1)
 			return null;
-		oldRecord = Records.get(Records.size()-2);
+		oldRecord = records.get(records.size()-2);
 		ASTChangeInformation change = ASTChangeInformationGenerator.getGeneralASTChangeInformation(oldRecord, newRecord);
 		return change;
 	}
 	protected String getCompilationUnitName()
 	{
-		return UnitName;
+		return unitName;
 	}
 	
 	protected String getPackageName()
 	{
-		return PackageName;
+		return packageName;
 	}
 	
 	public CompilationUnitHistoryRecord getMostRecentRecord()
 	{
-		if(Records.size() > 0)
-			return Records.get(Records.size()-1);
+		if(records.size() > 0)
+			return records.get(records.size()-1);
 		else
 			return null;
 	}
@@ -102,22 +102,12 @@ public class CompilationUnitHistory {
 		}
 		
 		//extract method
-		if(ExtractMethod.LookingBackForDetectingExtractMethodChange(records))
-		{
-			ASTExtractMethodChangeInformation infor =  ExtractMethod.detectedExtractMethodChanges.get(
-					ExtractMethod.detectedExtractMethodChanges.size()-1);
-			refactoring = infor.getJavaExtractMethodRefactoring(unit);
-			RefactoringChances.addNewRefactoringChance(refactoring);
-		}
 		
-		if(ExtractMethod.LookingBackForExtractMethodActivities(records))
-		{
-			System.out.println("copy statements.");
-			ASTExtractMethodActivity act = ExtractMethod.detectedExtractMethodActivities.get(
-					ExtractMethod.detectedExtractMethodActivities.size() - 1);
-			refactoring = act.getJavaExtractMethodRefactoring(unit);
-			RefactoringChances.addNewRefactoringChance(refactoring);
-		}
+		if(ExtractMethod.isFoundIn(records))
+			RefactoringChances.addNewRefactoringChance(ExtractMethod.getEMRefactoring(records, unit));			
+
+		
+		
 		
 		
 		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())

@@ -1,26 +1,29 @@
 package ExtractMethod;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.dom.ASTMatcher;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import util.StringUtil;
-
-import compare.*;
-
-import Rename.ASTNameChangeInformation;
-
 import ASTree.ASTChangeInformationGenerator;
 import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
+import JavaRefactoringAPI.JavaRefactoring;
+
+import compare.SourceDiff;
+import compare.SourceDiffChange;
+import compare.SourceDiffInsert;
 
 
-public class ExtractMethod {
-
-	public static final ArrayList<ASTExtractMethodChangeInformation> detectedExtractMethodChanges = new ArrayList<ASTExtractMethodChangeInformation>();
-	public static final ArrayList<ASTExtractMethodActivity> detectedExtractMethodActivities = new ArrayList<ASTExtractMethodActivity>();
+public abstract class ExtractMethod {
+	
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 	public static final int MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE = 5;
+
 
 	public static NewMethodSignatureForExtractMethod getEditingNewMethodSignature(CompilationUnitHistoryRecord newRecord) 
 	{	
@@ -64,15 +67,18 @@ public class ExtractMethod {
 	}
 	
 
-	public static boolean LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 
+	
+	//looking back for extract method change, null if not found.
+	private static ASTExtractMethodChangeInformation 
+		LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 
 	{
 		if (Records.size() == 0)
-			return false;
+			return null;
 		CompilationUnitHistoryRecord RecordTwo = Records
 				.get(Records.size() - 1);
 
 		if (Records.size() <= 1)
-			return false;
+			return null;
 
 		int lookBackCount = Math.min(Records.size() - 1,
 				MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD);
@@ -84,17 +90,16 @@ public class ExtractMethod {
 			ASTExtractMethodChangeInformation change = ASTChangeInformationGenerator
 					.getExtractMethodASTChangeInformation(RecordOne, RecordTwo);
 			if (change != null) {
-				detectedExtractMethodChanges.add(change);
-				return true;
+				return change;
 			}
 		}
-		return false;
+		return null;
 	}
 	
-	
-	public static boolean LookingBackForExtractMethodActivities(ArrayList<CompilationUnitHistoryRecord> records)
+	//looking back for extract method activity, null if not found.
+	private static ASTExtractMethodActivity 
+		LookingBackForExtractMethodActivities(ArrayList<CompilationUnitHistoryRecord> records)
 	{	
-		
 		int lookBackCount = Math.min(records.size(),
 				MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD);
 	
@@ -103,15 +108,9 @@ public class ExtractMethod {
 			CompilationUnitHistoryRecord current = records.get(i);
 			ASTExtractMethodActivity activity = new ASTExtractMethodActivity(current);
 			if(ASTExtractMethodActivity.isCopyingStatements(current))
-			{
-				if(!detectedExtractMethodActivities.contains(activity))
-				{
-					detectedExtractMethodActivities.add(activity);
-					return true;
-				}
-			}
+				return activity;
 		}
-		return false;
+		return null;
 	}
 
 	public static boolean isExtractMethodChange(
@@ -197,4 +196,35 @@ public class ExtractMethod {
 
 		return index + 1;
 	}
+
+	public static boolean isFoundIn(ArrayList<CompilationUnitHistoryRecord> records) {
+		ASTExtractMethodChangeInformation change = LookingBackForDetectingExtractMethodChange(records);
+		ASTExtractMethodActivity act = LookingBackForExtractMethodActivities(records);
+		return !(change == null && act == null);
+	}
+
+	public static JavaRefactoring getEMRefactoring(
+			ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception {
+		ASTExtractMethodChangeInformation change = LookingBackForDetectingExtractMethodChange(records);
+		ASTExtractMethodActivity act = LookingBackForExtractMethodActivities(records);
+		if(change != null)
+			return getCutRefactoring(change, unit);
+		else
+			return getCopyRefactoring(act, unit);
+	}
+	
+	private static JavaRefactoring getCutRefactoring
+		(ASTExtractMethodChangeInformation change, ICompilationUnit unit) throws Exception
+	{
+		ExtractWithCut.getInstance().set(change);
+		return ExtractWithCut.getInstance().getRefactoring(unit);
+	}
+	
+	private static JavaRefactoring getCopyRefactoring
+		(ASTExtractMethodActivity act, ICompilationUnit unit) throws Exception
+	{
+		ExtractWithCopy.getInstance().set(act);
+		return ExtractWithCopy.getInstance().getRefactoring(unit);
+	}
+
 }
