@@ -98,6 +98,14 @@ public class ASTreeManipulationMethods {
 		return (Block) parser.createAST(null);
 	}
 	
+	public static Expression parseExpression(String source)
+	{
+		ASTParser parser = ASTParser.newParser(AST.JLS3);
+		parser.setSource(source.toCharArray());
+		parser.setKind(ASTParser.K_EXPRESSION);
+		return (Expression) parser.createAST(null);
+	}
+	
 	public static CompilationUnit parseSourceCode(String code)
 	{
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
