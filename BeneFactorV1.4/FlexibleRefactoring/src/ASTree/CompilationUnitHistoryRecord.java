@@ -124,6 +124,8 @@ public class CompilationUnitHistoryRecord {
 	{
 		return seletectedRegion;
 	}
+	
+	
 	public CompilationUnit getASTree() {
 		String source = getSourceCode();
 		CompilationUnit unit = ASTreeManipulationMethods.parseSourceCode(source);

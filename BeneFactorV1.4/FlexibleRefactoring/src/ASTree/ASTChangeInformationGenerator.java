@@ -58,6 +58,10 @@ public class ASTChangeInformationGenerator {
 			return null;
 	}
 	
+
+	
+	
+	
 	
 	public static NewRootPair getTheDeepestChangedNodePair(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord)
 	{
