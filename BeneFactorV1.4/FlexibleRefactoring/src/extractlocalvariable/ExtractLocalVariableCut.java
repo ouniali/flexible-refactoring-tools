@@ -7,7 +7,7 @@ public class ExtractLocalVariableCut implements ExtractLocalVariableActivity{
 
 	public ExtractLocalVariableCut(CompilationUnitHistoryRecord r)
 	{
-		
+		System.out.println("ELV: cut.");
 	}
 	
 	public JavaRefactoring getELVRefactoring() {

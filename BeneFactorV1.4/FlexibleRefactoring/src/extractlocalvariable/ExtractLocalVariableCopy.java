@@ -10,7 +10,7 @@ public class ExtractLocalVariableCopy implements ExtractLocalVariableActivity{
 
 	public ExtractLocalVariableCopy(CompilationUnitHistoryRecord r)
 	{
-		
+		System.out.println("ELV: copy.");
 	}
 	
 	public JavaRefactoring getELVRefactoring() {

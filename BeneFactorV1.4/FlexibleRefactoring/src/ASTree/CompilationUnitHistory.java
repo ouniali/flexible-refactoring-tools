@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.*;
 import userinterface.RefactoringMarker;
 
 import compilation.RefactoringChances;
+import extractlocalvariable.ExtractLocalVariableDetector;
 import flexiblerefactoring.BeneFactor;
 
 import ExtractMethod.ASTExtractMethodActivity;
@@ -109,7 +110,6 @@ public class CompilationUnitHistory {
 		
 		
 		
-		
 		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())
 		{		
 			NewMethodSignatureForExtractMethod newSig = ExtractMethod.getEditingNewMethodSignature(records.get(records.size()-1));
@@ -155,6 +155,14 @@ public class CompilationUnitHistory {
 			}
 			
 		}
+		
+		//extract local variable
+		ExtractLocalVariableDetector ELVDetector = new ExtractLocalVariableDetector();
+		if(ELVDetector.isELVFound(records))
+		{
+			ELVDetector.getELVRefactoring(records);
+		}
+			
 	}
 	
 
