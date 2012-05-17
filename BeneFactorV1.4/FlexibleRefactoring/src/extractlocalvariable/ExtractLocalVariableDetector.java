@@ -15,27 +15,27 @@ import JavaRefactoringAPI.JavaRefactoring;
 public class ExtractLocalVariableDetector {
 	
 	private final int LOOK_BACK_COUNT = 5;
+	ExtractLocalVariableActivity act1;
+	ExtractLocalVariableActivity act2;
+	
 	
 	public boolean isELVFound(List<CompilationUnitHistoryRecord> records)
 	{
-		CompilationUnitHistoryRecord r1 = getELVRecordOrNull(records, new CutDetectStrategy());
-		CompilationUnitHistoryRecord r2 = getELVRecordOrNull(records, new CopyDetectStrategy());
-		return !(r1 == null && r2 == null);
+		act1 = getELVActivityOrNull(records, new CutDetectStrategy());
+		act2 = getELVActivityOrNull(records, new CopyDetectStrategy());
+		return !(act1 == null && act2 == null);
 	}
 	
 	public JavaRefactoring getELVRefactoring(List<CompilationUnitHistoryRecord> records)
 	{
-		CompilationUnitHistoryRecord r1 = getELVRecordOrNull(records, new CutDetectStrategy());
-		CompilationUnitHistoryRecord r2 = getELVRecordOrNull(records, new CopyDetectStrategy());
-		if(null != r1)
-			return new ExtractLocalVariableCut(r1).getELVRefactoring();
+		if(null != act1)
+			return act1.getELVRefactoring();
 		else
-			return new ExtractLocalVariableCopy(r2).getELVRefactoring();
+			return act2.getELVRefactoring();
 
 	}
 	
-
-	private CompilationUnitHistoryRecord getELVRecordOrNull(
+	private ExtractLocalVariableActivity getELVActivityOrNull(
 			List<CompilationUnitHistoryRecord> records, DetectStrategy str)
 	{
 		int lookBack = Math.min(records.size() - 1, LOOK_BACK_COUNT);
@@ -44,7 +44,7 @@ public class ExtractLocalVariableDetector {
 			int index = records.size() - 1 - i;
 			CompilationUnitHistoryRecord current = records.get(index);
 			if(str.isELVRecord(current))
-				return current;
+				return str.getELVActivity(current);
 		}
 		return null;
 	}
@@ -53,6 +53,7 @@ public class ExtractLocalVariableDetector {
 interface DetectStrategy
 {
 	public boolean isELVRecord(CompilationUnitHistoryRecord record);
+	public ExtractLocalVariableActivity getELVActivity(CompilationUnitHistoryRecord r);
 }
 
 class CutDetectStrategy implements DetectStrategy
@@ -63,6 +64,14 @@ class CutDetectStrategy implements DetectStrategy
 		String exp = record.getHighlightedText();
 		return cut && ASTUtil.isExpression(exp);
 	}
+
+	public ExtractLocalVariableActivity getELVActivity(CompilationUnitHistoryRecord r) {
+		ExtractLocalVariableCut cut1 = ExtractLocalVariableCut.getCurrentInstance();
+		ExtractLocalVariableCut cut2 = ExtractLocalVariableCut.getNewInstance(r);
+		if(null != cut1 && !cut1.getRecord().equals(cut2.getRecord()))
+			return cut2;
+		else return null;
+	}
 }
 
 class CopyDetectStrategy implements DetectStrategy
@@ -72,6 +81,16 @@ class CopyDetectStrategy implements DetectStrategy
 		boolean copy = record.hasCopyCommand();
 		String exp = record.getHighlightedText();
 		return copy && ASTUtil.isExpression(exp);
+	}
+
+	@Override
+	public ExtractLocalVariableActivity getELVActivity(CompilationUnitHistoryRecord r) {
+		ExtractLocalVariableCopy cop1 = ExtractLocalVariableCopy.getCurrentInstance();
+		ExtractLocalVariableCopy cop2 = ExtractLocalVariableCopy.getNewInstance(r);
+		if(null != cop1 && !cop1.getRecord().equals(cop2.getRecord()))
+			return cop2;
+		else 
+			return null;
 	}
 
 	
