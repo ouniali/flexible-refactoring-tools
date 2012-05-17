@@ -7,10 +7,24 @@ import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
 public class ExtractLocalVariableCopy implements ExtractLocalVariableActivity{
-
-	public ExtractLocalVariableCopy(CompilationUnitHistoryRecord r)
+	
+	CompilationUnitHistoryRecord record;
+	
+	ExtractLocalVariableCopy(CompilationUnitHistoryRecord r)
 	{
+		record = r;
 		System.out.println("ELV: copy.");
+	}
+	
+	static private ExtractLocalVariableCopy instance;
+	public static ExtractLocalVariableCopy getNewInstance(CompilationUnitHistoryRecord r)
+	{
+		 instance = new  ExtractLocalVariableCopy(r);
+		 return instance;
+	}
+	public static ExtractLocalVariableCopy getCurrentInstance()
+	{
+		return instance;
 	}
 	
 	public JavaRefactoring getELVRefactoring() {
@@ -18,9 +32,23 @@ public class ExtractLocalVariableCopy implements ExtractLocalVariableActivity{
 	}
 
 
+
+	public ExtractLocalVariableActivity createInstance(CompilationUnitHistoryRecord r) {
+		return new ExtractLocalVariableCopy(r);
+	}
+
+
+
+	public CompilationUnitHistoryRecord getRecord() {
+		return record;
+	}
+
+
 }
+
 
 
 interface ExtractLocalVariableActivity{
 	public JavaRefactoring getELVRefactoring();
+	public CompilationUnitHistoryRecord getRecord();
 }
