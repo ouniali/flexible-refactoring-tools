@@ -9,7 +9,6 @@ public class ExtractLocalVariableCut implements ExtractLocalVariableActivity{
 	
 	private ExtractLocalVariableCut(CompilationUnitHistoryRecord r)
 	{
-		System.out.println("ELV: cut.");
 		record = r;
 	}
 	
