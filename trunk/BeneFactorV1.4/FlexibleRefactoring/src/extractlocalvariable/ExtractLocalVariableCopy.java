@@ -13,7 +13,6 @@ public class ExtractLocalVariableCopy implements ExtractLocalVariableActivity{
 	ExtractLocalVariableCopy(CompilationUnitHistoryRecord r)
 	{
 		record = r;
-		System.out.println("ELV: copy.");
 	}
 	
 	static private ExtractLocalVariableCopy instance;

@@ -28,11 +28,21 @@ public class ExtractLocalVariableDetector {
 	
 	public JavaRefactoring getELVRefactoring(List<CompilationUnitHistoryRecord> records)
 	{
-		if(null != act1)
+		if(act1 != null && act2!= null)
+			return DecideLaterActivity().getELVRefactoring();
+		else if(null != act1)
 			return act1.getELVRefactoring();
 		else
 			return act2.getELVRefactoring();
 
+	}
+	
+	private ExtractLocalVariableActivity DecideLaterActivity()
+	{
+		if(act1.getRecord().getTime() < act2.getRecord().getTime())
+			return act2;
+		else 
+			return act1;
 	}
 	
 	private ExtractLocalVariableActivity getELVActivityOrNull(
