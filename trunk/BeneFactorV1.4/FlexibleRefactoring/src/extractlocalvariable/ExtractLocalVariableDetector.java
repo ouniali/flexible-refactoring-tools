@@ -10,6 +10,7 @@ import util.ASTUtil;
 import ASTree.ASTChangeInformationGenerator;
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.NewRootPair;
+import JavaRefactoringAPI.JavaRefactoring;
 
 public class ExtractLocalVariableDetector {
 	
@@ -20,6 +21,17 @@ public class ExtractLocalVariableDetector {
 		CompilationUnitHistoryRecord r1 = getELVRecordOrNull(records, new CutDetectStrategy());
 		CompilationUnitHistoryRecord r2 = getELVRecordOrNull(records, new CopyDetectStrategy());
 		return !(r1 == null && r2 == null);
+	}
+	
+	public JavaRefactoring getELVRefactoring(List<CompilationUnitHistoryRecord> records)
+	{
+		CompilationUnitHistoryRecord r1 = getELVRecordOrNull(records, new CutDetectStrategy());
+		CompilationUnitHistoryRecord r2 = getELVRecordOrNull(records, new CopyDetectStrategy());
+		if(null != r1)
+			return new ExtractLocalVariableCut(r1).getELVRefactoring();
+		else
+			return new ExtractLocalVariableCopy(r2).getELVRefactoring();
+
 	}
 	
 
