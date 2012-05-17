@@ -9,6 +9,8 @@ import movestaticmember.MoveStaticMember;
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import util.ASTUtil;
+
 import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
 import Rename.ASTNameChangeInformation;
@@ -79,8 +81,8 @@ public class ASTChangeInformationGenerator {
 	
 	public static NewRootPair traverseToDeepestChange(ASTNode AstOne, ASTNode AstTwo)
 	{
-		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods.getChildNodes(AstOne);
-		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(AstTwo);
+		ArrayList<ASTNode> childrenOne = ASTUtil.getChildNodes(AstOne);
+		ArrayList<ASTNode> childrenTwo = ASTUtil.getChildNodes(AstTwo);
 			
 		if(childrenOne.size() != childrenTwo.size())
 		{

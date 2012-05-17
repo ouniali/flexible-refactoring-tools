@@ -9,7 +9,8 @@ import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
 import org.eclipse.jdt.ui.text.java.IProblemLocation;
 import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
-import ASTree.ASTreeManipulationMethods;
+import util.ASTUtil;
+
 
 public class MockQuickFixProcessor implements IQuickFixProcessor{
 
@@ -28,7 +29,7 @@ public class MockQuickFixProcessor implements IQuickFixProcessor{
 		// TODO Auto-generated method stub
 		if(enable){
 			ICompilationUnit unit = context.getCompilationUnit();
-			CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+			CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
 			int selection = context.getSelectionOffset();
 			int line = tree.getLineNumber(selection);
 			if(marker !=null && marker.exists())

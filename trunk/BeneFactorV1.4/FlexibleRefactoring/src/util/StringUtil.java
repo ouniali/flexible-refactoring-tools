@@ -66,6 +66,15 @@ public class StringUtil {
 		return results;
 	}
 	
+
+	
+	
+	public static void main(String arg[])
+	{
+		String s1 = "abc";
+		String s2 = "a";
+		System.out.println(s1.indexOf(s2));
+	}
 	
 	
 }

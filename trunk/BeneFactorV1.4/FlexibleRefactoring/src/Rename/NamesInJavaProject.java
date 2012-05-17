@@ -5,6 +5,8 @@ import java.util.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
+import util.ASTUtil;
+
 import ASTree.*;
 
 public class NamesInJavaProject {
@@ -17,7 +19,7 @@ public class NamesInJavaProject {
 		try{
 			project = pro;
 			UnitsNames = new ArrayList<NamesInCompilationUnit>();
-			ArrayList<ICompilationUnit> Units = ASTreeManipulationMethods.getICompilationUnitsOfAProject(project);	
+			ArrayList<ICompilationUnit> Units = ASTUtil.getICompilationUnitsOfAProject(project);	
 			for(ICompilationUnit unit : Units)
 				UnitsNames.add(new NamesInCompilationUnit(unit));
 		} catch(Exception e)

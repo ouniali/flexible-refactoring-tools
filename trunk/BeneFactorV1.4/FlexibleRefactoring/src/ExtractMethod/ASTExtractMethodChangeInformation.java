@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import userinterface.RefactoringMarker;
+import util.ASTUtil;
 
 import ASTree.*;
 import JavaRefactoringAPI.*;
@@ -37,8 +38,8 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	private int[] getCutASTNodeIndex(ASTNode nodeOne, ASTNode nodeTwo)
 	{
 		int[] index = new int[2];
-		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods.getChildNodes(nodeOne);
-		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(nodeTwo);
+		ArrayList<ASTNode> childrenOne = ASTUtil.getChildNodes(nodeOne);
+		ArrayList<ASTNode> childrenTwo = ASTUtil.getChildNodes(nodeTwo);
 		int childrenOneSize = childrenOne.size();
 		int childrenTwoSize = childrenTwo.size();
 		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
@@ -50,21 +51,21 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		ASTNode firstDiffNode =childrenOne.get( start );	
 		ASTNode lastDiffNode = childrenOne.get(childrenOneSize - end - 1);
 		
-		index[0] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(firstDiffNode);		
-		index[1] = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(lastDiffNode);
+		index[0] = ASTUtil.getASTNodeIndexInCompilationUnit(firstDiffNode);		
+		index[1] = ASTUtil.getASTNodeIndexInCompilationUnit(lastDiffNode);
 		return index;
 	}
 	
 	private int getCuttedASTNodeIndexInNodeTwo(ASTNode nodeOne, ASTNode nodeTwo)
 	{
 		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
-		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods.getChildNodes(nodeTwo);
+		ArrayList<ASTNode> childrenTwo = ASTUtil.getChildNodes(nodeTwo);
 		ASTNode node; 
 		if(start != 0)
 			node = 	childrenTwo.get(start-1);
 		else
 			node = nodeTwo;
-		int index = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node);
+		int index = ASTUtil.getASTNodeIndexInCompilationUnit(node);
 		return index;		
 	}
 	
@@ -81,9 +82,9 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	public int[] getSelectionStartAndEnd(ICompilationUnit iunit)
 	{
 		int[] offsets = new int[2];
-		CompilationUnit parsedUnit = ASTreeManipulationMethods.parseICompilationUnit(iunit);
-		ASTNode nodeOne = ASTreeManipulationMethods.getASTNodeByIndex(parsedUnit, firstCutNodeIndex);
-		ASTNode nodeTwo = ASTreeManipulationMethods.getASTNodeByIndex(parsedUnit, lastCutNodeIndex);
+		CompilationUnit parsedUnit = ASTUtil.parseICompilationUnit(iunit);
+		ASTNode nodeOne = ASTUtil.getASTNodeByIndex(parsedUnit, firstCutNodeIndex);
+		ASTNode nodeTwo = ASTUtil.getASTNodeByIndex(parsedUnit, lastCutNodeIndex);
 		offsets[0] = nodeOne.getStartPosition();
 		offsets[1] = nodeTwo.getStartPosition()+ nodeTwo.getLength()-1;
 		return offsets;
@@ -105,8 +106,8 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
-		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, insertPlaceNodeIndex);
+		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
+		ASTNode node = ASTUtil.getASTNodeByIndex(tree, insertPlaceNodeIndex);
 		int lineNo = tree.getLineNumber(node.getStartPosition());
 		return lineNo + 1;
 	}

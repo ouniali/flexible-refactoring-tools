@@ -10,7 +10,8 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.Name;
 
-import ASTree.ASTreeManipulationMethods;
+import util.ASTUtil;
+
 
 public class ASTVisitorCollectingMembers extends ASTVisitor{
 	
@@ -31,15 +32,15 @@ public class ASTVisitorCollectingMembers extends ASTVisitor{
 		int index;
 		if(Modifier.isStatic(modifiers))
 		{
-			index = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node);
+			index = ASTUtil.getASTNodeIndexInCompilationUnit(node);
 			StaticFieldDeclarationsIndices.add(new Integer(index));	
 			StaticFieldDeclarations.add(node.toString());
 		}
-		ArrayList<ASTNode> children = ASTreeManipulationMethods.getChildNodes(node);
+		ArrayList<ASTNode> children = ASTUtil.getChildNodes(node);
 		for(ASTNode kid: children)
 		{
 			if(kid instanceof Name)
-				ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(kid);
+				ASTUtil.getASTNodeIndexInCompilationUnit(kid);
 		}
 		return true;
 	}

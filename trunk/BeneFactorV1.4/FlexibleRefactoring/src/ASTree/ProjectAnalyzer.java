@@ -13,6 +13,8 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import util.ASTUtil;
+
 public class ProjectAnalyzer {
 
 	private IJavaProject project;
@@ -52,7 +54,7 @@ public class ProjectAnalyzer {
 			for (ICompilationUnit unit : RequestedPackage.getCompilationUnits()) 
 			{
 				// Now create the AST for the ICompilationUnits
-				CompilationUnit parse = ASTreeManipulationMethods.parseICompilationUnit(unit);
+				CompilationUnit parse = ASTUtil.parseICompilationUnit(unit);
 				TreeSet.add(parse);
 
 			}

@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.IRegion;
 
+import util.ASTUtil;
 import util.FileUtil;
 import util.UIUtil;
 import Rename.NamesInCompilationUnit;
@@ -92,7 +93,7 @@ public class CompilationUnitHistoryRecord {
 	private void saveBindingTable(ICompilationUnit iu,
 			CompilationUnitHistoryRecord earlierVersionP) {
 		
-		CompilationUnit unit = ASTreeManipulationMethods
+		CompilationUnit unit = ASTUtil
 				.parseICompilationUnit(iu);
 		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
 		unit.accept(bVisitor);
@@ -125,10 +126,15 @@ public class CompilationUnitHistoryRecord {
 		return seletectedRegion;
 	}
 	
+	public String getHighlightedText()
+	{
+		int[] range = getHighlightedRegion();
+		return getSourceCode().substring(range[0], range[1] + 1);
+	}
 	
 	public CompilationUnit getASTree() {
 		String source = getSourceCode();
-		CompilationUnit unit = ASTreeManipulationMethods.parseSourceCode(source);
+		CompilationUnit unit = ASTUtil.parseSourceCode(source);
 		return unit;
 	}
 
@@ -196,7 +202,7 @@ public class CompilationUnitHistoryRecord {
 
 	public int getNumberOfSameBindingInHistory(String binding) throws Exception {
 		int allCount = 0;
-		ArrayList<ICompilationUnit> allOtherUnits = ASTreeManipulationMethods
+		ArrayList<ICompilationUnit> allOtherUnits = ASTUtil
 				.getSiblingsOfACompilationUnitInItsProject(Unit, Project);
 
 		for (ICompilationUnit unit : allOtherUnits) {
@@ -209,7 +215,7 @@ public class CompilationUnitHistoryRecord {
 
 	public int getNumberOfSameBindingRightNow(String binding) throws Exception {
 		int allCount = 0;
-		ArrayList<ICompilationUnit> allUnits = ASTreeManipulationMethods
+		ArrayList<ICompilationUnit> allUnits = ASTUtil
 				.getICompilationUnitsOfAProject(Project);
 		for (ICompilationUnit unit : allUnits) {
 			NamesInCompilationUnit names = new NamesInCompilationUnit(unit);
@@ -273,6 +279,11 @@ public class CompilationUnitHistoryRecord {
 	public boolean hasCopyCommand()
 	{
 		return UserAction.equals(UserActionData.COPY_ID);
+	}
+	
+	public boolean hasCutCommand()
+	{
+		return UserAction.equals(UserActionData.CUT_ID);
 	}
 	
 	public int[] getSeletectedRegion() {

@@ -5,9 +5,9 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 
 import userinterface.RefactoringMarker;
+import util.ASTUtil;
 import util.StringUtil;
 import util.UIUtil;
-import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodActivity;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
@@ -58,7 +58,7 @@ public class ASTExtractMethodActivity {
 			int end = record.getSeletectedRegion()[1];
 			int length = end - start + 1;
 			String statements = StringUtil.removeWhiteSpace(record.getSourceCode().substring(start, start + length));
-			String block = StringUtil.removeWhiteSpace(ASTreeManipulationMethods.parseStatements(statements).toString());
+			String block = StringUtil.removeWhiteSpace(ASTUtil.parseStatements(statements).toString());
 			block = block.substring(1, block.length() - 1);		
 			if(block.equals(statements))
 				return true;
