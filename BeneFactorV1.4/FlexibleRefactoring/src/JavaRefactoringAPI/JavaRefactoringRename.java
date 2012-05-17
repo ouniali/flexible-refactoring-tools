@@ -37,7 +37,8 @@ import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
-import ASTree.ASTreeManipulationMethods;
+import util.ASTUtil;
+
 import Rename.NamesInJavaProject;
 import Rename.NamesInPackage;
 
@@ -89,7 +90,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		
 		RenameRefactoring refactoring;
 		Name name; 
-		name = new NamesInPackage(ASTreeManipulationMethods.getContainingPackage(getICompilationUnit()))
+		name = new NamesInPackage(ASTUtil.getContainingPackage(getICompilationUnit()))
 		.getNameOfBinding(bindingKeyBeforeDeclarationChange);
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)

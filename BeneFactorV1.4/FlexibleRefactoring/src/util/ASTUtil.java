@@ -1,4 +1,4 @@
-package ASTree;
+package util;
 
 import java.util.ArrayList;
 import java.util.Queue;
@@ -7,10 +7,12 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
+import ASTree.ASTNodeIndexVisitor;
+import ASTree.GetChildrenNodeVisitor;
 import Rename.ASTNameChangeInformation;
 
 
-public class ASTreeManipulationMethods {
+public class ASTUtil {
 		
 	public static ArrayList<ASTNode> getRemainingNodes(ArrayList<ASTNode> totalNodes, ArrayList<ASTNode> deletedNodes)
 	{
@@ -104,6 +106,18 @@ public class ASTreeManipulationMethods {
 		parser.setSource(source.toCharArray());
 		parser.setKind(ASTParser.K_EXPRESSION);
 		return (Expression) parser.createAST(null);
+	}
+	
+	public static boolean isExpression(String s)
+	{
+		Expression exp = null;
+		try{
+			exp = ASTUtil.parseExpression(s);
+		}catch(Exception e)
+		{
+			return false;
+		}
+		return (exp != null);
 	}
 	
 	public static CompilationUnit parseSourceCode(String code)

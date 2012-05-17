@@ -10,9 +10,10 @@ import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
 import org.eclipse.jdt.ui.text.java.IProblemLocation;
 import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
+import util.ASTUtil;
+
 import compilation.UndoRefactoringChances;
 
-import ASTree.ASTreeManipulationMethods;
 import JavaRefactoringAPI.JavaRefactoringType;
 import JavaRefactoringAPI.JavaUndoRefactoring;
 
@@ -28,7 +29,7 @@ public class UndoRefactoringQuickFixProcessor implements IQuickFixProcessor {
 			IProblemLocation[] locations) throws CoreException 
 	{
 		ICompilationUnit unit = context.getCompilationUnit();
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
 		int selection = context.getSelectionOffset();
 		int line = tree.getLineNumber(selection);
 		ArrayList<JavaUndoRefactoring> undos = UndoRefactoringChances.getUndoRefactoring(unit, line);

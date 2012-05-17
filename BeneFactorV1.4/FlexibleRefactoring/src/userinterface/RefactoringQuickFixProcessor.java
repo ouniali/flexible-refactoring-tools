@@ -10,7 +10,8 @@ import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
 import org.eclipse.jdt.ui.text.java.IProblemLocation;
 import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
-import ASTree.ASTreeManipulationMethods;
+import util.ASTUtil;
+
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
 import JavaRefactoringAPI.JavaRefactoringRename;
@@ -32,7 +33,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 			IProblemLocation[] locations) throws CoreException {
 		try{
 		ICompilationUnit unit = context.getCompilationUnit();
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
 		boolean get_all = false;
 		int selection = context.getSelectionOffset();
 		int line = tree.getLineNumber(selection);

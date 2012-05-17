@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
 
 import userinterface.RefactoringMarker;
+import util.ASTUtil;
 import ASTree.*;
 import JavaRefactoringAPI.*;
 
@@ -251,8 +252,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
-		ASTNode oldNameNode = ASTreeManipulationMethods.getASTNodeByIndex(tree, oldNameNodeIndex);
+		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
+		ASTNode oldNameNode = ASTUtil.getASTNodeByIndex(tree, oldNameNodeIndex);
 		int lineNo = tree.getLineNumber(oldNameNode.getStartPosition());
 		return lineNo;
 	}

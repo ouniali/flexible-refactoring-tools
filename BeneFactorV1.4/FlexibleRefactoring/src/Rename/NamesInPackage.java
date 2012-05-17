@@ -6,8 +6,9 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.dom.Name;
 
+import util.ASTUtil;
 
-import ASTree.ASTreeManipulationMethods;
+
 
 public class NamesInPackage {
 	
@@ -17,7 +18,7 @@ public class NamesInPackage {
 	public NamesInPackage(IPackageFragment p) throws Exception
 	{
 		package_fragment = p;
-		ArrayList<ICompilationUnit> units = ASTreeManipulationMethods.getICompilationUnitOfPackage(package_fragment);
+		ArrayList<ICompilationUnit> units = ASTUtil.getICompilationUnitOfPackage(package_fragment);
 		UnitsNames = new ArrayList<NamesInCompilationUnit>();
 		for(ICompilationUnit unit: units)
 			UnitsNames.add(new NamesInCompilationUnit(unit));

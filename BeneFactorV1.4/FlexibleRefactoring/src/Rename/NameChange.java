@@ -6,8 +6,9 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
+import util.ASTUtil;
+
 import ASTree.ASTChangeInformationGenerator;
-import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 
 public class NameChange {
@@ -161,7 +162,7 @@ public class NameChange {
 			throws Exception {
 
 		if (!binding.equals("")) {
-			ArrayList<ICompilationUnit> siblings = ASTreeManipulationMethods
+			ArrayList<ICompilationUnit> siblings = ASTUtil
 					.getSiblingsOfACompilationUnitInItsProject(iunit, project);
 			ArrayList<Integer> names = new ArrayList<Integer>();
 

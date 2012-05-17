@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import util.ASTUtil;
 import util.FileUtil;
 
 public class ASTChangeInformation {
@@ -42,8 +43,8 @@ public class ASTChangeInformation {
 		oldTime = oldRecord.getTime();
 		newTime = newRecord.getTime();
 		
-		nodeOneIndex = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node1);
-		nodeTwoIndex = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(node2);
+		nodeOneIndex = ASTUtil.getASTNodeIndexInCompilationUnit(node1);
+		nodeTwoIndex = ASTUtil.getASTNodeIndexInCompilationUnit(node2);
 		
 		if(node1.getNodeType() == node2.getNodeType())
 			rootTypeChanged = false;

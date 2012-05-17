@@ -6,6 +6,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
 
+import util.ASTUtil;
+
 import Rename.*;
 
 public class ProjectHistory {
@@ -26,8 +28,8 @@ public class ProjectHistory {
 
 	public void addAST(CompilationUnit tree) throws Exception
 	{
-		String pacName = ASTreeManipulationMethods.getPackageName(tree.getPackage());
-		String unitName = ASTreeManipulationMethods.getCompilationUnitName(tree);
+		String pacName = ASTUtil.getPackageName(tree.getPackage());
+		String unitName = ASTUtil.getCompilationUnitName(tree);
 		
 		CompilationUnitHistory history = getHistory(pacName, unitName);
 		

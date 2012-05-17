@@ -16,6 +16,8 @@ import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
+import util.ASTUtil;
+
 import animation.autoedition.AtomicEdition;
 import animation.autoedition.MultiFileEdition;
 import animation.autoedition.SingleFileEdition;
@@ -24,7 +26,6 @@ import animation.change.AutoEditionVisitor;
 import animation.change.ChangeAnalyzer;
 import animation.change.ChangeAnalyzer.*;
 
-import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
 import Rename.ASTNameChangeInformation;
@@ -73,7 +74,7 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		SubMonitor monitor = SubMonitor.convert(pm,"Performing Rename Refactoring",6);
 		RenameRefactoring refactoring;
 		Name name;
-		name = new NamesInPackage(ASTreeManipulationMethods.getContainingPackage(getICompilationUnit()))
+		name = new NamesInPackage(ASTUtil.getContainingPackage(getICompilationUnit()))
 		.getNameOfBinding(bindingKey);
 		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)

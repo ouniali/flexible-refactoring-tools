@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import util.ASTUtil;
+
 import Rename.ASTNameChangeInformation;
 
 public class ProjectHistoryCollector {
@@ -30,12 +32,12 @@ public class ProjectHistoryCollector {
 	
 	public void addNewProjectVersion(IJavaProject project, ICompilationUnit unit) throws Exception
 	{
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
 		ProjectHistory history = Map.get(project);
 		
 		if(history == null)
 		{
-			ProjectHistory newHistory = new ProjectHistory(project ,ASTreeManipulationMethods.getJavaProjectName(project));
+			ProjectHistory newHistory = new ProjectHistory(project ,ASTUtil.getJavaProjectName(project));
 			newHistory.addAST(tree);
 			Map.put(project, newHistory);
 		}

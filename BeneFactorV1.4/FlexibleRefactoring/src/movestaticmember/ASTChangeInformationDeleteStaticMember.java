@@ -14,8 +14,9 @@ import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+import util.ASTUtil;
+
 import ASTree.ASTChangeInformation;
-import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 
 public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation{
@@ -72,15 +73,15 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 	private void prepareNameIndex()
 	{
 		CompilationUnit tree = getOldCompilationUnitRecord().getASTree();
-		ASTNode parent = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
-		ArrayList<ASTNode> children = ASTreeManipulationMethods.getOffsprings(parent);
+		ASTNode parent = ASTUtil.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
+		ArrayList<ASTNode> children = ASTUtil.getOffsprings(parent);
 		for(ASTNode kid: children)
 		{
 			if(kid instanceof SimpleName)
 			{
 				SimpleName name = (SimpleName) kid;
 				fieldName = name.getIdentifier();
-				fieldNameIndex = ASTreeManipulationMethods.getASTNodeIndexInCompilationUnit(kid);
+				fieldNameIndex = ASTUtil.getASTNodeIndexInCompilationUnit(kid);
 				fieldNameStart = kid.getStartPosition();
 				fieldNameLength = kid.getLength();
 				return;

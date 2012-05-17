@@ -7,9 +7,9 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import userinterface.RefactoringMarker;
+import util.ASTUtil;
 
 import ASTree.ASTChangeInformation;
-import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
 
@@ -44,8 +44,8 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 	}
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
-		CompilationUnit tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
-		ASTNode node = ASTreeManipulationMethods.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
+		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
+		ASTNode node = ASTUtil.getASTNodeByIndex(tree, staticFieldDeclarationIndex);
 		int lineNo = tree.getLineNumber(node.getStartPosition());
 		return lineNo;
 	}

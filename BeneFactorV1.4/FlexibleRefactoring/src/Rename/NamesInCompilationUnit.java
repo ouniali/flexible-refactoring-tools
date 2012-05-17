@@ -5,7 +5,8 @@ import java.util.Map.Entry;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
 
-import ASTree.ASTreeManipulationMethods;
+import util.ASTUtil;
+
 import ASTree.NameBindingInformationVisitor;
 
 public class NamesInCompilationUnit {
@@ -17,7 +18,7 @@ public class NamesInCompilationUnit {
 	// the compilation unit should be generated directly from ICompilationUnit
 	public NamesInCompilationUnit(ICompilationUnit unit)
 	{
-		tree = ASTreeManipulationMethods.parseICompilationUnit(unit);
+		tree = ASTUtil.parseICompilationUnit(unit);
 		visitor = new NameBindingInformationVisitor();
 		tree.accept(visitor);
 		NameTable = visitor.getEntireNameBindingTable();
@@ -57,7 +58,7 @@ public class NamesInCompilationUnit {
 		ArrayList<Name> names = new ArrayList<Name> ();
 		for(int index : indices)
 		{
-			Name name = (Name)ASTreeManipulationMethods.getASTNodeByIndex(tree, index);
+			Name name = (Name)ASTUtil.getASTNodeByIndex(tree, index);
 			names.add(name);
 		}
 		return names;

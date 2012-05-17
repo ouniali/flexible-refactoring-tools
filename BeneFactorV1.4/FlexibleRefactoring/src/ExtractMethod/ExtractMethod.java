@@ -8,9 +8,9 @@ import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import util.ASTUtil;
 import util.StringUtil;
 import ASTree.ASTChangeInformationGenerator;
-import ASTree.ASTreeManipulationMethods;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -126,9 +126,9 @@ public abstract class ExtractMethod {
 				nodeTwo);
 		int FirstIndexFromEnd = getLengthOfCommonnSubnodesFromEnd(nodeOne,
 				nodeTwo);
-		int childrenOneSize = ASTreeManipulationMethods.getChildNodes(nodeOne)
+		int childrenOneSize = ASTUtil.getChildNodes(nodeOne)
 				.size();
-		int childrenTwoSize = ASTreeManipulationMethods.getChildNodes(nodeTwo)
+		int childrenTwoSize = ASTUtil.getChildNodes(nodeTwo)
 				.size();
 
 		if(childrenOneSize == 0)
@@ -153,9 +153,9 @@ public abstract class ExtractMethod {
 	public static int getLengthOfCommonnSubnodesFromStart(ASTNode nodeOne,
 			ASTNode nodeTwo) {
 		int index = -1;
-		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods
+		ArrayList<ASTNode> childrenOne = ASTUtil
 				.getChildNodes(nodeOne);
-		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods
+		ArrayList<ASTNode> childrenTwo = ASTUtil
 				.getChildNodes(nodeTwo);
 		int size = Math.min(childrenOne.size(), childrenTwo.size());
 		ASTNode childOne;
@@ -174,9 +174,9 @@ public abstract class ExtractMethod {
 
 	public static int getLengthOfCommonnSubnodesFromEnd(ASTNode nodeOne,
 			ASTNode nodeTwo) {
-		ArrayList<ASTNode> childrenOne = ASTreeManipulationMethods
+		ArrayList<ASTNode> childrenOne = ASTUtil
 				.getChildNodes(nodeOne);
-		ArrayList<ASTNode> childrenTwo = ASTreeManipulationMethods
+		ArrayList<ASTNode> childrenTwo = ASTUtil
 				.getChildNodes(nodeTwo);
 		int sizeOne = childrenOne.size();
 		int sizeTwo = childrenTwo.size();
