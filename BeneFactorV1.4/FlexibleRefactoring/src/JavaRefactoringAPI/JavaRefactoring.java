@@ -1,8 +1,11 @@
 package JavaRefactoringAPI;
 
+import java.util.LinkedList;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
@@ -14,8 +17,12 @@ import org.eclipse.ui.IEditorInput;
 
 import util.UIUtil;
 
+import compare.JavaSourceDiff;
+import compare.diff_match_patch.Patch;
 import compilation.RefactoringChances;
 import ASTree.CompilationUnitHistory;
+import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CompilationUnitManipulationMethod;
 
 public abstract class JavaRefactoring extends Job{
 
@@ -99,5 +106,16 @@ public abstract class JavaRefactoring extends Job{
 	
 	abstract public int getRefactoringType();
     public abstract void preProcess() throws Exception;
-	public abstract void postProcess() throws Exception;	
+	public abstract void postProcess() throws Exception;
+	
+	protected void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord) throws Exception
+	{
+		String source;
+		source = getICompilationUnit().getSource();
+		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), 
+				endRecord.getSourceCode());
+		source = JavaSourceDiff.applyPatches(source, patches);
+		CompilationUnitManipulationMethod.UpdateICompilationUnit(getICompilationUnit(), 
+				source, new NullProgressMonitor());
+	}
 }

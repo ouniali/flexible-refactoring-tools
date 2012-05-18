@@ -106,16 +106,7 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 				InteractionEvent.makeCommand(event_id + ".ExtractMethod", "extract method"));
 	}
 	
-	private void redoUnrefactoringChanges(CompilationUnitHistoryRecord startRecord, CompilationUnitHistoryRecord endRecord) throws Exception
-	{
-		String source;
-		source = getICompilationUnit().getSource();
-		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), 
-				endRecord.getSourceCode());
-		source = JavaSourceDiff.applyPatches(source, patches);
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(getICompilationUnit(), 
-				source, new NullProgressMonitor());
-	}
+
 	
 	public abstract JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception;
 	
