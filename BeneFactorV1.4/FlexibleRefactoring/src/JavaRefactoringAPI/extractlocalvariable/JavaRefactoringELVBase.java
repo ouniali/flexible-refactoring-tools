@@ -10,7 +10,9 @@ import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
-
+import org.eclipse.jdt.internal.corext.refactoring.code.*;
+import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 
 public class JavaRefactoringELVBase extends JavaRefactoring{
 
@@ -22,10 +24,20 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 		activity = a;
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	final protected void performRefactoring(IProgressMonitor pm) throws Exception {
-		
-		
+		ICompilationUnit unit = getICompilationUnit();
+		unit.becomeWorkingCopy(null);
+		int start = activity.getRecord().getSeletectedRegion()[0];
+		int length = activity.getRecord().getSeletectedRegion()[1] 
+				- activity.getRecord().getSeletectedRegion()[0] + 1;
+		ExtractTempRefactoring refactoring = new ExtractTempRefactoring(unit, start, length);
+		RefactoringStatus status = refactoring.checkAllConditions(null);
+		if(status.isOK())
+			refactoring.createChange(null).perform(null);
+		unit.commitWorkingCopy(true, null);
+		unit.discardWorkingCopy();
 	}
 
 	@Override
