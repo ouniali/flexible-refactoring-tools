@@ -10,12 +10,13 @@ import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
 import org.eclipse.jdt.ui.text.java.IProblemLocation;
 import org.eclipse.jdt.ui.text.java.IQuickFixProcessor;
 
+import JavaRefactoringAPI.rename.JavaRefactoringRename;
+import JavaRefactoringAPI.rename.JavaRefactoringRenameDiff;
+
 import util.ASTUtil;
 
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
-import JavaRefactoringAPI.JavaRefactoringRename;
-import JavaRefactoringAPI.JavaRefactoringRenameDiff;
 import JavaRefactoringAPI.JavaRefactoringType;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 

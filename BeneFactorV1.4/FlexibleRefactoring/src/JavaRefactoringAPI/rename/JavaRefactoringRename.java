@@ -1,4 +1,4 @@
-package JavaRefactoringAPI;
+package JavaRefactoringAPI.rename;
 
 import java.util.ArrayList;
 
@@ -36,6 +36,9 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
+
+import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.JavaRefactoringType;
 
 import util.ASTUtil;
 
