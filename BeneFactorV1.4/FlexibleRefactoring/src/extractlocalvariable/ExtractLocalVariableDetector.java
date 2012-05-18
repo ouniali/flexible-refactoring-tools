@@ -19,6 +19,15 @@ public class ExtractLocalVariableDetector {
 	ExtractLocalVariableActivity act2;
 	
 	
+	public JavaRefactoring detect(List<CompilationUnitHistoryRecord> records)
+	{
+		if(isELVFound(records))
+			return getELVRefactoring(records);
+		else 
+			return null;
+	}
+	
+	
 	public boolean isELVFound(List<CompilationUnitHistoryRecord> records)
 	{
 		act1 = getELVActivityOrNull(records, new CutDetectStrategy());
