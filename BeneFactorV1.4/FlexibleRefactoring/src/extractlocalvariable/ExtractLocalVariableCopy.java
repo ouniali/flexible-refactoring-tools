@@ -58,8 +58,4 @@ public class ExtractLocalVariableCopy implements ExtractLocalVariableActivity{
 
 
 
-interface ExtractLocalVariableActivity{
-	public JavaRefactoring getELVRefactoring(ICompilationUnit u) throws Exception;
-	public CompilationUnitHistoryRecord getRecord();
-	
-}
+

@@ -7,17 +7,12 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import extractlocalvariable.ExtractLocalVariableCut;
 
 final public class JavaRefactoringELVCut extends JavaRefactoringELVBase{
-
-	ExtractLocalVariableCut cut;
 	
 	public JavaRefactoringELVCut(ICompilationUnit u, int l, IMarker m, ExtractLocalVariableCut c)
 			throws Exception {
-		super(u, l, m);
-		cut = c;
+		super(u, l, m, c);
 	}
 	
-	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
-		
-	}
+	
 
 }

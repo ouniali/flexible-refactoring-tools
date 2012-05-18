@@ -7,12 +7,9 @@ import extractlocalvariable.ExtractLocalVariableCopy;
 
 public class JavaRefactoringELVCopy extends JavaRefactoringELVBase{
 
-	ExtractLocalVariableCopy copy;
-	
 	public JavaRefactoringELVCopy(ICompilationUnit u, int l, IMarker m, ExtractLocalVariableCopy c)
 			throws Exception {
-		super(u, l, m);
-		copy = c;
+		super(u, l, m, c);
 	}
 	
 
