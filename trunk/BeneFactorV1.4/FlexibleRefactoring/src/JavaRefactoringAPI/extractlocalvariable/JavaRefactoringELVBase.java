@@ -5,6 +5,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.JavaRefactoringType;
 
 public class JavaRefactoringELVBase extends JavaRefactoring{
 
@@ -24,8 +25,8 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 	}
 
 	@Override
-	public int getRefactoringType() {
-		return 0;
+	public final int getRefactoringType() {
+		return JavaRefactoringType.EXTRACT_LOCAL_VARIABLE;
 	}
 
 	@Override
