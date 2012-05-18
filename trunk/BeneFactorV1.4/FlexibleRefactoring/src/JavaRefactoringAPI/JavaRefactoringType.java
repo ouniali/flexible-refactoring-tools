@@ -7,8 +7,9 @@ public class JavaRefactoringType {
 	public static final int RENAME =0;
 	public static final int EXTRACT_METHOD = 1;	
 	public static final int MOVE_STATIC = 2;
+	public static final int EXTRACT_LOCAL_VARIABLE = 3;
 	
-	public static final int UNCERTAIN_HIGH = 3;
+	public static final int UNCERTAIN_HIGH = 4;
 	
 	public static String getRefactoringTypeName(int type)
 	{
