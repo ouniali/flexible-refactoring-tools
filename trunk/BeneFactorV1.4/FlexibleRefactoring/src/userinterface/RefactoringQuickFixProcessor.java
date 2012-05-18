@@ -74,6 +74,8 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 			return new RefactoringProposalExtractMethod(ref);
 		case JavaRefactoringType.MOVE_STATIC:
 			return new RefactoringProposalMoveStaticMember(ref);
+		case JavaRefactoringType.EXTRACT_LOCAL_VARIABLE:
+			return new RefactoringProposalExtractLocalVariable(ref);
 		default:
 			break;
 		}
