@@ -17,6 +17,7 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 	@Override
 	protected void performRefactoring(IProgressMonitor pm) throws Exception {
 		
+		
 	}
 
 	@Override
