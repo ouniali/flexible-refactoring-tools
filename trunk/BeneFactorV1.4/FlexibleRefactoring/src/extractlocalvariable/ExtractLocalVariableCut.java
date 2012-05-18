@@ -1,5 +1,7 @@
 package extractlocalvariable;
 
+import org.eclipse.jdt.core.ICompilationUnit;
+
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -24,12 +26,13 @@ public class ExtractLocalVariableCut implements ExtractLocalVariableActivity{
 	}
 	
 	
-	public JavaRefactoring getELVRefactoring() {
-		return null;
-	}
-
+	
 	public CompilationUnitHistoryRecord getRecord() {
 		return record;
+	}
+		
+	public JavaRefactoring getELVRefactoring(ICompilationUnit u) {
+		return null;
 	}
 
 }
