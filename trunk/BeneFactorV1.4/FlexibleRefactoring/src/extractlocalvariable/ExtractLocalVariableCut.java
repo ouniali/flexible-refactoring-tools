@@ -38,6 +38,7 @@ public class ExtractLocalVariableCut implements ExtractLocalVariableActivity{
 		return record;
 	}
 		
+	
 	public JavaRefactoring getELVRefactoring(ICompilationUnit u) throws Exception {
 		JavaEditor editor = UIUtil.getJavaEditor(u);
 		int start = record.getHighlightedRegion()[0];
