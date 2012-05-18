@@ -6,12 +6,13 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+import JavaRefactoringAPI.move.JavaRefactoringMoveStaticMember;
+
 import userinterface.RefactoringMarker;
 import util.ASTUtil;
 
 import ASTree.ASTChangeInformation;
 import ASTree.CompilationUnitHistoryRecord;
-import JavaRefactoringAPI.JavaRefactoringMoveStaticMember;
 
 public class ASTChangeInformationAddStaticMember extends ASTChangeInformation 
 {
