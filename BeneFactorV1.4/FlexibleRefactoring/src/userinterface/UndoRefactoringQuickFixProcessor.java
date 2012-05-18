@@ -48,6 +48,8 @@ public class UndoRefactoringQuickFixProcessor implements IQuickFixProcessor {
 			return new UndoRefactoringProposalRename(undo);
 		case JavaRefactoringType.EXTRACT_METHOD:	
 			return new UndoRefactoringProposalExtractMethod(undo);
+		case JavaRefactoringType.EXTRACT_LOCAL_VARIABLE:
+			return new UndoRefactoringProposalExtractLocalVariable(undo);
 		default:
 			return null;
 		}
