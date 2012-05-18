@@ -158,7 +158,8 @@ public class CompilationUnitHistory {
 		
 		//extract local variable
 		ExtractLocalVariableDetector ELVDetector = new ExtractLocalVariableDetector();
-		refactoring = ELVDetector.detect(records);
+		if(ELVDetector.isELVFound(records))
+			ELVDetector.getELVRefactoring(unit);
 		
 			
 	}

@@ -2,6 +2,7 @@ package extractlocalvariable;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
 
@@ -17,16 +18,7 @@ public class ExtractLocalVariableDetector {
 	private final int LOOK_BACK_COUNT = 5;
 	ExtractLocalVariableActivity act1;
 	ExtractLocalVariableActivity act2;
-	
-	
-	public JavaRefactoring detect(List<CompilationUnitHistoryRecord> records)
-	{
-		if(isELVFound(records))
-			return getELVRefactoring(records);
-		else 
-			return null;
-	}
-	
+
 	
 	public boolean isELVFound(List<CompilationUnitHistoryRecord> records)
 	{
@@ -35,14 +27,16 @@ public class ExtractLocalVariableDetector {
 		return !(act1 == null && act2 == null);
 	}
 	
-	public JavaRefactoring getELVRefactoring(List<CompilationUnitHistoryRecord> records)
+	public JavaRefactoring getELVRefactoring(ICompilationUnit unit) throws Exception
 	{
 		if(act1 != null && act2!= null)
-			return DecideLaterActivity().getELVRefactoring();
+			return DecideLaterActivity().getELVRefactoring(unit);
 		else if(null != act1)
-			return act1.getELVRefactoring();
+			return act1.getELVRefactoring(unit);
+		else if(null != act2)
+			return act2.getELVRefactoring(unit);
 		else
-			return act2.getELVRefactoring();
+			return null;
 
 	}
 	
@@ -81,7 +75,8 @@ class CutDetectStrategy implements DetectStrategy
 	{
 		boolean cut = record.hasCutCommand();
 		String exp = record.getHighlightedText();
-		return cut && ASTUtil.isExpression(exp);
+		boolean res = cut && ASTUtil.isExpression(exp);
+		return res;
 	}
 
 	public ExtractLocalVariableActivity getELVActivity(CompilationUnitHistoryRecord r) {
