@@ -5,6 +5,9 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.*;
 
+import JavaRefactoringAPI.rename.JavaRefactoringRename;
+import JavaRefactoringAPI.rename.JavaRefactoringRenameDiff;
+
 import userinterface.RefactoringMarker;
 import util.ASTUtil;
 import ASTree.*;

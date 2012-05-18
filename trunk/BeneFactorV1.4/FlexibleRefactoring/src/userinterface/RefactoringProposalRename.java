@@ -7,10 +7,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
+import JavaRefactoringAPI.rename.JavaRefactoringRename;
+import JavaRefactoringAPI.rename.JavaRefactoringRenameDiff;
+
 import flexiblerefactoring.BeneFactor;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.JavaRefactoringRename;
-import JavaRefactoringAPI.JavaRefactoringRenameDiff;
 
 public class RefactoringProposalRename extends RefactoringProposal{
 	
