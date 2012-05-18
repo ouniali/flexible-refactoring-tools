@@ -2,6 +2,7 @@ package JavaRefactoringAPI.extractlocalvariable;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import extractlocalvariable.ExtractLocalVariableActivity;
@@ -29,14 +30,16 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 	final protected void performRefactoring(IProgressMonitor pm) throws Exception {
 		ICompilationUnit unit = getICompilationUnit();
 		unit.becomeWorkingCopy(null);
+		NullProgressMonitor monitor = new NullProgressMonitor();
 		int start = activity.getRecord().getSeletectedRegion()[0];
 		int length = activity.getRecord().getSeletectedRegion()[1] 
 				- activity.getRecord().getSeletectedRegion()[0] + 1;
 		ExtractTempRefactoring refactoring = new ExtractTempRefactoring(unit, start, length);
-		RefactoringStatus status = refactoring.checkAllConditions(null);
+		refactoring.setTempName("temp");
+		RefactoringStatus status = refactoring.checkAllConditions(monitor);
 		if(status.isOK())
-			refactoring.createChange(null).perform(null);
-		unit.commitWorkingCopy(true, null);
+			refactoring.createChange(monitor).perform(monitor);
+		unit.commitWorkingCopy(true, monitor);
 		unit.discardWorkingCopy();
 	}
 
