@@ -54,10 +54,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 		return null;
 	}
 	
-
-	
-	
-	public static RefactoringProposal getRefactoringProposalRefactoring(JavaRefactoring ref)
+	private RefactoringProposal getRefactoringProposalRefactoring(JavaRefactoring ref)
 	{
 		int type = ref.getRefactoringType();
 		switch(type)
