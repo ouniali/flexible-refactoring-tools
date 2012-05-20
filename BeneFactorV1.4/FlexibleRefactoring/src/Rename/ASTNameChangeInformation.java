@@ -142,7 +142,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			{
 				if(usingDiff1)
 				{
-					JavaRefactoringRenameDiff refactoringDiff = new JavaRefactoringRenameDiff(
+					JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
 							unit,
 							line,
 							marker,
@@ -177,7 +177,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 				
 				if(usingDiff2)
 				{
-					JavaRefactoringRenameDiff refactoringDiff = new JavaRefactoringRenameDiff(
+					JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
 							unit,
 							line,
 							marker,
