@@ -30,16 +30,8 @@ class NameChangeDetected {
 			String newBinding = change.getNewNameBindingKey();
 			if (change.isRenamingDeclaration() && newBinding.equals(currentBindingKey)) 
 			{
-				if (!change.hasIntermediateChange())
-				{
-					skips.add(0, change);
-					break;
-				}
-				else
-				{
-					skips.add(0, change);
-					currentBindingKey = change.getOldNameBindingKey();
-				}
+				skips.add(0, change);
+				currentBindingKey = change.getOldNameBindingKey();
 			}
 
 		}
