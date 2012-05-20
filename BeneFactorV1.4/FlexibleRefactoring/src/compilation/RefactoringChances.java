@@ -16,16 +16,26 @@ import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 public class RefactoringChances {
 	
-	private static ArrayList<JavaRefactoring> refactorings = new ArrayList<JavaRefactoring>();
-	static final int max_size = 5;
+	private List<JavaRefactoring> refactorings = new ArrayList<JavaRefactoring>();
+	private static final int max_size = 5;
+	private static RefactoringChances instance = new RefactoringChances();
 	
-	public static void addNewRefactoringChance(JavaRefactoring ref)
+	private RefactoringChances(){};
+	
+	public static RefactoringChances getInstance()
+	{
+		return instance;
+	}
+	
+	
+	public void addNewRefactoringChance(JavaRefactoring ref)
 	{
 		if(refactorings.size() == max_size)
 			refactorings.remove(0);
 		refactorings.add(ref);
 	}
-	public static List<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
+
+	public List<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
 	{
 		List<JavaRefactoring> results = new ArrayList<JavaRefactoring>();
 		
@@ -39,33 +49,33 @@ public class RefactoringChances {
 		return results;	
 	}
 	
-	public static JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line) throws Exception
+	public boolean hasRefactorings()
+	{
+		return refactorings.size() != 0;
+	}
+	
+	public JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line) throws Exception
 	{
 		List<JavaRefactoring> refs = getJavaRefactorings(unit, line);
 		int index = refs.size() - 1;
 		return refs.get(index);
 	}
-	public static void clearRefactoringChances()
+	
+	
+	public void clearRefactoringChances() throws Exception
 	{
-		try
+		for(JavaRefactoring refactoring: refactorings)
 		{
-			for(JavaRefactoring refactoring: refactorings)
-			{
-				IMarker marker = refactoring.getMarker();
-				if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
-					marker.delete();
-			}
-			refactorings.clear();
-		} catch(Exception e)
-		{
-			e.printStackTrace();
+			IMarker marker = refactoring.getMarker();
+			if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
+				marker.delete();
 		}
+		refactorings.clear();
 	}
 	
-	public static List<JavaRefactoring> getPendingExtractMethodRefactoring()
+	public List<JavaRefactoring> getPendingExtractMethodRefactoring()
 	{
 		List<JavaRefactoring> extracts = new ArrayList<JavaRefactoring>();
-		
 		for(JavaRefactoring ref : refactorings)
 		{
 			if(ref.getRefactoringType() == JavaRefactoringType.EXTRACT_METHOD)
@@ -74,7 +84,7 @@ public class RefactoringChances {
 		return extracts;	
 	}
 	
-	public static List<JavaRefactoring> getPendingRenameRefactoring()
+	public List<JavaRefactoring> getPendingRenameRefactoring()
 	{
 		List<JavaRefactoring> renames = new ArrayList<JavaRefactoring>();
 		for(JavaRefactoring ref : refactorings)
@@ -85,14 +95,13 @@ public class RefactoringChances {
 		return renames;
 	}
 	
-	public static void removeRefactoring(JavaRefactoring refactoring) throws Exception
+	public void removeRefactoring(JavaRefactoring refactoring) throws Exception
 	{
 			IMarker marker = refactoring.getMarker();
 			if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
 				marker.delete();
 			refactorings.remove(refactoring);
 	}
-	
-	
+
 	
 }

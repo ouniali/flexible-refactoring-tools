@@ -59,7 +59,7 @@ public abstract class JavaRefactoring extends Job{
 			performRefactoring(progress.newChild(50));	
 			postProcess();
 			
-			RefactoringChances.clearRefactoringChances();	
+			RefactoringChances.getInstance().clearRefactoringChances();	
 			
 			progress.worked(1);
 			unit.commitWorkingCopy(true, progress.newChild(1));
