@@ -3,7 +3,7 @@ package Rename;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NameChangeDetected {
+class NameChangeDetected {
 	
 	public static final int MAXIMUM_LOOK_BACK_SEARCHING_INTERMIDIATE_NAME_CHANGE = 5;
 	public static final int MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY = 40;
