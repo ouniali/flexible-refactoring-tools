@@ -100,8 +100,7 @@ public class CompilationUnitHistory {
 		NameChangeDetector NCDetector = new NameChangeDetector();
 		if(NCDetector.isRenameDetected(records))
 		{
-			ASTNameChangeInformation infor = NameChangeDetected.getInstance().getLatestDetectedChange();
-			refactoring = infor.getRenameRefactoring(unit);
+			refactoring = NCDetector.getRefactoring(unit);
 			RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
 		}
 		
