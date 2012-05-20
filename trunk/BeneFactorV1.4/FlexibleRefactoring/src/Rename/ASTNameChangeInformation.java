@@ -1,5 +1,6 @@
 package Rename;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -22,10 +23,6 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	String modifiedName;
 	String modifiedNameFull;
 	
-//	int originalNameBindingCount;
-	
-//	float percentage;
-//	final float PERCENTAGE_THRESHHOLD = (float)0.5;
 	static boolean allowFinishingRenamingAutomatically = true;
 	String bindingKeyOne;
 	String bindingKeyTwo;
@@ -64,7 +61,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			isDeclarationChange = sOldName.isDeclaration();
 			if(isDeclarationChange)
 			{
-				ASTNameChangeInformation change = NameChange.searchIntermediateChange(this);
+				ASTNameChangeInformation change = NameChangeDetected.getInstance().searchIntermediateChange(this);
 				if(change == null)
 					hasIntermediateChange = false;
 				else
@@ -81,11 +78,11 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	
 	public String getNameChangeTypeDescription()
 	{
-		String type = NameChange.getNameChangeTypeDescription(nameChangeType);
-		if(nameChangeType == NameChange.NOT_NAME_CHANGE)
+		String type = NameChangeUtil.getNameChangeTypeDescription(nameChangeType);
+		if(nameChangeType == NameChangeUtil.NOT_NAME_CHANGE)
 			return type;
 		else
-			return originalName+" "+ getNameChangePercentage() + " "+modifiedName;
+			return originalName + ":" + modifiedName;
 	}
 	
 
@@ -96,17 +93,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return 0;
 	}
 	
-	public float getNameChangePercentage()
-	{
-		//return percentage;
-		return (float) 0.0;
-	}
-	
-	public void setNameChangePercentage(float per)
-	{
-		//percentage = per;
-	}
-	
+
 
 	public String getOldNameBindingKey()
 	{
@@ -128,7 +115,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
 			//renaming reference when declaration has been changed
-			ArrayList<ASTNameChangeInformation> declarationChanges = NameChange.getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);
+			List<ASTNameChangeInformation> declarationChanges = 
+					NameChangeDetected.getInstance().getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);
 			
 			if(declarationChanges.size() == 0)
 				return null;
@@ -172,7 +160,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			if(this.isRenamingDeclaration())
 			{
-				ArrayList<ASTNameChangeInformation> changes = NameChange.getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);			
+				List<ASTNameChangeInformation> changes = NameChangeDetected.getInstance().
+						getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);			
 				changes.add(this);
 				
 				if(usingDiff2)

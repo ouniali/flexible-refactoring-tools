@@ -14,7 +14,7 @@ import util.ASTUtil;
 import ExtractMethod.ASTExtractMethodChangeInformation;
 import ExtractMethod.ExtractMethod;
 import Rename.ASTNameChangeInformation;
-import Rename.NameChange;
+import Rename.NameChangeUtil;
 
 public class ASTChangeInformationGenerator {
 
@@ -27,7 +27,7 @@ public class ASTChangeInformationGenerator {
 	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
-		if(NameChange.isRenameChange(pair.nodeOne, pair.nodeTwo))
+		if(NameChangeUtil.isRenameChange(pair.nodeOne, pair.nodeTwo))
 			return new ASTNameChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);		
 		else
 			return null; 	
