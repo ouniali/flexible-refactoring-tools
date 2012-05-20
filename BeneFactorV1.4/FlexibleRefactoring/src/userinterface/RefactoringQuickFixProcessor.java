@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -41,7 +42,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 		int line = tree.getLineNumber(selection);
 		if(get_all)
 		{
-			ArrayList<JavaRefactoring> refactorings = RefactoringChances.getJavaRefactorings(unit, line);
+			List<JavaRefactoring> refactorings = RefactoringChances.getJavaRefactorings(unit, line);
 			int size = refactorings.size();
 			IJavaCompletionProposal[] results = new IJavaCompletionProposal[size];
 			for(int i = 0; i< size; i++)

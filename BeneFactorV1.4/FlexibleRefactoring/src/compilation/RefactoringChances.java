@@ -1,8 +1,10 @@
 package compilation;
 
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
@@ -19,17 +21,13 @@ public class RefactoringChances {
 	
 	public static void addNewRefactoringChance(JavaRefactoring ref)
 	{
-		if(ref != null)
-		{
-			if(refactorings.size() == max_size)
-				refactorings.remove(0);
-			refactorings.add(ref);
-		}
-			
+		if(refactorings.size() == max_size)
+			refactorings.remove(0);
+		refactorings.add(ref);
 	}
-	public static ArrayList<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
+	public static List<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
 	{
-		ArrayList<JavaRefactoring> results = new ArrayList<JavaRefactoring>();
+		List<JavaRefactoring> results = new ArrayList<JavaRefactoring>();
 		
 		for(JavaRefactoring refactoring: refactorings)
 		{
@@ -43,7 +41,7 @@ public class RefactoringChances {
 	
 	public static JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line) throws Exception
 	{
-		ArrayList<JavaRefactoring> refs = getJavaRefactorings(unit, line);
+		List<JavaRefactoring> refs = getJavaRefactorings(unit, line);
 		int index = refs.size() - 1;
 		return refs.get(index);
 	}
@@ -64,9 +62,9 @@ public class RefactoringChances {
 		}
 	}
 	
-	public static ArrayList<JavaRefactoring> getPendingExtractMethodRefactoring()
+	public static List<JavaRefactoring> getPendingExtractMethodRefactoring()
 	{
-		ArrayList<JavaRefactoring> extracts = new ArrayList<JavaRefactoring>();
+		List<JavaRefactoring> extracts = new ArrayList<JavaRefactoring>();
 		
 		for(JavaRefactoring ref : refactorings)
 		{
@@ -76,32 +74,23 @@ public class RefactoringChances {
 		return extracts;	
 	}
 	
-	public static ArrayList<JavaRefactoring> getPendingRenameRefactoring()
+	public static List<JavaRefactoring> getPendingRenameRefactoring()
 	{
-		ArrayList<JavaRefactoring> renames = new ArrayList<JavaRefactoring>();
-		
+		List<JavaRefactoring> renames = new ArrayList<JavaRefactoring>();
 		for(JavaRefactoring ref : refactorings)
 		{
 			if(ref.getRefactoringType() == JavaRefactoringType.RENAME)
 				renames.add(ref);
 		}	
 		return renames;
-		
 	}
 	
-	public static void removeRefactoring(JavaRefactoring refactoring)
+	public static void removeRefactoring(JavaRefactoring refactoring) throws Exception
 	{
-		try
-		{		
 			IMarker marker = refactoring.getMarker();
 			if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
 				marker.delete();
 			refactorings.remove(refactoring);
-		} catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
 	}
 	
 	
