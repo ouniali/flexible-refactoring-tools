@@ -25,7 +25,6 @@ import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 import Rename.ASTNameChangeInformation;
-import Rename.NameChangeDetected;
 import Rename.NameChangeDetector;
 import Rename.NameChangeUtil;
 import Rename.NameChangeCountHistory;

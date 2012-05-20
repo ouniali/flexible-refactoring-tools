@@ -23,7 +23,6 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	String modifiedName;
 	String modifiedNameFull;
 	
-	static boolean allowFinishingRenamingAutomatically = true;
 	String bindingKeyOne;
 	String bindingKeyTwo;
 	
@@ -68,7 +67,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 					hasIntermediateChange = true;
 			}
 		}
-		else isDeclarationChange = false;
+		else 
+			isDeclarationChange = false;
 	}
 	
 	public int getNameChangeType()
