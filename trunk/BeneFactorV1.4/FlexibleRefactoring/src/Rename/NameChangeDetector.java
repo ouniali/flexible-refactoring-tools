@@ -3,8 +3,11 @@ package Rename;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.core.ICompilationUnit;
+
 import ASTree.ASTChangeInformationGenerator;
 import ASTree.CompilationUnitHistoryRecord;
+import JavaRefactoringAPI.JavaRefactoring;
 
 public class NameChangeDetector {
 
@@ -29,6 +32,12 @@ public class NameChangeDetector {
 		return false;
 	}
 	
+	
+	public JavaRefactoring getRefactoring(ICompilationUnit unit) throws Exception
+	{
+		return NameChangeDetected.getInstance().getLatestDetectedChange().getRenameRefactoring(unit);
+	}
+	
 	private CompilationUnitHistoryRecord getLatestRecord(List<CompilationUnitHistoryRecord> records) 
 	{
 		if(records.size() < 1)
@@ -44,5 +53,7 @@ public class NameChangeDetector {
 			return 0;
 		return Math.min(records.size() - 1, MAXIMUM_LOOK_BACK_COUNT_RENAME);
 	}
+	
+	
 	
 }
