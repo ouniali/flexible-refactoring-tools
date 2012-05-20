@@ -109,17 +109,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	{
 		int line = getRefactoringMarkerLine(unit);
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		boolean usingDiff1 = true;
-		boolean usingDiff2 = true;
 		
 		if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
 			//renaming reference when declaration has been changed
 			List<ASTNameChangeInformation> declarationChanges = 
 					NameChangeDetected.getInstance().getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);
-			
-			if(declarationChanges.size() == 0)
-				return null;
 			ASTNameChangeInformation first_change = declarationChanges.get(0);
 			ASTNameChangeInformation last_change = declarationChanges.get(declarationChanges.size()-1);
 				
@@ -128,78 +123,29 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 			
 			if(!keyBefore.equals("") && !keyAfter.equals(""))
 			{
-				if(usingDiff1)
-				{
-					JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
-							unit,
-							line,
-							marker,
-							declarationChanges,
-							modifiedName
-							);
-					return refactoringDiff;
-				}
-				else
-				{
-					JavaRefactoringRename refactoring = new JavaRefactoringRename(
-							unit,
-							line,
-							marker,
-							keyBefore,
-							keyAfter,
-							originalName,
-							modifiedName
-							);
-					return refactoring;
-				}
+				JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
+						unit, line, marker, declarationChanges, modifiedName);
+				return refactoringDiff;		
 			}
 			else
 				return null;
 		}
 		else
 		{
-			if(this.isRenamingDeclaration())
+			if(isRenamingDeclaration())
 			{
 				List<ASTNameChangeInformation> changes = NameChangeDetected.getInstance().
 						getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);			
 				changes.add(this);
-				
-				if(usingDiff2)
-				{
-					JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
-							unit,
-							line,
-							marker,
-							changes,
-							modifiedName
-							);					
-					return refactoringDiff;
-				}
-				else
-				{
-					JavaRefactoringRename refactoring = new JavaRefactoringRename(
-							unit, 
-							line, 
-							marker, 
-							bindingKeyOne, 
-							bindingKeyTwo,
-							originalName, 
-							modifiedName);
-					return refactoring;
-				}
+				JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
+					unit, line, marker, changes, modifiedName);					
+				return refactoringDiff;
 				
 			}
 			else
 			{
 				JavaRefactoringRename refactoring = new JavaRefactoringRename(
-						unit, 
-						line, 
-						marker, 
-						bindingKeyOne, 
-						bindingKeyOne,
-						originalName, 
-						modifiedName
-						);
+					unit, line, marker, bindingKeyOne, bindingKeyOne, originalName, modifiedName);
 				return refactoring;
 			}
 		}	
