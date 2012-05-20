@@ -99,32 +99,32 @@ public class CompilationUnitHistory {
 		{
 			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
 			refactoring = infor.getRenameRefactoring(unit);
-			RefactoringChances.addNewRefactoringChance(refactoring);
+			RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
 		}
 		
 		//extract method
 		
 		if(ExtractMethod.isFoundIn(records))
-			RefactoringChances.addNewRefactoringChance(ExtractMethod.getEMRefactoring(records, unit));			
+			RefactoringChances.getInstance().addNewRefactoringChance(ExtractMethod.getEMRefactoring(records, unit));			
 
 		
 		
 		
-		if(!RefactoringChances.getPendingExtractMethodRefactoring().isEmpty())
+		if(!RefactoringChances.getInstance().getPendingExtractMethodRefactoring().isEmpty())
 		{		
 			NewMethodSignatureForExtractMethod newSig = ExtractMethod.getEditingNewMethodSignature(records.get(records.size()-1));
 			if(newSig != null)
 			{
 				System.out.println(newSig);
 				JavaRefactoringExtractMethodBase pendingEM = (JavaRefactoringExtractMethodBase) 
-						RefactoringChances.getPendingExtractMethodRefactoring().get(0);
-				RefactoringChances.removeRefactoring(pendingEM);
+						RefactoringChances.getInstance().getPendingExtractMethodRefactoring().get(0);
+				RefactoringChances.getInstance().removeRefactoring(pendingEM);
 				int line = newSig.getLineNumber();
 				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 				JavaRefactoringExtractMethodBase newEM = pendingEM.moveExtractMethodRefactoring(marker, line);
 				newSig.setJavaRefactoringExtractMethod(newEM);
 				newEM.setNonrefactoringChangeEnd(newSig.getRecordNonRefactoringChangeEnd());
-				RefactoringChances.addNewRefactoringChance(newEM);	
+				RefactoringChances.getInstance().addNewRefactoringChance(newEM);	
 				System.out.println("Extract method continued.");
 			}
 		}
@@ -147,7 +147,7 @@ public class CompilationUnitHistory {
 				if(addStaticChange.getStaticFieldDeclaration().equals(deleteStaticChange.getStaticFieldDeclaration()))
 				{
 					refactoring =  addStaticChange.getMoveStaticMemberRefactoring(unit, deleteStaticChange);
-					RefactoringChances.addNewRefactoringChance(refactoring);
+					RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
 					MoveStaticMember.clearAddStaticChange();
 					MoveStaticMember.clearDeleteStaticChange();
 					System.out.println("Move Static Declaration Detected.");
@@ -159,7 +159,7 @@ public class CompilationUnitHistory {
 		//extract local variable
 		ExtractLocalVariableDetector ELVDetector = new ExtractLocalVariableDetector();
 		if(ELVDetector.isELVFound(records))
-			RefactoringChances.addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
+			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
 		
 			
 	}

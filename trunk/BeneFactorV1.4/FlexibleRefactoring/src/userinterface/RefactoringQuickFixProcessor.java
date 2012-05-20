@@ -35,27 +35,18 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 	public IJavaCompletionProposal[] getCorrections(IInvocationContext context,
 			IProblemLocation[] locations) throws CoreException {
 		try{
-		ICompilationUnit unit = context.getCompilationUnit();
-		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
-		boolean get_all = false;
-		int selection = context.getSelectionOffset();
-		int line = tree.getLineNumber(selection);
-		if(get_all)
-		{
-			List<JavaRefactoring> refactorings = RefactoringChances.getJavaRefactorings(unit, line);
-			int size = refactorings.size();
-			IJavaCompletionProposal[] results = new IJavaCompletionProposal[size];
-			for(int i = 0; i< size; i++)
-				results[i] = getRefactoringProposalRefactoring(refactorings.get(i));	
-			return results;
-		}
-		else
-		{
-			JavaRefactoring refactoring = RefactoringChances.getLatestJavaRefactoring(unit, line);
-			IJavaCompletionProposal[] result = new IJavaCompletionProposal[1];
-			result[0] = getRefactoringProposalRefactoring(refactoring);
-			return result;
-		}
+			ICompilationUnit unit = context.getCompilationUnit();
+			CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
+			int selection = context.getSelectionOffset();
+			int line = tree.getLineNumber(selection);
+			if(RefactoringChances.getInstance().hasRefactorings())
+			{
+				JavaRefactoring refactoring = RefactoringChances.getInstance().
+					getLatestJavaRefactoring(unit, line);
+				IJavaCompletionProposal[] result = new IJavaCompletionProposal[1];
+				result[0] = getRefactoringProposalRefactoring(refactoring);
+				return result;
+			}
 		}catch(Exception e)
 		{
 			e.printStackTrace();
