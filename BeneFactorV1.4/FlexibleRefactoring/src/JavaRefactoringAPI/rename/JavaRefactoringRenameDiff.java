@@ -1,6 +1,7 @@
 package JavaRefactoringAPI.rename;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.core.resources.IMarker;
@@ -41,12 +42,12 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 
 	ASTNameChangeInformation first_dec_change;
 	ASTNameChangeInformation last_dec_change;
-	ArrayList<ASTNameChangeInformation> dec_changes;
+	List<ASTNameChangeInformation> dec_changes;
 	String bindingKey;
 
 	private JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
 			String oN, String nN,
-			ArrayList<ASTNameChangeInformation> changes) throws Exception 
+			List<ASTNameChangeInformation> changes) throws Exception 
 	{
 		super(u, l, m, oN, nN);
 		dec_changes = changes;
@@ -56,7 +57,7 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 	}
 	
 	public static JavaRefactoringRenameDiff create(ICompilationUnit u, int l, IMarker m,
-			ArrayList<ASTNameChangeInformation> changes, String nN) throws Exception
+			List<ASTNameChangeInformation> changes, String nN) throws Exception
 	{
 		String oN = changes.get(0).getOldName();
 		return new JavaRefactoringRenameDiff(u, l, m, oN, nN, changes);

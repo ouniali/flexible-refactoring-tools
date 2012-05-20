@@ -25,7 +25,9 @@ import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 import Rename.ASTNameChangeInformation;
-import Rename.NameChange;
+import Rename.NameChangeDetected;
+import Rename.NameChangeDetector;
+import Rename.NameChangeUtil;
 import Rename.NameChangeCountHistory;
 
 public class CompilationUnitHistory {
@@ -95,9 +97,10 @@ public class CompilationUnitHistory {
 		JavaRefactoring refactoring;
 		
 		//rename
-		if(NameChange.LookingBackForDetectingRenameChange(records))
+		NameChangeDetector NCDetector = new NameChangeDetector();
+		if(NCDetector.isRenameDetected(records))
 		{
-			ASTNameChangeInformation infor = NameChange.detectedNameChanges.get(NameChange.detectedNameChanges.size()-1);
+			ASTNameChangeInformation infor = NameChangeDetected.getInstance().getLatestDetectedChange();
 			refactoring = infor.getRenameRefactoring(unit);
 			RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
 		}
