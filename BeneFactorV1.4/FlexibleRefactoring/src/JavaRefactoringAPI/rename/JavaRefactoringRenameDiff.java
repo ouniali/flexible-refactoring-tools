@@ -37,37 +37,30 @@ import Rename.NamesInPackage;
 
 import compare.SourceDiff;
 
-public class JavaRefactoringRenameDiff extends JavaRefactoring {
+public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 
 	ASTNameChangeInformation first_dec_change;
 	ASTNameChangeInformation last_dec_change;
 	ArrayList<ASTNameChangeInformation> dec_changes;
 	String bindingKey;
-	IJavaProject project;
-	String newName;
-	String oldName;
 
-	public JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
-			ArrayList<ASTNameChangeInformation> changes, String nN) throws Exception 
+	private JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
+			String oN, String nN,
+			ArrayList<ASTNameChangeInformation> changes) throws Exception 
 	{
-		super(u, l, m);
+		super(u, l, m, oN, nN);
 		dec_changes = changes;
 		first_dec_change = dec_changes.get(0);
 		last_dec_change = dec_changes.get(dec_changes.size()-1);
 		bindingKey = first_dec_change.getOldNameBindingKey();
-		project = u.getJavaProject(); 
-		newName = nN;
-		oldName = first_dec_change.getOldName();
 	}
-
 	
-	public String getOldName()
+	public static JavaRefactoringRenameDiff create(ICompilationUnit u, int l, IMarker m,
+			ArrayList<ASTNameChangeInformation> changes, String nN) throws Exception
 	{
-		return this.oldName;
-	}
-	public String getNewName()
-	{
-		return this.newName;
+		String oN = changes.get(0).getOldName();
+		return new JavaRefactoringRenameDiff(u, l, m, oN, nN, changes);
+		
 	}
 	
 	@SuppressWarnings("restriction")
@@ -96,8 +89,8 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			}
 			//new way to get element
 			
-			JavaRenameProcessor processor = JavaRefactoringRename.getRenameProcessor(element);
-			processor.setNewElementName(newName);
+			JavaRenameProcessor processor = getRenameProcessor(element);
+			processor.setNewElementName(getNewName());
 			refactoring = new RenameRefactoring(processor);
 			refactoring.checkInitialConditions(monitor.newChild(1));
 			refactoring.checkFinalConditions(monitor.newChild(1));
@@ -105,9 +98,9 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 			
 			//add preview here
 			
-			ArrayList results = new ChangeAnalyzer(change, new AutoEditionVisitorStrategy()).getResults();
+		/*	ArrayList results = new ChangeAnalyzer(change, new AutoEditionVisitorStrategy()).getResults();
 			new MultiFileEdition(results).play();
-			Thread.sleep(Integer.MAX_VALUE);
+			Thread.sleep(Integer.MAX_VALUE);*/
 			
 			//
 			
@@ -171,11 +164,6 @@ public class JavaRefactoringRenameDiff extends JavaRefactoring {
 		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(this.getICompilationUnit(),source, monitor.newChild(1));
 
 		monitor.done();
-	}
-
-	@Override
-	public int getRefactoringType() {
-		return JavaRefactoringType.RENAME;
 	}
 
 

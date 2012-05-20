@@ -47,41 +47,26 @@ import Rename.NamesInPackage;
 
 
 
-public class JavaRefactoringRename extends JavaRefactoring{
+public class JavaRefactoringRename extends JavaReafactoringRenameBase{
 
-	static final int flag = RenameSupport.UPDATE_REFERENCES|RenameSupport.UPDATE_GETTER_METHOD|RenameSupport.UPDATE_SETTER_METHOD;
 	
 	
 	final String bindingKeyBeforeDeclarationChange;
 	final String bindingKeyAfterDeclarationChange;
-	final String oldName;
-	final String newName;
 	
 	IJavaElement element;
-	IJavaProject project;
 	
 	ArrayList<Name> namesInProject;
 	boolean renamedBindingKey;
 	
 	public JavaRefactoringRename(ICompilationUnit u,int l, IMarker m,String keyBefore,String keyAfter, String oN, String nN) throws Exception
 	{
-		super(u, l, m);
+		super(u, l, m, oN, nN);
 		assert(keyBefore!= null && keyAfter != null);
 		bindingKeyBeforeDeclarationChange = keyBefore;
 		bindingKeyAfterDeclarationChange = keyAfter;
-		oldName = oN;
-		newName = nN;
-		project = u.getJavaProject(); 
 	}	
 	
-	public String getOldName()
-	{
-		return this.oldName;
-	}
-	public String getNewName()
-	{
-		return this.newName;
-	}
 	
 	
 	
@@ -110,7 +95,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 			}
 				
 			JavaRenameProcessor processor = getRenameProcessor(element);
-			processor.setNewElementName(newName);
+			processor.setNewElementName(getNewName());
 			refactoring = new RenameRefactoring(processor);
 			RefactoringStatus  initialStatus = refactoring.checkInitialConditions(monitor.newChild(1));
 			RefactoringStatus  finalStatus = refactoring.checkFinalConditions(monitor.newChild(1));
@@ -146,7 +131,7 @@ public class JavaRefactoringRename extends JavaRefactoring{
 				}
 				//new way to get element
 				JavaRenameProcessor processor = getRenameProcessor(element);
-				processor.setNewElementName(oldName);
+				processor.setNewElementName(getOldName());
 				RenameRefactoring recoverRefactoring = new RenameRefactoring(processor);
 				RefactoringStatus  initialStatus = recoverRefactoring.checkInitialConditions(monitor.newChild(1));
 				RefactoringStatus  finalStatus = recoverRefactoring.checkFinalConditions(monitor.newChild(1));
@@ -156,78 +141,6 @@ public class JavaRefactoringRename extends JavaRefactoring{
 		}
 		
 		monitor.done();
-	}
-
-	@Override
-	public int getRefactoringType() {
-		// TODO Auto-generated method stub
-		return JavaRefactoringType.RENAME;
-	}
-	
-	
-	@SuppressWarnings("restriction")
-	public static JavaRenameProcessor getRenameProcessor(IJavaElement element) throws Exception
-	{
-		int eleType = element.getElementType();				
-		
-		switch(eleType)
-		{
-		case IJavaElement.COMPILATION_UNIT:			
-			ICompilationUnit unit = (ICompilationUnit) element;
-			return new RenameCompilationUnitProcessor(unit);
-
-		case IJavaElement.FIELD:
-			IField field = (IField)element;
-			if (JdtFlags.isEnum(field))
-				return new RenameEnumConstProcessor(field);
-			else {
-				final RenameFieldProcessor RFprocessor= new RenameFieldProcessor(field);
-				RFprocessor.setRenameGetter((flag & RenameSupport.UPDATE_GETTER_METHOD) != 0);
-				RFprocessor.setRenameSetter((flag & RenameSupport.UPDATE_SETTER_METHOD) != 0);
-				return RFprocessor;
-			}
-
-		case IJavaElement.JAVA_PROJECT:			
-			IJavaProject project = (IJavaProject) element;
-			return new RenameJavaProjectProcessor(project);
-	
-		case IJavaElement.LOCAL_VARIABLE: 	
-			ILocalVariable variable = (ILocalVariable) element;
-			RenameLocalVariableProcessor LVProcessor = new RenameLocalVariableProcessor(variable);
-			LVProcessor.setUpdateReferences((flag & RenameSupport.UPDATE_REFERENCES) != 0);
-			return LVProcessor;
-			
-		case IJavaElement.METHOD:
-			final IMethod method= (IMethod)element;
-			JavaRenameProcessor MProcessor;
-			if (MethodChecks.isVirtual(method)) {
-				MProcessor= new RenameVirtualMethodProcessor(method);
-			} else {
-				MProcessor= new RenameNonVirtualMethodProcessor(method);
-			}
-            return MProcessor;
-             
-		case IJavaElement.PACKAGE_FRAGMENT:	
-			IPackageFragment fragment = (IPackageFragment) element;
-			return new RenamePackageProcessor(fragment);
-			
-		case IJavaElement.PACKAGE_FRAGMENT_ROOT:
-			IPackageFragmentRoot root = (IPackageFragmentRoot) element;
-			return new RenameSourceFolderProcessor(root);
-			
-		case IJavaElement.TYPE_PARAMETER:
-			ITypeParameter parameter = (ITypeParameter) element;
-			RenameTypeParameterProcessor TPProcessor= new RenameTypeParameterProcessor(parameter);
-			TPProcessor.setUpdateReferences((flag & RenameSupport.UPDATE_REFERENCES) != 0);
-			return TPProcessor;
-			
-		case IJavaElement.TYPE:			
-			IType type = (IType)element;
-			return new RenameTypeProcessor(type);
-		
-		default:
-			return null;
-		}
 	}
 
 
