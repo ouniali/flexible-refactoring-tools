@@ -35,7 +35,6 @@ public class JavaReafactoringRenameBase extends JavaRefactoring{
 
 	private final String old_name;
 	private final String new_name;
-	private final IJavaProject project;
 	private final int flag = 
 			RenameSupport.UPDATE_REFERENCES|RenameSupport.UPDATE_GETTER_METHOD|RenameSupport.UPDATE_SETTER_METHOD;
 	
@@ -45,8 +44,6 @@ public class JavaReafactoringRenameBase extends JavaRefactoring{
 		super(u, l, m);
 		old_name = oN;
 		new_name = nN;
-		project = u.getJavaProject();
-
 	}
 
 	public final String getOldName() {
