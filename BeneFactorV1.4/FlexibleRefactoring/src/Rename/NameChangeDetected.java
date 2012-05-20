@@ -28,7 +28,8 @@ class NameChangeDetected {
 		for (int i = start; i > end; i--) {
 			ASTNameChangeInformation change = detectedNameChanges.get(i);
 			String newBinding = change.getNewNameBindingKey();
-			if (change.isRenamingDeclaration() && newBinding.equals(currentBindingKey)) {
+			if (change.isRenamingDeclaration() && newBinding.equals(currentBindingKey)) 
+			{
 				if (!change.hasIntermediateChange)
 				{
 					skips.add(0, change);
