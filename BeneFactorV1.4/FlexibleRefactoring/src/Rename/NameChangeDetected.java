@@ -30,7 +30,7 @@ class NameChangeDetected {
 			String newBinding = change.getNewNameBindingKey();
 			if (change.isRenamingDeclaration() && newBinding.equals(currentBindingKey)) 
 			{
-				if (!change.hasIntermediateChange)
+				if (!change.hasIntermediateChange())
 				{
 					skips.add(0, change);
 					break;
@@ -38,7 +38,7 @@ class NameChangeDetected {
 				else
 				{
 					skips.add(0, change);
-					currentBindingKey = change.bindingKeyOne;
+					currentBindingKey = change.getOldNameBindingKey();
 				}
 			}
 
@@ -56,9 +56,9 @@ class NameChangeDetected {
 		{
 			ASTNameChangeInformation change = detectedNameChanges.get(i);
 			String codeOne = change.getNewCompilationUnitRecord().getSourceCode();
-			int indexOne = change.newNameNodeIndex;
+			int indexOne = change.getNodeOneIndex();
 			String codeTwo = current.getOldCompilationUnitRecord().getSourceCode();
-			int indexTwo = current.oldNameNodeIndex;
+			int indexTwo = current.getNodeTwoIndex();
 			if(codeOne.equals(codeTwo) && indexOne == indexTwo)
 				return change;
 		}

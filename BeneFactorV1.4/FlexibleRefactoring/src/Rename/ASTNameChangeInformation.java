@@ -15,23 +15,18 @@ import ASTree.*;
 import JavaRefactoringAPI.*;
 
 public class ASTNameChangeInformation extends ASTChangeInformation {
-
-	int nameChangeType;
 	
-	String originalName;
-	String originalNameFull;
-	String modifiedName;
-	String modifiedNameFull;
+	final private String originalName;
+	final private String originalNameFull;
+	final private String modifiedName;
+	final private String modifiedNameFull;
 	
-	String bindingKeyOne;
-	String bindingKeyTwo;
-	
-	int oldNameNodeIndex;
-	int newNameNodeIndex;
-	
-	boolean isDeclarationChange;
-	boolean hasIntermediateChange;
-	int declarationNodeIndex;
+	final private String bindingKeyOne;
+	final private String bindingKeyTwo;
+		
+	final private boolean isDeclarationChange;
+	final private boolean hasIntermediateChange;
+	//final private int declarationNodeIndex;
 	
 	
 	public ASTNameChangeInformation(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
@@ -41,11 +36,8 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		Name oldName = (Name) r1;
 		Name newName = (Name) r2;
 		
-		oldNameNodeIndex = this.getNodeOneIndex();
-		newNameNodeIndex = this.getNodeTwoIndex();
-		
-		bindingKeyOne = oldRecord.getBindingKey(oldNameNodeIndex);
-		bindingKeyTwo = newRecord.getBindingKey(newNameNodeIndex);
+		bindingKeyOne = oldRecord.getBindingKey(getNodeOneIndex());
+		bindingKeyTwo = newRecord.getBindingKey(getNodeTwoIndex());
 		
 		originalName = oldName.toString();
 		originalNameFull = oldName.getFullyQualifiedName();
@@ -54,7 +46,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		
 		
 		
-		if(oldName instanceof SimpleName)
+		if(oldName.isSimpleName())
 		{
 			SimpleName sOldName = (SimpleName) oldName; 
 			isDeclarationChange = sOldName.isDeclaration();
@@ -66,23 +58,14 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 				else
 					hasIntermediateChange = true;
 			}
+			else
+				hasIntermediateChange = false;
 		}
 		else 
+		{
+			hasIntermediateChange = false;
 			isDeclarationChange = false;
-	}
-	
-	public int getNameChangeType()
-	{
-		return nameChangeType;
-	}
-	
-	public String getNameChangeTypeDescription()
-	{
-		String type = NameChangeUtil.getNameChangeTypeDescription(nameChangeType);
-		if(nameChangeType == NameChangeUtil.NOT_NAME_CHANGE)
-			return type;
-		else
-			return originalName + ":" + modifiedName;
+		}
 	}
 	
 
@@ -191,11 +174,15 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
 		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
-		ASTNode oldNameNode = ASTUtil.getASTNodeByIndex(tree, oldNameNodeIndex);
+		ASTNode oldNameNode = ASTUtil.getASTNodeByIndex(tree, getNodeOneIndex());
 		int lineNo = tree.getLineNumber(oldNameNode.getStartPosition());
 		return lineNo;
 	}
 	
+	public boolean hasIntermediateChange()
+	{
+		return hasIntermediateChange;
+	}
 	
 
 }
