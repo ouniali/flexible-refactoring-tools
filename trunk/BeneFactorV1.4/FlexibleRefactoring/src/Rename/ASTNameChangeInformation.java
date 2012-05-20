@@ -25,9 +25,6 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	final private String bindingKeyTwo;
 		
 	final private boolean isDeclarationChange;
-	final private boolean hasIntermediateChange;
-	//final private int declarationNodeIndex;
-	
 	
 	public ASTNameChangeInformation(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
 		
@@ -50,22 +47,9 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			SimpleName sOldName = (SimpleName) oldName; 
 			isDeclarationChange = sOldName.isDeclaration();
-			if(isDeclarationChange)
-			{
-				ASTNameChangeInformation change = NameChangeDetected.getInstance().searchIntermediateChange(this);
-				if(change == null)
-					hasIntermediateChange = false;
-				else
-					hasIntermediateChange = true;
-			}
-			else
-				hasIntermediateChange = false;
 		}
 		else 
-		{
-			hasIntermediateChange = false;
 			isDeclarationChange = false;
-		}
 	}
 	
 
@@ -179,10 +163,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return lineNo;
 	}
 	
-	public boolean hasIntermediateChange()
-	{
-		return hasIntermediateChange;
-	}
+
 	
 
 }
