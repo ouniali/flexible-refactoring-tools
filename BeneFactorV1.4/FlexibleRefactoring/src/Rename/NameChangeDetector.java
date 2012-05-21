@@ -35,7 +35,8 @@ public class NameChangeDetector {
 	
 	public JavaRefactoring getRefactoring(ICompilationUnit unit) throws Exception
 	{
-		return NameChangeDetected.getInstance().getLatestDetectedChange().getRenameRefactoring(unit);
+		return NameChangeDetected.getInstance().
+				getLatestDetectedChange().getRenameRefactoring(unit);
 	}
 	
 	private CompilationUnitHistoryRecord getLatestRecord(List<CompilationUnitHistoryRecord> records) 

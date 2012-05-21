@@ -59,9 +59,10 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 	public static JavaRefactoringRenameDiff create(ICompilationUnit u, int l, IMarker m,
 			List<ASTNameChangeInformation> changes, String nN) throws Exception
 	{
+		if(changes.size() < 1)
+			return null;
 		String oN = changes.get(0).getOldName();
-		return new JavaRefactoringRenameDiff(u, l, m, oN, nN, changes);
-		
+		return new JavaRefactoringRenameDiff(u, l, m, oN, nN, changes);	
 	}
 	
 	@SuppressWarnings("restriction")

@@ -18,6 +18,10 @@ class NameChangeDetected {
 		return instance;
 	}
 
+	public boolean isDeclarationChangeTrackable(String binding_key)
+	{
+		return getSkipedDeclaredNameChangesInHistory(binding_key).size() != 0;
+	}
 	
 	public List<ASTNameChangeInformation> getSkipedDeclaredNameChangesInHistory(String currentBindingKey) {
 		
@@ -35,7 +39,6 @@ class NameChangeDetected {
 				skips.add(0, change);
 				currentBindingKey = change.getOldNameBindingKey();
 			}
-
 		}
 		return skips;
 	}
