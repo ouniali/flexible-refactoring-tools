@@ -116,10 +116,8 @@ public class JavaRefactoringRename extends JavaReafactoringRenameBase{
 				RefactoringStatus  initialStatus = recoverRefactoring.checkInitialConditions(monitor.newChild(1));
 				RefactoringStatus  finalStatus = recoverRefactoring.checkFinalConditions(monitor.newChild(1));
 				recoverRefactoring.createChange(monitor.newChild(1)).perform(monitor.newChild(1));
-			}
-			
+			}	
 		}
-		
 		monitor.done();
 	}
 
