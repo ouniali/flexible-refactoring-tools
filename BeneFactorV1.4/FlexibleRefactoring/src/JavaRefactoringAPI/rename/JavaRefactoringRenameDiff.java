@@ -83,17 +83,7 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 			refactoring.checkInitialConditions(monitor.newChild(1));
 			refactoring.checkFinalConditions(monitor.newChild(1));
 			Change change = refactoring.createChange(monitor.newChild(1));
-			
-			//add preview here
-			
-		/*	ArrayList results = new ChangeAnalyzer(change, new AutoEditionVisitorStrategy()).getResults();
-			new MultiFileEdition(results).play();
-			Thread.sleep(Integer.MAX_VALUE);*/
-			
-			//
-			
-			
-			//System.out.println("add preview here");			
+			//showPreview(change);
 			Change undo = change.perform(monitor.newChild(1));
 			this.setUndo(undo);
 		}
@@ -164,6 +154,13 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 	@Override
 	public void postProcess() {
 		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id+".rename", "rename"));
+	}
+	
+	private void showPreview(Change change) throws Exception
+	{
+		List results = new ChangeAnalyzer(change, new AutoEditionVisitorStrategy()).getResults();
+		new MultiFileEdition(results).play();
+		Thread.sleep(Integer.MAX_VALUE);
 	}
 
 }
