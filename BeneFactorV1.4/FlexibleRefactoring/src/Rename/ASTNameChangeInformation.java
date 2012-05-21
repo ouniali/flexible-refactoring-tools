@@ -75,30 +75,23 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public JavaRefactoring getRenameRefactoring(ICompilationUnit unit) throws Exception
 	{
 		int line = getRefactoringMarkerLine(unit);
-		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+		IMarker marker;
 		
-		if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
+		if(bindingKeyOne.equals("") && bindingKeyTwo.equals(""))
+			return null;
+		else if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
 			//renaming reference when declaration has been changed
+			marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 			List<ASTNameChangeInformation> declarationChanges = 
 					NameChangeDetected.getInstance().getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);
-			ASTNameChangeInformation first_change = declarationChanges.get(0);
-			ASTNameChangeInformation last_change = declarationChanges.get(declarationChanges.size()-1);
-				
-			String keyBefore = first_change.getOldNameBindingKey();
-			String keyAfter = last_change.getNewNameBindingKey();
-			
-			if(!keyBefore.equals("") && !keyAfter.equals(""))
-			{
-				JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
-						unit, line, marker, declarationChanges, modifiedName);
-				return refactoringDiff;		
-			}
-			else
-				return null;
+			JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
+					unit, line, marker, declarationChanges, modifiedName);
+			return refactoringDiff;
 		}
 		else
 		{
+			marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 			if(isRenamingDeclaration())
 			{
 				List<ASTNameChangeInformation> changes = NameChangeDetected.getInstance().
@@ -115,20 +108,12 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 					unit, line, marker, bindingKeyOne, bindingKeyOne, originalName, modifiedName);
 				return refactoring;
 			}
-		}	
+		}
+	
 	}
 	
-	public boolean isPercentageAboveThreshhold()
-	{
-		//return percentage> PERCENTAGE_THRESHHOLD;
-		return false;
-	}
-	
-	public boolean isRenameComplete(ICompilationUnit unit)
-	{	
-		//return percentage == 1.00;
-		return false;
-	}
+
+
 	
 	public boolean isRenamingDeclaration()
 	{

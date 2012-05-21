@@ -39,7 +39,7 @@ public class RefactoringQuickFixProcessor implements IQuickFixProcessor {
 			CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
 			int selection = context.getSelectionOffset();
 			int line = tree.getLineNumber(selection);
-			if(RefactoringChances.getInstance().hasRefactorings())
+			if(RefactoringChances.getInstance().hasRefactorings(unit, line))
 			{
 				JavaRefactoring refactoring = RefactoringChances.getInstance().
 					getLatestJavaRefactoring(unit, line);
