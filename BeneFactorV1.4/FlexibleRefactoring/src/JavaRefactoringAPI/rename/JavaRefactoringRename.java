@@ -80,20 +80,10 @@ public class JavaRefactoringRename extends JavaReafactoringRenameBase{
 		Name name; 
 		name = new NamesInPackage(ASTUtil.getContainingPackage(getICompilationUnit()))
 		.getNameOfBinding(bindingKeyBeforeDeclarationChange);
-		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)
 		{
 			IJavaElement element = name.resolveBinding().getJavaElement();
-			IJavaElement entire_element = element;
-			try{
-				int name_start = name.getStartPosition();
-				int name_length = name.getLength();
-				IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
-				element = primary_elements[0];
-			} catch (Exception e){
-				element = entire_element;
-			}
-				
+			element = correctElement(element, name);
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(getNewName());
 			refactoring = new RenameRefactoring(processor);
@@ -119,17 +109,7 @@ public class JavaRefactoringRename extends JavaReafactoringRenameBase{
 			if(name != null)
 			{				
 				IJavaElement element = name.resolveBinding().getJavaElement();		
-				//new way to get element
-				IJavaElement entire_element = element;
-				try{
-					int name_start = name.getStartPosition();
-					int name_length = name.getLength();
-					IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
-					element = primary_elements[0];
-				} catch (Exception e){
-					element = entire_element;
-				}
-				//new way to get element
+				element = correctElement(element, name);
 				JavaRenameProcessor processor = getRenameProcessor(element);
 				processor.setNewElementName(getOldName());
 				RenameRefactoring recoverRefactoring = new RenameRefactoring(processor);
