@@ -49,16 +49,17 @@ public class RefactoringChances {
 		return results;	
 	}
 	
-	public boolean hasRefactorings()
+	public boolean hasRefactorings(ICompilationUnit unit, int line) throws Exception
 	{
-		return refactorings.size() != 0;
+		List<JavaRefactoring> refs = getJavaRefactorings(unit, line);
+		return refs.size() > 0;
 	}
 	
 	public JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line) throws Exception
 	{
 		List<JavaRefactoring> refs = getJavaRefactorings(unit, line);
 		int index = refs.size() - 1;
-		return refs.get(index);
+		return refs.get(index);	
 	}
 	
 	

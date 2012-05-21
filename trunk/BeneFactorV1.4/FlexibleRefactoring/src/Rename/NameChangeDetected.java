@@ -17,6 +17,7 @@ class NameChangeDetected {
 	{
 		return instance;
 	}
+
 	
 	public List<ASTNameChangeInformation> getSkipedDeclaredNameChangesInHistory(String currentBindingKey) {
 		
@@ -38,6 +39,7 @@ class NameChangeDetected {
 		}
 		return skips;
 	}
+	
 
 	public ASTNameChangeInformation searchIntermediateChange(ASTNameChangeInformation current)
 	{
