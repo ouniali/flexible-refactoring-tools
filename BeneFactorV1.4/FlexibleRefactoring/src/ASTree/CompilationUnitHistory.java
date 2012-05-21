@@ -102,9 +102,6 @@ public class CompilationUnitHistory {
 			refactoring = NCDetector.getRefactoring(unit);
 			if(refactoring != null)
 				RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
-			else
-				System.out.println("null refactoring.");
-				
 		}
 		
 		//extract method
