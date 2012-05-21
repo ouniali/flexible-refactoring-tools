@@ -1,6 +1,7 @@
 package animation.autoedition;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import flexiblerefactoring.BeneFactor;
@@ -9,9 +10,9 @@ import animation.autoedition.ui.FileChangeDecorator;
 
 public class MultiFileEdition extends Observable{
 
-	ArrayList<SingleFileEdition> File_Editions;
+	List<SingleFileEdition> File_Editions;
 	
-	public MultiFileEdition(ArrayList arr)
+	public MultiFileEdition(List arr)
 	{
 		File_Editions = arr;
 		for(SingleFileEdition se : File_Editions)
