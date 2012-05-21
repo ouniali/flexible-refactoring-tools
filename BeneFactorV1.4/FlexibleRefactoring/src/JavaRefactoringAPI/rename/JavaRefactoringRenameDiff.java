@@ -94,8 +94,8 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 	
 
 	@Override
-	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
-		
+	protected void performCodeRecovery(IProgressMonitor pm) throws Exception 
+	{	
 		SubMonitor monitor = SubMonitor.convert(pm,"Recovering Code",2);
 		String source = first_dec_change.getOldCompilationUnitRecord().getSourceCode();	
 		source = performDiffs(source, getChangesAfterDeclarationRenamed());
