@@ -96,64 +96,35 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
 		
 		SubMonitor monitor = SubMonitor.convert(pm,"Recovering Code",2);
-		
-		if(first_dec_change == null)
-			return;
-			
-		String source = first_dec_change.getOldCompilationUnitRecord().getSourceCode();
-		ArrayList<CompilationUnitHistoryRecord> records = new ArrayList<CompilationUnitHistoryRecord>();
-		CompilationUnitHistoryRecord startRecord = first_dec_change.getOldCompilationUnitRecord();
-		CompilationUnitHistoryRecord endRecord = startRecord.getAllHistory().getMostRecentRecord();
-		CompilationUnitHistoryRecord currentRecord = endRecord;
-
-		
-		while (currentRecord != startRecord && currentRecord != null) 
-		{
-			records.add(0, currentRecord);
-			currentRecord = currentRecord.getPreviousRecord();
-		}
-		records.add(0, currentRecord);
-		
-		boolean[] does_skips = new boolean[records.size()];
-		for(int i = 1; i< does_skips.length; i++)
-			does_skips[i] = false;
-		
-		for(ASTNameChangeInformation change : dec_changes)
-		{
-			int start = records.indexOf(change.getOldCompilationUnitRecord());
-			int end = records.indexOf(change.getNewCompilationUnitRecord());
-			
-			for(int i = start ; i<= end; i++)
-				does_skips[i] = true;
-		}
-		
-		for(int i = 1 ; i< records.size(); i++)
-		{
-			SourceDiff d = records.get(i).getSourceDiff();
-			if(does_skips[i])
-				source = d.skipChange(source);
-			else 
-				source = d.performChange(source);
-		}
-		
-		monitor.worked(1);
-	
-
+		String source = first_dec_change.getOldCompilationUnitRecord().getSourceCode();	
+		source = performDiffs(source, getChangesAfterDeclarationRenamed());
 		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(this.getICompilationUnit(),source, monitor.newChild(1));
-
 		monitor.done();
 	}
 
-
-	@Override
-	public void preProcess() {
-		
+	private List<SourceDiff> getChangesAfterDeclarationRenamed()
+	{
+		List<SourceDiff> diffs = new ArrayList<SourceDiff>();
+		CompilationUnitHistoryRecord start = last_dec_change.getNewCompilationUnitRecord();
+		CompilationUnitHistoryRecord end = start.getAllHistory().getMostRecentRecord();
+		for(CompilationUnitHistoryRecord current = end; current != start; current = current.getPreviousRecord())
+			diffs.add(0, current.getSourceDiff());
+		return diffs;
 	}
-
+	
+	private String performDiffs(String source, List<SourceDiff> diffs)
+	{
+		for(SourceDiff diff : diffs)
+			source = diff.performChange(source);
+		return source;
+	}
+	
+	
 
 	@Override
 	public void postProcess() {
-		MonitorUiPlugin.getDefault().notifyInteractionObserved(InteractionEvent.makeCommand(event_id+".rename", "rename"));
+		MonitorUiPlugin.getDefault().
+			notifyInteractionObserved(InteractionEvent.makeCommand(event_id+".rename", "rename"));
 	}
 	
 	private void showPreview(Change change) throws Exception
