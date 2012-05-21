@@ -74,23 +74,23 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 		Name name;
 		name = new NamesInPackage(ASTUtil.getContainingPackage(getICompilationUnit()))
 		.getNameOfBinding(bindingKey);
-		ICompilationUnit unit = this.getICompilationUnit();
 		if(name != null)
 		{
 			IJavaElement element = name.resolveBinding().getJavaElement();
-			
+/*			
 			//new way to get element
-			IJavaElement entire_element = element;
+			//IJavaElement entire_element = element;
 			try{
 				int name_start = name.getStartPosition();
 				int name_length = name.getLength();
 				IJavaElement[] primary_elements = unit.codeSelect(name_start, name_length);
 				element = primary_elements[0];
 			} catch (Exception e){
+				System.out.println("");
 				element = entire_element;
 			}
 			//new way to get element
-			
+*/			
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(getNewName());
 			refactoring = new RenameRefactoring(processor);
