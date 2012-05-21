@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.ITypeParameter;
+import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.internal.corext.refactoring.rename.JavaRenameProcessor;
 import org.eclipse.jdt.internal.corext.refactoring.rename.MethodChecks;
 import org.eclipse.jdt.internal.corext.refactoring.rename.RenameCompilationUnitProcessor;
@@ -72,7 +73,21 @@ public class JavaReafactoringRenameBase extends JavaRefactoring{
 	@Override
 	public void postProcess() throws Exception {}
 	
-	
+	protected IJavaElement correctElement(IJavaElement element, Name name)
+	{
+		IJavaElement original = element;
+		try{
+			int name_start = name.getStartPosition();
+			int name_length = name.getLength();
+			IJavaElement[] primary_elements = getICompilationUnit().
+					codeSelect(name_start, name_length);
+			element = primary_elements[0];
+		} catch (Exception e){
+			element = original;
+		}
+		
+		return element;
+	}
 	@SuppressWarnings("restriction")
 	protected JavaRenameProcessor getRenameProcessor(IJavaElement element) throws Exception
 	{
