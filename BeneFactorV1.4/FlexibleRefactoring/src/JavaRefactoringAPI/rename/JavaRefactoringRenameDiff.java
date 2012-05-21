@@ -77,6 +77,7 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 		if(name != null)
 		{
 			IJavaElement element = name.resolveBinding().getJavaElement();
+			element = correctElement(element, name);
 			JavaRenameProcessor processor = getRenameProcessor(element);
 			processor.setNewElementName(getNewName());
 			refactoring = new RenameRefactoring(processor);
