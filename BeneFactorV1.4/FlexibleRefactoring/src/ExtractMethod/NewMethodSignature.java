@@ -33,7 +33,7 @@ public class NewMethodSignature {
 	CompilationUnitHistoryRecord current_record;
 	
 	
-	public CompilationUnitHistoryRecord getRecordNonRefactoringChangeEnd()
+	private CompilationUnitHistoryRecord getRecordNonRefactoringChangeEnd()
 	{
 		CompilationUnitHistoryRecord current = current_record;
 		CompilationUnitHistoryRecord after = null;
@@ -70,14 +70,14 @@ public class NewMethodSignature {
 		current_record = cr;
 	}
 
-	public void setJavaRefactoringExtractMethod(JavaRefactoringExtractMethodBase em) {
+	private void setJavaRefactoringExtractMethod(JavaRefactoringExtractMethodBase em) {
 		if (modifierAvailable)
 			em.setModifier(modifier);
 		if (methodNameAvailable)
 			em.setMethodName(methodName);
 	}
 
-	public int getLineNumber() {
+	private int getLineNumber() {
 		return lineNumber;
 	}
 
