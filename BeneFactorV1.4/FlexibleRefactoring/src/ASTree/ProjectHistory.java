@@ -30,7 +30,6 @@ public class ProjectHistory {
 	{
 		String pacName = ASTUtil.getPackageName(tree.getPackage());
 		String unitName = ASTUtil.getCompilationUnitName(tree);
-		
 		CompilationUnitHistory history = getHistory(pacName, unitName);
 		
 		if(history == null)
@@ -53,13 +52,11 @@ public class ProjectHistory {
 	
 	private CompilationUnitHistory getHistory(String pacName, String unitName)
 	{
-		
 		for (CompilationUnitHistory his: histories)
 		{
 			if(his.getCompilationUnitName().equals(unitName) && his.getPackageName().equals(pacName))
 				return his;
 		}
-		
 		return null;
 	}
 	

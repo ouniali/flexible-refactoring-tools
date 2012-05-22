@@ -28,14 +28,14 @@ public class RefactoringChances {
 	}
 	
 	
-	public void addNewRefactoringChance(JavaRefactoring ref)
+	public synchronized void addNewRefactoringChance(JavaRefactoring ref)
 	{
 		if(refactorings.size() == max_size)
 			refactorings.remove(0);
 		refactorings.add(ref);
 	}
 
-	public List<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
+	public synchronized List<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
 	{
 		List<JavaRefactoring> results = new ArrayList<JavaRefactoring>();
 		
@@ -55,7 +55,7 @@ public class RefactoringChances {
 		return refs.size() > 0;
 	}
 	
-	public JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line) throws Exception
+	public synchronized JavaRefactoring getLatestJavaRefactoring(ICompilationUnit unit, int line) throws Exception
 	{
 		List<JavaRefactoring> refs = getJavaRefactorings(unit, line);
 		int index = refs.size() - 1;
