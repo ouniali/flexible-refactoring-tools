@@ -49,7 +49,7 @@ public class CompilationUnitHistory {
 	}
 	
 	
-	protected void addAST(CompilationUnit tree) throws Exception
+	protected synchronized void addAST(CompilationUnit tree) throws Exception
 	{
 		CompilationUnitHistoryRecord earlier = null;
 		if(records.size()> 0)

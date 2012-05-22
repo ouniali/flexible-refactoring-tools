@@ -100,7 +100,6 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 				JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
 					unit, line, marker, changes, modifiedName);					
 				return refactoringDiff;
-				
 			}
 			else
 			{
