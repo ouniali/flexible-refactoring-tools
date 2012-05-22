@@ -27,8 +27,8 @@ import UserAction.MylynMonitor;
 
 public class RefactoringCompilerParticipant extends CompilationParticipant {
 	
-	static private ProjectHistoryCollector collector = new ProjectHistoryCollector();
-			
+	/*static private ProjectHistoryCollector collector = new ProjectHistoryCollector();
+	*/		
 	public RefactoringCompilerParticipant()
 	{
 		super();
@@ -43,21 +43,20 @@ public class RefactoringCompilerParticipant extends CompilationParticipant {
 	{
 		
 		try {
-			//below is original code
-			originalCode(context);
-			//testingFloatingCode();
-			//testingAutoEdition(context);
+			
+			JobQueue.getInstance().enqueue(context);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}	
 	
-	private void originalCode(ReconcileContext context) throws Exception
+/*	private void originalCode(ReconcileContext context) throws Exception
 	{
 		IJavaProject pro = context.getWorkingCopy().getJavaProject();
 		CompilationUnit tree = context.getAST3();
 		collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());	
-	}
+	}*/
 	
 	
 	boolean test = true;
