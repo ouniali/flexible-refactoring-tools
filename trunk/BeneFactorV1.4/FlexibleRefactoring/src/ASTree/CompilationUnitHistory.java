@@ -19,8 +19,9 @@ import flexiblerefactoring.BeneFactor;
 
 import ExtractMethod.ASTExtractMethodActivity;
 import ExtractMethod.ASTExtractMethodChangeInformation;
-import ExtractMethod.ExtractMethod;
-import ExtractMethod.NewMethodSignatureForExtractMethod;
+import ExtractMethod.ExtractMethodDetector;
+import ExtractMethod.NewMethodSignature;
+import ExtractMethod.NewMethodSignatureDetector;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
@@ -106,33 +107,24 @@ public class CompilationUnitHistory {
 		
 		//extract method
 		
-		if(ExtractMethod.isFoundIn(records))
-			RefactoringChances.getInstance().addNewRefactoringChance(ExtractMethod.getEMRefactoring(records, unit));			
-
-		
-		
+		ExtractMethodDetector EMDetector = new ExtractMethodDetector();
+		if(EMDetector.isExtractMethodDetected(records))
+			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));			
 		
 		if(!RefactoringChances.getInstance().getPendingExtractMethodRefactoring().isEmpty())
-		{		
-			NewMethodSignatureForExtractMethod newSig = ExtractMethod.getEditingNewMethodSignature(records.get(records.size()-1));
-			if(newSig != null)
+		{
+			NewMethodSignatureDetector NMSDetector = new NewMethodSignatureDetector();
+			if(NMSDetector.isNewSignatureDetected(records))
 			{
-				System.out.println(newSig);
-				JavaRefactoringExtractMethodBase pendingEM = (JavaRefactoringExtractMethodBase) 
-						RefactoringChances.getInstance().getPendingExtractMethodRefactoring().get(0);
-				RefactoringChances.getInstance().removeRefactoring(pendingEM);
-				int line = newSig.getLineNumber();
-				IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-				JavaRefactoringExtractMethodBase newEM = pendingEM.moveExtractMethodRefactoring(marker, line);
-				newSig.setJavaRefactoringExtractMethod(newEM);
-				newEM.setNonrefactoringChangeEnd(newSig.getRecordNonRefactoringChangeEnd());
-				RefactoringChances.getInstance().addNewRefactoringChance(newEM);	
-				System.out.println("Extract method continued.");
+				JavaRefactoringExtractMethodBase EM =  
+						RefactoringChances.getInstance().getLatestExtractMethod();
+				RefactoringChances.getInstance().removeRefactoring(EM);
+				EM = NMSDetector.getNewSignature().moveRefactoring(EM, unit);
+				RefactoringChances.getInstance().addNewRefactoringChance(EM);
 			}
 		}
 		
-		//move static field declaration
-		
+		//Move field
 		if(MoveStaticMember.LookingBackForDetectingDeleteStaticDeclarationChange(records))
 		{
 			System.out.println("Delete Static Declaration Detected.");
