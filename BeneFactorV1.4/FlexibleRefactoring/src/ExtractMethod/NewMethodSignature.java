@@ -8,6 +8,9 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 
+import compare.SourceDiff;
+import compare.SourceDiffNull;
+
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
@@ -37,17 +40,19 @@ public class NewMethodSignature {
 	{
 		CompilationUnitHistoryRecord current = current_record;
 		CompilationUnitHistoryRecord after = null;
-		while(current != null && current.getSourceDiff() != null
-				&& current.getSourceDiff().getLineNumber() == lineNumber)
+		
+		for(current = current_record; current != null;current = current.getPreviousRecord())
 		{
 			after = current;
-			current = current.getPreviousRecord();
+			SourceDiff diff = current.getSourceDiff();
+			if(!(diff instanceof SourceDiffNull) && diff.getLineNumber() != lineNumber)
+				break;
 		}
+		
 		if(current == null)
 			return after;
 		else
-			return current;
-		
+			return current;		
 	}
 
 	public NewMethodSignature(String info, CompilationUnitHistoryRecord cr) {
