@@ -101,7 +101,7 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		CompilationUnitHistoryRecord startR = getNonrefactoringChangeStart();
 		CompilationUnitHistoryRecord endR = getNonRefactoringChangeEnd();
 		redoUnrefactoringChanges(startR, endR);
-		JavaRefactoringExtractMethodUtil.prepareLinkedEdition(this.getICompilationUnit(), this.getMethodName());	
+		//JavaRefactoringExtractMethodUtil.prepareLinkedEdition(this.getICompilationUnit(), this.getMethodName());	
 		MonitorUiPlugin.getDefault().notifyInteractionObserved(
 				InteractionEvent.makeCommand(event_id + ".ExtractMethod", "extract method"));
 	}
