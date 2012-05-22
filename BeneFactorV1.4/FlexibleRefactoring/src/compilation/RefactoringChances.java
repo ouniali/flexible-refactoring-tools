@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import userinterface.RefactoringMarker;
 import JavaRefactoringAPI.*;
+import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 public class RefactoringChances {
@@ -85,6 +86,13 @@ public class RefactoringChances {
 		return extracts;	
 	}
 	
+	public JavaRefactoringExtractMethodBase getLatestExtractMethod()
+	{
+		
+		return (JavaRefactoringExtractMethodBase) getPendingExtractMethodRefactoring().
+				get(getPendingExtractMethodRefactoring().size() - 1);
+	}
+	
 	public List<JavaRefactoring> getPendingRenameRefactoring()
 	{
 		List<JavaRefactoring> renames = new ArrayList<JavaRefactoring>();
@@ -103,6 +111,7 @@ public class RefactoringChances {
 				marker.delete();
 			refactorings.remove(refactoring);
 	}
+	
 
 	
 }

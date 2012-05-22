@@ -3,6 +3,8 @@ package ExtractMethod;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 
@@ -10,9 +12,10 @@ import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
+import userinterface.RefactoringMarker;
 import util.StringUtil;
 
-public class NewMethodSignatureForExtractMethod {
+public class NewMethodSignature {
 
 	int lineNumber;
 	String signature;
@@ -47,7 +50,7 @@ public class NewMethodSignatureForExtractMethod {
 		
 	}
 
-	public NewMethodSignatureForExtractMethod(String info, CompilationUnitHistoryRecord cr) {
+	public NewMethodSignature(String info, CompilationUnitHistoryRecord cr) {
 
 		lineNumber = cr.getSourceDiff().getLineNumber();
 		signature = info;
@@ -143,4 +146,15 @@ public class NewMethodSignatureForExtractMethod {
 		return buffer.toString();
 	}
 
+	public JavaRefactoringExtractMethodBase moveRefactoring(JavaRefactoringExtractMethodBase ref,
+			ICompilationUnit unit) throws Exception
+	{
+		int line = getLineNumber();
+		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+		JavaRefactoringExtractMethodBase newEM = ref.moveExtractMethodRefactoring(marker, line);
+		setJavaRefactoringExtractMethod(newEM);
+		newEM.setNonrefactoringChangeEnd(getRecordNonRefactoringChangeEnd());
+		return newEM;
+		
+	}
 }

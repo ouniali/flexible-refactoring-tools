@@ -18,7 +18,7 @@ import util.ASTUtil;
 import util.FileUtil;
 import util.UIUtil;
 import Rename.NamesInCompilationUnit;
-import ExtractMethod.ExtractMethod;
+import ExtractMethod.ExtractMethodDetector;
 import UserAction.UserActionData;
 
 import compare.JavaSourceDiff;

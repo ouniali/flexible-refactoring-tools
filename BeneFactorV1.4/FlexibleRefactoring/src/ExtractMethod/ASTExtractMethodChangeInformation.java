@@ -42,9 +42,9 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		ArrayList<ASTNode> childrenTwo = ASTUtil.getChildNodes(nodeTwo);
 		int childrenOneSize = childrenOne.size();
 		int childrenTwoSize = childrenTwo.size();
-		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
+		int start = ExtractMethodUtil.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
 		int end = Math.min(
-				ExtractMethod.getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo),
+				ExtractMethodUtil.getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo),
 				childrenTwoSize-start
 		);
 		
@@ -58,7 +58,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	
 	private int getCuttedASTNodeIndexInNodeTwo(ASTNode nodeOne, ASTNode nodeTwo)
 	{
-		int start = ExtractMethod.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
+		int start = ExtractMethodUtil.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
 		ArrayList<ASTNode> childrenTwo = ASTUtil.getChildNodes(nodeTwo);
 		ASTNode node; 
 		if(start != 0)

@@ -16,7 +16,7 @@ abstract class ExtractMethodDetected
 	public abstract void set(Object o);
 }
 
-class ExtractWithCopy extends ExtractMethodDetected{
+ class ExtractWithCopy extends ExtractMethodDetected{
 	
 	ASTExtractMethodActivity activity;
 	private static ExtractWithCopy detected;
