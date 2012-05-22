@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import util.ASTUtil;
+
 import ASTree.ProjectHistoryCollector;
 
 public class JobQueue implements Runnable{
@@ -60,7 +62,7 @@ public class JobQueue implements Runnable{
 	private void handle(ReconcileContext context) throws Exception
 	{
 		IJavaProject pro = context.getWorkingCopy().getJavaProject();
-		CompilationUnit tree = context.getAST3();
+		CompilationUnit tree = ASTUtil.parseICompilationUnit(context.getWorkingCopy());
 		collector.addNewProjectVersion(pro, (ICompilationUnit)tree.getJavaElement());	
 	}
 	
