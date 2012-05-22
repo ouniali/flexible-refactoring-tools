@@ -62,7 +62,6 @@ public class JobQueue implements Runnable{
 	private void handle(ReconcileContext context) throws Exception
 	{
 		IJavaProject pro = context.getWorkingCopy().getJavaProject();
-		//CompilationUnit tree = ASTUtil.parseICompilationUnit(context.getWorkingCopy());
 		collector.addNewProjectVersion(pro, context.getWorkingCopy());	
 	}
 	
