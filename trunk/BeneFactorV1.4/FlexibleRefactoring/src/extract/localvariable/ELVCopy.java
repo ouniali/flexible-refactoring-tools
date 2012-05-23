@@ -38,7 +38,7 @@ public class ELVCopy implements ELVActivity{
 		int start = record.getHighlightedRegion()[0];
 		int line = UIUtil.getLineNumberByOffset(start, editor);
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(u, line);
-		return new JavaRefactoringELVCopy(u, line, marker, this);
+		return new JavaRefactoringELVCopy(u, line, this);
 	}
 
 

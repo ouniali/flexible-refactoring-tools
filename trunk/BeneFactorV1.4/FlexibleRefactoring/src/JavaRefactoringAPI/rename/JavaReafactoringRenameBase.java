@@ -40,9 +40,9 @@ public class JavaReafactoringRenameBase extends JavaRefactoring{
 			RenameSupport.UPDATE_REFERENCES|RenameSupport.UPDATE_GETTER_METHOD|RenameSupport.UPDATE_SETTER_METHOD;
 	
 
-	public JavaReafactoringRenameBase(ICompilationUnit u, int l, IMarker m, String oN, String nN)
+	public JavaReafactoringRenameBase(ICompilationUnit u, int l, String oN, String nN)
 			throws Exception {
-		super(u, l, m);
+		super(u, l);
 		old_name = oN;
 		new_name = nN;
 	}

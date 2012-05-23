@@ -45,24 +45,24 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 	List<ASTNameChangeInformation> dec_changes;
 	String bindingKey;
 
-	private JavaRefactoringRenameDiff(ICompilationUnit u, int l, IMarker m,
+	private JavaRefactoringRenameDiff(ICompilationUnit u, int l,
 			String oN, String nN,
 			List<ASTNameChangeInformation> changes) throws Exception 
 	{
-		super(u, l, m, oN, nN);
+		super(u, l, oN, nN);
 		dec_changes = changes;
 		first_dec_change = dec_changes.get(0);
 		last_dec_change = dec_changes.get(dec_changes.size()-1);
 		bindingKey = first_dec_change.getOldNameBindingKey();
 	}
 	
-	public static JavaRefactoringRenameDiff create(ICompilationUnit u, int l, IMarker m,
+	public static JavaRefactoringRenameDiff create(ICompilationUnit u, int l,
 			List<ASTNameChangeInformation> changes, String nN) throws Exception
 	{
 		if(changes.size() < 1)
 			return null;
 		String oN = changes.get(0).getOldName();
-		return new JavaRefactoringRenameDiff(u, l, m, oN, nN, changes);	
+		return new JavaRefactoringRenameDiff(u, l, oN, nN, changes);	
 	}
 	
 	@SuppressWarnings("restriction")

@@ -28,7 +28,7 @@ public class ASTEMActivity {
 	{
 		int line = getMarkerLineNumber(getCopyStart()) + 1;
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		return new JavaRefactoringExtractMethodActivity(unit, line, marker, this);
+		return new JavaRefactoringExtractMethodActivity(unit, line, this);
 	}
 	
 	public int getCopyStart()

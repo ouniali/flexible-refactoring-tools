@@ -138,12 +138,10 @@ public class MethodDec extends Declaration{
 	}
 
 	@Override
-	public JavaRefactoring moveRefactoring(JavaRefactoring ref, ICompilationUnit unit) throws Exception 
+	public void moveRefactoring(JavaRefactoring ref) throws Exception 
 	{
 		JavaRefactoringExtractMethodBase emb = (JavaRefactoringExtractMethodBase) ref;
 		int line = getLineNumber();
-		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		JavaRefactoringExtractMethodBase newEM = emb.moveExtractMethodRefactoring(marker, line);
-		return newEM;
+		emb.moveRefactoring(line);
 	}
 }

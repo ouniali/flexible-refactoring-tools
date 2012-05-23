@@ -18,9 +18,8 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 
 	final ASTEMActivity activity;
 		
-	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, 
-			IMarker m, ASTEMActivity a) throws Exception{
-		super(u, l, m);
+	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, ASTEMActivity a) throws Exception{
+		super(u, l);
 		activity = a;
 	}
 
@@ -38,15 +37,7 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 	}
 
 
-	@Override
-	public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(
-			IMarker marker, int l) throws Exception {
-		JavaRefactoringExtractMethodActivity ref = new JavaRefactoringExtractMethodActivity
-				(this.getICompilationUnit(), l, marker, activity);
-		ref.setMethodName(getMethodName());
-		ref.setModifier(getModifier());
-		return ref;
-	}
+	
 
 
 

@@ -21,9 +21,9 @@ public abstract class JavaRefactoringELVBase extends JavaRefactoring{
 	String temp_name = "temp";
 	CompilationUnitHistoryRecord non_refactoring_end;
 	
-	public JavaRefactoringELVBase(ICompilationUnit u, int l, IMarker m, ELVActivity a)
+	public JavaRefactoringELVBase(ICompilationUnit u, int l, ELVActivity a)
 			throws Exception {
-		super(u, l, m);
+		super(u, l);
 		activity = a;
 	}
 	
@@ -95,8 +95,6 @@ public abstract class JavaRefactoringELVBase extends JavaRefactoring{
 		else
 			return activity.getRecord().getAllHistory().getMostRecentRecord();
 	}
-	
-	public abstract JavaRefactoringELVBase moveRefactoring(IMarker marker, int l) throws Exception;
 	
 	
 

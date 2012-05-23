@@ -31,9 +31,9 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 	ASTChangeInformationDeleteStaticMember deleteChange;
 	ASTChangeInformationAddStaticMember addChange;
 	
-	public JavaRefactoringMoveStaticMember(ICompilationUnit u, int l, IMarker m, ASTChangeInformationDeleteStaticMember delete, ASTChangeInformationAddStaticMember add) throws Exception 
+	public JavaRefactoringMoveStaticMember(ICompilationUnit u, int l, ASTChangeInformationDeleteStaticMember delete, ASTChangeInformationAddStaticMember add) throws Exception 
 	{
-		super(u, l, m);
+		super(u, l);
 		deleteChange = delete;
 		addChange = add;
 	}

@@ -11,7 +11,7 @@ import JavaRefactoringAPI.JavaRefactoring;
 
 public abstract class Declaration {
 	public abstract void setRefactoring(JavaRefactoring ref);
-	public abstract JavaRefactoring moveRefactoring(JavaRefactoring ref, ICompilationUnit unit) throws Exception;
+	public abstract void moveRefactoring(JavaRefactoring ref) throws Exception;
 	
 	protected CompilationUnitHistoryRecord getRecordNotEditingOn
 		(CompilationUnitHistoryRecord record, int line)
