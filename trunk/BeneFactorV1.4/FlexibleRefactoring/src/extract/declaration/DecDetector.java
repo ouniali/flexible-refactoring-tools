@@ -24,7 +24,6 @@ public abstract class DecDetector {
 		for(int i = records.size() - 1; i > records.size() - 1 - total; i--)
 		{
 			CompilationUnitHistoryRecord current = records.get(i);
-			
 			if(isDecFoundIn(current))
 			{
 				dec = getDeclaration(current);
