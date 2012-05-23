@@ -161,11 +161,15 @@ public class CompilationUnitHistory {
 
 	private static void detectEM(
 			ArrayList<CompilationUnitHistoryRecord> records,
-			ICompilationUnit unit) throws Exception {
+			ICompilationUnit unit) throws Exception 
+	{
 		EMDetector EMDetector = new EMDetector();
 		if(EMDetector.isExtractMethodDetected(records))
-			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));				
-		else if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
+		{
+			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));
+			return;
+		}
+		if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
 		{
 			DecDetector NMSDetector = new MethodDecDetector();
 			if(NMSDetector.isDecDetected(records))
