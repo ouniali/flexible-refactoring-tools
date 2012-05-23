@@ -1,4 +1,4 @@
-package JavaRefactoringAPI.extract.method;
+	package JavaRefactoringAPI.extract.method;
 
 import java.lang.reflect.Modifier;
 import java.util.LinkedList;
