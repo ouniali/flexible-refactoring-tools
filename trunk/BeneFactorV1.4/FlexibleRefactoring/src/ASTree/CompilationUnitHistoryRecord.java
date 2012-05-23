@@ -27,7 +27,7 @@ import compare.SourceDiffIdentical;
 import compare.SourceDiffNull;
 import extract.method.EMDetector;
 
-public class CompilationUnitHistoryRecord {
+public class CompilationUnitHistoryRecord implements Comparable{
 
 	static final String root = "AST_FULL";
 	private final long time;
@@ -302,6 +302,15 @@ public class CompilationUnitHistoryRecord {
 	static public String getHistoryFilesRoot()
 	{
 		return root;
+	}
+
+
+
+	@Override
+	public int compareTo(Object obj) {
+		//>0 if this record is newer
+		CompilationUnitHistoryRecord another = (CompilationUnitHistoryRecord)obj;
+		return (int) (time - another.time);
 	}
 	
 

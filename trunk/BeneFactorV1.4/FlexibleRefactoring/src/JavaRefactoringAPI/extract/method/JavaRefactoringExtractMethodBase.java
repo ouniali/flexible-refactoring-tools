@@ -45,7 +45,7 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 	}
 	
 
-	protected abstract CompilationUnitHistoryRecord getNonrefactoringChangeStart();
+	
 	
 	public void setNonrefactoringChangeEnd(CompilationUnitHistoryRecord r)
 	{
@@ -63,7 +63,7 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		return endR;
 	}
 	
-	
+	protected abstract CompilationUnitHistoryRecord getNonrefactoringChangeStart();
 	abstract protected String getSourceAfterRefactoring() throws Exception;
 	abstract protected String getSourceAfterRecovery() throws Exception;
 	abstract protected CompilationUnitHistoryRecord getLatestRecord() throws Exception;
