@@ -114,16 +114,17 @@ public class CompilationUnitHistory {
 		if(EMDetector.isExtractMethodDetected(records))
 			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));			
 		
-		if(!RefactoringChances.getInstance().getPendingExtractMethodRefactoring().isEmpty())
+		if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
 		{
 			MethodSignatureDetector NMSDetector = new MethodSignatureDetector();
 			if(NMSDetector.isDecDetected(records))
 			{
 				JavaRefactoringExtractMethodBase EM =  
-						RefactoringChances.getInstance().getLatestExtractMethod();
+						RefactoringChances.getInstance().getLatestEM();
 				RefactoringChances.getInstance().removeRefactoring(EM);
 				MethodDec m_dec = (MethodDec) NMSDetector.getDetectedDec();
-				EM = m_dec.moveRefactoring(EM, unit);
+				m_dec.setRefactoring(EM);
+				EM = (JavaRefactoringExtractMethodBase) m_dec.moveRefactoring(EM, unit);
 				RefactoringChances.getInstance().addNewRefactoringChance(EM);
 			}
 		}
@@ -161,11 +162,15 @@ public class CompilationUnitHistory {
 		if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
 		{
 			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
-			LVDecDetector LVDecDetector = LVDecDetector.create(ref);
-			if(LVDecDetector.isDecDetected(records))
+			LVDecDetector lvd_detector = LVDecDetector.create(ref);
+			if(lvd_detector.isDecDetected(records))
 			{
-				Declaration dec = LVDecDetector.getDetectedDec();
-				
+				Declaration dec = lvd_detector.getDetectedDec();
+				JavaRefactoringELVBase elv = RefactoringChances.getInstance().getLatestELV();
+				RefactoringChances.getInstance().removeRefactoring(elv);
+				dec.setRefactoring(elv);
+				elv = (JavaRefactoringELVBase) dec.moveRefactoring(elv, unit);
+				RefactoringChances.getInstance().addNewRefactoringChance(elv);
 			}
 		}
 		

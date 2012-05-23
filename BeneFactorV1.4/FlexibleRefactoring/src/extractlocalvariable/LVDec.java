@@ -1,10 +1,12 @@
 package extractlocalvariable;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
+import userinterface.RefactoringMarker;
 import util.StringUtil;
 
 public class LVDec extends Declaration{
@@ -42,12 +44,11 @@ public class LVDec extends Declaration{
 	}
 
 	@Override
-	public JavaRefactoring moveRefactoring(JavaRefactoring ref, ICompilationUnit unit) 
+	public JavaRefactoring moveRefactoring(JavaRefactoring ref, ICompilationUnit unit) throws Exception 
 	{
 		JavaRefactoringELVBase elvb = (JavaRefactoringELVBase)ref;
-		
-		
-		return null;
+		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
+		return elvb.moveRefactoring(marker, line);
 	}
 	
 	
