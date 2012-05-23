@@ -131,16 +131,6 @@ public abstract class JavaRefactoring extends Job{
 				source, new NullProgressMonitor());
 	}
 	
-	public void finalize()
-	{
-		try {
-			super.finalize();
-			deleteMarker();
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		
-	}
 	
 	private void deleteMarker() throws Exception
 	{

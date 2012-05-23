@@ -10,6 +10,7 @@ import ASTree.visitors.ASTMethodDecVisitor;
 
 import compare.SourceDiff;
 import compare.SourceDiffChange;
+import compare.SourceDiffIdentical;
 import compare.SourceDiffInsert;
 
 public class MethodDecDetector extends DecDetector{
@@ -19,6 +20,8 @@ public class MethodDecDetector extends DecDetector{
 		CompilationUnit tree = record.getASTree();
 		ASTMethodDecVisitor mVisitor = new ASTMethodDecVisitor();
 		tree.accept(mVisitor);
+		if(!record.hasMeaningfulChangeLineNumber())
+			return false;
 		if(mVisitor.isInMethod(getEditedLineNumber(record)))
 			return false;
 		else
