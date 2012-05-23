@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import util.ASTUtil;
 
-import ASTree.NameBindingInformationVisitor;
+import ASTree.visitors.NameBindingInformationVisitor;
 
 public class NamesInCompilationUnit {
 	

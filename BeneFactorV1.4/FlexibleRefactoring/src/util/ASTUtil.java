@@ -7,8 +7,8 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
-import ASTree.ASTNodeIndexVisitor;
-import ASTree.GetChildrenNodeVisitor;
+import ASTree.visitors.ASTNodeIndexVisitor;
+import ASTree.visitors.GetChildrenNodeVisitor;
 import Rename.ASTNameChangeInformation;
 
 

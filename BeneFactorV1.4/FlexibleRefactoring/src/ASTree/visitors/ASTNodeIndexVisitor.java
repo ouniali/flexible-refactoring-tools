@@ -1,4 +1,4 @@
-package ASTree;
+package ASTree.visitors;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
