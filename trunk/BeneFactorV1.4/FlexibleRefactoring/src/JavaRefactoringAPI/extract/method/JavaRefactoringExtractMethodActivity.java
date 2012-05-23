@@ -5,6 +5,7 @@ import java.lang.reflect.Modifier;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaModelException;
 
 import extract.method.ASTEMActivity;
 
@@ -50,18 +51,23 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 
 
 	@Override
-	protected CompilationUnitHistoryRecord getRecordAfterRefactoring() {
-		return activity.getRecord().getAllHistory().getMostRecentRecord();
+	protected String getSourceAfterRefactoring() throws Exception {
+		return getICompilationUnit().getSource();
 	}
 
 	@Override
-	protected CompilationUnitHistoryRecord getRecordAfterRecovery() {
-		return activity.getRecord();
+	protected String getSourceAfterRecovery() throws Exception {
+		return activity.getRecord().getSourceCode();
 	}
 
 	@Override
 	protected CompilationUnitHistoryRecord getNonrefactoringChangeStart() {
 		return activity.getRecord();
+	}
+
+	@Override
+	protected CompilationUnitHistoryRecord getLatestRecord() throws Exception {
+		return activity.getRecord().getAllHistory().getMostRecentRecord();
 	}
 
 
