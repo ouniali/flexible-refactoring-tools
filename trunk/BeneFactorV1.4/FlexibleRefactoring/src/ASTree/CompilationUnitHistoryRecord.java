@@ -19,12 +19,12 @@ import util.FileUtil;
 import util.UIUtil;
 import Rename.NamesInCompilationUnit;
 import ASTree.visitors.NameBindingInformationVisitor;
-import ExtractMethod.EMDetector;
 import UserAction.UserActionData;
 
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
 import compare.SourceDiffNull;
+import extract.method.EMDetector;
 
 public class CompilationUnitHistoryRecord {
 

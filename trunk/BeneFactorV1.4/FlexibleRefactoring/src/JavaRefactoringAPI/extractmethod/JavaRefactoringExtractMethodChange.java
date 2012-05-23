@@ -34,12 +34,12 @@ import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
 import compare.diff_match_patch.Patch;
+import extract.method.ASTEMChangeInformation;
 
 import util.UIUtil;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
-import ExtractMethod.ASTEMChangeInformation;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
