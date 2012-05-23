@@ -129,4 +129,9 @@ public abstract class JavaRefactoring extends Job{
 				source, new NullProgressMonitor());
 	}
 	
+	public void finalize()
+	{
+		
+	}
+	
 }

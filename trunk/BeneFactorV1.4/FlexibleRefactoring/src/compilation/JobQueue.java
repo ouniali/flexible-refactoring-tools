@@ -22,7 +22,6 @@ public class JobQueue implements Runnable{
 
 	private ProjectHistoryCollector collector = new ProjectHistoryCollector();
 	private List<ReconcileContext> contexts = Collections.synchronizedList(new ArrayList<ReconcileContext>());
-	private static int SLEEP_TIME = 0;
 	private static JobQueue queue;
 	
 	static public synchronized JobQueue getInstance()
@@ -30,6 +29,9 @@ public class JobQueue implements Runnable{
 		if(queue == null)
 		{
 			queue = new JobQueue();
+			Thread t = new Thread(queue);
+			//lowest priority, otherwise UI will suffer
+			t.setPriority(Thread.MIN_PRIORITY);
 			new Thread(queue).start();
 		}
 		return queue;
@@ -51,8 +53,6 @@ public class JobQueue implements Runnable{
 					handle(contexts.get(0));	
 					contexts.remove(0);
 				}
-				else
-					Thread.sleep(SLEEP_TIME);
 			}
 		} catch (Exception e)
 		{
