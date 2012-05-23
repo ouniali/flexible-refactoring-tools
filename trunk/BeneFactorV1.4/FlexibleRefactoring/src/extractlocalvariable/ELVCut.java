@@ -12,22 +12,22 @@ import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVCopy;
 import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVCut;
 
-public class ExtractLocalVariableCut implements ExtractLocalVariableActivity{
+public class ELVCut implements ELVActivity{
 
 	CompilationUnitHistoryRecord record;
 	
-	private ExtractLocalVariableCut(CompilationUnitHistoryRecord r)
+	private ELVCut(CompilationUnitHistoryRecord r)
 	{
 		record = r;
 	}
 	
-	static private ExtractLocalVariableCut instance;
-	public static ExtractLocalVariableCut getNewInstance(CompilationUnitHistoryRecord r)
+	static private ELVCut instance;
+	public static ELVCut getNewInstance(CompilationUnitHistoryRecord r)
 	{
-		 instance = new  ExtractLocalVariableCut(r);
+		 instance = new  ELVCut(r);
 		 return instance;
 	}
-	public static ExtractLocalVariableCut getCurrentInstance()
+	public static ELVCut getCurrentInstance()
 	{
 		return instance;
 	}
