@@ -23,6 +23,7 @@ import UserAction.UserActionData;
 
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
+import compare.SourceDiffIdentical;
 import compare.SourceDiffNull;
 import extract.method.EMDetector;
 
@@ -264,7 +265,7 @@ public class CompilationUnitHistoryRecord {
 		if (diffs != null && diffs.size() > 0)
 			return diffs.get(0);
 		else
-			return new SourceDiffNull(0);
+			return new SourceDiffIdentical(0);
 	}
 	
 	public CompilationUnitHistoryRecord getPreviousRecord()

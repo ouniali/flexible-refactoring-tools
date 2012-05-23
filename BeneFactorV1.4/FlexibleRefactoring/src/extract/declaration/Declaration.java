@@ -23,7 +23,7 @@ public abstract class Declaration {
 		{
 			after = current;
 			SourceDiff diff = current.getSourceDiff();
-			if(diff instanceof SourceDiffNull || diff instanceof SourceDiffIdentical)
+			if(diff instanceof SourceDiffIdentical)
 				continue;
 			if(diff.getLineNumber() != line)
 				break;
