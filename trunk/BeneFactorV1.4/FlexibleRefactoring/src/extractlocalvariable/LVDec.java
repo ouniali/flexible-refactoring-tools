@@ -24,4 +24,6 @@ public class LVDec extends Declaration{
 			isNameAvailable = false;
 	}
 	
+	
+	
 }

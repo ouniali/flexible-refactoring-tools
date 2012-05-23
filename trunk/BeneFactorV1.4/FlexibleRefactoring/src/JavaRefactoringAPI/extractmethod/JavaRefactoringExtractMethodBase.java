@@ -111,3 +111,4 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 	public abstract JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception;
 	
 }
+ 	
