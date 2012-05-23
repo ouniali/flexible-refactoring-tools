@@ -48,7 +48,7 @@ public class MethodSignatureDetector {
 		if(diff == null)
 			return "";
 		CompilationUnit tree = record.getASTree();
-		ASTMethodDeclarationVisitor mVisitor = new ASTMethodDeclarationVisitor();
+		ASTMethodDecVisitor mVisitor = new ASTMethodDecVisitor();
 		tree.accept(mVisitor);
 		int line = diff.getLineNumber();
 		if(mVisitor.isInMethod(line))
