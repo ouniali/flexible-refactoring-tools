@@ -39,7 +39,7 @@ import util.UIUtil;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
-import ExtractMethod.ASTExtractMethodChangeInformation;
+import ExtractMethod.ASTEMChangeInformation;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
@@ -47,9 +47,9 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 
 	@SuppressWarnings("restriction")
 	
-	ASTExtractMethodChangeInformation information;
+	ASTEMChangeInformation information;
 	
-	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l,IMarker m,ASTExtractMethodChangeInformation info) throws Exception{
+	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l,IMarker m,ASTEMChangeInformation info) throws Exception{
 		super(u, l, m);
 		information = info;	
 	}
@@ -80,7 +80,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 		information.recoverICompilationUnitToOldRecord(monitor);	
 	}
 	
-	public ASTExtractMethodChangeInformation getExtractMethodChangeInformation()
+	public ASTEMChangeInformation getExtractMethodChangeInformation()
 	{
 		return information;
 	}

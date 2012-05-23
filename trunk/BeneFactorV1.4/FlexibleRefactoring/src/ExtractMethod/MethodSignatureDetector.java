@@ -10,10 +10,10 @@ import compare.SourceDiff;
 import compare.SourceDiffChange;
 import compare.SourceDiffInsert;
 
-public class NewMethodSignatureDetector {
+public class MethodSignatureDetector {
 
 	private static final int MAXIMUM_LOOK_BACK_COUNT_NEW_SIGNATURE = 5;
-	private NewMethodSignature detected = null;
+	private MethodSignature detected = null;
 	
 	public boolean isNewSignatureDetected(List<CompilationUnitHistoryRecord> records) 
 	{	
@@ -24,7 +24,7 @@ public class NewMethodSignatureDetector {
 			String s = MethodSignaturehelper(current);
 			if(!s.equals(""))
 			{
-				detected = new NewMethodSignature (s, current);
+				detected = new MethodSignature (s, current);
 				return true;
 			}
 		}
@@ -37,7 +37,7 @@ public class NewMethodSignatureDetector {
 	}
 	
 	
-	public NewMethodSignature getNewSignature()
+	public MethodSignature getNewSignature()
 	{
 		return detected;
 	}

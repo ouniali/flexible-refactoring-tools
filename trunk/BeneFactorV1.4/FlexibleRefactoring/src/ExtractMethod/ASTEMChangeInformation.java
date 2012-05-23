@@ -15,7 +15,7 @@ import ASTree.*;
 import JavaRefactoringAPI.*;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
-public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
+public class ASTEMChangeInformation extends ASTChangeInformation {
 
 	int firstCutNodeIndex;	
 	int lastCutNodeIndex;
@@ -25,7 +25,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	
 	int insertPlaceNodeIndex;
 	
-	public ASTExtractMethodChangeInformation( CompilationUnitHistoryRecord or, ASTNode node1, CompilationUnitHistoryRecord nr, ASTNode node2) 
+	public ASTEMChangeInformation( CompilationUnitHistoryRecord or, ASTNode node1, CompilationUnitHistoryRecord nr, ASTNode node2) 
 	{
 		super(or, node1, nr, node2);
 		int[] index = getCutASTNodeIndex(node1, node2);
@@ -42,9 +42,9 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 		ArrayList<ASTNode> childrenTwo = ASTUtil.getChildNodes(nodeTwo);
 		int childrenOneSize = childrenOne.size();
 		int childrenTwoSize = childrenTwo.size();
-		int start = ExtractMethodUtil.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
+		int start = EMUtil.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
 		int end = Math.min(
-				ExtractMethodUtil.getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo),
+				EMUtil.getLengthOfCommonnSubnodesFromEnd(nodeOne, nodeTwo),
 				childrenTwoSize-start
 		);
 		
@@ -58,7 +58,7 @@ public class ASTExtractMethodChangeInformation extends ASTChangeInformation {
 	
 	private int getCuttedASTNodeIndexInNodeTwo(ASTNode nodeOne, ASTNode nodeTwo)
 	{
-		int start = ExtractMethodUtil.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
+		int start = EMUtil.getLengthOfCommonnSubnodesFromStart(nodeOne, nodeTwo);
 		ArrayList<ASTNode> childrenTwo = ASTUtil.getChildNodes(nodeTwo);
 		ASTNode node; 
 		if(start != 0)
