@@ -97,39 +97,44 @@ public class CompilationUnitHistory {
 	
 	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{	
-		JavaRefactoring refactoring;
-		
 		//rename
-		NameChangeDetector NCDetector = new NameChangeDetector();
-		if(NCDetector.isRenameDetected(records))
-		{
-			refactoring = NCDetector.getRefactoring(unit);
-			if(refactoring != null)
-				RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
-		}
-		
+		detectRename(records, unit);
 		//extract method
-		
-		EMDetector EMDetector = new EMDetector();
-		if(EMDetector.isExtractMethodDetected(records))
-			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));			
-		
-		if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
+		detectEM(records, unit);
+		//Move field
+		detectMove(records, unit);
+		//extract local variable
+		detectELV(records, unit);
+	}
+
+
+	private static void detectELV(
+			ArrayList<CompilationUnitHistoryRecord> records,
+			ICompilationUnit unit) throws Exception {
+		ELVDetector ELVDetector = new ELVDetector();
+		if(ELVDetector.isELVFound(records))
+			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
+		if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
 		{
-			MethodSignatureDetector NMSDetector = new MethodSignatureDetector();
-			if(NMSDetector.isDecDetected(records))
+			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
+			LVDecDetector lvd_detector = LVDecDetector.create(ref);
+			if(lvd_detector.isDecDetected(records))
 			{
-				JavaRefactoringExtractMethodBase EM =  
-						RefactoringChances.getInstance().getLatestEM();
-				RefactoringChances.getInstance().removeRefactoring(EM);
-				MethodDec m_dec = (MethodDec) NMSDetector.getDetectedDec();
-				m_dec.setRefactoring(EM);
-				EM = (JavaRefactoringExtractMethodBase) m_dec.moveRefactoring(EM, unit);
-				RefactoringChances.getInstance().addNewRefactoringChance(EM);
+				Declaration dec = lvd_detector.getDetectedDec();
+				JavaRefactoringELVBase elv = RefactoringChances.getInstance().getLatestELV();
+				RefactoringChances.getInstance().removeRefactoring(elv);
+				dec.setRefactoring(elv);
+				elv = (JavaRefactoringELVBase) dec.moveRefactoring(elv, unit);
+				RefactoringChances.getInstance().addNewRefactoringChance(elv);
 			}
 		}
-		
-		//Move field
+	}
+
+
+	private static void detectMove(
+			ArrayList<CompilationUnitHistoryRecord> records,
+			ICompilationUnit unit) throws Exception {
+		JavaRefactoring refactoring;
 		if(MoveStaticMember.LookingBackForDetectingDeleteStaticDeclarationChange(records))
 		{
 			System.out.println("Delete Static Declaration Detected.");
@@ -154,29 +159,44 @@ public class CompilationUnitHistory {
 			}
 			
 		}
+	}
+
+
+	private static void detectEM(
+			ArrayList<CompilationUnitHistoryRecord> records,
+			ICompilationUnit unit) throws Exception {
+		EMDetector EMDetector = new EMDetector();
+		if(EMDetector.isExtractMethodDetected(records))
+			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));			
 		
-		//extract local variable
-		ELVDetector ELVDetector = new ELVDetector();
-		if(ELVDetector.isELVFound(records))
-			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
-		if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
+		if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
 		{
-			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
-			LVDecDetector lvd_detector = LVDecDetector.create(ref);
-			if(lvd_detector.isDecDetected(records))
+			MethodSignatureDetector NMSDetector = new MethodSignatureDetector();
+			if(NMSDetector.isDecDetected(records))
 			{
-				Declaration dec = lvd_detector.getDetectedDec();
-				JavaRefactoringELVBase elv = RefactoringChances.getInstance().getLatestELV();
-				RefactoringChances.getInstance().removeRefactoring(elv);
-				dec.setRefactoring(elv);
-				elv = (JavaRefactoringELVBase) dec.moveRefactoring(elv, unit);
-				RefactoringChances.getInstance().addNewRefactoringChance(elv);
+				JavaRefactoringExtractMethodBase EM =  
+						RefactoringChances.getInstance().getLatestEM();
+				RefactoringChances.getInstance().removeRefactoring(EM);
+				MethodDec m_dec = (MethodDec) NMSDetector.getDetectedDec();
+				m_dec.setRefactoring(EM);
+				EM = (JavaRefactoringExtractMethodBase) m_dec.moveRefactoring(EM, unit);
+				RefactoringChances.getInstance().addNewRefactoringChance(EM);
 			}
 		}
-		
-		
-		
-			
+	}
+
+
+	private static void detectRename(
+			ArrayList<CompilationUnitHistoryRecord> records,
+			ICompilationUnit unit) throws Exception {
+		JavaRefactoring refactoring;
+		NameChangeDetector NCDetector = new NameChangeDetector();
+		if(NCDetector.isRenameDetected(records))
+		{
+			refactoring = NCDetector.getRefactoring(unit);
+			if(refactoring != null)
+				RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
+		}
 	}
 	
 
