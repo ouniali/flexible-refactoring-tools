@@ -21,7 +21,7 @@ public class JobQueue implements Runnable{
 
 	private ProjectHistoryCollector collector = new ProjectHistoryCollector();
 	private List<ReconcileContext> contexts = new ArrayList<ReconcileContext>();
-	private static int SLEEP_TIME = 100;
+	private static int SLEEP_TIME = 0;
 	private static JobQueue queue;
 	
 	static public JobQueue getInstance()

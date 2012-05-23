@@ -89,6 +89,7 @@ public class ASTEMChangeInformation extends ASTChangeInformation {
 		offsets[1] = nodeTwo.getStartPosition()+ nodeTwo.getLength()-1;
 		return offsets;
 	}
+	
 	public String getCuttedSourceCode(ICompilationUnit unit)
 	{
 		int[] offsets = getSelectionStartAndEnd(unit);
