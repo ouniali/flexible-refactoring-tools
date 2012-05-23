@@ -12,7 +12,7 @@ import compare.SourceDiff;
 import compare.SourceDiffChange;
 import compare.SourceDiffInsert;
 
-public class MethodSignatureDetector extends DecDetector{
+public class MethodDecDetector extends DecDetector{
 	
 	@Override
 	protected boolean isDecFoundIn(CompilationUnitHistoryRecord record) {

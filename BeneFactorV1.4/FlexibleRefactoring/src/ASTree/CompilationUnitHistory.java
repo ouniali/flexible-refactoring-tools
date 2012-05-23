@@ -18,7 +18,7 @@ import extract.declaration.DecDetector;
 import extract.declaration.Declaration;
 import extract.declaration.LVDecDetector;
 import extract.declaration.MethodDec;
-import extract.declaration.MethodSignatureDetector;
+import extract.declaration.MethodDecDetector;
 import extract.localvariable.ELVDetector;
 import extract.method.ASTEMActivity;
 import extract.method.ASTEMChangeInformation;
@@ -167,7 +167,7 @@ public class CompilationUnitHistory {
 			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));				
 		else if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
 		{
-			DecDetector NMSDetector = new MethodSignatureDetector();
+			DecDetector NMSDetector = new MethodDecDetector();
 			if(NMSDetector.isDecDetected(records))
 			{
 				JavaRefactoringExtractMethodBase EM =  
