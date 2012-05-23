@@ -7,18 +7,18 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import JavaRefactoringAPI.JavaRefactoring;
 
-abstract class ExtractMethodDetected
+abstract class EMDetected
 {
-	protected ExtractMethodDetected(){};
-	public static ExtractMethodDetected getInstance(){return null;};
+	protected EMDetected(){};
+	public static EMDetected getInstance(){return null;};
 	public abstract JavaRefactoring getRefactoring(ICompilationUnit unit) throws Exception;
 	public abstract boolean equals(Object o);
 	public abstract void set(Object o);
 }
 
- class ExtractWithCopy extends ExtractMethodDetected{
+ class ExtractWithCopy extends EMDetected{
 	
-	ASTExtractMethodActivity activity;
+	ASTEMActivity activity;
 	private static ExtractWithCopy detected;
 	
 	@Override
@@ -26,7 +26,7 @@ abstract class ExtractMethodDetected
 		return activity.getJavaExtractMethodRefactoring(unit);
 	}
 	
-	public static ExtractMethodDetected getInstance()
+	public static EMDetected getInstance()
 	{
 		if(detected == null)
 			detected = new ExtractWithCopy();
@@ -35,17 +35,17 @@ abstract class ExtractMethodDetected
 
 	@Override
 	public boolean equals(Object o) {
-		return activity.equals((ASTExtractMethodActivity)o);
+		return activity.equals((ASTEMActivity)o);
 	}
 	@Override
 	public void set(Object o) {	
-		activity = (ASTExtractMethodActivity)o;
+		activity = (ASTEMActivity)o;
 	}
 }
 
-class ExtractWithCut extends ExtractMethodDetected{
+class ExtractWithCut extends EMDetected{
 	
-	ASTExtractMethodChangeInformation change;
+	ASTEMChangeInformation change;
 	private static ExtractWithCut detected;
 	
 	@Override
@@ -55,10 +55,10 @@ class ExtractWithCut extends ExtractMethodDetected{
 
 	@Override
 	public boolean equals(Object o) {
-		return change.equals((ASTExtractMethodChangeInformation)o);
+		return change.equals((ASTEMChangeInformation)o);
 	}
 	
-	public static ExtractMethodDetected getInstance()
+	public static EMDetected getInstance()
 	{
 		if(detected == null)
 			detected = new ExtractWithCut();
@@ -67,7 +67,7 @@ class ExtractWithCut extends ExtractMethodDetected{
 
 	@Override
 	public void set(Object o) {
-		change = (ASTExtractMethodChangeInformation)o;
+		change = (ASTEMChangeInformation)o;
 	}
 	
 }

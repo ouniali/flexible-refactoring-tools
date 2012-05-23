@@ -10,7 +10,7 @@ import ASTree.CompilationUnitHistoryRecord;
 import util.ASTUtil;
 import util.StringUtil;
 
-public class ExtractMethodUtil {
+public class EMUtil {
 
 	public static boolean isExtractMethodChange(
 			CompilationUnitHistoryRecord oldRecord, ASTNode nodeOne, 

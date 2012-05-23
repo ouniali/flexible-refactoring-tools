@@ -8,16 +8,16 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
-import ExtractMethod.ASTExtractMethodActivity;
+import ExtractMethod.ASTEMActivity;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
 public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtractMethodBase{
 
-	final ASTExtractMethodActivity activity;
+	final ASTEMActivity activity;
 		
 	public JavaRefactoringExtractMethodActivity(ICompilationUnit u, int l, 
-			IMarker m, ASTExtractMethodActivity a) throws Exception{
+			IMarker m, ASTEMActivity a) throws Exception{
 		super(u, l, m);
 		activity = a;
 	}

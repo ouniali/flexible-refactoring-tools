@@ -12,7 +12,7 @@ import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodActivity;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
-public class ASTExtractMethodActivity {
+public class ASTEMActivity {
 
 	private final CompilationUnitHistoryRecord record;
 	
@@ -20,7 +20,7 @@ public class ASTExtractMethodActivity {
 		return record;
 	}
 
-	public ASTExtractMethodActivity(CompilationUnitHistoryRecord r)
+	public ASTEMActivity(CompilationUnitHistoryRecord r)
 	{
 		record = r;
 	}
@@ -74,7 +74,7 @@ public class ASTExtractMethodActivity {
 	
 	public boolean equals(Object o)
 	{
-		CompilationUnitHistoryRecord another = ((ASTExtractMethodActivity)o).record;
+		CompilationUnitHistoryRecord another = ((ASTEMActivity)o).record;
 		return record.equals(another);
 	}
 }

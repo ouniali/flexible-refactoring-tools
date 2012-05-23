@@ -18,7 +18,7 @@ import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 import userinterface.RefactoringMarker;
 import util.StringUtil;
 
-public class NewMethodSignature {
+public class MethodSignature {
 
 	int lineNumber;
 	String signature;
@@ -55,7 +55,7 @@ public class NewMethodSignature {
 			return current;		
 	}
 
-	public NewMethodSignature(String info, CompilationUnitHistoryRecord cr) {
+	public MethodSignature(String info, CompilationUnitHistoryRecord cr) {
 
 		lineNumber = cr.getSourceDiff().getLineNumber();
 		signature = info;

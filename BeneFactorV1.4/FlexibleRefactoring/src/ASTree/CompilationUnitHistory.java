@@ -17,11 +17,11 @@ import compilation.RefactoringChances;
 import extractlocalvariable.ELVDetector;
 import flexiblerefactoring.BeneFactor;
 
-import ExtractMethod.ASTExtractMethodActivity;
-import ExtractMethod.ASTExtractMethodChangeInformation;
-import ExtractMethod.ExtractMethodDetector;
-import ExtractMethod.NewMethodSignature;
-import ExtractMethod.NewMethodSignatureDetector;
+import ExtractMethod.ASTEMActivity;
+import ExtractMethod.ASTEMChangeInformation;
+import ExtractMethod.EMDetector;
+import ExtractMethod.MethodSignature;
+import ExtractMethod.MethodSignatureDetector;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
@@ -107,13 +107,13 @@ public class CompilationUnitHistory {
 		
 		//extract method
 		
-		ExtractMethodDetector EMDetector = new ExtractMethodDetector();
+		EMDetector EMDetector = new EMDetector();
 		if(EMDetector.isExtractMethodDetected(records))
 			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));			
 		
 		if(!RefactoringChances.getInstance().getPendingExtractMethodRefactoring().isEmpty())
 		{
-			NewMethodSignatureDetector NMSDetector = new NewMethodSignatureDetector();
+			MethodSignatureDetector NMSDetector = new MethodSignatureDetector();
 			if(NMSDetector.isNewSignatureDetected(records))
 			{
 				JavaRefactoringExtractMethodBase EM =  

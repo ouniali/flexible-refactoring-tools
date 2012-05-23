@@ -11,9 +11,9 @@ import org.eclipse.jdt.core.dom.ASTNode;
 
 import util.ASTUtil;
 
-import ExtractMethod.ASTExtractMethodChangeInformation;
-import ExtractMethod.ExtractMethodDetector;
-import ExtractMethod.ExtractMethodUtil;
+import ExtractMethod.ASTEMChangeInformation;
+import ExtractMethod.EMDetector;
+import ExtractMethod.EMUtil;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChangeUtil;
 
@@ -34,11 +34,11 @@ public class ASTChangeInformationGenerator {
 			return null; 	
 	}
 	
-	public static ASTExtractMethodChangeInformation getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
+	public static ASTEMChangeInformation getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);		
-		if(ExtractMethodUtil.isExtractMethodChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo))
-			return new ASTExtractMethodChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
+		if(EMUtil.isExtractMethodChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo))
+			return new ASTEMChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 		else
 			return null;
 	}
