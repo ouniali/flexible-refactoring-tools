@@ -13,11 +13,11 @@ import ASTree.CompilationUnitHistoryRecord;
 import ASTree.NewRootPair;
 import JavaRefactoringAPI.JavaRefactoring;
 
-public class ExtractLocalVariableDetector {
+public class ELVDetector {
 	
 	private final int LOOK_BACK_COUNT = 5;
-	ExtractLocalVariableActivity act1;
-	ExtractLocalVariableActivity act2;
+	ELVActivity act1;
+	ELVActivity act2;
 
 	
 	public boolean isELVFound(List<CompilationUnitHistoryRecord> records)
@@ -40,7 +40,7 @@ public class ExtractLocalVariableDetector {
 
 	}
 	
-	private ExtractLocalVariableActivity DecideLaterActivity()
+	private ELVActivity DecideLaterActivity()
 	{
 		if(act1.getRecord().getTime() < act2.getRecord().getTime())
 			return act2;
@@ -48,7 +48,7 @@ public class ExtractLocalVariableDetector {
 			return act1;
 	}
 	
-	private ExtractLocalVariableActivity getELVActivityOrNull(
+	private ELVActivity getELVActivityOrNull(
 			List<CompilationUnitHistoryRecord> records, DetectStrategy str)
 	{
 		int lookBack = Math.min(records.size() - 1, LOOK_BACK_COUNT);
@@ -66,7 +66,7 @@ public class ExtractLocalVariableDetector {
 interface DetectStrategy
 {
 	public boolean isELVRecord(CompilationUnitHistoryRecord record);
-	public ExtractLocalVariableActivity getELVActivity(CompilationUnitHistoryRecord r);
+	public ELVActivity getELVActivity(CompilationUnitHistoryRecord r);
 }
 
 class CutDetectStrategy implements DetectStrategy
@@ -79,9 +79,9 @@ class CutDetectStrategy implements DetectStrategy
 		return res;
 	}
 
-	public ExtractLocalVariableActivity getELVActivity(CompilationUnitHistoryRecord r) {
-		ExtractLocalVariableCut cut1 = ExtractLocalVariableCut.getCurrentInstance();
-		ExtractLocalVariableCut cut2 = ExtractLocalVariableCut.getNewInstance(r);
+	public ELVActivity getELVActivity(CompilationUnitHistoryRecord r) {
+		ELVCut cut1 = ELVCut.getCurrentInstance();
+		ELVCut cut2 = ELVCut.getNewInstance(r);
 		if(null != cut1 && !cut1.getRecord().equals(cut2.getRecord()))
 			return cut2;
 		else return null;
@@ -98,9 +98,9 @@ class CopyDetectStrategy implements DetectStrategy
 	}
 
 	@Override
-	public ExtractLocalVariableActivity getELVActivity(CompilationUnitHistoryRecord r) {
-		ExtractLocalVariableCopy cop1 = ExtractLocalVariableCopy.getCurrentInstance();
-		ExtractLocalVariableCopy cop2 = ExtractLocalVariableCopy.getNewInstance(r);
+	public ELVActivity getELVActivity(CompilationUnitHistoryRecord r) {
+		ELVCopy cop1 = ELVCopy.getCurrentInstance();
+		ELVCopy cop2 = ELVCopy.getNewInstance(r);
 		if(null != cop1 && !cop1.getRecord().equals(cop2.getRecord()))
 			return cop2;
 		else 

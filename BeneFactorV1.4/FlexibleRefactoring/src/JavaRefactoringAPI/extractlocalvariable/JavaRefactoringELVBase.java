@@ -5,7 +5,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 
-import extractlocalvariable.ExtractLocalVariableActivity;
+import extractlocalvariable.ELVActivity;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
@@ -17,9 +17,9 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 
 public class JavaRefactoringELVBase extends JavaRefactoring{
 
-	ExtractLocalVariableActivity activity;
+	ELVActivity activity;
 	
-	public JavaRefactoringELVBase(ICompilationUnit u, int l, IMarker m, ExtractLocalVariableActivity a)
+	public JavaRefactoringELVBase(ICompilationUnit u, int l, IMarker m, ELVActivity a)
 			throws Exception {
 		super(u, l, m);
 		activity = a;

@@ -14,7 +14,7 @@ import org.eclipse.jdt.core.dom.*;
 import userinterface.RefactoringMarker;
 
 import compilation.RefactoringChances;
-import extractlocalvariable.ExtractLocalVariableDetector;
+import extractlocalvariable.ELVDetector;
 import flexiblerefactoring.BeneFactor;
 
 import ExtractMethod.ASTExtractMethodActivity;
@@ -151,7 +151,7 @@ public class CompilationUnitHistory {
 		}
 		
 		//extract local variable
-		ExtractLocalVariableDetector ELVDetector = new ExtractLocalVariableDetector();
+		ELVDetector ELVDetector = new ELVDetector();
 		if(ELVDetector.isELVFound(records))
 			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
 		
