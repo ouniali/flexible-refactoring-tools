@@ -15,7 +15,7 @@ import org.eclipse.jdt.internal.corext.refactoring.code.*;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 
-public class JavaRefactoringELVBase extends JavaRefactoring{
+public abstract class JavaRefactoringELVBase extends JavaRefactoring{
 
 	ELVActivity activity;
 	String temp_name = "temp";
@@ -27,12 +27,17 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 		activity = a;
 	}
 	
-	private String getTempName() {
+	protected final String getTempName() {
 		return temp_name;
 	}
 
 	public void setTempName(String t) {
 		temp_name = t;
+	}
+	
+	public final ELVActivity getActivity()
+	{
+		return activity;
 	}
 	
 	@SuppressWarnings("restriction")
@@ -90,6 +95,9 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 		else
 			return activity.getRecord().getAllHistory().getMostRecentRecord();
 	}
+	
+	public abstract JavaRefactoringELVBase moveRefactoring(IMarker marker, int l) throws Exception;
+	
 	
 
 }

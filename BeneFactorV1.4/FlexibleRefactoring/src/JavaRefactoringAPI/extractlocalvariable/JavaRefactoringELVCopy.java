@@ -4,6 +4,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import extractlocalvariable.ELVCopy;
+import extractlocalvariable.ELVCut;
 
 public class JavaRefactoringELVCopy extends JavaRefactoringELVBase{
 
@@ -11,6 +12,16 @@ public class JavaRefactoringELVCopy extends JavaRefactoringELVBase{
 			throws Exception {
 		super(u, l, m, c);
 	}
+
+	@Override
+	public JavaRefactoringELVBase moveRefactoring(IMarker marker, int l) throws Exception 
+	{
+		JavaRefactoringELVCopy elvc = new JavaRefactoringELVCopy(getICompilationUnit(), 
+				l, marker, (ELVCopy)getActivity());
+		elvc.setName(getTempName());
+		elvc.setNonRefactoringChangeEnd(getNonRefactoringChangeEnd());
+		return elvc;
+	}	
 	
 
 }
