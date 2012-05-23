@@ -1,4 +1,4 @@
-package extract.method;
+package extract.declaration;
 
 import java.util.List;
 
@@ -11,8 +11,6 @@ import ASTree.visitors.ASTMethodDecVisitor;
 import compare.SourceDiff;
 import compare.SourceDiffChange;
 import compare.SourceDiffInsert;
-import extract.localvariable.DecDetector;
-import extract.localvariable.Declaration;
 
 public class MethodSignatureDetector extends DecDetector{
 	

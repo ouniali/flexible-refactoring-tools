@@ -1,4 +1,4 @@
-package extract.localvariable;
+package extract.declaration;
 
 import java.util.List;
 
