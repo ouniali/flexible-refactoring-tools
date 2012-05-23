@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import util.visitors.ASTMethodDecVisitor;
+
 import ASTree.CompilationUnitHistoryRecord;
 
 import compare.SourceDiff;
