@@ -136,13 +136,13 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		return modifiedNameFull;
 	}
 	
-	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
+/*	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
 		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
 		ASTNode oldNameNode = ASTUtil.getASTNodeByIndex(tree, getNodeOneIndex());
 		int lineNo = tree.getLineNumber(oldNameNode.getStartPosition());
 		return lineNo;
-	}
+	}*/
 	
 
 	
