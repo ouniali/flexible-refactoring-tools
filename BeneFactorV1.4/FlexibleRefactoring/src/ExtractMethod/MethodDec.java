@@ -13,6 +13,7 @@ import compare.SourceDiffNull;
 import extractlocalvariable.Declaration;
 
 import ASTree.CompilationUnitHistoryRecord;
+import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
@@ -36,26 +37,6 @@ public class MethodDec extends Declaration{
 	
 	CompilationUnitHistoryRecord current_record;
 	
-	
-	private CompilationUnitHistoryRecord getRecordNonRefactoringChangeEnd()
-	{
-		CompilationUnitHistoryRecord current = current_record;
-		CompilationUnitHistoryRecord after = null;
-		
-		for(current = current_record; current != null;current = current.getPreviousRecord())
-		{
-			after = current;
-			SourceDiff diff = current.getSourceDiff();
-			if(!(diff instanceof SourceDiffNull) && diff.getLineNumber() != lineNumber)
-				break;
-		}
-		
-		if(current == null)
-			return after;
-		else
-			return current;		
-	}
-
 	public MethodDec(String info, CompilationUnitHistoryRecord cr) {
 
 		lineNumber = cr.getSourceDiff().getLineNumber();
@@ -76,12 +57,6 @@ public class MethodDec extends Declaration{
 		current_record = cr;
 	}
 
-	private void setJavaRefactoringExtractMethod(JavaRefactoringExtractMethodBase em) {
-		if (modifierAvailable)
-			em.setModifier(modifier);
-		if (methodNameAvailable)
-			em.setMethodName(methodName);
-	}
 
 	private int getLineNumber() {
 		return lineNumber;
@@ -152,15 +127,25 @@ public class MethodDec extends Declaration{
 		return buffer.toString();
 	}
 
-	public JavaRefactoringExtractMethodBase moveRefactoring(JavaRefactoringExtractMethodBase ref,
-			ICompilationUnit unit) throws Exception
+
+	@Override
+	public void setRefactoring(JavaRefactoring ref) 
 	{
+		JavaRefactoringExtractMethodBase emb = (JavaRefactoringExtractMethodBase) ref;
+		if (modifierAvailable)
+			emb.setModifier(modifier);
+		if (methodNameAvailable)
+			emb.setMethodName(methodName);
+		emb.setNonrefactoringChangeEnd(getRecordNonRefactoringChangeEnd(current_record, getLineNumber()));
+	}
+
+	@Override
+	public JavaRefactoring moveRefactoring(JavaRefactoring ref, ICompilationUnit unit) throws Exception 
+	{
+		JavaRefactoringExtractMethodBase emb = (JavaRefactoringExtractMethodBase) ref;
 		int line = getLineNumber();
 		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		JavaRefactoringExtractMethodBase newEM = ref.moveExtractMethodRefactoring(marker, line);
-		setJavaRefactoringExtractMethod(newEM);
-		newEM.setNonrefactoringChangeEnd(getRecordNonRefactoringChangeEnd());
+		JavaRefactoringExtractMethodBase newEM = emb.moveExtractMethodRefactoring(marker, line);
 		return newEM;
-		
 	}
 }

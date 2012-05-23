@@ -19,6 +19,7 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 
 	ELVActivity activity;
 	String temp_name = "temp";
+	CompilationUnitHistoryRecord non_refactoring_end;
 	
 	public JavaRefactoringELVBase(ICompilationUnit u, int l, IMarker m, ELVActivity a)
 			throws Exception {
@@ -73,8 +74,21 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 	final public void postProcess() throws Exception 
 	{
 		CompilationUnitHistoryRecord start = activity.getRecord();
-		CompilationUnitHistoryRecord end = start.getAllHistory().getMostRecentRecord();
+		CompilationUnitHistoryRecord end = getNonRefactoringChangeEnd();
 		redoUnrefactoringChanges(start, end);
+	}
+	
+	public void setNonRefactoringChangeEnd(CompilationUnitHistoryRecord end)
+	{
+		non_refactoring_end = end;
+	}
+	
+	public CompilationUnitHistoryRecord getNonRefactoringChangeEnd()
+	{
+		if(non_refactoring_end != null)
+			return non_refactoring_end;
+		else
+			return activity.getRecord().getAllHistory().getMostRecentRecord();
 	}
 	
 
