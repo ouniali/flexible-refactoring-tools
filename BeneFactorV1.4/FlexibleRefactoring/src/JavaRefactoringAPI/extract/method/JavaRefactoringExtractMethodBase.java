@@ -57,9 +57,8 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		CompilationUnitHistoryRecord after = null;
 		
 		while( 	endR != null && 
-				(endR.getSourceCode().equals(getSourceAfterRefactoring()) || 
-				endR.getSourceCode().equals(getSourceAfterRecovery()))
-			)
+				(endR.getSourceCode().equals(getSourceAfterRefactoring())
+				|| endR.getSourceCode().equals(getSourceAfterRecovery())))
 		{	
 			after = endR; 
 			endR = endR.getPreviousRecord();
