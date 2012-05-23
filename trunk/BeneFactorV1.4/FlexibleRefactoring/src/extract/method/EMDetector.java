@@ -23,13 +23,6 @@ public class EMDetector {
 	
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 
-
-
-	
-
-	
-
-	
 	//looking back for extract method change, null if not found.
 	private ASTEMChangeInformation 
 		LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 
