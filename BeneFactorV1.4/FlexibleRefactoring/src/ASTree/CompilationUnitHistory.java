@@ -110,8 +110,11 @@ public class CompilationUnitHistory {
 			ICompilationUnit unit) throws Exception {
 		ELVDetector ELVDetector = new ELVDetector();
 		if(ELVDetector.isELVFound(records))
+		{
 			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
-		else if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
+			return;
+		}
+		if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
 		{
 			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
 			LVDecDetector lvd_detector = LVDecDetector.create(ref);
