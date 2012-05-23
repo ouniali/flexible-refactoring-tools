@@ -1,5 +1,5 @@
 package extractlocalvariable;
 
-public class Declaration {
+abstract public class Declaration {
 
 }
