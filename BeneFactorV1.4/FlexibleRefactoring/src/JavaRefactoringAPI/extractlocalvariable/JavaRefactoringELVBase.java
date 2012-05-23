@@ -18,13 +18,22 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 public class JavaRefactoringELVBase extends JavaRefactoring{
 
 	ELVActivity activity;
+	String temp_name = "temp";
 	
 	public JavaRefactoringELVBase(ICompilationUnit u, int l, IMarker m, ELVActivity a)
 			throws Exception {
 		super(u, l, m);
 		activity = a;
 	}
+	
+	private String getTempName() {
+		return temp_name;
+	}
 
+	public void setTempName(String t) {
+		temp_name = t;
+	}
+	
 	@SuppressWarnings("restriction")
 	@Override
 	final protected void performRefactoring(IProgressMonitor pm) throws Exception {
@@ -35,7 +44,7 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 		int length = activity.getRecord().getSeletectedRegion()[1] 
 				- activity.getRecord().getSeletectedRegion()[0] + 1;
 		ExtractTempRefactoring refactoring = new ExtractTempRefactoring(unit, start, length);
-		refactoring.setTempName("temp");
+		refactoring.setTempName(getTempName());
 		RefactoringStatus status = refactoring.checkAllConditions(monitor);
 		if(status.isOK())
 			refactoring.createChange(monitor).perform(monitor);
@@ -61,9 +70,12 @@ public class JavaRefactoringELVBase extends JavaRefactoring{
 	}
 
 	@Override
-	final public void postProcess() throws Exception {
-		
-		
+	final public void postProcess() throws Exception 
+	{
+		CompilationUnitHistoryRecord start = activity.getRecord();
+		CompilationUnitHistoryRecord end = start.getAllHistory().getMostRecentRecord();
+		redoUnrefactoringChanges(start, end);
 	}
+	
 
 }
