@@ -1,4 +1,4 @@
-package JavaRefactoringAPI.extractlocalvariable;
+package JavaRefactoringAPI.extract.localvariable;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;

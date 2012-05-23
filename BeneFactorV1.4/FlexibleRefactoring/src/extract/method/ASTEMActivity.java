@@ -9,8 +9,7 @@ import util.ASTUtil;
 import util.StringUtil;
 import util.UIUtil;
 import ASTree.CompilationUnitHistoryRecord;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodActivity;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodActivity;
 
 public class ASTEMActivity {
 

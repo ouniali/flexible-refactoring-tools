@@ -8,7 +8,7 @@ import util.StringUtil;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.visitors.ASTMethodDecVisitor;
-import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
+import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 
 public class LVDecDetector extends DecDetector {
 	

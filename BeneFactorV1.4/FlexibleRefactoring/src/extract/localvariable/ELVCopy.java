@@ -11,7 +11,7 @@ import util.UIUtil;
 import ASTree.ASTChangeInformation;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVCopy;
+import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVCopy;
 
 public class ELVCopy implements ELVActivity{
 	

@@ -9,8 +9,7 @@ import util.UIUtil;
 
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVCopy;
-import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVCut;
+import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVCut;
 
 public class ELVCut implements ELVActivity{
 

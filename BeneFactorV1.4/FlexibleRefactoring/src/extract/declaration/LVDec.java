@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
+import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 import userinterface.RefactoringMarker;
 import util.StringUtil;
 
