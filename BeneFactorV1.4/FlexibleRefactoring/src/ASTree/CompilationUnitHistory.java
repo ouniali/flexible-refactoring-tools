@@ -20,7 +20,7 @@ import flexiblerefactoring.BeneFactor;
 import ExtractMethod.ASTEMActivity;
 import ExtractMethod.ASTEMChangeInformation;
 import ExtractMethod.EMDetector;
-import ExtractMethod.MethodSignature;
+import ExtractMethod.MethodDec;
 import ExtractMethod.MethodSignatureDetector;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
@@ -114,12 +114,13 @@ public class CompilationUnitHistory {
 		if(!RefactoringChances.getInstance().getPendingExtractMethodRefactoring().isEmpty())
 		{
 			MethodSignatureDetector NMSDetector = new MethodSignatureDetector();
-			if(NMSDetector.isNewSignatureDetected(records))
+			if(NMSDetector.isDecDetected(records))
 			{
 				JavaRefactoringExtractMethodBase EM =  
 						RefactoringChances.getInstance().getLatestExtractMethod();
 				RefactoringChances.getInstance().removeRefactoring(EM);
-				EM = NMSDetector.getNewSignature().moveRefactoring(EM, unit);
+				MethodDec m_dec = (MethodDec) NMSDetector.getDetectedDec();
+				EM = m_dec.moveRefactoring(EM, unit);
 				RefactoringChances.getInstance().addNewRefactoringChance(EM);
 			}
 		}

@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.PrimitiveType;
 
 import compare.SourceDiff;
 import compare.SourceDiffNull;
+import extractlocalvariable.Declaration;
 
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
@@ -18,7 +19,7 @@ import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 import userinterface.RefactoringMarker;
 import util.StringUtil;
 
-public class MethodSignature {
+public class MethodDec extends Declaration{
 
 	int lineNumber;
 	String signature;
@@ -55,7 +56,7 @@ public class MethodSignature {
 			return current;		
 	}
 
-	public MethodSignature(String info, CompilationUnitHistoryRecord cr) {
+	public MethodDec(String info, CompilationUnitHistoryRecord cr) {
 
 		lineNumber = cr.getSourceDiff().getLineNumber();
 		signature = info;
