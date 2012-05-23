@@ -27,7 +27,7 @@ public class LVDecDetector extends DecDetector {
 	@Override
 	protected boolean isDecFoundIn(CompilationUnitHistoryRecord record) 
 	{
-		if(!record.hasMeaningfulChangeLineNumber())
+		if(!record.hasMeaningfulChangedLineNumber())
 			return false;
 		int line = getEditedLineNumber(record);
 		CompilationUnit tree = record.getASTree();
