@@ -3,6 +3,7 @@ package extract.declaration;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import compare.SourceDiff;
+import compare.SourceDiffIdentical;
 import compare.SourceDiffNull;
 
 import ASTree.CompilationUnitHistoryRecord;
@@ -22,7 +23,7 @@ public abstract class Declaration {
 		{
 			after = current;
 			SourceDiff diff = current.getSourceDiff();
-			if(diff instanceof SourceDiffNull)
+			if(diff instanceof SourceDiffNull || diff instanceof SourceDiffIdentical)
 				continue;
 			if(diff.getLineNumber() != line)
 				break;
