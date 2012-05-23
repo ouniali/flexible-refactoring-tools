@@ -7,13 +7,13 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-public class ASTMethodDeclarationVisitor extends ASTVisitor {
+public class ASTMethodDecVisitor extends ASTVisitor {
 
 	ArrayList<Integer> methodDeclarationStartLine;
 	ArrayList<Integer> methodDeclarationEndLine;
 	ArrayList<String> methodNames;
 
-	public ASTMethodDeclarationVisitor() {
+	public ASTMethodDecVisitor() {
 		methodDeclarationStartLine = new ArrayList<Integer>();
 		methodDeclarationEndLine = new ArrayList<Integer>();
 		methodNames = new ArrayList<String>();
