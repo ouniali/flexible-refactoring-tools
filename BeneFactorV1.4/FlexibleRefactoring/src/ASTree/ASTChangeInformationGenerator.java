@@ -9,11 +9,12 @@ import movestaticmember.MoveStaticMember;
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import extract.method.ASTEMChangeInformation;
+import extract.method.EMDetector;
+import extract.method.EMUtil;
+
 import util.ASTUtil;
 
-import ExtractMethod.ASTEMChangeInformation;
-import ExtractMethod.EMDetector;
-import ExtractMethod.EMUtil;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChangeUtil;
 

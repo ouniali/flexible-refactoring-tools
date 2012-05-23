@@ -4,7 +4,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 
-import extractlocalvariable.ELVCut;
+import extract.localvariable.ELVCut;
 
 final public class JavaRefactoringELVCut extends JavaRefactoringELVBase{
 	

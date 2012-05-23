@@ -14,16 +14,17 @@ import org.eclipse.jdt.core.dom.*;
 import userinterface.RefactoringMarker;
 
 import compilation.RefactoringChances;
-import extractlocalvariable.Declaration;
-import extractlocalvariable.ELVDetector;
-import extractlocalvariable.LVDecDetector;
+import extract.localvariable.DecDetector;
+import extract.localvariable.Declaration;
+import extract.localvariable.ELVDetector;
+import extract.localvariable.LVDecDetector;
+import extract.method.ASTEMActivity;
+import extract.method.ASTEMChangeInformation;
+import extract.method.EMDetector;
+import extract.method.MethodDec;
+import extract.method.MethodSignatureDetector;
 import flexiblerefactoring.BeneFactor;
 
-import ExtractMethod.ASTEMActivity;
-import ExtractMethod.ASTEMChangeInformation;
-import ExtractMethod.EMDetector;
-import ExtractMethod.MethodDec;
-import ExtractMethod.MethodSignatureDetector;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
@@ -97,13 +98,9 @@ public class CompilationUnitHistory {
 	
 	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{	
-		//rename
 		detectRename(records, unit);
-		//extract method
 		detectEM(records, unit);
-		//Move field
 		detectMove(records, unit);
-		//extract local variable
 		detectELV(records, unit);
 	}
 
@@ -114,7 +111,7 @@ public class CompilationUnitHistory {
 		ELVDetector ELVDetector = new ELVDetector();
 		if(ELVDetector.isELVFound(records))
 			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
-		if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
+		else if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
 		{
 			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
 			LVDecDetector lvd_detector = LVDecDetector.create(ref);
@@ -167,11 +164,10 @@ public class CompilationUnitHistory {
 			ICompilationUnit unit) throws Exception {
 		EMDetector EMDetector = new EMDetector();
 		if(EMDetector.isExtractMethodDetected(records))
-			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));			
-		
-		if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
+			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));				
+		else if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
 		{
-			MethodSignatureDetector NMSDetector = new MethodSignatureDetector();
+			DecDetector NMSDetector = new MethodSignatureDetector();
 			if(NMSDetector.isDecDetected(records))
 			{
 				JavaRefactoringExtractMethodBase EM =  
