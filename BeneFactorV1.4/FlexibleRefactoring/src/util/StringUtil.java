@@ -7,6 +7,9 @@ import java.util.regex.Pattern;
 
 public class StringUtil {
 	
+	
+	public static String EMPTY_STRING = "";
+	
 	public static boolean isWhiteSpaceString(String source)
 	{
 		char[] charactors = source.toCharArray();
