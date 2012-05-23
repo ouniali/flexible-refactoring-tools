@@ -134,7 +134,7 @@ public class MethodDec extends Declaration{
 			emb.setModifier(modifier);
 		if (methodNameAvailable)
 			emb.setMethodName(methodName);
-		emb.setNonrefactoringChangeEnd(getRecordNonRefactoringChangeEnd(current_record, getLineNumber()));
+		emb.setNonrefactoringChangeEnd(getRecordNotEditingOn(current_record, getLineNumber()));
 	}
 
 	@Override

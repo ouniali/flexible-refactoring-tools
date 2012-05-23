@@ -1,6 +1,7 @@
 package compilation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -20,11 +21,11 @@ public class JobQueue implements Runnable{
 	private JobQueue() {}
 
 	private ProjectHistoryCollector collector = new ProjectHistoryCollector();
-	private List<ReconcileContext> contexts = new ArrayList<ReconcileContext>();
+	private List<ReconcileContext> contexts = Collections.synchronizedList(new ArrayList<ReconcileContext>());
 	private static int SLEEP_TIME = 0;
 	private static JobQueue queue;
 	
-	static public JobQueue getInstance()
+	static public synchronized JobQueue getInstance()
 	{
 		if(queue == null)
 		{

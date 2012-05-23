@@ -44,9 +44,6 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		return modifier;
 	}
 	
-
-	
-	
 	public void setNonrefactoringChangeEnd(CompilationUnitHistoryRecord r)
 	{
 		non_refactoring_change_end = r;
