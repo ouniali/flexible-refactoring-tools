@@ -40,7 +40,7 @@ public class LVDec extends Declaration{
 	{
 		JavaRefactoringELVBase elvb = (JavaRefactoringELVBase)ref;
 		elvb.setTempName(name);
-		elvb.setNonRefactoringChangeEnd(getRecordNonRefactoringChangeEnd(record, line));
+		elvb.setNonRefactoringChangeEnd(getRecordNotEditingOn(record, line));
 	}
 
 	@Override
