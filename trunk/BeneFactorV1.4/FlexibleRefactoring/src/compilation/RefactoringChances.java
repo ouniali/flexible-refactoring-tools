@@ -121,15 +121,5 @@ public class RefactoringChances {
 		return (JavaRefactoringELVBase)list.get(list.size() - 1);
 	}
 	
-	public void removeRefactoring(JavaRefactoring refactoring) throws Exception
-	{
-		IMarker marker = refactoring.getMarker();
-		if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
-			marker.delete();
-		if(false == refactorings.remove(refactoring))
-			throw new Exception("no refactoring found");
-	}
-	
-
 	
 }

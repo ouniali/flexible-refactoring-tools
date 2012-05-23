@@ -128,4 +128,5 @@ public abstract class JavaRefactoring extends Job{
 		CompilationUnitManipulationMethod.UpdateICompilationUnit(getICompilationUnit(), 
 				source, new NullProgressMonitor());
 	}
+	
 }
