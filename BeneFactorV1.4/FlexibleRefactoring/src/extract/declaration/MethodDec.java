@@ -1,4 +1,4 @@
-package extract.method;
+package extract.declaration;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.PrimitiveType;
 
 import compare.SourceDiff;
 import compare.SourceDiffNull;
-import extract.localvariable.Declaration;
 
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
