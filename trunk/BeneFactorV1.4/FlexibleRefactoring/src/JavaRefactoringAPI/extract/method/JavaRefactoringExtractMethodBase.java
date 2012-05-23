@@ -54,18 +54,32 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		if(non_refactoring_change_end != null)
 			return non_refactoring_change_end;
 		CompilationUnitHistoryRecord endR = getLatestRecord();
-		while(!endR.getSourceCode().equals(getSourceAfterRefactoring()) 
-				|| !endR.getSourceCode().equals(getSourceAfterRecovery()))
+		CompilationUnitHistoryRecord after = null;
+		
+		while( 	endR != null && 
+				(endR.getSourceCode().equals(getSourceAfterRefactoring()) || 
+				endR.getSourceCode().equals(getSourceAfterRecovery()))
+			)
+		{	
+			after = endR; 
 			endR = endR.getPreviousRecord();
-		return endR;
+		}
+		if(endR == null)
+			return after;
+		else 
+			return endR;
 	}
 	
-	protected abstract CompilationUnitHistoryRecord getNonrefactoringChangeStart();
+	abstract protected CompilationUnitHistoryRecord getNonrefactoringChangeStart();
 	abstract protected String getSourceAfterRefactoring() throws Exception;
 	abstract protected String getSourceAfterRecovery() throws Exception;
 	abstract protected CompilationUnitHistoryRecord getLatestRecord() throws Exception;
-	
-	
+	abstract public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception;
+	@Override
+	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
+	@Override
+	protected abstract void performCodeRecovery(IProgressMonitor pm) throws Exception;
+
 	
 	
 	public JavaRefactoringExtractMethodBase(ICompilationUnit u, int l, IMarker m)
@@ -75,12 +89,9 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		modifier = Modifier.PRIVATE;
 	}
 
-	@Override
-	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
 
-	@Override
-	protected abstract void performCodeRecovery(IProgressMonitor pm) throws Exception;
 
+	
 	@Override
 	public final int getRefactoringType() {
 		return JavaRefactoringType.EXTRACT_METHOD;
@@ -104,7 +115,6 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 	
 
 	
-	public abstract JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception;
 	
 }
  	
