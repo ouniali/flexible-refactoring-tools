@@ -66,6 +66,7 @@ public abstract class JavaRefactoring extends Job{
 			progress.worked(1);
 			unit.commitWorkingCopy(true, progress.newChild(1));
 			unit.discardWorkingCopy();
+			deleteMarker();
 			
 			UIUtil.wakeUpEditor(UIUtil.getActiveJavaEditor());
 		} catch (Exception e) {
@@ -94,7 +95,8 @@ public abstract class JavaRefactoring extends Job{
 	public final void moveRefactoring(int l) throws Exception
 	{
 		line = l;
-		marker.setAttribute(IMarker.LINE_NUMBER, line);
+		if(marker.exists())
+			marker.setAttribute(IMarker.LINE_NUMBER, line);
 	}
 	
 	public final int getLineNumber()
@@ -131,7 +133,19 @@ public abstract class JavaRefactoring extends Job{
 	
 	public void finalize()
 	{
+		try {
+			super.finalize();
+			deleteMarker();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		
+	}
+	
+	private void deleteMarker() throws Exception
+	{
+		if(marker.exists())
+			marker.delete();
 	}
 	
 }
