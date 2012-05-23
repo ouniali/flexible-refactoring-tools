@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import userinterface.RefactoringMarker;
 import JavaRefactoringAPI.*;
+import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
@@ -75,7 +76,7 @@ public class RefactoringChances {
 		refactorings.clear();
 	}
 	
-	public List<JavaRefactoring> getPendingExtractMethodRefactoring()
+	public List<JavaRefactoring> getPendingEMRefactoring()
 	{
 		List<JavaRefactoring> extracts = new ArrayList<JavaRefactoring>();
 		for(JavaRefactoring ref : refactorings)
@@ -86,11 +87,11 @@ public class RefactoringChances {
 		return extracts;	
 	}
 	
-	public JavaRefactoringExtractMethodBase getLatestExtractMethod()
+	public JavaRefactoringExtractMethodBase getLatestEM()
 	{
 		
-		return (JavaRefactoringExtractMethodBase) getPendingExtractMethodRefactoring().
-				get(getPendingExtractMethodRefactoring().size() - 1);
+		return (JavaRefactoringExtractMethodBase) getPendingEMRefactoring().
+				get(getPendingEMRefactoring().size() - 1);
 	}
 	
 	public List<JavaRefactoring> getPendingRenameRefactoring()
@@ -102,6 +103,23 @@ public class RefactoringChances {
 				renames.add(ref);
 		}	
 		return renames;
+	}
+	
+	public List<JavaRefactoring> getPendingELVRefactoring()
+	{
+		List<JavaRefactoring> elvs = new ArrayList<JavaRefactoring>();
+		for(JavaRefactoring ref : refactorings)
+		{
+			if(ref.getRefactoringType() == JavaRefactoringType.EXTRACT_LOCAL_VARIABLE)
+				elvs.add(ref);
+		}	
+		return elvs;
+	}
+	
+	public JavaRefactoringELVBase getLatestELV()
+	{
+		List<JavaRefactoring> list = getPendingELVRefactoring();
+		return (JavaRefactoringELVBase)list.get(list.size() - 1);
 	}
 	
 	public void removeRefactoring(JavaRefactoring refactoring) throws Exception

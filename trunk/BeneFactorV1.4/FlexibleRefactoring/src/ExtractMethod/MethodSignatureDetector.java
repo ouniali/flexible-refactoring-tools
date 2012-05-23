@@ -31,7 +31,7 @@ public class MethodSignatureDetector extends DecDetector{
 	@Override
 	protected Declaration getDeclaration(CompilationUnitHistoryRecord record) {
 		String s = getEditedLineText(record);
-		return new MethodDec(s, record);
+		return (Declaration) new MethodDec(s, record);
 	}
 	
 }

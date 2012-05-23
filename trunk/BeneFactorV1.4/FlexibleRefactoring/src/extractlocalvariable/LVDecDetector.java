@@ -38,8 +38,9 @@ public class LVDecDetector extends DecDetector {
 
 	@Override
 	protected Declaration getDeclaration(CompilationUnitHistoryRecord record) {
+		int line = getEditedLineNumber(record);
 		String code = getEditedLineText(record);
-		return new LVDec(code);
+		return new LVDec(line ,code, record);
 	}
 	
 	

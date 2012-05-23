@@ -14,7 +14,9 @@ import org.eclipse.jdt.core.dom.*;
 import userinterface.RefactoringMarker;
 
 import compilation.RefactoringChances;
+import extractlocalvariable.Declaration;
 import extractlocalvariable.ELVDetector;
+import extractlocalvariable.LVDecDetector;
 import flexiblerefactoring.BeneFactor;
 
 import ExtractMethod.ASTEMActivity;
@@ -23,6 +25,7 @@ import ExtractMethod.EMDetector;
 import ExtractMethod.MethodDec;
 import ExtractMethod.MethodSignatureDetector;
 import JavaRefactoringAPI.JavaRefactoring;
+import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
 import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 import Rename.ASTNameChangeInformation;
@@ -155,6 +158,18 @@ public class CompilationUnitHistory {
 		ELVDetector ELVDetector = new ELVDetector();
 		if(ELVDetector.isELVFound(records))
 			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
+		if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
+		{
+			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
+			LVDecDetector LVDecDetector = LVDecDetector.create(ref);
+			if(LVDecDetector.isDecDetected(records))
+			{
+				Declaration dec = LVDecDetector.getDetectedDec();
+				
+			}
+		}
+		
+		
 		
 			
 	}
