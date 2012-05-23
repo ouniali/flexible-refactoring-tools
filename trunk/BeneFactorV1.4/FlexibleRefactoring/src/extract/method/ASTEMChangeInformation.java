@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import compare.SourceDiffIdentical;
+
 import userinterface.RefactoringMarker;
 import util.ASTUtil;
 
@@ -104,12 +106,6 @@ public class ASTEMChangeInformation extends ASTChangeInformation {
 		return null;
 	}
 	
-	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
-	{
-		CompilationUnit tree = ASTUtil.parseICompilationUnit(unit);
-		ASTNode node = ASTUtil.getASTNodeByIndex(tree, insertPlaceNodeIndex);
-		int lineNo = tree.getLineNumber(node.getStartPosition());
-		return lineNo + 1;
-	}
+	
 
 }

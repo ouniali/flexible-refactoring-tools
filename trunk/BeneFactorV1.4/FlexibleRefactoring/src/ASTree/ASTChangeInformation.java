@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import compare.SourceDiffIdentical;
+
 import util.ASTUtil;
 import util.FileUtil;
 
@@ -126,8 +128,16 @@ public class ASTChangeInformation {
 		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(unit, code,monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
-	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
+	
+	protected int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{
+		CompilationUnitHistoryRecord current = getNewCompilationUnitRecord();
+		CompilationUnitHistoryRecord old = getOldCompilationUnitRecord();
+		for(;!current.equals(old);current = current.getPreviousRecord())
+		{
+			if(!(current.getSourceDiff() instanceof SourceDiffIdentical))
+				return current.getSourceDiff().getLineNumber();
+		}
 		return 0;
 	}
 	
