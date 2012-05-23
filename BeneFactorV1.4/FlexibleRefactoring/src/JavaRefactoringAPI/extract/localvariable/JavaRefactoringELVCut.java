@@ -8,20 +8,11 @@ import extract.localvariable.ELVCut;
 
 final public class JavaRefactoringELVCut extends JavaRefactoringELVBase{
 	
-	public JavaRefactoringELVCut(ICompilationUnit u, int l, IMarker m, ELVCut c)
+	public JavaRefactoringELVCut(ICompilationUnit u, int l, ELVCut c)
 			throws Exception {
-		super(u, l, m, c);
+		super(u, l, c);
 	}
 
-	@Override
-	public JavaRefactoringELVBase moveRefactoring(IMarker marker, int l) throws Exception {
-		JavaRefactoringELVCut elvc = new JavaRefactoringELVCut(getICompilationUnit(), 
-				l, marker, (ELVCut)getActivity());
-		elvc.setName(getTempName());
-		elvc.setNonRefactoringChangeEnd(getNonRefactoringChangeEnd());
-		return elvc;
-	}
-	
 	
 
 }

@@ -44,11 +44,10 @@ public class LVDec extends Declaration{
 	}
 
 	@Override
-	public JavaRefactoring moveRefactoring(JavaRefactoring ref, ICompilationUnit unit) throws Exception 
+	public void moveRefactoring(JavaRefactoring ref) throws Exception 
 	{
 		JavaRefactoringELVBase elvb = (JavaRefactoringELVBase)ref;
-		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		return elvb.moveRefactoring(marker, line);
+		ref.moveRefactoring(line);
 	}
 	
 	

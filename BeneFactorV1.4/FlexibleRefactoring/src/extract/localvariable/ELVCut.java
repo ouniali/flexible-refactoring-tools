@@ -42,8 +42,7 @@ public class ELVCut implements ELVActivity{
 		JavaEditor editor = UIUtil.getJavaEditor(u);
 		int start = record.getHighlightedRegion()[0];
 		int line = UIUtil.getLineNumberByOffset(start, editor);
-		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(u, line);
-		return new JavaRefactoringELVCut(u, line, marker, this);
+		return new JavaRefactoringELVCut(u, line, this);
 	}
 
 }

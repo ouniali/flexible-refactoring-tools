@@ -75,36 +75,33 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 	public JavaRefactoring getRenameRefactoring(ICompilationUnit unit) throws Exception
 	{
 		int line = getRefactoringMarkerLine(unit);
-		IMarker marker;
 		
 		if(bindingKeyOne.equals("") && bindingKeyTwo.equals(""))
 			return null;
 		else if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
 			//renaming reference when declaration has been changed
-			marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 			List<ASTNameChangeInformation> declarationChanges = 
 					NameChangeDetected.getInstance().getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);
 			JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
-					unit, line, marker, declarationChanges, modifiedName);
+					unit, line, declarationChanges, modifiedName);
 			return refactoringDiff;
 		}
 		else
 		{
-			marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 			if(isRenamingDeclaration())
 			{
 				List<ASTNameChangeInformation> changes = NameChangeDetected.getInstance().
 						getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);			
 				changes.add(this);
 				JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
-					unit, line, marker, changes, modifiedName);					
+					unit, line, changes, modifiedName);					
 				return refactoringDiff;
 			}
 			else
 			{
 				JavaRefactoringRename refactoring = new JavaRefactoringRename(
-					unit, line, marker, bindingKeyOne, bindingKeyOne, originalName, modifiedName);
+					unit, line, bindingKeyOne, bindingKeyOne, originalName, modifiedName);
 				return refactoring;
 			}
 		}

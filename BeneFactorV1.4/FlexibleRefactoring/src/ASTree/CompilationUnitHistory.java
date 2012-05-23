@@ -121,10 +121,8 @@ public class CompilationUnitHistory {
 			{
 				Declaration dec = lvd_detector.getDetectedDec();
 				JavaRefactoringELVBase elv = RefactoringChances.getInstance().getLatestELV();
-				RefactoringChances.getInstance().removeRefactoring(elv);
 				dec.setRefactoring(elv);
-				elv = (JavaRefactoringELVBase) dec.moveRefactoring(elv, unit);
-				RefactoringChances.getInstance().addNewRefactoringChance(elv);
+				dec.moveRefactoring(elv);
 			}
 		}
 	}
@@ -180,11 +178,9 @@ public class CompilationUnitHistory {
 			{
 				JavaRefactoringExtractMethodBase EM =  
 						RefactoringChances.getInstance().getLatestEM();
-				RefactoringChances.getInstance().removeRefactoring(EM);
 				MethodDec m_dec = (MethodDec) NMSDetector.getDetectedDec();
 				m_dec.setRefactoring(EM);
-				EM = (JavaRefactoringExtractMethodBase) m_dec.moveRefactoring(EM, unit);
-				RefactoringChances.getInstance().addNewRefactoringChance(EM);
+				m_dec.moveRefactoring(EM);
 			}
 		}
 	}

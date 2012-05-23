@@ -49,8 +49,8 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 	
 	ASTEMChangeInformation information;
 	
-	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l,IMarker m,ASTEMChangeInformation info) throws Exception{
-		super(u, l, m);
+	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l ,ASTEMChangeInformation info) throws Exception{
+		super(u, l);
 		information = info;	
 	}
 	
@@ -86,15 +86,6 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 	}
 	
 
-	public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception
-	{
-		JavaRefactoringExtractMethodChange refactoring = 
-				new JavaRefactoringExtractMethodChange(getICompilationUnit(), 
-						l, marker, getExtractMethodChangeInformation());
-		refactoring.setModifier(this.getModifier());
-		refactoring.setMethodName(this.getMethodName());
-		return refactoring; 
-	}
 	
 
 
@@ -111,4 +102,6 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 	protected CompilationUnitHistoryRecord getLatestRecord() throws Exception {
 		return information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
 	}
+
+
 }

@@ -40,8 +40,7 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 	public JavaRefactoringMoveStaticMember getMoveStaticMemberRefactoring(ICompilationUnit unit, ASTChangeInformationDeleteStaticMember deleteChange) throws Exception
 	{
 		int line = getRefactoringMarkerLine(unit);
-		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		return new JavaRefactoringMoveStaticMember(unit, line, marker, deleteChange ,this);
+		return new JavaRefactoringMoveStaticMember(unit, line, deleteChange ,this);
 	}
 	public int getRefactoringMarkerLine(ICompilationUnit unit) throws Exception
 	{

@@ -3,6 +3,7 @@ package JavaRefactoringAPI;
 import java.util.LinkedList;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -15,6 +16,7 @@ import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.ui.IEditorInput;
 
+import userinterface.RefactoringMarker;
 import util.UIUtil;
 
 import compare.JavaSourceDiff;
@@ -75,18 +77,26 @@ public abstract class JavaRefactoring extends Job{
 		return Status.OK_STATUS;
 	}
 
-	public JavaRefactoring(ICompilationUnit u, int l, IMarker m) throws Exception
+	public JavaRefactoring(ICompilationUnit u, int l) throws Exception
 	{
 		super("Java Refactoring Job");
 		unit = u;
 		line = l;
-		marker = m;
+		marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
 	}
+	
 	public final ICompilationUnit getICompilationUnit() throws Exception
 	{
 		unit.makeConsistent(null);
 		return unit;
 	}
+	
+	public final void moveRefactoring(int l) throws Exception
+	{
+		line = l;
+		marker.setAttribute(IMarker.LINE_NUMBER, line);
+	}
+	
 	public final int getLineNumber()
 	{
 		return line;

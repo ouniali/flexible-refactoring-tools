@@ -74,8 +74,7 @@ public class ASTEMChangeInformation extends ASTChangeInformation {
 	public JavaRefactoringExtractMethodChange getJavaExtractMethodRefactoring(ICompilationUnit unit) throws Exception
 	{
 		int line = getRefactoringMarkerLine(unit);
-		IMarker marker = RefactoringMarker.addRefactoringMarkerIfNo(unit, line);
-		return new JavaRefactoringExtractMethodChange(unit, line, marker, this);
+		return new JavaRefactoringExtractMethodChange(unit, line, this);
 	}
 	
 

@@ -73,7 +73,6 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 	abstract protected String getSourceAfterRefactoring() throws Exception;
 	abstract protected String getSourceAfterRecovery() throws Exception;
 	abstract protected CompilationUnitHistoryRecord getLatestRecord() throws Exception;
-	abstract public JavaRefactoringExtractMethodBase moveExtractMethodRefactoring(IMarker marker, int l) throws Exception;
 	@Override
 	protected abstract void performRefactoring(IProgressMonitor pm) throws Exception;
 	@Override
@@ -81,9 +80,9 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 
 	
 	
-	public JavaRefactoringExtractMethodBase(ICompilationUnit u, int l, IMarker m)
+	public JavaRefactoringExtractMethodBase(ICompilationUnit u, int l)
 			throws Exception {
-		super(u, l, m);
+		super(u, l);
 		setMethodName(JavaRefactoringExtractMethodUtil.getExtractedMethodName(this.getICompilationUnit()));
 		modifier = Modifier.PRIVATE;
 	}
