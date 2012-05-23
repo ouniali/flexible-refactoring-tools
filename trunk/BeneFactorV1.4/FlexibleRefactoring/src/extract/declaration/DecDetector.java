@@ -18,7 +18,7 @@ public abstract class DecDetector {
 		return Math.min(LOOK_BACK_COUNT, records.size());
 	}
 	
-	public boolean isDecDetected(List<CompilationUnitHistoryRecord> records)
+	public final boolean isDecDetected(List<CompilationUnitHistoryRecord> records)
 	{
 		int total = getBackCount(records);
 		for(int i = records.size() - 1; i > records.size() - 1 - total; i--)
