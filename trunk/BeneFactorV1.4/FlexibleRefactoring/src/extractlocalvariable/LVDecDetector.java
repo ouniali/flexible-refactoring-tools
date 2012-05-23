@@ -4,14 +4,18 @@ import java.util.List;
 
 import ASTree.CompilationUnitHistoryRecord;
 
-public class LVDecDetector {
+public class LVDecDetector extends DecDetector {
 	
-	static int LOOK_BACK_COUNT = 5;
-	
-	
-	public boolean isLVDecDetected(List<CompilationUnitHistoryRecord> records)
-	{
+	@Override
+	protected boolean isDecFoundIn(CompilationUnitHistoryRecord record) {
+		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	protected Declaration getDeclaration(CompilationUnitHistoryRecord current) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
