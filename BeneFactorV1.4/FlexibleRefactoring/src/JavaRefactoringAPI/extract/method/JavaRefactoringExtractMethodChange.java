@@ -99,11 +99,16 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 
 
 	@Override
-	protected CompilationUnitHistoryRecord getRecordAfterRefactoring() {
-		return  information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
+	protected String getSourceAfterRefactoring() {
+		return  information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord().getSourceCode();
 	}
 	@Override
-	protected CompilationUnitHistoryRecord getRecordAfterRecovery() {
-		return information.getOldCompilationUnitRecord();
+	protected String getSourceAfterRecovery() {
+		return information.getOldCompilationUnitRecord().getSourceCode();
+	}
+
+	@Override
+	protected CompilationUnitHistoryRecord getLatestRecord() throws Exception {
+		return information.getNewCompilationUnitRecord().getAllHistory().getMostRecentRecord();
 	}
 }

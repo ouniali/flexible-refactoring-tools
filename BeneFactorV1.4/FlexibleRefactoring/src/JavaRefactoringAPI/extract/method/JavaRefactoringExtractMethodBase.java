@@ -52,21 +52,21 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		non_refactoring_change_end = r;
 	}
 	
-	final protected CompilationUnitHistoryRecord getNonRefactoringChangeEnd()	
+	final protected CompilationUnitHistoryRecord getNonRefactoringChangeEnd() throws Exception	
 	{
 		if(non_refactoring_change_end != null)
 			return non_refactoring_change_end;
-		CompilationUnitHistoryRecord endR = getRecordAfterRefactoring();
-		while(endR.getSourceCode().equals(getRecordAfterRefactoring().getSourceCode()) 
-				|| endR.getSourceCode().equals(getRecordAfterRecovery().getSourceCode()))
+		CompilationUnitHistoryRecord endR = getLatestRecord();
+		while(!endR.getSourceCode().equals(getSourceAfterRefactoring()) 
+				|| !endR.getSourceCode().equals(getSourceAfterRecovery()))
 			endR = endR.getPreviousRecord();
 		return endR;
 	}
 	
 	
-	abstract protected CompilationUnitHistoryRecord getRecordAfterRefactoring();
-	abstract protected CompilationUnitHistoryRecord getRecordAfterRecovery();
-	
+	abstract protected String getSourceAfterRefactoring() throws Exception;
+	abstract protected String getSourceAfterRecovery() throws Exception;
+	abstract protected CompilationUnitHistoryRecord getLatestRecord() throws Exception;
 	
 	
 	
@@ -101,7 +101,6 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 		CompilationUnitHistoryRecord startR = getNonrefactoringChangeStart();
 		CompilationUnitHistoryRecord endR = getNonRefactoringChangeEnd();
 		redoUnrefactoringChanges(startR, endR);
-		//JavaRefactoringExtractMethodUtil.prepareLinkedEdition(this.getICompilationUnit(), this.getMethodName());	
 		MonitorUiPlugin.getDefault().notifyInteractionObserved(
 				InteractionEvent.makeCommand(event_id + ".ExtractMethod", "extract method"));
 	}
