@@ -26,9 +26,8 @@ import extract.method.EMDetector;
 import flexiblerefactoring.BeneFactor;
 
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
+import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
 import Rename.ASTNameChangeInformation;
 import Rename.NameChangeDetector;
 import Rename.NameChangeUtil;

@@ -13,7 +13,7 @@ import util.ASTUtil;
 
 import ASTree.*;
 import JavaRefactoringAPI.*;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodChange;
 
 public class ASTEMChangeInformation extends ASTChangeInformation {
 

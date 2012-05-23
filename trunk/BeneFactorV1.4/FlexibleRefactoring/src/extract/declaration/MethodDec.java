@@ -13,8 +13,7 @@ import compare.SourceDiffNull;
 
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
 
 import userinterface.RefactoringMarker;
 import util.StringUtil;

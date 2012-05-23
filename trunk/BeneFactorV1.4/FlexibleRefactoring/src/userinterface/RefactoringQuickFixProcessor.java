@@ -20,7 +20,6 @@ import util.ASTUtil;
 
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
 
 import compilation.RefactoringChances;
 

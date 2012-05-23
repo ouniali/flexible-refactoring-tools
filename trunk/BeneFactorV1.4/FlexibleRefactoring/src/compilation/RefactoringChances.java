@@ -12,9 +12,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import userinterface.RefactoringMarker;
 import JavaRefactoringAPI.*;
-import JavaRefactoringAPI.extractlocalvariable.JavaRefactoringELVBase;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodBase;
-import JavaRefactoringAPI.extractmethod.JavaRefactoringExtractMethodChange;
+import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
+import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
 
 public class RefactoringChances {
 	
