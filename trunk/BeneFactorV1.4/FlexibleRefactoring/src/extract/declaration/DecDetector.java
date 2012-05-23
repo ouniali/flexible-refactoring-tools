@@ -4,6 +4,7 @@ import java.util.List;
 
 import compare.SourceDiff;
 import compare.SourceDiffChange;
+import compare.SourceDiffIdentical;
 import compare.SourceDiffInsert;
 
 import ASTree.CompilationUnitHistoryRecord;
@@ -61,6 +62,11 @@ public abstract class DecDetector {
 		}
 		else
 			return "";
+	}
+	
+	protected boolean hasMeaningfulLineNumber(CompilationUnitHistoryRecord record)
+	{
+		return !(record.getSourceDiff() instanceof SourceDiffIdentical);
 	}
 	
 	protected abstract boolean isDecFoundIn(CompilationUnitHistoryRecord record);

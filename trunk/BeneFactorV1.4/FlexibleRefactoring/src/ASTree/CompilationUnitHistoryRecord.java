@@ -313,6 +313,16 @@ public class CompilationUnitHistoryRecord implements Comparable{
 		return (int) (time - another.time);
 	}
 	
+	public boolean hasMeaningfulChangeLineNumber()
+	{
+		return !(getSourceDiff() instanceof SourceDiffIdentical); 
+	}
+	
+	public int getChangedLineNumberFromPreviousRecord()
+	{
+		return getSourceDiff().getLineNumber();
+	}
+	
 
 
 }
