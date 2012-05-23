@@ -14,15 +14,15 @@ import org.eclipse.jdt.core.dom.*;
 import userinterface.RefactoringMarker;
 
 import compilation.RefactoringChances;
-import extract.localvariable.DecDetector;
-import extract.localvariable.Declaration;
+import extract.declaration.DecDetector;
+import extract.declaration.Declaration;
+import extract.declaration.LVDecDetector;
+import extract.declaration.MethodDec;
+import extract.declaration.MethodSignatureDetector;
 import extract.localvariable.ELVDetector;
-import extract.localvariable.LVDecDetector;
 import extract.method.ASTEMActivity;
 import extract.method.ASTEMChangeInformation;
 import extract.method.EMDetector;
-import extract.method.MethodDec;
-import extract.method.MethodSignatureDetector;
 import flexiblerefactoring.BeneFactor;
 
 import JavaRefactoringAPI.JavaRefactoring;
