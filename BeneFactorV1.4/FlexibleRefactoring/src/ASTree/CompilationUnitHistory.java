@@ -21,14 +21,14 @@ import extract.declaration.MethodDec;
 import extract.declaration.MethodDecDetector;
 import extract.localvariable.ELVDetector;
 import extract.method.ASTEMActivity;
-import extract.method.ASTEMChange;
+import extract.method.ASTChangeEM;
 import extract.method.EMDetector;
 import flexiblerefactoring.BeneFactor;
 
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
-import Rename.ASTNameChange;
+import Rename.ASTChangeName;
 import Rename.NameChangeDetector;
 import Rename.NameChangeUtil;
 import Rename.NameChangeCountHistory;

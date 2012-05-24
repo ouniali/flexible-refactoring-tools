@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import ASTree.visitors.ASTNodeIndexVisitor;
 import ASTree.visitors.GetChildrenNodeVisitor;
-import Rename.ASTNameChange;
+import Rename.ASTChangeName;
 
 
 public class ASTUtil {

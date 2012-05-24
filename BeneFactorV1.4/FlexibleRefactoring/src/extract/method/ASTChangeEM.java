@@ -17,7 +17,7 @@ import ASTree.*;
 import JavaRefactoringAPI.*;
 import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodChange;
 
-public class ASTEMChange extends ASTChange {
+public class ASTChangeEM extends ASTChange {
 
 	int firstCutNodeIndex;	
 	int lastCutNodeIndex;
@@ -27,7 +27,7 @@ public class ASTEMChange extends ASTChange {
 	
 	int insertPlaceNodeIndex;
 	
-	public ASTEMChange( CompilationUnitHistoryRecord or, ASTNode node1, CompilationUnitHistoryRecord nr, ASTNode node2) 
+	public ASTChangeEM( CompilationUnitHistoryRecord or, ASTNode node1, CompilationUnitHistoryRecord nr, ASTNode node2) 
 	{
 		super(or, node1, nr, node2);
 		int[] index = getCutASTNodeIndex(node1, node2);
