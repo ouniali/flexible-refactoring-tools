@@ -66,8 +66,8 @@ public class CompilationUnitHistoryRecord implements Comparable{
 		history = his;
 		previousRecord = earlierVersionP;
 		saveSourceCode(iu);	
-		saveBindingTable(iu, earlierVersionP);
-		diffs = initializeDiffsBetweenPreviousRecord(previousRecord);
+		saveBindingTable(iu);
+		diffs = initializeDiffsBetweenPreviousRecord(getPreviousRecord());
 		UserAction = UserActionData.getPendingEvent();
 	}
 
@@ -92,15 +92,13 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	}
 
 
-	private void saveBindingTable(ICompilationUnit iu,
-			CompilationUnitHistoryRecord earlierVersionP) {
+	private void saveBindingTable(ICompilationUnit iu) {
 		
-		CompilationUnit unit = ASTUtil
-				.parseICompilationUnit(iu);
+		CompilationUnit unit = ASTUtil.parseICompilationUnit(iu);
 		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
 		unit.accept(bVisitor);
-		
 		String bInfor = bVisitor.getBindingInformation();
+		System.out.println(bInfor);
 		FileUtil.save(getBindingTablePath(), bInfor);
 	}
 
