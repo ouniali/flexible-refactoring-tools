@@ -41,7 +41,7 @@ public class NameChangeCountHistory {
 			}
 			
 		}
-	}
+	}	
 
 	public float getNameChangeFraction(String binding)
 	{
