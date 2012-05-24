@@ -36,10 +36,10 @@ import compare.SourceDiff;
 import compare.diff_match_patch.Patch;
 import extract.method.ASTChangeEM;
 
+import util.ICompilationUnitUtil;
 import util.UIUtil;
 
 import ASTree.CompilationUnitHistoryRecord;
-import ASTree.CompilationUnitManipulationMethod;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
