@@ -110,6 +110,7 @@ public class CompilationUnitHistory {
 		ELVDetector ELVDetector = new ELVDetector();
 		if(ELVDetector.isELVFound(records))
 		{
+			System.out.println("ELV detected");
 			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
 			return;
 		}
