@@ -96,8 +96,8 @@ class CutDetectStrategy implements DetectStrategy
 			record = record.getPreviousRecord();
 		if(record == null)
 			return StringUtil.EMPTY_STRING;
-		record = record.getPreviousRecord();
-		return record.getSeletectedCode();
+		//TODO: how to get cutted expression?
+		return StringUtil.EMPTY_STRING;
 	}
 }
 
