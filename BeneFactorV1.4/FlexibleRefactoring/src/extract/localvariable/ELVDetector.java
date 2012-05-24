@@ -11,7 +11,7 @@ import compare.SourceDiff;
 import util.ASTUtil;
 import util.StringUtil;
 
-import ASTree.ASTChangeInformationGenerator;
+import ASTree.ASTChangeGenerator;
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.NewRootPair;
 import JavaRefactoringAPI.JavaRefactoring;

@@ -12,7 +12,7 @@ import compare.SourceDiffIdentical;
 import util.ASTUtil;
 import util.FileUtil;
 
-public class ASTChangeInformation {
+public class ASTChange {
 
 	IJavaProject project;
 	ICompilationUnit unit;
@@ -34,7 +34,7 @@ public class ASTChangeInformation {
 
 
 	
-	protected ASTChangeInformation(CompilationUnitHistoryRecord or, ASTNode node1 ,CompilationUnitHistoryRecord nr, ASTNode node2)
+	protected ASTChange(CompilationUnitHistoryRecord or, ASTNode node1 ,CompilationUnitHistoryRecord nr, ASTNode node2)
 	{
 		oldRecord = or; 
 		newRecord = nr;
@@ -83,7 +83,7 @@ public class ASTChangeInformation {
 	@Override
 	public boolean equals(Object o)
 	{
-		ASTChangeInformation info = (ASTChangeInformation) o;
+		ASTChange info = (ASTChange) o;
 		return info.getOldTime() == this.getOldTime() && info.getNewTime() == this.getNewTime();	
 	}
 	

@@ -2,62 +2,62 @@ package ASTree;
 
 import java.util.ArrayList;
 
-import movestaticmember.ASTChangeInformationAddStaticMember;
-import movestaticmember.ASTChangeInformationDeleteStaticMember;
+import movestaticmember.ASTChangeAddStaticMember;
+import movestaticmember.ASTChangeDeleteStaticMember;
 import movestaticmember.MoveStaticMember;
 
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import extract.method.ASTEMChangeInformation;
+import extract.method.ASTEMChange;
 import extract.method.EMDetector;
 import extract.method.EMUtil;
 
 import util.ASTUtil;
 
-import Rename.ASTNameChangeInformation;
+import Rename.ASTNameChange;
 import Rename.NameChangeUtil;
 
-public class ASTChangeInformationGenerator {
+public class ASTChangeGenerator {
 
-	public static ASTChangeInformation getGeneralASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
+	public static ASTChange getGeneralASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);	
-		return new ASTChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
+		return new ASTChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 	}
 
-	public static ASTNameChangeInformation getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
+	public static ASTNameChange getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
 		if(NameChangeUtil.isRenameChange(pair.nodeOne, pair.nodeTwo))
-			return new ASTNameChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);		
+			return new ASTNameChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);		
 		else
 			return null; 	
 	}
 	
-	public static ASTEMChangeInformation getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
+	public static ASTEMChange getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);		
 		if(EMUtil.isExtractMethodChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo))
-			return new ASTEMChangeInformation(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
+			return new ASTEMChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 		else
 			return null;
 	}
 	
-	public static ASTChangeInformationAddStaticMember getAddStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
+	public static ASTChangeAddStaticMember getAddStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
 		if(MoveStaticMember.isAddStaticMemberChange(pair.nodeOne, pair.nodeTwo))
-			return new ASTChangeInformationAddStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
+			return new ASTChangeAddStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
 		else 
 			return null;
 	}
 	
-	public static ASTChangeInformationDeleteStaticMember getDeleteStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
+	public static ASTChangeDeleteStaticMember getDeleteStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
 		if(MoveStaticMember.isDeleteStaticMemberChange(pair.nodeOne, pair.nodeTwo))
-			return new ASTChangeInformationDeleteStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
+			return new ASTChangeDeleteStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
 		else 
 			return null;
 	}

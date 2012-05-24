@@ -2,8 +2,8 @@ package ASTree;
 
 import java.util.*;
 
-import movestaticmember.ASTChangeInformationAddStaticMember;
-import movestaticmember.ASTChangeInformationDeleteStaticMember;
+import movestaticmember.ASTChangeAddStaticMember;
+import movestaticmember.ASTChangeDeleteStaticMember;
 import movestaticmember.MoveStaticMember;
 
 import org.eclipse.core.resources.IMarker;
@@ -21,14 +21,14 @@ import extract.declaration.MethodDec;
 import extract.declaration.MethodDecDetector;
 import extract.localvariable.ELVDetector;
 import extract.method.ASTEMActivity;
-import extract.method.ASTEMChangeInformation;
+import extract.method.ASTEMChange;
 import extract.method.EMDetector;
 import flexiblerefactoring.BeneFactor;
 
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
-import Rename.ASTNameChangeInformation;
+import Rename.ASTNameChange;
 import Rename.NameChangeDetector;
 import Rename.NameChangeUtil;
 import Rename.NameChangeCountHistory;
@@ -66,7 +66,7 @@ public class CompilationUnitHistory {
 	
 
 	
-	protected ASTChangeInformation getMostRecentASTGeneralChange()
+	protected ASTChange getMostRecentASTGeneralChange()
 	{
 		CompilationUnitHistoryRecord newRecord = records.get(records.size()-1);
 		CompilationUnitHistoryRecord oldRecord = null;
@@ -74,7 +74,7 @@ public class CompilationUnitHistory {
 		if(records.size()<=1)
 			return null;
 		oldRecord = records.get(records.size()-2);
-		ASTChangeInformation change = ASTChangeInformationGenerator.getGeneralASTChangeInformation(oldRecord, newRecord);
+		ASTChange change = ASTChangeGenerator.getGeneralASTChangeInformation(oldRecord, newRecord);
 		return change;
 	}
 	protected String getCompilationUnitName()
@@ -140,9 +140,9 @@ public class CompilationUnitHistory {
 		
 		if(MoveStaticMember.LookingBcckForDetectingAddStaticDeclarationChange(records))
 		{
-			ASTChangeInformationAddStaticMember 
+			ASTChangeAddStaticMember 
 				addStaticChange = MoveStaticMember.getLatestAddStaticChange();
-			ASTChangeInformationDeleteStaticMember 
+			ASTChangeDeleteStaticMember 
 				deleteStaticChange = MoveStaticMember.getLatestDeleteStaticChange();
 			if(addStaticChange != null && deleteStaticChange != null)
 			{

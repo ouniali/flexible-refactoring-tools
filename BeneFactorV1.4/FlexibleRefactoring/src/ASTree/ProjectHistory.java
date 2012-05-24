@@ -42,7 +42,7 @@ public class ProjectHistory {
 		mostRecentHistory = history;
 	}
 	
-	public ASTChangeInformation getMostRecentChange()
+	public ASTChange getMostRecentChange()
 	{
 		if(mostRecentHistory == null)
 			return null;

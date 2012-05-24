@@ -12,7 +12,7 @@ import org.osgi.framework.BundleContext;
 
 import util.FileUtil;
 
-import ASTree.ASTChangeInformation;
+import ASTree.ASTChange;
 import ASTree.CompilationUnitHistoryRecord;
 import UserAction.MylynMonitor;
 
@@ -45,7 +45,7 @@ public class Activator extends AbstractUIPlugin {
 		MylynMonitor.addListener();
 		// add mylyn monitor
 		FileUtil.deleteFolder(CompilationUnitHistoryRecord.getHistoryFilesRoot());
-		FileUtil.deleteFolder(ASTChangeInformation.getChangeFilesRoot());
+		FileUtil.deleteFolder(ASTChange.getChangeFilesRoot());
 		// delete files for the last time
 	}
 

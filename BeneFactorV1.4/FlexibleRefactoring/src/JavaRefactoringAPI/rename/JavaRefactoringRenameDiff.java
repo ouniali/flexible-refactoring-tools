@@ -32,7 +32,7 @@ import animation.change.ChangeAnalyzer.*;
 
 import ASTree.CompilationUnitHistoryRecord;
 import ASTree.CompilationUnitManipulationMethod;
-import Rename.ASTNameChangeInformation;
+import Rename.ASTNameChange;
 import Rename.NamesInJavaProject;
 import Rename.NamesInPackage;
 
@@ -40,14 +40,14 @@ import compare.SourceDiff;
 
 public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 
-	ASTNameChangeInformation first_dec_change;
-	ASTNameChangeInformation last_dec_change;
-	List<ASTNameChangeInformation> dec_changes;
+	ASTNameChange first_dec_change;
+	ASTNameChange last_dec_change;
+	List<ASTNameChange> dec_changes;
 	String bindingKey;
 
 	private JavaRefactoringRenameDiff(ICompilationUnit u, int l,
 			String oN, String nN,
-			List<ASTNameChangeInformation> changes) throws Exception 
+			List<ASTNameChange> changes) throws Exception 
 	{
 		super(u, l, oN, nN);
 		dec_changes = changes;
@@ -57,7 +57,7 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 	}
 	
 	public static JavaRefactoringRenameDiff create(ICompilationUnit u, int l,
-			List<ASTNameChangeInformation> changes, String nN) throws Exception
+			List<ASTNameChange> changes, String nN) throws Exception
 	{
 		if(changes.size() < 1)
 			return null;

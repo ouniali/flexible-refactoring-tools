@@ -45,7 +45,7 @@ abstract class EMDetected
 
 class ExtractWithCut extends EMDetected{
 	
-	ASTEMChangeInformation change;
+	ASTEMChange change;
 	private static ExtractWithCut detected;
 	
 	@Override
@@ -55,7 +55,7 @@ class ExtractWithCut extends EMDetected{
 
 	@Override
 	public boolean equals(Object o) {
-		return change.equals((ASTEMChangeInformation)o);
+		return change.equals((ASTEMChange)o);
 	}
 	
 	public static EMDetected getInstance()
@@ -67,7 +67,7 @@ class ExtractWithCut extends EMDetected{
 
 	@Override
 	public void set(Object o) {
-		change = (ASTEMChangeInformation)o;
+		change = (ASTEMChange)o;
 	}
 	
 }

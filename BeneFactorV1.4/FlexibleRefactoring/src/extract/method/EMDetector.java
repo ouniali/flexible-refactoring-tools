@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import util.ASTUtil;
 import util.StringUtil;
-import ASTree.ASTChangeInformationGenerator;
+import ASTree.ASTChangeGenerator;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -24,7 +24,7 @@ public class EMDetector {
 	public static final int MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD = 5;
 
 	//looking back for extract method change, null if not found.
-	private ASTEMChangeInformation 
+	private ASTEMChange 
 		LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 
 	{
 		if (Records.size() == 0)
@@ -42,7 +42,7 @@ public class EMDetector {
 		for (int i = 1; i <= lookBackCount; i++) {
 			int index = Records.size() - 1 - i;
 			RecordOne = Records.get(index);
-			ASTEMChangeInformation change = ASTChangeInformationGenerator
+			ASTEMChange change = ASTChangeGenerator
 					.getExtractMethodASTChangeInformation(RecordOne, RecordTwo);
 			if (change != null) {
 				return change;
@@ -75,14 +75,14 @@ public class EMDetector {
 
 
 	public boolean isExtractMethodDetected(ArrayList<CompilationUnitHistoryRecord> records) {
-		ASTEMChangeInformation change = LookingBackForDetectingExtractMethodChange(records);
+		ASTEMChange change = LookingBackForDetectingExtractMethodChange(records);
 		ASTEMActivity act = LookingBackForExtractMethodActivities(records);
 		return !(change == null && act == null);
 	}
 
 	public JavaRefactoring getEMRefactoring(
 			ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception {
-		ASTEMChangeInformation change = LookingBackForDetectingExtractMethodChange(records);
+		ASTEMChange change = LookingBackForDetectingExtractMethodChange(records);
 		ASTEMActivity act = LookingBackForExtractMethodActivities(records);
 		if(change != null)
 			return getCutRefactoring(change, unit);
@@ -91,7 +91,7 @@ public class EMDetector {
 	}
 	
 	private JavaRefactoring getCutRefactoring
-		(ASTEMChangeInformation change, ICompilationUnit unit) throws Exception
+		(ASTEMChange change, ICompilationUnit unit) throws Exception
 	{
 		ExtractWithCut.getInstance().set(change);
 		return ExtractWithCut.getInstance().getRefactoring(unit);

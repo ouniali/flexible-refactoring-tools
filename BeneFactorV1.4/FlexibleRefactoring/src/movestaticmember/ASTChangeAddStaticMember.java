@@ -11,17 +11,17 @@ import JavaRefactoringAPI.move.JavaRefactoringMoveStaticMember;
 import userinterface.RefactoringMarker;
 import util.ASTUtil;
 
-import ASTree.ASTChangeInformation;
+import ASTree.ASTChange;
 import ASTree.CompilationUnitHistoryRecord;
 
-public class ASTChangeInformationAddStaticMember extends ASTChangeInformation 
+public class ASTChangeAddStaticMember extends ASTChange 
 {
 
 	String staticFieldDeclaration;
 	int staticFieldDeclarationIndex;
 	String targetTypeFullyQualifiedName;
 	
-	public ASTChangeInformationAddStaticMember(
+	public ASTChangeAddStaticMember(
 			CompilationUnitHistoryRecord or, ASTNode node1,
 			CompilationUnitHistoryRecord nr, ASTNode node2) 
 	{
@@ -37,7 +37,7 @@ public class ASTChangeInformationAddStaticMember extends ASTChangeInformation
 		return staticFieldDeclaration;
 	}
 	
-	public JavaRefactoringMoveStaticMember getMoveStaticMemberRefactoring(ICompilationUnit unit, ASTChangeInformationDeleteStaticMember deleteChange) throws Exception
+	public JavaRefactoringMoveStaticMember getMoveStaticMemberRefactoring(ICompilationUnit unit, ASTChangeDeleteStaticMember deleteChange) throws Exception
 	{
 		int line = getRefactoringMarkerLine(unit);
 		return new JavaRefactoringMoveStaticMember(unit, line, deleteChange ,this);
