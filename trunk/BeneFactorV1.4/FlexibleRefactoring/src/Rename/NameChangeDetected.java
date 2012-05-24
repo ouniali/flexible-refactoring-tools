@@ -7,7 +7,7 @@ class NameChangeDetected {
 	
 	public static final int MAXIMUM_LOOK_BACK_SEARCHING_INTERMIDIATE_NAME_CHANGE = 5;
 	public static final int MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY = 40;
-	private final List<ASTNameChange> detectedNameChanges = new ArrayList<ASTNameChange>();
+	private final List<ASTChangeName> detectedNameChanges = new ArrayList<ASTChangeName>();
 	private final NameChangeCountHistory nameChangeHistory = new NameChangeCountHistory();
 
 	private static NameChangeDetected instance = new NameChangeDetected();
@@ -23,16 +23,16 @@ class NameChangeDetected {
 		return getSkipedDeclaredNameChangesInHistory(binding_key).size() != 0;
 	}
 	
-	public List<ASTNameChange> getSkipedDeclaredNameChangesInHistory(String currentBindingKey) {
+	public List<ASTChangeName> getSkipedDeclaredNameChangesInHistory(String currentBindingKey) {
 		
-		List<ASTNameChange> skips = new ArrayList<ASTNameChange>();
+		List<ASTChangeName> skips = new ArrayList<ASTChangeName>();
 		int lookBack = Math.min(MAXIMUM_LOOK_BACK_SEARCHING_BINDINGKEY,
 				detectedNameChanges.size());
 		int start = detectedNameChanges.size() - 1;
 		int end = start - lookBack;
 		for (int i = start; i > end; i--) 
 		{
-			ASTNameChange change = detectedNameChanges.get(i);
+			ASTChangeName change = detectedNameChanges.get(i);
 			String newBinding = change.getNewNameBindingKey();
 			if (change.isRenamingDeclaration() && newBinding.equals(currentBindingKey)) 
 			{
@@ -44,7 +44,7 @@ class NameChangeDetected {
 	}
 	
 
-	public ASTNameChange searchIntermediateChange(ASTNameChange current)
+	public ASTChangeName searchIntermediateChange(ASTChangeName current)
 	{
 		int lookBack = Math.min(MAXIMUM_LOOK_BACK_SEARCHING_INTERMIDIATE_NAME_CHANGE,
 				detectedNameChanges.size());
@@ -52,7 +52,7 @@ class NameChangeDetected {
 		int end = start - lookBack;
 		for(int i = start; i> end; i--)
 		{
-			ASTNameChange change = detectedNameChanges.get(i);
+			ASTChangeName change = detectedNameChanges.get(i);
 			String codeOne = change.getNewCompilationUnitRecord().getSourceCode();
 			int indexOne = change.getNodeOneIndex();
 			String codeTwo = current.getOldCompilationUnitRecord().getSourceCode();
@@ -65,12 +65,12 @@ class NameChangeDetected {
 		
 	}
 	
-	public boolean isNewChange(ASTNameChange change)
+	public boolean isNewChange(ASTChangeName change)
 	{
 		return !detectedNameChanges.contains(change);
 	}
 	
-	public void addNameChange(ASTNameChange change)
+	public void addNameChange(ASTChangeName change)
 	{
 		String binding = change.getOldNameBindingKey();
 		int bindingCount = change.getOldNameBindingCount();
@@ -78,7 +78,7 @@ class NameChangeDetected {
 		detectedNameChanges.add(change);
 	}
 	
-	public ASTNameChange getLatestDetectedChange()
+	public ASTChangeName getLatestDetectedChange()
 	{
 		return detectedNameChanges.get(detectedNameChanges.size() - 1);
 	}

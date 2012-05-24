@@ -9,13 +9,13 @@ import movestaticmember.MoveStaticMember;
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import extract.method.ASTEMChange;
+import extract.method.ASTChangeEM;
 import extract.method.EMDetector;
 import extract.method.EMUtil;
 
 import util.ASTUtil;
 
-import Rename.ASTNameChange;
+import Rename.ASTChangeName;
 import Rename.NameChangeUtil;
 
 public class ASTChangeGenerator {
@@ -26,20 +26,20 @@ public class ASTChangeGenerator {
 		return new ASTChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 	}
 
-	public static ASTNameChange getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
+	public static ASTChangeName getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
 		if(NameChangeUtil.isRenameChange(pair.nodeOne, pair.nodeTwo))
-			return new ASTNameChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);		
+			return new ASTChangeName(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);		
 		else
 			return null; 	
 	}
 	
-	public static ASTEMChange getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
+	public static ASTChangeEM getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
 		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);		
 		if(EMUtil.isExtractMethodChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo))
-			return new ASTEMChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
+			return new ASTChangeEM(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 		else
 			return null;
 	}

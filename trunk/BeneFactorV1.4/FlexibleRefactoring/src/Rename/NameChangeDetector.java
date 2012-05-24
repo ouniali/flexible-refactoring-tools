@@ -21,7 +21,7 @@ public class NameChangeDetector {
 		for (int i = 1; i <= lookBackCount; i++) {
 			int index = records.size() - 1 - i;
 			oldRecord = records.get(index);
-			ASTNameChange change = ASTChangeGenerator
+			ASTChangeName change = ASTChangeGenerator
 					.getRenameASTChangedInformation(oldRecord, latestRecord);
 			if(change != null && NameChangeDetected.getInstance().isNewChange(change))
 			{
