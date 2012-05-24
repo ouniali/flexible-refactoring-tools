@@ -22,13 +22,13 @@ public class ASTChangeGenerator {
 
 	public static ASTChange getGeneralASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
-		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);	
+		NewRootPair pair = getDeepestChangedNodePair(oldRecord, newRecord);	
 		return new ASTChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 	}
 
 	public static ASTChangeName getRenameASTChangedInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord) throws Exception
 	{
-		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
+		NewRootPair pair = getDeepestChangedNodePair(oldRecord, newRecord);
 		if(NameChangeUtil.isRenameChange(pair.nodeOne, pair.nodeTwo))
 			return new ASTChangeName(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);		
 		else
@@ -37,7 +37,7 @@ public class ASTChangeGenerator {
 	
 	public static ASTChangeEM getExtractMethodASTChangeInformation(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord )
 	{
-		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);		
+		NewRootPair pair = getDeepestChangedNodePair(oldRecord, newRecord);		
 		if(EMUtil.isExtractMethodChange(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo))
 			return new ASTChangeEM(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);	
 		else
@@ -46,7 +46,7 @@ public class ASTChangeGenerator {
 	
 	public static ASTChangeAddStaticMember getAddStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
 	{
-		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
+		NewRootPair pair = getDeepestChangedNodePair(oldRecord, newRecord);
 		if(MoveStaticMember.isAddStaticMemberChange(pair.nodeOne, pair.nodeTwo))
 			return new ASTChangeAddStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
 		else 
@@ -55,19 +55,14 @@ public class ASTChangeGenerator {
 	
 	public static ASTChangeDeleteStaticMember getDeleteStaticMemberASTChangeInformation(CompilationUnitHistoryRecord oldRecord, CompilationUnitHistoryRecord newRecord)
 	{
-		NewRootPair pair = getTheDeepestChangedNodePair(oldRecord, newRecord);
+		NewRootPair pair = getDeepestChangedNodePair(oldRecord, newRecord);
 		if(MoveStaticMember.isDeleteStaticMemberChange(pair.nodeOne, pair.nodeTwo))
 			return new ASTChangeDeleteStaticMember(oldRecord, pair.nodeOne, newRecord, pair.nodeTwo);
 		else 
 			return null;
-	}
+	}	
 	
-
-	
-	
-	
-	
-	public static NewRootPair getTheDeepestChangedNodePair(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord)
+	public static NewRootPair getDeepestChangedNodePair(CompilationUnitHistoryRecord oldRecord,CompilationUnitHistoryRecord newRecord)
 	{
 		ASTNode ASTOne = oldRecord.getASTree().getRoot();
 		ASTNode ASTTwo = newRecord.getASTree().getRoot();
