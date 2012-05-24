@@ -288,15 +288,18 @@ public class CompilationUnitHistoryRecord implements Comparable{
 		return UserAction.equals(UserActionData.CUT_ID);
 	}
 	
-	public int[] getSeletectedRegion() {
-		return seletectedRegion;
+	public int getSeletectedStart() {
+		return seletectedRegion[0];
+	}
+
+	public int getSeletectedLenghth() {
+		return seletectedRegion[1] - seletectedRegion[0] + 1;
 	}
 	
 	public String getSeletectedCode()
 	{
-		int start = getSeletectedRegion()[0];
-		int end = getSeletectedRegion()[1] + 1;
-		return getSourceCode().substring(start, end);
+		return getSourceCode().substring(
+				getSeletectedStart(), getSeletectedLenghth());
 	}
 
 

@@ -46,9 +46,8 @@ public abstract class JavaRefactoringELVBase extends JavaRefactoring{
 		ICompilationUnit unit = getICompilationUnit();
 		unit.becomeWorkingCopy(null);
 		NullProgressMonitor monitor = new NullProgressMonitor();
-		int start = activity.getRecord().getSeletectedRegion()[0];
-		int length = activity.getRecord().getSeletectedRegion()[1] 
-				- activity.getRecord().getSeletectedRegion()[0] + 1;
+		int start = activity.getRecord().getSeletectedStart();
+		int length = activity.getRecord().getSeletectedLenghth();
 		ExtractTempRefactoring refactoring = new ExtractTempRefactoring(unit, start, length);
 		refactoring.setTempName(getTempName());
 		RefactoringStatus status = refactoring.checkAllConditions(monitor);
