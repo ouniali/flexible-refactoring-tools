@@ -18,7 +18,7 @@ import util.ASTUtil;
 import util.FileUtil;
 import util.UIUtil;
 import Rename.NamesInCompilationUnit;
-import ASTree.visitors.NameBindingInformationVisitor;
+import ASTree.visitors.NameBindingVisitor;
 import UserAction.UserActionData;
 
 import compare.JavaSourceDiff;
@@ -95,7 +95,7 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	private void saveBindingTable(ICompilationUnit iu) {
 		
 		CompilationUnit unit = ASTUtil.parseICompilationUnit(iu);
-		NameBindingInformationVisitor bVisitor = new NameBindingInformationVisitor();
+		NameBindingVisitor bVisitor = new NameBindingVisitor();
 		unit.accept(bVisitor);
 		String bInfor = bVisitor.getBindingInformation();
 		System.out.println(bInfor);

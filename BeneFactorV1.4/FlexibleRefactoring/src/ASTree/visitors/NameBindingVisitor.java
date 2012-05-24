@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import org.eclipse.jdt.core.ILocalVariable;
 import org.eclipse.jdt.core.dom.*;
 
-public class NameBindingInformationVisitor extends ASTVisitor{
+public class NameBindingVisitor extends ASTVisitor{
 	
 	
 	Hashtable<String, ArrayList<Integer>> VariablesSimple;
@@ -26,7 +26,7 @@ public class NameBindingInformationVisitor extends ASTVisitor{
 	int current_index;
 	
 	
-	public NameBindingInformationVisitor()
+	public NameBindingVisitor()
 	{
 		
 		VariablesSimple = new Hashtable<String, ArrayList<Integer>>();

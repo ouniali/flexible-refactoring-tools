@@ -7,19 +7,19 @@ import org.eclipse.jdt.core.dom.*;
 
 import util.ASTUtil;
 
-import ASTree.visitors.NameBindingInformationVisitor;
+import ASTree.visitors.NameBindingVisitor;
 
 public class NamesInCompilationUnit {
 	
 	CompilationUnit tree;
-	NameBindingInformationVisitor visitor;
+	NameBindingVisitor visitor;
 	Hashtable<String, ArrayList<Integer>> NameTable;
 	
 	// the compilation unit should be generated directly from ICompilationUnit
 	public NamesInCompilationUnit(ICompilationUnit unit)
 	{
 		tree = ASTUtil.parseICompilationUnit(unit);
-		visitor = new NameBindingInformationVisitor();
+		visitor = new NameBindingVisitor();
 		tree.accept(visitor);
 		NameTable = visitor.getEntireNameBindingTable();
 	}
