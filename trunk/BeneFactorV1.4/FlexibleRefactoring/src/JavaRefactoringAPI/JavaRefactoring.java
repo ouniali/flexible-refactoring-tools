@@ -17,6 +17,7 @@ import org.eclipse.mylyn.monitor.core.InteractionEvent;
 import org.eclipse.ui.IEditorInput;
 
 import userinterface.RefactoringMarker;
+import util.ICompilationUnitUtil;
 import util.UIUtil;
 
 import compare.JavaSourceDiff;
@@ -24,7 +25,6 @@ import compare.diff_match_patch.Patch;
 import compilation.RefactoringChances;
 import ASTree.CompilationUnitHistory;
 import ASTree.CompilationUnitHistoryRecord;
-import ASTree.CompilationUnitManipulationMethod;
 
 public abstract class JavaRefactoring extends Job{
 
@@ -127,7 +127,7 @@ public abstract class JavaRefactoring extends Job{
 		LinkedList<Patch> patches = JavaSourceDiff.getPatches(startRecord.getSourceCode(), 
 				endRecord.getSourceCode());
 		source = JavaSourceDiff.applyPatches(source, patches);
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(getICompilationUnit(), 
+		ICompilationUnitUtil.UpdateICompilationUnit(getICompilationUnit(), 
 				source, new NullProgressMonitor());
 	}
 	

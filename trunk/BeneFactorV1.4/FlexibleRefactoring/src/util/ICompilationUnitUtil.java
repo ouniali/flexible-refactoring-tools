@@ -1,4 +1,4 @@
-package ASTree;
+package util;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
 
-public class CompilationUnitManipulationMethod {
+public class ICompilationUnitUtil {
 
 	
 	static public void UpdateICompilationUnit(ICompilationUnit unit, String code, IProgressMonitor pm)

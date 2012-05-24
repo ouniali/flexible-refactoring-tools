@@ -10,11 +10,12 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.mylyn.internal.monitor.ui.MonitorUiPlugin;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
 
+import util.ICompilationUnitUtil;
+
 import compare.JavaSourceDiff;
 import compare.diff_match_patch.Patch;
 
 import ASTree.CompilationUnitHistoryRecord;
-import ASTree.CompilationUnitManipulationMethod;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 

@@ -8,12 +8,13 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import extract.localvariable.ELVActivity;
 
 import ASTree.CompilationUnitHistoryRecord;
-import ASTree.CompilationUnitManipulationMethod;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 import org.eclipse.jdt.internal.corext.refactoring.code.*;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+
+import util.ICompilationUnitUtil;
 
 public abstract class JavaRefactoringELVBase extends JavaRefactoring{
 
@@ -62,7 +63,7 @@ public abstract class JavaRefactoringELVBase extends JavaRefactoring{
 	protected final void performCodeRecovery(IProgressMonitor pm) throws Exception {
 		ICompilationUnit unit = this.getICompilationUnit();
 		String code = activity.getRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(unit, code, null);
+		ICompilationUnitUtil.UpdateICompilationUnitWithoutCommit(unit, code, null);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import compare.SourceDiffIdentical;
 
 import util.ASTUtil;
+import util.ICompilationUnitUtil;
 import util.FileUtil;
 
 public class ASTChange {
@@ -118,14 +119,14 @@ public class ASTChange {
 	public void recoverICompilationUnitToOldRecord(IProgressMonitor monitor)
 	{
 		String code = getOldCompilationUnitRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(unit, code, monitor);
+		ICompilationUnitUtil.UpdateICompilationUnitWithoutCommit(unit, code, monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	
 	public void recoverICompilationUnitToNewRecord(IProgressMonitor monitor)
 	{
 		String code = getNewCompilationUnitRecord().getSourceCode();
-		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(unit, code,monitor);
+		ICompilationUnitUtil.UpdateICompilationUnitWithoutCommit(unit, code,monitor);
 		//CompilationUnitManipulationMethod.FormattICompilationUnit(unit);
 	}
 	

@@ -21,6 +21,7 @@ import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
 import util.ASTUtil;
+import util.ICompilationUnitUtil;
 
 import animation.autoedition.AtomicEdition;
 import animation.autoedition.MultiFileEdition;
@@ -31,7 +32,6 @@ import animation.change.ChangeAnalyzer;
 import animation.change.ChangeAnalyzer.*;
 
 import ASTree.CompilationUnitHistoryRecord;
-import ASTree.CompilationUnitManipulationMethod;
 import Rename.ASTChangeName;
 import Rename.NamesInJavaProject;
 import Rename.NamesInPackage;
@@ -99,7 +99,7 @@ public class JavaRefactoringRenameDiff extends JavaReafactoringRenameBase {
 		SubMonitor monitor = SubMonitor.convert(pm,"Recovering Code",2);
 		String source = first_dec_change.getOldCompilationUnitRecord().getSourceCode();	
 		source = performDiffs(source, getChangesAfterDeclarationRenamed());
-		CompilationUnitManipulationMethod.UpdateICompilationUnitWithoutCommit(this.getICompilationUnit(),source, monitor.newChild(1));
+		ICompilationUnitUtil.UpdateICompilationUnitWithoutCommit(this.getICompilationUnit(),source, monitor.newChild(1));
 		monitor.done();
 	}
 

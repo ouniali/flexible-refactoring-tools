@@ -7,10 +7,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaModelException;
 
+import util.ICompilationUnitUtil;
+
 import extract.method.ASTEMActivity;
 
 import ASTree.CompilationUnitHistoryRecord;
-import ASTree.CompilationUnitManipulationMethod;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 
@@ -32,7 +33,7 @@ public class JavaRefactoringExtractMethodActivity extends JavaRefactoringExtract
 
 	@Override
 	protected void performCodeRecovery(IProgressMonitor pm) throws Exception {
-		CompilationUnitManipulationMethod.UpdateICompilationUnit(
+		ICompilationUnitUtil.UpdateICompilationUnit(
 				this.getICompilationUnit(), activity.getRecord().getSourceCode(), null);
 	}
 

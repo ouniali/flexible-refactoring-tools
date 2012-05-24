@@ -44,10 +44,5 @@ public class LVDecDetector extends DecDetector {
 		String code = getEditedLineText(record);
 		return new LVDec(line ,code, record);
 	}
-	
-	
-
-	
-	
 
 }
