@@ -34,4 +34,19 @@ public abstract class Declaration {
 		else
 			return current;		
 	}
+	
+	protected boolean isType(String token)
+	{
+		return (
+				token.equals("boolean")
+				|| token.equals("byte")
+				|| token.equals("char")
+				|| token.equals("double")
+				|| token.equals("float")
+				|| token.equals("int")
+				|| token.equals("long")
+				|| token.equals("short")
+				|| token.equals("void"));
+	}
+
 }
