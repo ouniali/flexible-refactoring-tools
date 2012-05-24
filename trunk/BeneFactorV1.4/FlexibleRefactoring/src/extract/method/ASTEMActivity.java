@@ -33,12 +33,12 @@ public class ASTEMActivity {
 	
 	public int getCopyStart()
 	{
-		return record.getSeletectedRegion()[0];
+		return record.getSeletectedStart();
 	}
 	
 	public int getCopyLength()
 	{
-		return record.getSeletectedRegion()[1] - record.getSeletectedRegion()[0] + 1;
+		return record.getSeletectedLenghth();
 	}
 	
 	
@@ -53,9 +53,8 @@ public class ASTEMActivity {
 	{
 		if(record.hasCopyCommand())
 		{
-			int start = record.getSeletectedRegion()[0];
-			int end = record.getSeletectedRegion()[1];
-			int length = end - start + 1;
+			int start = record.getSeletectedStart();
+			int length = record.getSeletectedLenghth();
 			String statements = StringUtil.removeWhiteSpace(record.getSourceCode().substring(start, start + length));
 			String block = StringUtil.removeWhiteSpace(ASTUtil.parseStatements(statements).toString());
 			block = block.substring(1, block.length() - 1);		
