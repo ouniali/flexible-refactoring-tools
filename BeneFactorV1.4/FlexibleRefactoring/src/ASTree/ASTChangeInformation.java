@@ -135,8 +135,8 @@ public class ASTChangeInformation {
 		CompilationUnitHistoryRecord old = getOldCompilationUnitRecord();
 		for(;!current.equals(old);current = current.getPreviousRecord())
 		{
-			if(!(current.getSourceDiff() instanceof SourceDiffIdentical))
-				return current.getSourceDiff().getLineNumber();
+			if(current.hasMeaningfulChangedLineNumber())
+				return current.getChangedLineNumberFromPrevious();
 		}
 		return 0;
 	}

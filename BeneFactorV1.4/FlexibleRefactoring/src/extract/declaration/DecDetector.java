@@ -64,10 +64,7 @@ public abstract class DecDetector {
 			return "";
 	}
 	
-	protected boolean hasMeaningfulLineNumber(CompilationUnitHistoryRecord record)
-	{
-		return !(record.getSourceDiff() instanceof SourceDiffIdentical);
-	}
+
 	
 	protected abstract boolean isDecFoundIn(CompilationUnitHistoryRecord record);
 	protected abstract Declaration getDeclaration(CompilationUnitHistoryRecord current);
