@@ -1,5 +1,7 @@
 package extract.declaration;
 
+import java.util.StringTokenizer;
+
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 
@@ -25,23 +27,24 @@ public class LVDec extends Declaration{
 	
 	private void parse(String s)
 	{
-		String[] tokens = s.split(" ");
-		if( isType(tokens[0]) && 
-			tokens.length > 1 && 
+		System.out.println(s);
+		String[] tokens = StringUtil.removeEmptyTokens(StringUtil.splitBySpace(s));
+		System.out.println(tokens.length);
+		if( tokens.length > 1 && isType(tokens[0]) &&
 			StringUtil.isJavaIdentifier(tokens[1]))
 		{
 			isNameAvailable = true;
 			name = tokens[1];
+			System.out.println(name);
 		}
-		else
-			isNameAvailable = false;
 	}
 
 	@Override
 	public void setRefactoring(JavaRefactoring ref) 
 	{
 		JavaRefactoringELVBase elvb = (JavaRefactoringELVBase)ref;
-		elvb.setTempName(name);
+		if(isNameAvailable)
+			elvb.setTempName(name);
 		elvb.setNonRefactoringChangeEnd(getRecordNotEditingOn(record, line));
 	}
 

@@ -49,6 +49,7 @@ public abstract class JavaRefactoringELVBase extends JavaRefactoring{
 		int start = activity.getRecord().getSeletectedStart();
 		int length = activity.getRecord().getSeletectedLenghth();
 		ExtractTempRefactoring refactoring = new ExtractTempRefactoring(unit, start, length);
+		System.out.println(getTempName());
 		refactoring.setTempName(getTempName());
 		RefactoringStatus status = refactoring.checkAllConditions(monitor);
 		if(status.isOK())
