@@ -21,7 +21,7 @@ public class JobQueue implements Runnable{
 	private JobQueue() {}
 
 	private ProjectHistoryCollector collector = new ProjectHistoryCollector();
-	private List<ReconcileContext> contexts = Collections.synchronizedList(new ArrayList<ReconcileContext>());
+	private List<ICompilationUnit> contexts = Collections.synchronizedList(new ArrayList<ICompilationUnit>());
 	private static JobQueue queue;
 	
 	static public synchronized JobQueue getInstance()
@@ -39,7 +39,7 @@ public class JobQueue implements Runnable{
 	
 	public synchronized void enqueue(ReconcileContext con)
 	{
-		contexts.add(con);
+		contexts.add(con.getWorkingCopy());
 	}
 
 	@Override
@@ -60,10 +60,10 @@ public class JobQueue implements Runnable{
 		}
 	}
 	
-	private void handle(ReconcileContext context) throws Exception
+	private void handle(ICompilationUnit unit) throws Exception
 	{
-		IJavaProject pro = context.getWorkingCopy().getJavaProject();
-		collector.addNewProjectVersion(pro, context.getWorkingCopy());	
+		IJavaProject pro = unit.getJavaProject();
+		collector.addNewProjectVersion(pro, unit);	
 	}
 	
 
