@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import util.ASTUtil;
 
-import Rename.ASTNameChangeInformation;
+import Rename.ASTNameChange;
 
 public class ProjectHistoryCollector {
 	

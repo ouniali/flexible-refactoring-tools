@@ -16,10 +16,10 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import util.ASTUtil;
 
-import ASTree.ASTChangeInformation;
+import ASTree.ASTChange;
 import ASTree.CompilationUnitHistoryRecord;
 
-public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation{
+public class ASTChangeDeleteStaticMember extends ASTChange{
 
 	String staticFieldDeclaration;
 	int staticFieldDeclarationIndex;
@@ -28,7 +28,7 @@ public class ASTChangeInformationDeleteStaticMember extends ASTChangeInformation
 	int fieldNameStart;
 	int fieldNameLength;
 	
-	public ASTChangeInformationDeleteStaticMember(
+	public ASTChangeDeleteStaticMember(
 			CompilationUnitHistoryRecord or, ASTNode node1,
 			CompilationUnitHistoryRecord nr, ASTNode node2) 
 	{

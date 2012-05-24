@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 
-import ASTree.ASTChangeInformationGenerator;
+import ASTree.ASTChangeGenerator;
 import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
@@ -21,7 +21,7 @@ public class NameChangeDetector {
 		for (int i = 1; i <= lookBackCount; i++) {
 			int index = records.size() - 1 - i;
 			oldRecord = records.get(index);
-			ASTNameChangeInformation change = ASTChangeInformationGenerator
+			ASTNameChange change = ASTChangeGenerator
 					.getRenameASTChangedInformation(oldRecord, latestRecord);
 			if(change != null && NameChangeDetected.getInstance().isNewChange(change))
 			{

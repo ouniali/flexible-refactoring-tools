@@ -3,15 +3,15 @@ package movestaticmember;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import ASTree.ASTChangeInformationGenerator;
+import ASTree.ASTChangeGenerator;
 import ASTree.CompilationUnitHistoryRecord;
 
 public class MoveStaticMember {
 
 	static int MAXIMUM_LOOK_BACK_COUNT_ADD_STATIC_DECLARATION = 5;
 	static int MAXIMUM_LOOK_BACK_COUNT_DELETE_STATIC_DECLARATION = 5;
-	static ArrayList<ASTChangeInformationAddStaticMember> detectedAddStaticChange = new ArrayList<ASTChangeInformationAddStaticMember>();
-	static ArrayList<ASTChangeInformationDeleteStaticMember> detectedDeleteStaticChange = new ArrayList<ASTChangeInformationDeleteStaticMember>();
+	static ArrayList<ASTChangeAddStaticMember> detectedAddStaticChange = new ArrayList<ASTChangeAddStaticMember>();
+	static ArrayList<ASTChangeDeleteStaticMember> detectedDeleteStaticChange = new ArrayList<ASTChangeDeleteStaticMember>();
 
 	public static void clearAddStaticChange()
 	{
@@ -23,7 +23,7 @@ public class MoveStaticMember {
 	}
 	
 	
-	public static ASTChangeInformationAddStaticMember getLatestAddStaticChange()
+	public static ASTChangeAddStaticMember getLatestAddStaticChange()
 	{
 		if(detectedAddStaticChange.size() > 0)
 			return detectedAddStaticChange.get(detectedAddStaticChange.size() -1);
@@ -31,7 +31,7 @@ public class MoveStaticMember {
 			return null;
 	}
 	
-	public static ASTChangeInformationDeleteStaticMember getLatestDeleteStaticChange()
+	public static ASTChangeDeleteStaticMember getLatestDeleteStaticChange()
 	{
 		if(detectedDeleteStaticChange.size() > 0)
 			return detectedDeleteStaticChange.get(detectedDeleteStaticChange.size()-1);
@@ -58,7 +58,7 @@ public class MoveStaticMember {
 		{
 			int index = Records.size() - 1 - i;
 			oldRecord = Records.get(index);
-			ASTChangeInformationAddStaticMember change = ASTChangeInformationGenerator.getAddStaticMemberASTChangeInformation(oldRecord, latestRecord);
+			ASTChangeAddStaticMember change = ASTChangeGenerator.getAddStaticMemberASTChangeInformation(oldRecord, latestRecord);
 			if (change != null) 
 			{
 				detectedAddStaticChange.add(change);
@@ -87,7 +87,7 @@ public class MoveStaticMember {
 		{
 			int index = Records.size() - 1 - i;
 			oldRecord = Records.get(index);
-			ASTChangeInformationDeleteStaticMember change = ASTChangeInformationGenerator.getDeleteStaticMemberASTChangeInformation(oldRecord, latestRecord);
+			ASTChangeDeleteStaticMember change = ASTChangeGenerator.getDeleteStaticMemberASTChangeInformation(oldRecord, latestRecord);
 			if (change != null) 
 			{
 				detectedDeleteStaticChange.add(change);

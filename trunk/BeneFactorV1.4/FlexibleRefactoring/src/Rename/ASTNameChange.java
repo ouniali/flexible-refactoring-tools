@@ -14,7 +14,7 @@ import util.ASTUtil;
 import ASTree.*;
 import JavaRefactoringAPI.*;
 
-public class ASTNameChangeInformation extends ASTChangeInformation {
+public class ASTNameChange extends ASTChange {
 	
 	final private String originalName;
 	final private String originalNameFull;
@@ -26,7 +26,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		
 	final private boolean isDeclarationChange;
 	
-	public ASTNameChangeInformation(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
+	public ASTNameChange(CompilationUnitHistoryRecord oldRecord ,ASTNode r1, CompilationUnitHistoryRecord newRecord ,ASTNode r2) throws Exception {
 		
 		super(oldRecord,r1,newRecord,r2);
 		
@@ -81,7 +81,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		else if(bindingKeyOne.equals("") && !bindingKeyTwo.equals(""))
 		{
 			//renaming reference when declaration has been changed
-			List<ASTNameChangeInformation> declarationChanges = 
+			List<ASTNameChange> declarationChanges = 
 					NameChangeDetected.getInstance().getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);
 			JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(
 					unit, line, declarationChanges, modifiedName);
@@ -91,7 +91,7 @@ public class ASTNameChangeInformation extends ASTChangeInformation {
 		{
 			if(isRenamingDeclaration())
 			{
-				List<ASTNameChangeInformation> changes = NameChangeDetected.getInstance().
+				List<ASTNameChange> changes = NameChangeDetected.getInstance().
 						getSkipedDeclaredNameChangesInHistory(bindingKeyTwo);			
 				changes.add(this);
 				JavaRefactoringRenameDiff refactoringDiff = JavaRefactoringRenameDiff.create(

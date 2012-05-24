@@ -34,7 +34,7 @@ import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
 import compare.diff_match_patch.Patch;
-import extract.method.ASTEMChangeInformation;
+import extract.method.ASTEMChange;
 
 import util.UIUtil;
 
@@ -47,9 +47,9 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 
 	@SuppressWarnings("restriction")
 	
-	ASTEMChangeInformation information;
+	ASTEMChange information;
 	
-	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l ,ASTEMChangeInformation info) throws Exception{
+	public JavaRefactoringExtractMethodChange(ICompilationUnit u, int l ,ASTEMChange info) throws Exception{
 		super(u, l);
 		information = info;	
 	}
@@ -80,7 +80,7 @@ public class JavaRefactoringExtractMethodChange extends JavaRefactoringExtractMe
 		information.recoverICompilationUnitToOldRecord(monitor);	
 	}
 	
-	public ASTEMChangeInformation getExtractMethodChangeInformation()
+	public ASTEMChange getExtractMethodChangeInformation()
 	{
 		return information;
 	}

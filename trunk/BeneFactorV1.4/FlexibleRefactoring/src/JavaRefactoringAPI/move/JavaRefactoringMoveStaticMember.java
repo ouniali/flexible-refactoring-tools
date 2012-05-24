@@ -1,7 +1,7 @@
 package JavaRefactoringAPI.move;
 
-import movestaticmember.ASTChangeInformationAddStaticMember;
-import movestaticmember.ASTChangeInformationDeleteStaticMember;
+import movestaticmember.ASTChangeAddStaticMember;
+import movestaticmember.ASTChangeDeleteStaticMember;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,10 +28,10 @@ public class JavaRefactoringMoveStaticMember extends JavaRefactoring {
 
 	MoveRefactoring moveRefactoring;
 	MoveStaticMembersProcessor moveProcessor;
-	ASTChangeInformationDeleteStaticMember deleteChange;
-	ASTChangeInformationAddStaticMember addChange;
+	ASTChangeDeleteStaticMember deleteChange;
+	ASTChangeAddStaticMember addChange;
 	
-	public JavaRefactoringMoveStaticMember(ICompilationUnit u, int l, ASTChangeInformationDeleteStaticMember delete, ASTChangeInformationAddStaticMember add) throws Exception 
+	public JavaRefactoringMoveStaticMember(ICompilationUnit u, int l, ASTChangeDeleteStaticMember delete, ASTChangeAddStaticMember add) throws Exception 
 	{
 		super(u, l);
 		deleteChange = delete;
