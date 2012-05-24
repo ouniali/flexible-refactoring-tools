@@ -291,6 +291,13 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	public int[] getSeletectedRegion() {
 		return seletectedRegion;
 	}
+	
+	public String getSeletectedCode()
+	{
+		int start = getSeletectedRegion()[0];
+		int end = getSeletectedRegion()[1] + 1;
+		return getSourceCode().substring(start, end);
+	}
 
 
 	public boolean equals(Object o)
@@ -316,6 +323,11 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	public boolean hasMeaningfulChangedLineNumber()
 	{
 		return !(getSourceDiff() instanceof SourceDiffIdentical); 
+	}
+	
+	public boolean differsFromPrevious()
+	{
+		return hasMeaningfulChangedLineNumber();
 	}
 	
 	public int getChangedLineNumberFromPrevious()

@@ -6,7 +6,10 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
 
+import compare.SourceDiff;
+
 import util.ASTUtil;
+import util.StringUtil;
 
 import ASTree.ASTChangeInformationGenerator;
 import ASTree.CompilationUnitHistoryRecord;
@@ -74,7 +77,7 @@ class CutDetectStrategy implements DetectStrategy
 	public boolean isELVRecord(CompilationUnitHistoryRecord record) 
 	{
 		boolean cut = record.hasCutCommand();
-		String exp = record.getHighlightedText();
+		String exp = getCuttedCode(record);
 		boolean res = cut && ASTUtil.isExpression(exp);
 		return res;
 	}
@@ -85,6 +88,16 @@ class CutDetectStrategy implements DetectStrategy
 		if(null != cut1 && !cut1.getRecord().equals(cut2.getRecord()))
 			return cut2;
 		else return null;
+	}
+	
+	private String getCuttedCode(CompilationUnitHistoryRecord record)
+	{
+		while(record!= null && !record.differsFromPrevious())
+			record = record.getPreviousRecord();
+		if(record == null)
+			return StringUtil.EMPTY_STRING;
+		record = record.getPreviousRecord();
+		return record.getSeletectedCode();
 	}
 }
 

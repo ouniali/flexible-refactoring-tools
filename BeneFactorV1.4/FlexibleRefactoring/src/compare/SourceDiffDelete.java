@@ -45,5 +45,7 @@ public class SourceDiffDelete extends SourceDiff {
 	public String skipChange(String source) {
 		return source;
 	}
+	
+
 
 }
