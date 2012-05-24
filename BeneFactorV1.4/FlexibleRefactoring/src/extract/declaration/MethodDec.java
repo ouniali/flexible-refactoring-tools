@@ -84,16 +84,7 @@ public class MethodDec extends Declaration{
 	private void parseReturnType() {
 		while (tokens.hasMoreTokens()) {
 			String token = tokens.nextToken();
-
-			if (token.equals("boolean")
-					|| token.equals("byte")
-					|| token.equals("char")
-					|| token.equals("double")
-					|| token.equals("float")
-					|| token.equals("int")
-					|| token.equals("long")
-					|| token.equals("short")
-					|| token.equals("void")) {
+			if (isType(token)) {
 				returnTypeAvailable = true;
 				returnType = token;
 				return;
