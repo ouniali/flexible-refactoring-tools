@@ -92,8 +92,8 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	}
 
 
-	private void saveBindingTable(ICompilationUnit iu) {
-		
+	private void saveBindingTable(ICompilationUnit iu) 
+	{	
 		CompilationUnit unit = ASTUtil.parseICompilationUnit(iu);
 		NameBindingVisitor bVisitor = new NameBindingVisitor();
 		unit.accept(bVisitor);
