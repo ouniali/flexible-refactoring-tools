@@ -31,7 +31,7 @@ public class JobQueue implements Runnable{
 			queue = new JobQueue();
 			Thread t = new Thread(queue);
 			//lowest priority, otherwise UI will suffer
-			t.setPriority(Thread.MIN_PRIORITY);
+			t.setPriority(Thread.NORM_PRIORITY);
 			new Thread(queue).start();
 		}
 		return queue;
