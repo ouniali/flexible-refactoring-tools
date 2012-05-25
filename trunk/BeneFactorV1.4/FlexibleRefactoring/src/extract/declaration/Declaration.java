@@ -23,7 +23,6 @@ public abstract class Declaration {
 		{
 			after = current;
 			SourceDiff diff = current.getSourceDiff();
-			System.out.println(diff);
 			if(!current.hasMeaningfulChangedLineNumber())
 				continue;
 			if(diff.getLineNumber() != line)
