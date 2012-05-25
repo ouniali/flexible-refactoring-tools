@@ -174,7 +174,6 @@ public class CompilationUnitHistory {
 		
 		if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
 		{
-			System.out.println("start searching for dec");
 			DecDetector NMSDetector = new MethodDecDetector();
 			if(NMSDetector.isDecDetected(records))
 			{
@@ -183,7 +182,6 @@ public class CompilationUnitHistory {
 				MethodDec m_dec = (MethodDec) NMSDetector.getDetectedDec();
 				m_dec.setRefactoring(EM);
 				m_dec.moveRefactoring(EM);
-				System.out.println("EM is set");
 			}
 		}
 	}
