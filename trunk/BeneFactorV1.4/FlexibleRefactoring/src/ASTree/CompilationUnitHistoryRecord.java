@@ -29,7 +29,7 @@ import extract.method.EMDetector;
 
 public class CompilationUnitHistoryRecord implements Comparable{
 
-	static final String root = "AST_FULL";
+	static private final String root = "AST_FULL";
 	private final long time;
 	private final String Directory;
 	private final String ASTFileName;
