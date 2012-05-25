@@ -98,7 +98,6 @@ public class CompilationUnitHistoryRecord implements Comparable{
 		NameBindingVisitor bVisitor = new NameBindingVisitor();
 		unit.accept(bVisitor);
 		String bInfor = bVisitor.getBindingInformation();
-		System.out.println(bInfor);
 		FileUtil.save(getBindingTablePath(), bInfor);
 	}
 
