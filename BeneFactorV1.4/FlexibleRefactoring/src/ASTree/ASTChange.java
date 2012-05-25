@@ -15,23 +15,22 @@ import util.FileUtil;
 
 public class ASTChange {
 
-	IJavaProject project;
-	ICompilationUnit unit;
+	private final IJavaProject project;
+	private final ICompilationUnit unit;
 	
-	int nodeOneIndex;
-	int nodeTwoIndex;
+	private final int nodeOneIndex;
+	private final int nodeTwoIndex;
 	
-	CompilationUnitHistoryRecord oldRecord;
-	CompilationUnitHistoryRecord newRecord;
+	private final CompilationUnitHistoryRecord oldRecord;
+	private final CompilationUnitHistoryRecord newRecord;
 	
-	long oldTime;
-	long newTime;
+	private final long oldTime;
+	private final long newTime;
 
-	boolean rootTypeChanged;
 	
-	static final String root = "AST_CONCISE";
-	final String Directory;
-	final String ChangeFileName;
+	static private final String root = "AST_CONCISE";
+	private final String Directory;
+	private final String ChangeFileName;
 
 
 	
@@ -39,21 +38,12 @@ public class ASTChange {
 	{
 		oldRecord = or; 
 		newRecord = nr;
-		
 		project = oldRecord.getIJavaProject();
 		unit = oldRecord.getICompilationUnit();
-		
 		oldTime = oldRecord.getTime();
 		newTime = newRecord.getTime();
-		
 		nodeOneIndex = ASTUtil.getASTNodeIndexInCompilationUnit(node1);
 		nodeTwoIndex = ASTUtil.getASTNodeIndexInCompilationUnit(node2);
-		
-		if(node1.getNodeType() == node2.getNodeType())
-			rootTypeChanged = false;
-		else	
-			rootTypeChanged = true;
-		
 		Directory = root+File.separator+project.getElementName();
 		ChangeFileName = oldRecord.getPackageName()+"_"+oldRecord.getCompilationUnitName()+"_"+oldRecord.getTime()+"_"+newRecord.getTime()+".txt";
 		new File(Directory).mkdirs();
