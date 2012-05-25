@@ -1,15 +1,12 @@
 package util;
 
 import java.util.ArrayList;
-import java.util.Queue;
-
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-
 import ASTree.visitors.ASTNodeIndexVisitor;
 import ASTree.visitors.GetChildrenNodeVisitor;
-import Rename.ASTChangeName;
+
 
 
 public class ASTUtil {
