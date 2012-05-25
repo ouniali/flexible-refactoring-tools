@@ -17,8 +17,8 @@ import util.ASTUtil;
 
 public class ProjectAnalyzer {
 
-	private IJavaProject project;
-	private IPackageFragment[] packages;
+	private final IJavaProject project;
+	private final IPackageFragment[] packages;
 	
 	public ProjectAnalyzer(IJavaProject p) throws CoreException
 	{
