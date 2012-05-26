@@ -23,6 +23,7 @@ public class JobQueue implements Runnable{
 	private ProjectHistoryCollector collector = new ProjectHistoryCollector();
 	private List<ICompilationUnit> contexts = Collections.synchronizedList(new ArrayList<ICompilationUnit>());
 	private static JobQueue queue;
+	private static int SLEEP_TIME = 20;
 	
 	static public synchronized JobQueue getInstance()
 	{
@@ -53,6 +54,8 @@ public class JobQueue implements Runnable{
 					handle(contexts.get(0));	
 					contexts.remove(0);
 				}
+				else
+					Thread.sleep(SLEEP_TIME);
 			}
 		} catch (Exception e)
 		{
