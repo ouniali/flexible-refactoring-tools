@@ -129,7 +129,7 @@ public class RefactoringChances {
 		return !refactorings_em.isEmpty();
 	}
 	
-	public List<JavaRefactoring> getPendingEMRefactoring()
+	public List<JavaRefactoring> getPendingEMRefactorings()
 	{
 		return refactorings_em;	
 	}
@@ -145,7 +145,7 @@ public class RefactoringChances {
 		return !refactorings_rename.isEmpty();
 	}
 	
-	public List<JavaRefactoring> getPendingRenameRefactoring()
+	public List<JavaRefactoring> getPendingRenameRefactorings()
 	{
 		return refactorings_rename;
 	}
@@ -155,7 +155,7 @@ public class RefactoringChances {
 		return !refactorings_elv.isEmpty();
 	}
 	
-	public List<JavaRefactoring> getPendingELVRefactoring()
+	public List<JavaRefactoring> getPendingELVRefactorings()
 	{
 		return refactorings_elv;
 	}
