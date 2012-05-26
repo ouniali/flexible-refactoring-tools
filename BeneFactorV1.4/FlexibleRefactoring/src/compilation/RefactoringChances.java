@@ -126,7 +126,7 @@ public class RefactoringChances {
 	
 	public boolean hasPendingEMRefactorings()
 	{
-		return refactorings_em.size() != 0;
+		return !refactorings_em.isEmpty();
 	}
 	
 	public List<JavaRefactoring> getPendingEMRefactoring()
@@ -136,12 +136,13 @@ public class RefactoringChances {
 	
 	public JavaRefactoringExtractMethodBase getLatestEM()
 	{
-		return (JavaRefactoringExtractMethodBase) refactorings_em.get(refactorings_em.size() - 1);
+		return (JavaRefactoringExtractMethodBase) 
+				refactorings_em.get(refactorings_em.size() - 1);
 	}
 	
 	public boolean hasPendingRenameRefactoring()
 	{
-		return refactorings_rename.size() != 0;
+		return !refactorings_rename.isEmpty();
 	}
 	
 	public List<JavaRefactoring> getPendingRenameRefactoring()
@@ -151,7 +152,7 @@ public class RefactoringChances {
 	
 	public boolean hasPendingELVRefactoring()
 	{
-		return refactorings_elv.size() != 0;
+		return !refactorings_elv.isEmpty();
 	}
 	
 	public List<JavaRefactoring> getPendingELVRefactoring()
