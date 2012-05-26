@@ -172,7 +172,7 @@ public class CompilationUnitHistory {
 			return;
 		}
 		
-		if(!RefactoringChances.getInstance().hasPendingEMRefactorings())
+		if(RefactoringChances.getInstance().hasPendingEMRefactorings())
 		{
 			DecDetector NMSDetector = new MethodDecDetector();
 			if(NMSDetector.isDecDetected(records))
