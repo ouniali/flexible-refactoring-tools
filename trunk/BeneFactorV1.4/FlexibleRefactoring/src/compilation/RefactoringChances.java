@@ -22,10 +22,10 @@ public class RefactoringChances {
 	private final List<JavaRefactoring> refactorings_elv;
 	private final List<JavaRefactoring> refactorings_move;
 	
-	private static final int rename_max = 5;
-	private static final int em_max = 1;
-	private static final int elv_max = 1;
-	private static final int move_max = 1;
+	private static final int max_rename = 5;
+	private static final int max_em = 1;
+	private static final int max_elv = 1;
+	private static final int max_move = 1;
 	
 	private static RefactoringChances instance = new RefactoringChances();
 	
@@ -55,16 +55,16 @@ public class RefactoringChances {
 		switch(ref.getRefactoringType())
 		{
 		case JavaRefactoringType.RENAME:
-			add_refactoring(refactorings_rename, rename_max, ref);
+			add_refactoring(refactorings_rename, max_rename, ref);
 			break;
 		case JavaRefactoringType.EXTRACT_LOCAL_VARIABLE:
-			add_refactoring(refactorings_elv, elv_max, ref);
+			add_refactoring(refactorings_elv, max_elv, ref);
 			break;
 		case JavaRefactoringType.EXTRACT_METHOD:
-			add_refactoring(refactorings_em, em_max, ref);
+			add_refactoring(refactorings_em, max_em, ref);
 			break;
 		case JavaRefactoringType.MOVE_STATIC:
-			add_refactoring(refactorings_move, move_max, ref);
+			add_refactoring(refactorings_move, max_move, ref);
 			break;
 		default:
 			throw new Exception ("unknown refactoring type.");
