@@ -108,20 +108,21 @@ public class CompilationUnitHistory {
 			ArrayList<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception {
 		ELVDetector ELVDetector = new ELVDetector();
+		RefactoringChances chances = RefactoringChances.getInstance();
 		if(ELVDetector.isELVFound(records))
 		{
 			System.out.println("ELV detected");
 			RefactoringChances.getInstance().addRefactoringChance(ELVDetector.getELVRefactoring(unit));
 			return;
 		}
-		if(RefactoringChances.getInstance().hasPendingELVRefactoring())
+		if(chances.hasPendingELVRefactoring())
 		{
-			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
+			JavaRefactoringELVBase ref = chances.getLatestELV();
 			LVDecDetector lvd_detector = LVDecDetector.create(ref);
 			if(lvd_detector.isDecDetected(records))
 			{
 				Declaration dec = lvd_detector.getDetectedDec();
-				JavaRefactoringELVBase elv = RefactoringChances.getInstance().getLatestELV();
+				JavaRefactoringELVBase elv = chances.getLatestELV();
 				dec.setRefactoring(elv);
 				dec.moveRefactoring(elv);
 			}
@@ -165,20 +166,20 @@ public class CompilationUnitHistory {
 			ICompilationUnit unit) throws Exception 
 	{
 		EMDetector EMDetector = new EMDetector();
+		RefactoringChances chances = RefactoringChances.getInstance();
 		
 		if(EMDetector.isExtractMethodDetected(records))
 		{
-			RefactoringChances.getInstance().addRefactoringChance(EMDetector.getEMRefactoring(records, unit));
+			chances.addRefactoringChance(EMDetector.getEMRefactoring(records, unit));
 			return;
 		}
 		
-		if(RefactoringChances.getInstance().hasPendingEMRefactorings())
+		if(chances.hasPendingEMRefactorings())
 		{
 			DecDetector NMSDetector = new MethodDecDetector();
 			if(NMSDetector.isDecDetected(records))
 			{
-				JavaRefactoringExtractMethodBase EM =  
-						RefactoringChances.getInstance().getLatestEM();
+				JavaRefactoringExtractMethodBase EM = chances.getLatestEM();
 				MethodDec m_dec = (MethodDec) NMSDetector.getDetectedDec();
 				m_dec.setRefactoring(EM);
 				m_dec.moveRefactoring(EM);
