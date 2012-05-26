@@ -28,7 +28,7 @@ public class RefactoringChances {
 	private static final int max_move = 1;
 	
 	private static RefactoringChances instance = new RefactoringChances();
-	
+
 	private RefactoringChances()
 	{
 		refactorings_rename = new ArrayList<JavaRefactoring>();
