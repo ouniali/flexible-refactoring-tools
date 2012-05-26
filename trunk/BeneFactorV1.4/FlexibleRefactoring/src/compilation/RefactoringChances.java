@@ -50,7 +50,7 @@ public class RefactoringChances {
 	}
 	
 	
-	public synchronized void addNewRefactoringChance(JavaRefactoring ref) throws Exception
+	public synchronized void addRefactoringChance(JavaRefactoring ref) throws Exception
 	{
 		switch(ref.getRefactoringType())
 		{
