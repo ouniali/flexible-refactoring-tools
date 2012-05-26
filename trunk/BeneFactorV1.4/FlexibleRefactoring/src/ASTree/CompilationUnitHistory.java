@@ -114,7 +114,7 @@ public class CompilationUnitHistory {
 			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
 			return;
 		}
-		if(RefactoringChances.getInstance().getPendingELVRefactoring().size() > 0)
+		if(RefactoringChances.getInstance().hasPendingELVRefactoring())
 		{
 			JavaRefactoringELVBase ref = RefactoringChances.getInstance().getLatestELV();
 			LVDecDetector lvd_detector = LVDecDetector.create(ref);
@@ -172,7 +172,7 @@ public class CompilationUnitHistory {
 			return;
 		}
 		
-		if(!RefactoringChances.getInstance().getPendingEMRefactoring().isEmpty())
+		if(!RefactoringChances.getInstance().hasPendingEMRefactorings())
 		{
 			DecDetector NMSDetector = new MethodDecDetector();
 			if(NMSDetector.isDecDetected(records))
