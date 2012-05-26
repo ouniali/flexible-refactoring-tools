@@ -17,30 +17,75 @@ import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
 
 public class RefactoringChances {
 	
-	private List<JavaRefactoring> refactorings = new ArrayList<JavaRefactoring>();
-	private static final int max_size = 5;
+	private final List<JavaRefactoring> refactorings_rename;
+	private final List<JavaRefactoring> refactorings_em;
+	private final List<JavaRefactoring> refactorings_elv;
+	private final List<JavaRefactoring> refactorings_move;
+	
+	private static final int rename_max = 5;
+	private static final int em_max = 1;
+	private static final int elv_max = 1;
+	private static final int move_max = 1;
+	
 	private static RefactoringChances instance = new RefactoringChances();
 	
-	private RefactoringChances(){};
+	private RefactoringChances()
+	{
+		refactorings_rename = new ArrayList<JavaRefactoring>();
+		refactorings_em = new ArrayList<JavaRefactoring>();
+		refactorings_elv = new ArrayList<JavaRefactoring>();
+		refactorings_move = new ArrayList<JavaRefactoring>();
+	};
 	
 	public static RefactoringChances getInstance()
 	{
 		return instance;
 	}
 	
-	
-	public synchronized void addNewRefactoringChance(JavaRefactoring ref)
+	private void add_refactoring(List l, int max, JavaRefactoring ref)
 	{
-		if(refactorings.size() == max_size)
-			refactorings.remove(0);
-		refactorings.add(ref);
+		if(l.size() == max)
+			l.remove(0);
+		l.add(ref);
+	}
+	
+	
+	public synchronized void addNewRefactoringChance(JavaRefactoring ref) throws Exception
+	{
+		switch(ref.getRefactoringType())
+		{
+		case JavaRefactoringType.RENAME:
+			add_refactoring(refactorings_rename, rename_max, ref);
+			break;
+		case JavaRefactoringType.EXTRACT_LOCAL_VARIABLE:
+			add_refactoring(refactorings_elv, elv_max, ref);
+			break;
+		case JavaRefactoringType.EXTRACT_METHOD:
+			add_refactoring(refactorings_em, em_max, ref);
+			break;
+		case JavaRefactoringType.MOVE_STATIC:
+			add_refactoring(refactorings_move, move_max, ref);
+			break;
+		default:
+			throw new Exception ("unknown refactoring type.");
+		}
+	}
+	
+	private List<JavaRefactoring> get_all_refactorings()
+	{
+		List<JavaRefactoring> all = new ArrayList<JavaRefactoring>();
+		all.addAll(refactorings_rename);
+		all.addAll(refactorings_em);
+		all.addAll(refactorings_elv);
+		all.addAll(refactorings_move);
+		return all;
 	}
 
 	public synchronized List<JavaRefactoring> getJavaRefactorings(ICompilationUnit unit, int line) throws Exception
 	{
 		List<JavaRefactoring> results = new ArrayList<JavaRefactoring>();
-		
-		for(JavaRefactoring refactoring: refactorings)
+		List<JavaRefactoring> all = get_all_refactorings();
+		for(JavaRefactoring refactoring: all)
 		{
 			ICompilationUnit u = refactoring.getICompilationUnit();
 			int l = refactoring.getLineNumber();
@@ -66,59 +111,57 @@ public class RefactoringChances {
 	
 	public void clearRefactoringChances() throws Exception
 	{
-		for(JavaRefactoring refactoring: refactorings)
+		List<JavaRefactoring> all = get_all_refactorings();
+		for(JavaRefactoring refactoring: all)
 		{
 			IMarker marker = refactoring.getMarker();
 			if(marker.exists() && marker.getType().equals(RefactoringMarker.REFACTORING_MARKER_TYPE))
 				marker.delete();
 		}
-		refactorings.clear();
+		refactorings_rename.clear();
+		refactorings_em.clear();
+		refactorings_elv.clear();
+		refactorings_move.clear();
+	}
+	
+	public boolean hasPendingEMRefactorings()
+	{
+		return refactorings_em.size() != 0;
 	}
 	
 	public List<JavaRefactoring> getPendingEMRefactoring()
 	{
-		List<JavaRefactoring> extracts = new ArrayList<JavaRefactoring>();
-		for(JavaRefactoring ref : refactorings)
-		{
-			if(ref.getRefactoringType() == JavaRefactoringType.EXTRACT_METHOD)
-				extracts.add(ref);
-		}	
-		return extracts;	
+		return refactorings_em;	
 	}
 	
 	public JavaRefactoringExtractMethodBase getLatestEM()
 	{
-		
-		return (JavaRefactoringExtractMethodBase) getPendingEMRefactoring().
-				get(getPendingEMRefactoring().size() - 1);
+		return (JavaRefactoringExtractMethodBase) refactorings_em.get(refactorings_em.size() - 1);
+	}
+	
+	public boolean hasPendingRenameRefactoring()
+	{
+		return refactorings_rename.size() != 0;
 	}
 	
 	public List<JavaRefactoring> getPendingRenameRefactoring()
 	{
-		List<JavaRefactoring> renames = new ArrayList<JavaRefactoring>();
-		for(JavaRefactoring ref : refactorings)
-		{
-			if(ref.getRefactoringType() == JavaRefactoringType.RENAME)
-				renames.add(ref);
-		}	
-		return renames;
+		return refactorings_rename;
+	}
+	
+	public boolean hasPendingELVRefactoring()
+	{
+		return refactorings_elv.size() != 0;
 	}
 	
 	public List<JavaRefactoring> getPendingELVRefactoring()
 	{
-		List<JavaRefactoring> elvs = new ArrayList<JavaRefactoring>();
-		for(JavaRefactoring ref : refactorings)
-		{
-			if(ref.getRefactoringType() == JavaRefactoringType.EXTRACT_LOCAL_VARIABLE)
-				elvs.add(ref);
-		}	
-		return elvs;
+		return refactorings_elv;
 	}
 	
 	public JavaRefactoringELVBase getLatestELV()
 	{
-		List<JavaRefactoring> list = getPendingELVRefactoring();
-		return (JavaRefactoringELVBase)list.get(list.size() - 1);
+		return (JavaRefactoringELVBase)refactorings_elv.get(refactorings_elv.size() - 1);
 	}
 	
 	
