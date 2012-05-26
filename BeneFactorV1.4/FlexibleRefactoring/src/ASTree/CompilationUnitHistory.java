@@ -111,7 +111,7 @@ public class CompilationUnitHistory {
 		if(ELVDetector.isELVFound(records))
 		{
 			System.out.println("ELV detected");
-			RefactoringChances.getInstance().addNewRefactoringChance(ELVDetector.getELVRefactoring(unit));
+			RefactoringChances.getInstance().addRefactoringChance(ELVDetector.getELVRefactoring(unit));
 			return;
 		}
 		if(RefactoringChances.getInstance().hasPendingELVRefactoring())
@@ -149,7 +149,7 @@ public class CompilationUnitHistory {
 				if(addStaticChange.getStaticFieldDeclaration().equals(deleteStaticChange.getStaticFieldDeclaration()))
 				{
 					refactoring =  addStaticChange.getMoveStaticMemberRefactoring(unit, deleteStaticChange);
-					RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
+					RefactoringChances.getInstance().addRefactoringChance(refactoring);
 					MoveStaticMember.clearAddStaticChange();
 					MoveStaticMember.clearDeleteStaticChange();
 					System.out.println("Move Static Declaration Detected.");
@@ -168,7 +168,7 @@ public class CompilationUnitHistory {
 		
 		if(EMDetector.isExtractMethodDetected(records))
 		{
-			RefactoringChances.getInstance().addNewRefactoringChance(EMDetector.getEMRefactoring(records, unit));
+			RefactoringChances.getInstance().addRefactoringChance(EMDetector.getEMRefactoring(records, unit));
 			return;
 		}
 		
@@ -196,7 +196,7 @@ public class CompilationUnitHistory {
 		{
 			refactoring = NCDetector.getRefactoring(unit);
 			if(refactoring != null)
-				RefactoringChances.getInstance().addNewRefactoringChance(refactoring);
+				RefactoringChances.getInstance().addRefactoringChance(refactoring);
 		}
 	}
 	
