@@ -1,6 +1,7 @@
 package movestaticmember;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import ASTree.ASTChangeGenerator;
@@ -40,7 +41,7 @@ public class MoveStaticMember {
 	}
 	
 	
-	public static boolean LookingBcckForDetectingAddStaticDeclarationChange(ArrayList<CompilationUnitHistoryRecord> Records) throws Exception
+	public static boolean LookingBcckForDetectingAddStaticDeclarationChange(List<CompilationUnitHistoryRecord> Records) throws Exception
 	{
 		if (Records.size() == 0)
 			return false;
@@ -69,7 +70,7 @@ public class MoveStaticMember {
 		
 	}
 	
-	public static boolean LookingBackForDetectingDeleteStaticDeclarationChange(ArrayList<CompilationUnitHistoryRecord> Records)
+	public static boolean LookingBackForDetectingDeleteStaticDeclarationChange(List<CompilationUnitHistoryRecord> Records)
 	{
 		if (Records.size() == 0)
 			return false;
