@@ -47,9 +47,12 @@ public class ASTChange {
 		Directory = root+File.separator+project.getElementName();
 		ChangeFileName = oldRecord.getPackageName()+"_"+oldRecord.getCompilationUnitName()+"_"+oldRecord.getTime()+"_"+newRecord.getTime()+".txt";
 		new File(Directory).mkdirs();
-		FileUtil.save(Directory + File.separator + ChangeFileName, getChangeInformation(node1, node2));
+		FileUtil.save(getChangeFilePath(), getChangeInformation(node1, node2));
 	}
-	
+
+	private String getChangeFilePath() {
+		return Directory + File.separator + ChangeFileName;
+	}
 
 	
 	public String getChangeInformation(ASTNode node1, ASTNode node2)
