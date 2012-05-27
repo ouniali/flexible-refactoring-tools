@@ -35,12 +35,12 @@ import Rename.NameChangeCountHistory;
 
 public class CompilationUnitHistory {
 	
-	private String projectName;
-	private String packageName;
-	private String unitName;
-	private IJavaProject project;
-	private ICompilationUnit unit;
-	private ArrayList<CompilationUnitHistoryRecord> records;
+	private final String projectName;
+	private final String packageName;
+	private final String unitName;
+	private final IJavaProject project;
+	private final ICompilationUnit unit;
+	private final List<CompilationUnitHistoryRecord> records;
 	
 	protected CompilationUnitHistory(IJavaProject proj, ICompilationUnit u, String pro, String pac, String un)
 	{
@@ -95,7 +95,7 @@ public class CompilationUnitHistory {
 			return null;
 	}
 	
-	static private void detectRefactoringOpportunity(ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
+	static private void detectRefactoringOpportunity(List<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{	
 		detectRename(records, unit);
 		detectEM(records, unit);
@@ -105,7 +105,7 @@ public class CompilationUnitHistory {
 
 
 	private static void detectELV(
-			ArrayList<CompilationUnitHistoryRecord> records,
+			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception {
 		ELVDetector ELVDetector = new ELVDetector();
 		RefactoringChances chances = RefactoringChances.getInstance();
@@ -131,7 +131,7 @@ public class CompilationUnitHistory {
 
 
 	private static void detectMove(
-			ArrayList<CompilationUnitHistoryRecord> records,
+			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception {
 		JavaRefactoring refactoring;
 		if(MoveStaticMember.LookingBackForDetectingDeleteStaticDeclarationChange(records))
@@ -162,7 +162,7 @@ public class CompilationUnitHistory {
 
 
 	private static void detectEM(
-			ArrayList<CompilationUnitHistoryRecord> records,
+			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception 
 	{
 		EMDetector EMDetector = new EMDetector();
@@ -189,7 +189,7 @@ public class CompilationUnitHistory {
 
 
 	private static void detectRename(
-			ArrayList<CompilationUnitHistoryRecord> records,
+			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception {
 		JavaRefactoring refactoring;
 		NameChangeDetector NCDetector = new NameChangeDetector();

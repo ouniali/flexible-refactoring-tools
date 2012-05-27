@@ -25,7 +25,7 @@ public class EMDetector {
 
 	//looking back for extract method change, null if not found.
 	private ASTChangeEM 
-		LookingBackForDetectingExtractMethodChange(ArrayList<CompilationUnitHistoryRecord> Records) 
+		LookingBackForDetectingExtractMethodChange(List<CompilationUnitHistoryRecord> Records) 
 	{
 		if (Records.size() == 0)
 			return null;
@@ -53,7 +53,7 @@ public class EMDetector {
 	
 	//looking back for extract method activity, null if not found.
 	private ASTEMActivity 
-		LookingBackForExtractMethodActivities(ArrayList<CompilationUnitHistoryRecord> records)
+		LookingBackForExtractMethodActivities(List<CompilationUnitHistoryRecord> records)
 	{	
 		int lookBackCount = Math.min(records.size(),
 				MAXIMUM_LOOK_BACK_COUNT_EXTRACT_METHOD);
@@ -74,14 +74,14 @@ public class EMDetector {
 
 
 
-	public boolean isExtractMethodDetected(ArrayList<CompilationUnitHistoryRecord> records) {
+	public boolean isExtractMethodDetected(List<CompilationUnitHistoryRecord> records) {
 		ASTChangeEM change = LookingBackForDetectingExtractMethodChange(records);
 		ASTEMActivity act = LookingBackForExtractMethodActivities(records);
 		return !(change == null && act == null);
 	}
 
 	public JavaRefactoring getEMRefactoring(
-			ArrayList<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception {
+			List<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception {
 		ASTChangeEM change = LookingBackForDetectingExtractMethodChange(records);
 		ASTEMActivity act = LookingBackForExtractMethodActivities(records);
 		if(change != null)
