@@ -334,6 +334,12 @@ public class CompilationUnitHistoryRecord implements Comparable{
 		return getSourceDiff().getLineNumber();
 	}
 	
+	
+	public void finalize()
+	{
+		FileUtil.delete(getASTFilePath());
+		FileUtil.delete(getBindingTablePath());
+	}
 
 
 }
