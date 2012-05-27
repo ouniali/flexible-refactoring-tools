@@ -104,8 +104,7 @@ public class CompilationUnitHistoryRecord implements Comparable{
 
 	private void saveSourceCode(ICompilationUnit iu) throws JavaModelException {
 		new File(Directory).mkdirs();
-		FileUtil.save(getASTFilePath(),
-				iu.getSource());
+		FileUtil.save(getASTFilePath(),iu.getSource());
 	}
 
 	public String getPackageName() {
