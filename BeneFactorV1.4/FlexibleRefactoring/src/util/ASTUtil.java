@@ -82,11 +82,6 @@ public class ASTUtil {
 		return (CompilationUnit) parser.createAST(null); // parse
 	}
 	
-
-/**
- * @author Xi Ge
- *	This method tries to parse several statements.
- */
 	public static Block parseStatements(String source)
 	{
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
