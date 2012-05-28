@@ -9,6 +9,7 @@ public interface CUHistoryInterface {
 
 	public void addAST(CompilationUnit tree) throws Exception;
 	public void removeOldASTs(int count) throws Exception;
+	public int getRecordSize();
 	public ASTChange getLatestChange();
 	public String getCompilationUnitName();
 	public String getPackageName();
