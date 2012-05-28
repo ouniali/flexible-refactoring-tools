@@ -4,13 +4,29 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IPackageDeclaration;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
+import org.eclipse.jdt.internal.core.PackageFragment;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
+import org.junit.Assert;
 
 public class ICompilationUnitUtil {
 
+	
+	static public String getPackageName(ICompilationUnit unit)
+	{
+		//TODO: to finish;
+		return null;
+	}
+	
+	static public String getProjectName(ICompilationUnit unit) throws Exception
+	{
+		//TODO: to finish
+		 return null;
+	}
 	
 	static public void UpdateICompilationUnit(ICompilationUnit unit, String code, IProgressMonitor pm)
 	{	    
