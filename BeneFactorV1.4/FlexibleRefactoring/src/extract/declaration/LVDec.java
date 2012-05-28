@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 import userinterface.RefactoringMarker;

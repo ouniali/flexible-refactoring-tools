@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import util.ASTUtil;
 
 import ASTree.ASTChange;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 
 public class ASTChangeDeleteStaticMember extends ASTChange{
 

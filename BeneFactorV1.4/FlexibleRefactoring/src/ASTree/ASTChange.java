@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
+
 import compare.SourceDiffIdentical;
 
 import util.ASTUtil;

@@ -12,8 +12,8 @@ import util.ASTUtil;
 import util.StringUtil;
 
 import ASTree.ASTChangeGenerator;
-import ASTree.CompilationUnitHistoryRecord;
 import ASTree.NewRootPair;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
 public class ELVDetector {

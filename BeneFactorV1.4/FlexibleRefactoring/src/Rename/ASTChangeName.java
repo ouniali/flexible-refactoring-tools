@@ -12,6 +12,7 @@ import JavaRefactoringAPI.rename.JavaRefactoringRenameDiff;
 import userinterface.RefactoringMarker;
 import util.ASTUtil;
 import ASTree.*;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.*;
 
 public class ASTChangeName extends ASTChange {

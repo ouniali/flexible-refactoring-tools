@@ -13,7 +13,7 @@ import org.osgi.framework.BundleContext;
 import util.FileUtil;
 
 import ASTree.ASTChange;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import UserAction.MylynMonitor;
 
 /**

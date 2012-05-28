@@ -39,7 +39,7 @@ import extract.method.ASTChangeEM;
 import util.ICompilationUnitUtil;
 import util.UIUtil;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 

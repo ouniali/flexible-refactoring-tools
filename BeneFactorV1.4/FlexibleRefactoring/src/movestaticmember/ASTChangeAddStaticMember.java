@@ -12,7 +12,7 @@ import userinterface.RefactoringMarker;
 import util.ASTUtil;
 
 import ASTree.ASTChange;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 
 public class ASTChangeAddStaticMember extends ASTChange 
 {

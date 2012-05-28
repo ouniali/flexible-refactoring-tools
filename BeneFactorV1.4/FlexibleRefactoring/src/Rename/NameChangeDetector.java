@@ -6,7 +6,7 @@ import java.util.List;
 import org.eclipse.jdt.core.ICompilationUnit;
 
 import ASTree.ASTChangeGenerator;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
 public class NameChangeDetector {

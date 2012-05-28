@@ -7,7 +7,7 @@ import compare.SourceDiffChange;
 import compare.SourceDiffIdentical;
 import compare.SourceDiffInsert;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 
 public abstract class DecDetector {
 

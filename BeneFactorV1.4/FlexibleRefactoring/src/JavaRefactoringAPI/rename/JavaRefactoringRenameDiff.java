@@ -31,7 +31,7 @@ import animation.change.AutoEditionVisitor;
 import animation.change.ChangeAnalyzer;
 import animation.change.ChangeAnalyzer.*;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import Rename.ASTChangeName;
 import Rename.NamesInJavaProject;
 import Rename.NamesInPackage;

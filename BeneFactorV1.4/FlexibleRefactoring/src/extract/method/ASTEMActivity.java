@@ -8,7 +8,7 @@ import userinterface.RefactoringMarker;
 import util.ASTUtil;
 import util.StringUtil;
 import util.UIUtil;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodActivity;
 
 public class ASTEMActivity {

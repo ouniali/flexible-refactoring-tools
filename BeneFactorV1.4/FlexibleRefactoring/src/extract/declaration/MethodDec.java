@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.PrimitiveType;
 import compare.SourceDiff;
 import compare.SourceDiffNull;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
 

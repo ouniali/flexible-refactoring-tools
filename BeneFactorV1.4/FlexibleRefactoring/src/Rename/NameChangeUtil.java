@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import util.ASTUtil;
 
 import ASTree.ASTChangeGenerator;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 
 public class NameChangeUtil {
 

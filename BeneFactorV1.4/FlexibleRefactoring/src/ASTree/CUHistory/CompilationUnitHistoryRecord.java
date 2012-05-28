@@ -1,4 +1,4 @@
-package ASTree;
+package ASTree.CUHistory;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -18,7 +18,6 @@ import util.ASTUtil;
 import util.FileUtil;
 import util.UIUtil;
 import Rename.NamesInCompilationUnit;
-import ASTree.CUHistory.CompilationUnitHistory;
 import ASTree.visitors.NameBindingVisitor;
 import UserAction.UserActionData;
 
