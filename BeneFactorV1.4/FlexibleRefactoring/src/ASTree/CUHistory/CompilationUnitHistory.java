@@ -98,6 +98,11 @@ public class CompilationUnitHistory implements CUHistoryInterface{
 			
 	}
 	
+	public int getRecordSize() {
+		return records.size();
+	}
+
+	
 	private void detectRefactoringOpportunity(List<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{	
 		detectRename(records, unit);
@@ -203,6 +208,7 @@ public class CompilationUnitHistory implements CUHistoryInterface{
 				RefactoringChances.getInstance().addRefactoringChance(refactoring);
 		}
 	}
+
 
 
 	
