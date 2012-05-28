@@ -1,9 +1,6 @@
 package ASTree.CUHistory;
 
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-
 import ASTree.ASTChange;
 import ASTree.CompilationUnitHistoryRecord;
 

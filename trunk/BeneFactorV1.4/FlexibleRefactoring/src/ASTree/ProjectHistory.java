@@ -8,22 +8,24 @@ import org.eclipse.jdt.core.dom.*;
 
 import util.ASTUtil;
 
+import ASTree.CUHistory.CUHistoryInterface;
 import ASTree.CUHistory.CompilationUnitHistory;
+import ASTree.CUHistory.ControlSizedCUHistory;
 import Rename.*;
 
 public class ProjectHistory {
 	
 	
-	ArrayList<CompilationUnitHistory> histories;
-	CompilationUnitHistory mostRecentHistory;
-	String ProjectName;
-	IJavaProject project;
+	private final List<CUHistoryInterface> histories;
+	private CUHistoryInterface mostRecentHistory;
+	private final String ProjectName;
+	private final IJavaProject project;
 	
 
 	public ProjectHistory(IJavaProject proj, String pro) {
 		project = proj;
 		ProjectName = pro;
-		histories = new ArrayList<CompilationUnitHistory>();
+		histories = new ArrayList<CUHistoryInterface>();
 	}
 
 
@@ -31,11 +33,12 @@ public class ProjectHistory {
 	{
 		String pacName = ASTUtil.getPackageName(tree.getPackage());
 		String unitName = ASTUtil.getCompilationUnitName(tree);
-		CompilationUnitHistory history = getHistory(pacName, unitName);
+		CUHistoryInterface history = getHistory(pacName, unitName);
 		
 		if(history == null)
 		{
-			history = new CompilationUnitHistory(project, (ICompilationUnit)tree.getJavaElement(), ProjectName ,pacName, unitName );
+			history = new ControlSizedCUHistory
+					(new CompilationUnitHistory(project, (ICompilationUnit)tree.getJavaElement(), ProjectName ,pacName, unitName));
 			histories.add(history);
 		}
 		
@@ -51,9 +54,9 @@ public class ProjectHistory {
 			return mostRecentHistory.getLatestChange();
 	}
 	
-	private CompilationUnitHistory getHistory(String pacName, String unitName)
+	private CUHistoryInterface getHistory(String pacName, String unitName)
 	{
-		for (CompilationUnitHistory his: histories)
+		for (CUHistoryInterface his: histories)
 		{
 			if(his.getCompilationUnitName().equals(unitName) && his.getPackageName().equals(pacName))
 				return his;
