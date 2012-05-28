@@ -18,6 +18,7 @@ import util.ASTUtil;
 import util.FileUtil;
 import util.UIUtil;
 import Rename.NamesInCompilationUnit;
+import ASTree.CUHistory.CompilationUnitHistory;
 import ASTree.visitors.NameBindingVisitor;
 import UserAction.UserActionData;
 
@@ -49,7 +50,7 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	private final String UserAction;
 
 
-	protected CompilationUnitHistoryRecord(IJavaProject proj,
+	public CompilationUnitHistoryRecord(IJavaProject proj,
 			ICompilationUnit iu, String pro, String pac, String un, long t,
 			CompilationUnitHistoryRecord earlierVersionP, CompilationUnitHistory his) throws Exception 
 	{		

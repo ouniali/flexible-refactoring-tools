@@ -23,8 +23,8 @@ import util.UIUtil;
 import compare.JavaSourceDiff;
 import compare.diff_match_patch.Patch;
 import compilation.RefactoringChances;
-import ASTree.CompilationUnitHistory;
 import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistory;
 
 public abstract class JavaRefactoring extends Job{
 

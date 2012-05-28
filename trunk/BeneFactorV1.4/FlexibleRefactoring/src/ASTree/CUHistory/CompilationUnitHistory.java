@@ -1,4 +1,4 @@
-package ASTree;
+package ASTree.CUHistory;
 
 import java.util.*;
 
@@ -6,13 +6,9 @@ import movestaticmember.ASTChangeAddStaticMember;
 import movestaticmember.ASTChangeDeleteStaticMember;
 import movestaticmember.MoveStaticMember;
 
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.*;
-
-import userinterface.RefactoringMarker;
-
 import compilation.RefactoringChances;
 import extract.declaration.DecDetector;
 import extract.declaration.Declaration;
@@ -20,20 +16,16 @@ import extract.declaration.LVDecDetector;
 import extract.declaration.MethodDec;
 import extract.declaration.MethodDecDetector;
 import extract.localvariable.ELVDetector;
-import extract.method.ASTEMActivity;
-import extract.method.ASTChangeEM;
 import extract.method.EMDetector;
-import flexiblerefactoring.BeneFactor;
-
+import ASTree.ASTChange;
+import ASTree.ASTChangeGenerator;
+import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;
-import Rename.ASTChangeName;
 import Rename.NameChangeDetector;
-import Rename.NameChangeUtil;
-import Rename.NameChangeCountHistory;
 
-public class CompilationUnitHistory {
+public class CompilationUnitHistory implements CUHistoryInterface{
 	
 	private final String projectName;
 	private final String packageName;
@@ -42,7 +34,7 @@ public class CompilationUnitHistory {
 	private final ICompilationUnit unit;
 	private final List<CompilationUnitHistoryRecord> records;
 	
-	protected CompilationUnitHistory(IJavaProject proj, ICompilationUnit u, String pro, String pac, String un)
+	public CompilationUnitHistory(IJavaProject proj, ICompilationUnit u, String pro, String pac, String un)
 	{
 		unit = u;
 		project = proj;
@@ -53,20 +45,19 @@ public class CompilationUnitHistory {
 	}
 	
 	
-	protected synchronized void addAST(CompilationUnit tree) throws Exception
+	public synchronized void addAST(CompilationUnit tree) throws Exception
 	{
 		CompilationUnitHistoryRecord earlier = null;
 		if(records.size()> 0)
 			earlier = records.get(records.size()-1);
 		records.add(new CompilationUnitHistoryRecord(project, unit ,
 				projectName, packageName, unitName, System.currentTimeMillis(), earlier, this));
-		
 		detectRefactoringOpportunity(records, unit);
 	}
 	
 
 	
-	protected ASTChange getMostRecentASTGeneralChange()
+	public ASTChange getLatestChange()
 	{
 		CompilationUnitHistoryRecord newRecord = records.get(records.size()-1);
 		CompilationUnitHistoryRecord oldRecord = null;
@@ -77,12 +68,13 @@ public class CompilationUnitHistory {
 		ASTChange change = ASTChangeGenerator.getGeneralASTChangeInformation(oldRecord, newRecord);
 		return change;
 	}
-	protected String getCompilationUnitName()
+	
+	public String getCompilationUnitName()
 	{
 		return unitName;
 	}
 	
-	protected String getPackageName()
+	public String getPackageName()
 	{
 		return packageName;
 	}
@@ -95,7 +87,18 @@ public class CompilationUnitHistory {
 			return null;
 	}
 	
-	static private void detectRefactoringOpportunity(List<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
+	public void removeOldASTs(int count) throws Exception{
+		if(count > records.size())
+			throw new Exception("Not enough records to remove.");
+		else
+		{
+			for(int i = 0; i < count; i ++)
+				records.remove(0);
+		}
+			
+	}
+	
+	private void detectRefactoringOpportunity(List<CompilationUnitHistoryRecord> records, ICompilationUnit unit) throws Exception
 	{	
 		detectRename(records, unit);
 		detectEM(records, unit);
@@ -104,7 +107,7 @@ public class CompilationUnitHistory {
 	}
 
 
-	private static void detectELV(
+	private void detectELV(
 			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception {
 		ELVDetector ELVDetector = new ELVDetector();
@@ -130,7 +133,7 @@ public class CompilationUnitHistory {
 	}
 
 
-	private static void detectMove(
+	private void detectMove(
 			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception {
 		JavaRefactoring refactoring;
@@ -161,7 +164,7 @@ public class CompilationUnitHistory {
 	}
 
 
-	private static void detectEM(
+	private void detectEM(
 			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception 
 	{
@@ -188,7 +191,7 @@ public class CompilationUnitHistory {
 	}
 
 
-	private static void detectRename(
+	private void detectRename(
 			List<CompilationUnitHistoryRecord> records,
 			ICompilationUnit unit) throws Exception {
 		JavaRefactoring refactoring;
@@ -200,6 +203,8 @@ public class CompilationUnitHistory {
 				RefactoringChances.getInstance().addRefactoringChance(refactoring);
 		}
 	}
+
+
 	
 
 	
