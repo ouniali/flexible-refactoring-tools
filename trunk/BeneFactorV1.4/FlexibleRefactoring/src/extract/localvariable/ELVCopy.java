@@ -9,7 +9,7 @@ import userinterface.RefactoringMarker;
 import util.UIUtil;
 
 import ASTree.ASTChange;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVCopy;
 

@@ -2,7 +2,6 @@ package ASTree.CUHistory;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import ASTree.ASTChange;
-import ASTree.CompilationUnitHistoryRecord;
 
 public class ControlSizedCUHistory implements CUHistoryInterface{
 

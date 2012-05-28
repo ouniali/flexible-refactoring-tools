@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import util.StringUtil;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import ASTree.visitors.ASTMethodDecVisitor;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 

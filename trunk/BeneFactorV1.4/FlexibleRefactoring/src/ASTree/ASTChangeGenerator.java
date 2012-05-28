@@ -15,6 +15,7 @@ import extract.method.EMUtil;
 
 import util.ASTUtil;
 
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import Rename.ASTChangeName;
 import Rename.NameChangeUtil;
 

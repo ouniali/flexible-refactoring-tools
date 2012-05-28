@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import extract.localvariable.ELVActivity;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 import org.eclipse.jdt.internal.corext.refactoring.code.*;

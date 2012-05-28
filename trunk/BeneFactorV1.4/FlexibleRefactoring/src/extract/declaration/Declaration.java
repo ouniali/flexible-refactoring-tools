@@ -6,7 +6,7 @@ import compare.SourceDiff;
 import compare.SourceDiffIdentical;
 import compare.SourceDiffNull;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
 public abstract class Declaration {

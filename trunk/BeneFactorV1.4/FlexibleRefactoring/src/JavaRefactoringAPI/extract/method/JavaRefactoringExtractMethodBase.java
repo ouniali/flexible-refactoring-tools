@@ -15,7 +15,7 @@ import util.ICompilationUnitUtil;
 import compare.JavaSourceDiff;
 import compare.diff_match_patch.Patch;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.JavaRefactoringType;
 

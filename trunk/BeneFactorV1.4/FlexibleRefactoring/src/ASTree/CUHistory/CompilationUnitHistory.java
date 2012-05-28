@@ -19,7 +19,6 @@ import extract.localvariable.ELVDetector;
 import extract.method.EMDetector;
 import ASTree.ASTChange;
 import ASTree.ASTChangeGenerator;
-import ASTree.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVBase;
 import JavaRefactoringAPI.extract.method.JavaRefactoringExtractMethodBase;

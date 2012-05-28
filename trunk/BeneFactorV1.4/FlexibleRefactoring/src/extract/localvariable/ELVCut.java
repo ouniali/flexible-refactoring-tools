@@ -7,7 +7,7 @@ import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import userinterface.RefactoringMarker;
 import util.UIUtil;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 import JavaRefactoringAPI.extract.localvariable.JavaRefactoringELVCut;
 

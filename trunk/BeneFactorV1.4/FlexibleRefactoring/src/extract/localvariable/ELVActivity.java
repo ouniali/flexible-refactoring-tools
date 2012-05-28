@@ -2,7 +2,7 @@ package extract.localvariable;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
 public interface ELVActivity{

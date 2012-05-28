@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import util.ASTUtil;
 import util.StringUtil;
 import ASTree.ASTChangeGenerator;
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
 
 import compare.SourceDiff;

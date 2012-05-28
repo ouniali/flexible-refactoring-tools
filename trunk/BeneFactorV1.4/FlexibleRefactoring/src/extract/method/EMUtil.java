@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import ASTree.CompilationUnitHistoryRecord;
+import ASTree.CUHistory.CompilationUnitHistoryRecord;
 
 import util.ASTUtil;
 import util.StringUtil;
