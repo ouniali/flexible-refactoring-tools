@@ -24,7 +24,7 @@ public class FloatingShellImage extends FloatingObject
 		Y = y;
 		width = w;
 		height = h;
-		path = p;	
+		path = p;
 	}
 	
 	public Shell getShell ()

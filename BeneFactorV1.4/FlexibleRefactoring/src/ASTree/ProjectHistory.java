@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import util.ASTUtil;
 
+import ASTree.CUHistory.CompilationUnitHistory;
 import Rename.*;
 
 public class ProjectHistory {
@@ -47,7 +48,7 @@ public class ProjectHistory {
 		if(mostRecentHistory == null)
 			return null;
 		else
-			return mostRecentHistory.getMostRecentASTGeneralChange();
+			return mostRecentHistory.getLatestChange();
 	}
 	
 	private CompilationUnitHistory getHistory(String pacName, String unitName)
