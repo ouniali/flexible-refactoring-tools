@@ -13,7 +13,7 @@ import Rename.ASTChangeName;
 
 public class ProjectHistoryCollector {
 	
-	private HashMap<IJavaProject,ProjectHistory> Map;
+	private final HashMap<IJavaProject,ProjectHistory> Map;
 	
 	public int getProjectCount()
 	{

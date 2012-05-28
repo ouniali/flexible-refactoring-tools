@@ -30,19 +30,20 @@ public class ProjectAnalyzer {
 	{
 		return packages.length;
 	}
-	public ArrayList<CompilationUnit> getAllTrees() throws JavaModelException
+	
+	public List<CompilationUnit> getAllTrees() throws JavaModelException
 	{
-		ArrayList<CompilationUnit> AllTrees = new ArrayList<CompilationUnit>();
+		List<CompilationUnit> AllTrees = new ArrayList<CompilationUnit>();
 		for (int i = 0; i<packages.length; i++)
 		{
-			ArrayList<CompilationUnit> TreesOfPackage = getTrees(i);
+			List<CompilationUnit> TreesOfPackage = getTrees(i);
 			if(TreesOfPackage!= null && TreesOfPackage.size()>0)
 				AllTrees.addAll(TreesOfPackage);
 		}
 		return AllTrees;
 	}
 	
-	private ArrayList<CompilationUnit> getTrees(int index) throws JavaModelException
+	private List<CompilationUnit> getTrees(int index) throws JavaModelException
 	{
 		if(index<0 || index> getPackageCount())
 			return null;
@@ -50,7 +51,7 @@ public class ProjectAnalyzer {
 		IPackageFragment RequestedPackage = packages[index];
 		if (RequestedPackage.getKind() == IPackageFragmentRoot.K_SOURCE) 
 		{
-			ArrayList<CompilationUnit> TreeSet = new ArrayList<CompilationUnit>();
+			List<CompilationUnit> TreeSet = new ArrayList<CompilationUnit>();
 			for (ICompilationUnit unit : RequestedPackage.getCompilationUnits()) 
 			{
 				// Now create the AST for the ICompilationUnits
