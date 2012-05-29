@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jdt.core.BindingKey;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -45,7 +46,7 @@ public class CompilationUnitHistoryRecord implements Comparable{
 
 	private final CompilationUnitHistoryRecord previousRecord;
 	private final CompilationUnitHistory history;
-	private final ArrayList<SourceDiff> diffs;	
+	private final List<SourceDiff> diffs;	
 	private final String UserAction;
 
 
@@ -73,7 +74,7 @@ public class CompilationUnitHistoryRecord implements Comparable{
 
 
 	
-	private ArrayList<SourceDiff> initializeDiffsBetweenPreviousRecord(CompilationUnitHistoryRecord previousRecord)
+	private List<SourceDiff> initializeDiffsBetweenPreviousRecord(CompilationUnitHistoryRecord previousRecord)
 	{
 		if (previousRecord != null)
 			return JavaSourceDiff.getSourceDiffs(previousRecord.getASTFilePath(), getASTFilePath());
