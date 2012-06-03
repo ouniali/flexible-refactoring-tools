@@ -33,29 +33,5 @@ public class SourceDiffMulti extends SourceDiffNotAtomic{
 		return sb.toString();
 	}
 	
-	public int getLineNumber()
-	{
-		try {
-			if(diffs.size() == 1)
-				return diffs.get(0).getLineNumber();
-			else
-				throw new Exception("No line number available.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally{
-			return -1;
-		}
-	}
-	
-	public boolean isConvertable2Atomic()
-	{
-		return diffs.size() == 1;
-	}
-	
-	public SourceDiff convert2Atomic()
-	{
-		return diffs.get(0);
-	}
-
 
 }

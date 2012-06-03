@@ -19,7 +19,7 @@ abstract class SourceDiffAtomic implements SourceDiff{
 		lineNumber = l;
 	}
 	
-	public final int getLineNumber()
+	public int getLineNumber()
 	{
 		return lineNumber;
 	}
@@ -62,6 +62,11 @@ abstract class SourceDiffNotAtomic implements SourceDiff{
 	@Override
 	public final boolean isAtomic() {
 		return false;
+	}
+	
+	public final int getLineNumber()
+	{
+		return -1;
 	}
 	
 	@Override
