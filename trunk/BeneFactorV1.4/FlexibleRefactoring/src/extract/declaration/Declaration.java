@@ -18,13 +18,14 @@ public abstract class Declaration {
 		CompilationUnitHistoryRecord current;
 		CompilationUnitHistoryRecord after = null;
 		
-		for(current = record; current != null;current = current.getPreviousRecord())
+		for(current = record; current != null;after = current, current = current.getPreviousRecord())
 		{
-			after = current;
 			SourceDiff diff = current.getSourceDiff();
-			if(!current.hasMeaningfulChangedLineNumber())
+			if(!diff.isAtomic())
+				break;
+			if(!diff.causeSourceChange())
 				continue;
-			if(diff.getLineNumber() != line)
+			if(diff.isLineNumberAvailable() && diff.getLineNumber() != line)
 				break;
 		}
 		
