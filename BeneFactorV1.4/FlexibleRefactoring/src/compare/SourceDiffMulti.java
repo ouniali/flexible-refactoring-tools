@@ -3,18 +3,12 @@ package compare;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SourceDiffMulti extends SourceDiff{
+public class SourceDiffMulti extends SourceDiffNotAtomic{
 
 	private final List<SourceDiff> diffs;
-	
-	public SourceDiffMulti(int l) {
-		super(0);
-		diffs = new ArrayList<SourceDiff>();
-	}
-	
+		
 	public SourceDiffMulti(List<SourceDiff> ds)
 	{
-		super(0);
 		diffs = ds;
 	}
 	
@@ -63,9 +57,5 @@ public class SourceDiffMulti extends SourceDiff{
 		return diffs.get(0);
 	}
 
-	@Override
-	public boolean isAtomic() {
-		return false;
-	}
 
 }

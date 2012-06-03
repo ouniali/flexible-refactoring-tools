@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import util.StringUtil;
 
-public class SourceDiffDelete extends SourceDiff {
+public class SourceDiffDelete extends SourceDiffAtomic {
 
 	ArrayList<String> deletedSource;
 
@@ -45,12 +45,6 @@ public class SourceDiffDelete extends SourceDiff {
 	public String skipChange(String source) {
 		return source;
 	}
-
-	@Override
-	public boolean isAtomic() {
-		return true;
-	}
-	
 
 
 }

@@ -1,7 +1,5 @@
 package compare;
 
-import java.util.ArrayList;
-
 abstract public class SourceDiff {
 	int lineNumber;
 	public SourceDiff(int l)
@@ -17,4 +15,28 @@ abstract public class SourceDiff {
 	public abstract String toString();
 	public abstract boolean isAtomic();
 
+}
+
+abstract class SourceDiffAtomic extends SourceDiff{
+
+	public SourceDiffAtomic(int l) {
+		super(l);
+	}
+
+	@Override
+	public final boolean isAtomic() {
+		return true;
+	}
+	
+}
+
+abstract class SourceDiffNotAtomic extends SourceDiff{
+
+	public SourceDiffNotAtomic() {
+		super(0);
+	}
+	@Override
+	public final boolean isAtomic() {
+		return false;
+	}
 }

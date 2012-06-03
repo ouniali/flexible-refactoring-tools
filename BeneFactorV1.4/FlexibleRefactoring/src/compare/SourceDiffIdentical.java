@@ -1,6 +1,6 @@
 package compare;
 
-public class SourceDiffIdentical extends SourceDiff{
+public class SourceDiffIdentical extends SourceDiffAtomic{
 
 	public SourceDiffIdentical(int l) {
 		super(l);
@@ -21,9 +21,5 @@ public class SourceDiffIdentical extends SourceDiff{
 		return "Identical";
 	}
 
-	@Override
-	public boolean isAtomic() {
-		return true;
-	}
 
 }

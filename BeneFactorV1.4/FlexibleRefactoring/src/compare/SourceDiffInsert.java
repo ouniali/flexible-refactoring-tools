@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import util.StringUtil;
 
-public class SourceDiffInsert extends SourceDiff{
+public class SourceDiffInsert extends SourceDiffAtomic{
 
 	ArrayList<String> insertedSource;
 	
@@ -57,10 +57,4 @@ public class SourceDiffInsert extends SourceDiff{
 		return source;
 	}
 
-
-
-	@Override
-	public boolean isAtomic() {
-		return true;
-	}
 }
