@@ -36,6 +36,11 @@ public class SourceDiffIdentical extends SourceDiffAtomic{
 		return false;
 	}
 	
+	public int getLineNumber()
+	{
+		return -1;
+	}
+	
 	@Override
 	public boolean causeSourceChange()
 	{
