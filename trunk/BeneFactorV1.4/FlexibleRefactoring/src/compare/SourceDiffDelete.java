@@ -45,6 +45,11 @@ public class SourceDiffDelete extends SourceDiff {
 	public String skipChange(String source) {
 		return source;
 	}
+
+	@Override
+	public boolean isAtomic() {
+		return true;
+	}
 	
 
 

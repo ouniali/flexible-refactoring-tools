@@ -70,5 +70,12 @@ public class SourceDiffChange extends SourceDiff{
 		// TODO Auto-generated method stub
 		return source;
 	}
+
+
+
+	@Override
+	public boolean isAtomic() {
+		return true;
+	}
 	
 }
