@@ -7,7 +7,6 @@ public interface SourceDiff {
 	public String toString();
 	public boolean isAtomic();
 	public boolean isLineNumberAvailable();
-
 }
 
 abstract class SourceDiffAtomic implements SourceDiff{
