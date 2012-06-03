@@ -7,6 +7,7 @@ abstract public interface SourceDiff {
 	public String skipChange(String source);
 	public String toString();
 	public boolean isAtomic();
+	public boolean isLineNumberAvailable();
 
 }
 
@@ -28,12 +29,24 @@ abstract class SourceDiffAtomic implements SourceDiff{
 		return true;
 	}
 	
+	@Override
+	public final boolean isLineNumberAvailable()
+	{
+		return true;
+	}
+	
 }
 
 abstract class SourceDiffNotAtomic implements SourceDiff{
 
 	@Override
 	public final boolean isAtomic() {
+		return false;
+	}
+	
+	@Override
+	public final boolean isLineNumberAvailable()
+	{
 		return false;
 	}
 }
