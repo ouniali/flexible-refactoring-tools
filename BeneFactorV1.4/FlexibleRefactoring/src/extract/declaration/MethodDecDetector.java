@@ -20,9 +20,10 @@ public class MethodDecDetector extends DecDetector{
 		CompilationUnit tree = record.getASTree();
 		ASTMethodDecVisitor mVisitor = new ASTMethodDecVisitor();
 		tree.accept(mVisitor);
-		if(!record.hasMeaningfulChangedLineNumber())
+		SourceDiff diff = record.getSourceDiff();
+		if(!diff.isLineNumberAvailable())
 			return false;
-		if(mVisitor.isInMethod(getEditedLineNumber(record)))
+		if(mVisitor.isInMethod(diff.getLineNumber()))
 			return false;
 		else
 			return true;
