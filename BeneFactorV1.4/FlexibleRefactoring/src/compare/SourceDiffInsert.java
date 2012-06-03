@@ -17,7 +17,6 @@ public class SourceDiffInsert extends SourceDiff{
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "INSERT at " +getLineNumber() + '\n' + getInsertedCode();
 	}
 	
@@ -28,7 +27,6 @@ public class SourceDiffInsert extends SourceDiff{
 
 	@Override
 	public String performChange(String source) {
-		// TODO Auto-generated method stub
 		int insertBefore = getLineNumber();
 		String[] lines = source.split("\n");
 		StringBuffer result = new StringBuffer();
@@ -56,7 +54,6 @@ public class SourceDiffInsert extends SourceDiff{
 
 	@Override
 	public String skipChange(String source) {
-		// TODO Auto-generated method stub
 		return source;
 	}
 }
