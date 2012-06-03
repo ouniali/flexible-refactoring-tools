@@ -1,6 +1,6 @@
 package compare;
 
-public class SourceDiffMove extends SourceDiff {
+public class SourceDiffMove extends SourceDiffAtomic {
 
 	public SourceDiffMove(int l) {
 		super(l);
@@ -19,11 +19,6 @@ public class SourceDiffMove extends SourceDiff {
 	@Override
 	public String toString() {
 		return "Move";
-	}
-
-	@Override
-	public boolean isAtomic() {
-		return true;
 	}
 
 }

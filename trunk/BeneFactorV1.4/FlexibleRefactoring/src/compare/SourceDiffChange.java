@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import util.StringUtil;
 
-public class SourceDiffChange extends SourceDiff{
+public class SourceDiffChange extends SourceDiffAtomic{
 
 	ArrayList<String> beforeChange;
 	ArrayList<String> afterChange;
@@ -67,15 +67,8 @@ public class SourceDiffChange extends SourceDiff{
 
 	@Override
 	public String skipChange(String source) {
-		// TODO Auto-generated method stub
 		return source;
 	}
 
 
-
-	@Override
-	public boolean isAtomic() {
-		return true;
-	}
-	
 }
