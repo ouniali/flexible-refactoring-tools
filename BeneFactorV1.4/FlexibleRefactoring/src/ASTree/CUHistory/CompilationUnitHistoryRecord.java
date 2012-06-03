@@ -25,7 +25,6 @@ import UserAction.UserActionData;
 import compare.JavaSourceDiff;
 import compare.SourceDiff;
 import compare.SourceDiffIdentical;
-import compare.SourceDiffNull;
 import extract.method.EMDetector;
 
 public class CompilationUnitHistoryRecord implements Comparable{
