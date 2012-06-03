@@ -53,12 +53,12 @@ public class SourceDiffMulti extends SourceDiff{
 		}
 	}
 	
-	public boolean isConvertable2Single()
+	public boolean isConvertable2Atomic()
 	{
 		return diffs.size() == 1;
 	}
 	
-	public SourceDiff convert2Single()
+	public SourceDiff convert2Atomic()
 	{
 		return diffs.get(0);
 	}

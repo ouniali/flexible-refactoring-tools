@@ -4,7 +4,6 @@ import org.eclipse.jdt.core.ICompilationUnit;
 
 import compare.SourceDiff;
 import compare.SourceDiffIdentical;
-import compare.SourceDiffNull;
 
 import ASTree.CUHistory.CompilationUnitHistoryRecord;
 import JavaRefactoringAPI.JavaRefactoring;
