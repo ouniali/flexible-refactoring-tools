@@ -21,5 +21,9 @@ public class SourceDiffIdentical extends SourceDiffAtomic{
 		return "Identical";
 	}
 
+	public boolean isLineNumberAvailable()
+	{
+		return false;
+	}
 
 }
