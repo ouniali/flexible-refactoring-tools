@@ -21,11 +21,13 @@ public class SourceDiffIdentical extends SourceDiffAtomic{
 		return "Identical";
 	}
 
+	@Override
 	public boolean isLineNumberAvailable()
 	{
 		return false;
 	}
 	
+	@Override
 	public boolean causeSourceChange()
 	{
 		return false;
