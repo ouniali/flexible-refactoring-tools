@@ -30,7 +30,7 @@ abstract class SourceDiffAtomic implements SourceDiff{
 	}
 	
 	@Override
-	public final boolean isLineNumberAvailable()
+	public boolean isLineNumberAvailable()
 	{
 		return true;
 	}
