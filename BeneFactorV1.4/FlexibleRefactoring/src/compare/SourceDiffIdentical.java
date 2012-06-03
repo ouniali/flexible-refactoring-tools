@@ -25,5 +25,10 @@ public class SourceDiffIdentical extends SourceDiffAtomic{
 	{
 		return false;
 	}
+	
+	public boolean causeSourceChange()
+	{
+		return false;
+	}
 
 }
