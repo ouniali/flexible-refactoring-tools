@@ -8,7 +8,7 @@ public interface SourceDiff {
 	public boolean isAtomic();
 	public boolean isLineNumberAvailable();
 	public boolean causeSourceChange();
-	public boolean isSameLine(SourceDiff another);
+	public boolean isAppliedSameLine(SourceDiff another);
 }
 
 abstract class SourceDiffAtomic implements SourceDiff{
@@ -41,7 +41,7 @@ abstract class SourceDiffAtomic implements SourceDiff{
 		return true;
 	}
 	
-	public boolean isSameLine(SourceDiff another)
+	public boolean isAppliedSameLine(SourceDiff another)
 	{
 		if(!another.isAtomic())
 			return false;
@@ -73,7 +73,7 @@ abstract class SourceDiffNotAtomic implements SourceDiff{
 		return true;
 	}
 	
-	public boolean isSameLine(SourceDiff another)
+	public boolean isAppliedSameLine(SourceDiff another)
 	{
 		return false;
 	}
