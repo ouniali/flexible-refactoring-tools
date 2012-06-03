@@ -1,7 +1,6 @@
 package compare;
 
-abstract public interface SourceDiff {
-
+public interface SourceDiff {
 	public int getLineNumber();
 	public String performChange(String source);
 	public String skipChange(String source);
