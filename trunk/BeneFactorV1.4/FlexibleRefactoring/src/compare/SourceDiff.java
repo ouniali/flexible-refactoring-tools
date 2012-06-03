@@ -7,6 +7,7 @@ public interface SourceDiff {
 	public String toString();
 	public boolean isAtomic();
 	public boolean isLineNumberAvailable();
+	public boolean causeSourceChange();
 }
 
 abstract class SourceDiffAtomic implements SourceDiff{
@@ -33,6 +34,11 @@ abstract class SourceDiffAtomic implements SourceDiff{
 		return true;
 	}
 	
+	public boolean causeSourceChange()
+	{
+		return true;
+	}
+	
 }
 
 abstract class SourceDiffNotAtomic implements SourceDiff{
@@ -46,5 +52,10 @@ abstract class SourceDiffNotAtomic implements SourceDiff{
 	public final boolean isLineNumberAvailable()
 	{
 		return false;
+	}
+	
+	public boolean causeSourceChange()
+	{
+		return true;
 	}
 }
