@@ -2,8 +2,17 @@ package compare;
 
 public class SourceDiffIdentical extends SourceDiffAtomic{
 
-	public SourceDiffIdentical(int l) {
-		super(l);
+	private static SourceDiffIdentical instance;
+	
+	private SourceDiffIdentical() {
+		super(0);
+	}
+	
+	public static SourceDiffIdentical getInstance()
+	{
+		if(instance == null)
+			instance = new SourceDiffIdentical();
+		return instance;
 	}
 
 	@Override
