@@ -8,22 +8,15 @@ public class SourceDiffMulti extends SourceDiff{
 	private final List<SourceDiff> diffs;
 	
 	public SourceDiffMulti(int l) {
-		super(-1);
+		super(0);
 		diffs = new ArrayList<SourceDiff>();
 	}
 	
 	public SourceDiffMulti(List<SourceDiff> ds)
 	{
-		super(-1);
+		super(0);
 		diffs = ds;
 	}
-	
-	
-	public void addDiff(SourceDiff d)
-	{
-		diffs.add(d);
-	}
-	
 	
 	@Override
 	public String performChange(String source) {
@@ -58,6 +51,16 @@ public class SourceDiffMulti extends SourceDiff{
 		} finally{
 			return -1;
 		}
+	}
+	
+	public boolean isConvertable2Single()
+	{
+		return diffs.size() == 1;
+	}
+	
+	public SourceDiff convert2Single()
+	{
+		return diffs.get(0);
 	}
 
 }
