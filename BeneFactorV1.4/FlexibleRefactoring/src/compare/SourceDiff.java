@@ -15,5 +15,6 @@ abstract public class SourceDiff {
 	public abstract String performChange(String source);
 	public abstract String skipChange(String source);
 	public abstract String toString();
+	public abstract boolean isAtomic();
 
 }

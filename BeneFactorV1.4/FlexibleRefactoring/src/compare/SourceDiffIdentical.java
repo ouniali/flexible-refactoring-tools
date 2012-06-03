@@ -21,4 +21,9 @@ public class SourceDiffIdentical extends SourceDiff{
 		return "Identical";
 	}
 
+	@Override
+	public boolean isAtomic() {
+		return true;
+	}
+
 }

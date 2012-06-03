@@ -63,4 +63,9 @@ public class SourceDiffMulti extends SourceDiff{
 		return diffs.get(0);
 	}
 
+	@Override
+	public boolean isAtomic() {
+		return false;
+	}
+
 }

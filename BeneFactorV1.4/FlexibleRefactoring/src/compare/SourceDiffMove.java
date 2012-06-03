@@ -21,4 +21,9 @@ public class SourceDiffMove extends SourceDiff {
 		return "Move";
 	}
 
+	@Override
+	public boolean isAtomic() {
+		return true;
+	}
+
 }
