@@ -39,13 +39,13 @@ public abstract class DecDetector {
 		return dec;
 	}
 	
-
+/*
 	protected final int getEditedLineNumber(CompilationUnitHistoryRecord record)
 	{
 		SourceDiff diff = record.getSourceDiff();
 		return diff.getLineNumber();
 	}
-	
+*/	
 	protected final String getEditedLineText(CompilationUnitHistoryRecord record)
 	{
 		SourceDiff diff = record.getSourceDiff();

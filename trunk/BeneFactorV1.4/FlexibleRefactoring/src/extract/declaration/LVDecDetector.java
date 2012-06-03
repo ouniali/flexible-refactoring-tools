@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import compare.SourceDiff;
+
 import util.StringUtil;
 
 import ASTree.CUHistory.CompilationUnitHistoryRecord;
@@ -27,9 +29,10 @@ public class LVDecDetector extends DecDetector {
 	@Override
 	protected boolean isDecFoundIn(CompilationUnitHistoryRecord record) 
 	{
-		if(!record.hasMeaningfulChangedLineNumber())
+		SourceDiff diff = record.getSourceDiff();
+		if(!diff.isLineNumberAvailable())
 			return false;
-		int line = getEditedLineNumber(record);
+		int line = diff.getLineNumber();
 		CompilationUnit tree = record.getASTree();
 		ASTMethodDecVisitor mVisitor = new ASTMethodDecVisitor();
 		tree.accept(mVisitor);
@@ -40,7 +43,7 @@ public class LVDecDetector extends DecDetector {
 
 	@Override
 	protected Declaration getDeclaration(CompilationUnitHistoryRecord record) {
-		int line = getEditedLineNumber(record);
+		int line = record.getSourceDiff().getLineNumber();
 		String code = getEditedLineText(record);
 		return new LVDec(line ,code, record);
 	}
