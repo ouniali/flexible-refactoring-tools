@@ -2,6 +2,7 @@ package compare;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,24 +14,30 @@ import util.*;
 
 public class JavaSourceDiff {
 
-	public static ArrayList<SourceDiff> getSourceDiffs(String oldPath,
-			String newPath) {
+	public static SourceDiff getSourceDiff(String oldPath, String newPath) {
 
 		String des = Diff.getDiffDescription(oldPath, newPath);
 		ArrayList<SourceDiff> diffs = new ArrayList<SourceDiff>();
 		String[] lines = des.split("\n");
-
 		diffs.addAll(getSourceDiffChanges(lines));
 		diffs.addAll(getSourceDiffInserts(lines));
 		diffs.addAll(getSourceDiffDeletes(lines));
-/*
-		System.out.println(des);
-		for (SourceDiff diff : diffs)
-			System.out.println(diff);
-		*/
-		return diffs;
+		if(diffs.isEmpty())
+			diffs.add(SourceDiffIdentical.getInstance());
+		return combineSourceDiffs(diffs);
 	}
 
+	private static SourceDiff combineSourceDiffs(List<SourceDiff> diffs)
+	{
+		if(diffs.size() == 1)
+			return diffs.get(0);
+		else
+			return new SourceDiffMulti(diffs);
+	}
+	
+	
+	
+	
 	public static LinkedList<Patch> getPatches(String olds, String news)
 	{
 		diff_match_patch dmp= new diff_match_patch();	

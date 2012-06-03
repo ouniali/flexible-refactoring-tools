@@ -42,10 +42,9 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	private final int[] seletectedRegion;
 	
 	
-
 	private final CompilationUnitHistoryRecord previousRecord;
 	private final CompilationUnitHistory history;
-	private final List<SourceDiff> diffs;	
+	private final SourceDiff diff;	
 	private final String UserAction;
 
 
@@ -67,18 +66,18 @@ public class CompilationUnitHistoryRecord implements Comparable{
 		previousRecord = earlierVersionP;
 		saveSourceCode(iu);	
 		saveBindingTable(iu);
-		diffs = initializeDiffsBetweenPreviousRecord(getPreviousRecord());
+		diff = initializeDiff(getPreviousRecord());
 		UserAction = UserActionData.getPendingEvent();
 	}
 
 
 	
-	private List<SourceDiff> initializeDiffsBetweenPreviousRecord(CompilationUnitHistoryRecord previousRecord)
+	private SourceDiff initializeDiff(CompilationUnitHistoryRecord previousRecord)
 	{
 		if (previousRecord != null)
-			return JavaSourceDiff.getSourceDiffs(previousRecord.getASTFilePath(), getASTFilePath());
+			return JavaSourceDiff.getSourceDiff(previousRecord.getASTFilePath(), getASTFilePath());
 		else
-			return null;
+			return SourceDiffIdentical.getInstance();
 	}
 	
 	private String getBindingTableFileName() {
@@ -258,10 +257,7 @@ public class CompilationUnitHistoryRecord implements Comparable{
 	}
 
 	public SourceDiff getSourceDiff() {
-		if (diffs != null && diffs.size() > 0)
-			return diffs.get(0);
-		else
-			return new SourceDiffIdentical(0);
+		return diff;
 	}
 	
 	public CompilationUnitHistoryRecord getPreviousRecord()

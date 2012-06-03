@@ -49,7 +49,6 @@ abstract class SourceDiffAtomic implements SourceDiff{
 			return true;
 		else
 			return another.getLineNumber() == this.getLineNumber();
-			
 	}
 	
 }
