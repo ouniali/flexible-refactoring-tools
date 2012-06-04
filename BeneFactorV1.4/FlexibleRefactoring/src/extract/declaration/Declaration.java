@@ -14,7 +14,7 @@ public abstract class Declaration {
 	
 	protected CompilationUnitHistoryRecord getRecordNotEditingOn
 		(CompilationUnitHistoryRecord record, int line)
-	{
+	{	
 		CompilationUnitHistoryRecord current;
 		CompilationUnitHistoryRecord after = null;
 		
