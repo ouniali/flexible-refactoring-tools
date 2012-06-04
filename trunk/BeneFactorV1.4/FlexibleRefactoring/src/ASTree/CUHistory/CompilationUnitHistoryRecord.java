@@ -315,6 +315,16 @@ public class CompilationUnitHistoryRecord implements Comparable{
 		return (int) (time - another.time);
 	}
 	
+	public boolean isEalierThan(CompilationUnitHistoryRecord r)
+	{
+		return this.getTime() < r.getTime();
+	}
+	
+	public boolean isLaterThan(CompilationUnitHistoryRecord r)
+	{
+		return this.getTime() > r.getTime();
+	}
+	
 	public boolean hasMeaningfulChangedLineNumber()
 	{
 		return !(getSourceDiff() instanceof SourceDiffIdentical); 
