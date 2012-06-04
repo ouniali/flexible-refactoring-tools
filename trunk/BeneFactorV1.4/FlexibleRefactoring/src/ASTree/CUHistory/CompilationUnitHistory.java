@@ -106,8 +106,8 @@ public class CompilationUnitHistory implements CUHistoryInterface{
 	{	
 		detectRename(records, unit);
 		detectEM(records, unit);
-		detectMove(records, unit);
-		detectELV(records, unit);
+		//detectMove(records, unit);
+		//detectELV(records, unit);
 	}
 
 
