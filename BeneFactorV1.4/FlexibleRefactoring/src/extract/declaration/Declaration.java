@@ -18,9 +18,10 @@ public abstract class Declaration {
 		CompilationUnitHistoryRecord current;
 		CompilationUnitHistoryRecord after = null;
 		
-		for(current = record; current != null;after = current, current = current.getPreviousRecord())
+		for(current = record; current != null; after = current, current = current.getPreviousRecord())
 		{
 			SourceDiff diff = current.getSourceDiff();
+			System.out.println(diff);
 			if(!diff.isAtomic())
 				break;
 			if(!diff.causeSourceChange())
