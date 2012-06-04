@@ -24,6 +24,7 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 	String methodName;
 	int modifier;
 	CompilationUnitHistoryRecord non_refactoring_change_end;
+	private static boolean PERFORM_POST_PROCESS = false;
 	
 	public final void setMethodName(String m)
 	{
@@ -105,11 +106,13 @@ public abstract class JavaRefactoringExtractMethodBase extends JavaRefactoring{
 	@Override
 	public void postProcess() throws Exception
 	{
-		CompilationUnitHistoryRecord startR = getNonrefactoringChangeStart();
-		CompilationUnitHistoryRecord endR = getNonRefactoringChangeEnd();
-		redoUnrefactoringChanges(startR, endR);
-		MonitorUiPlugin.getDefault().notifyInteractionObserved(
+		if(JavaRefactoringExtractMethodBase.PERFORM_POST_PROCESS){
+			CompilationUnitHistoryRecord startR = getNonrefactoringChangeStart();
+			CompilationUnitHistoryRecord endR = getNonRefactoringChangeEnd();
+			redoUnrefactoringChanges(startR, endR);
+			MonitorUiPlugin.getDefault().notifyInteractionObserved(
 				InteractionEvent.makeCommand(event_id + ".ExtractMethod", "extract method"));
+		}
 	}
 	
 
