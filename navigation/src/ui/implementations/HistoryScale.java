@@ -23,13 +23,17 @@ import ui.interfaces.IHistoryController;
  * @author xgencsu@google.com (Xi Ge)
  *
  */
-public class HistoryScale implements IHistoryController{
+public class HistoryScale implements IHistoryController, Runnable, Listener{
 
    ICompilationUnitHistory history;
-   internalScale inScale;
+     
+   private Display display = new Display();
+   private Shell shell = new Shell(display);
+   private Scale scale;
+   private Label label;
+   private Text text;
    
    private HistoryScale(){
-     inScale = new internalScale();
    }
   
    @Override
@@ -63,52 +67,38 @@ public class HistoryScale implements IHistoryController{
     
   }
   
- 
-  
-  
-  
-  private class internalScale implements Runnable, Listener{
-    
-    private Display display = new Display();
-    private Shell shell = new Shell(display);
-    private Scale scale;
-    private Label label;
-    private Text text;
-    
-  
-    @Override
-    public void run() {
-      shell.setLayout(new GridLayout(1, true));
-      shell.setText("Show scale");
-      label = new Label(shell, SWT.HORIZONTAL);
-      label.setText("Speed:");
+  @Override
+  public void run() {
+    shell.setLayout(new GridLayout(1, true));
+    shell.setText("Show scale");
+    label = new Label(shell, SWT.HORIZONTAL);
+    label.setText("Speed:");
 
-      scale = new Scale(shell, SWT.HORIZONTAL);
-      scale.setMinimum(0);
-      scale.setMaximum(50);
-      scale.setIncrement(1);
-      scale.setPageIncrement(10);
-      
-      scale.addListener(SWT.Selection, this);
-      text = new Text(shell, SWT.BORDER | SWT.SINGLE);
-      text.setEditable(true);
-      scale.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER)); 
-      shell.pack();
-      shell.open();
-      
-      while (!shell.isDisposed()) {
-      if (!display.readAndDispatch()) {
-      display.sleep();
-     }
-      }
-      
-    }
-
-    @Override
-    public void handleEvent(Event event) {
-      
+    scale = new Scale(shell, SWT.HORIZONTAL);
+    scale.setMinimum(0);
+    scale.setMaximum(50);
+    scale.setIncrement(1);
+    scale.setPageIncrement(10);
+    
+    scale.addListener(SWT.Selection, this);
+    text = new Text(shell, SWT.BORDER | SWT.SINGLE);
+    text.setEditable(true);
+    scale.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER)); 
+    shell.pack();
+    shell.open();
+    
+    while (!shell.isDisposed()) {
+    if (!display.readAndDispatch()) {
+    display.sleep();
+   }
     }
     
   }
 
+  @Override
+  public void handleEvent(Event event) {
+    
+  }
+  
 }
+
