@@ -33,6 +33,16 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
    private Label label;
    private Text text;
    
+   
+   private static IHistoryController controller;
+   public static IHistoryController getInstance()
+   {
+     if(controller == null)
+       controller = new HistoryScale();
+     return controller;
+   }
+   
+   
    private HistoryScale(){
    }
   
