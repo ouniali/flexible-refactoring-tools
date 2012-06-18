@@ -16,13 +16,18 @@ import history.interfaces.IHistoryCollector;
  */
 public class CompilationUnitHistoryCollector implements IHistoryCollector{
 
+  private static IHistoryCollector collector;
+  
+  public static IHistoryCollector getInstance()
+  {
+    if(collector == null)
+      collector = new CompilationUnitHistoryCollector();
+    return collector;
+  }
   
   private List<ICompilationUnitHistory> histories = new ArrayList<ICompilationUnitHistory> ();;
-  
-  private CompilationUnitHistoryCollector()
-  {
-    
-  }
+ 
+  private CompilationUnitHistoryCollector(){}
 
   @Override
   public void addHistoryRecord(ICompilationUnitHistoryRecord record) {

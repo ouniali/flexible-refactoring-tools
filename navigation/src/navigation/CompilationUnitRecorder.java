@@ -7,6 +7,12 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 
+import history.implementation.CompilationUnitHistoryRecord;
+
+import history.interfaces.ICompilationUnitHistoryRecord;
+
+import history.implementation.CompilationUnitHistoryCollector;
+
 import history.implementation.HistoryWorkQueue;
 
 /**
@@ -21,7 +27,9 @@ public class CompilationUnitRecorder extends CompilationParticipant {
     
       try {
         ICompilationUnit unit = context.getWorkingCopy();
-        HistoryWorkQueue.handleNewVersion(unit);
+        ICompilationUnitHistoryRecord record = 
+            CompilationUnitHistoryRecord.createCompilationUnitHistoryRecord(unit);
+        CompilationUnitHistoryCollector.getInstance().addHistoryRecord(record);
         System.out.println("called");
       } catch (Exception e) {
           e.printStackTrace();
