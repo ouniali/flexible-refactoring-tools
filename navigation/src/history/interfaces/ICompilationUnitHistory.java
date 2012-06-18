@@ -12,6 +12,8 @@ public interface ICompilationUnitHistory {
   String getFilePath();
   String getCompilationUnitName();
   boolean checkBelonging(ICompilationUnitHistoryRecord record);
+  ICompilationUnitHistoryRecord getRecordByScale(double scale);
+  int getRecordCount();
 }
 
 

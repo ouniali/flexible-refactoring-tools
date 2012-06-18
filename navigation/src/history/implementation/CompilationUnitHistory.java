@@ -4,6 +4,8 @@ package history.implementation;
 
 
 
+import org.eclipse.core.runtime.Assert;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +74,18 @@ public class CompilationUnitHistory implements ICompilationUnitHistory{
   @Override
   public String getFilePath() {
     return fPath;
+  }
+
+  @Override
+  public ICompilationUnitHistoryRecord getRecordByScale(double scale) {
+    Assert.isTrue(scale > 0.0 && scale < 1.0);
+    int index = (int) (getRecordCount() * scale);
+    return records.get(index);
+  }
+
+  @Override
+  public int getRecordCount() {
+    return records.size();
   }
 
 }
