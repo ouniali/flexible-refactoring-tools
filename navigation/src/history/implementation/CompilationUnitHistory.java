@@ -1,9 +1,6 @@
 // Copyright 2012 Google Inc. All Rights Reserved.
 
 package history.implementation;
-
-
-
 import org.eclipse.core.runtime.Assert;
 
 import java.util.ArrayList;
@@ -42,6 +39,17 @@ public class CompilationUnitHistory implements ICompilationUnitHistory{
       record.setHistory(nHistory);
       histories.add(nHistory);
   }
+  
+  public static ICompilationUnitHistory getHistoryByPath(String fPath)
+  {
+      for(ICompilationUnitHistory history : histories)
+      {
+        if(history.getFilePath().equals(fPath))
+          return history;
+      }
+      return new NullCompilationUnitHistory();
+  }
+  
   
   private CompilationUnitHistory(String fPath, String cuName)
   {
