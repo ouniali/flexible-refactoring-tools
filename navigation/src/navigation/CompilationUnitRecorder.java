@@ -20,8 +20,8 @@ public class CompilationUnitRecorder extends CompilationParticipant {
   {
     
       try {
-        //ICompilationUnit unit = context.getWorkingCopy();
-        //HistoryWorkQueue.handleNewVersion(unit);
+        ICompilationUnit unit = context.getWorkingCopy();
+        HistoryWorkQueue.handleNewVersion(unit);
         System.out.println("called");
       } catch (Exception e) {
           e.printStackTrace();
