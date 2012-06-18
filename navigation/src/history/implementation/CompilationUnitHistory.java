@@ -16,51 +16,11 @@ import history.interfaces.ICompilationUnitHistory;
  */
 public class CompilationUnitHistory implements ICompilationUnitHistory{
 
-  static private List<ICompilationUnitHistory> histories = new ArrayList<ICompilationUnitHistory> ();
   private List<ICompilationUnitHistoryRecord> records;
   private final String cuName;
   private final String fPath;
   
-  
-  public static void addHistoryRecord(ICompilationUnitHistoryRecord record)
-  {
-      ICompilationUnitHistory history;
-      String fPath = record.getFilePath();
-      if(hasHistoryForPath(fPath))
-        history = getHistoryByPath(fPath);
-      else
-      {
-        history = new CompilationUnitHistory(fPath, record.getCompilationUnitName());
-        histories.add(history);
-      }
-      
-      history.addRecord(record);
-      record.setHistory(history);
-   }
-  
-  public static boolean hasHistoryForPath(String fPath)
-  {
-      for(ICompilationUnitHistory history : histories)
-      {
-        if(history.getFilePath().equals(fPath))
-          return true;
-      }
-      return false;
-  }
-  
-  
-  public static ICompilationUnitHistory getHistoryByPath(String fPath)
-  {
-      for(ICompilationUnitHistory history : histories)
-      {
-        if(history.getFilePath().equals(fPath))
-          return history;
-      }
-      return null;
-  }
-  
-  
-  private CompilationUnitHistory(String fPath, String cuName)
+  public CompilationUnitHistory(String fPath, String cuName)
   {
      records = new ArrayList<ICompilationUnitHistoryRecord>();
      this.cuName = cuName;
