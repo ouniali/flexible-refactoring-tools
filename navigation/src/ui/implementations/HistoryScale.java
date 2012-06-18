@@ -41,10 +41,8 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
        controller = new HistoryScale();
      return controller;
    }
-   
-   
-   private HistoryScale(){
-   }
+
+   private HistoryScale(){}
   
    @Override
   public void setHistory(ICompilationUnitHistory history) {
