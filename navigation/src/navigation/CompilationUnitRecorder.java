@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.compiler.ReconcileContext;
 import history.implementation.CompilationUnitHistoryRecord;
 import history.interfaces.ICompilationUnitHistoryRecord;
 import history.implementation.CompilationUnitHistoryCollector;
-import history.implementation.HistoryWorkQueue;
 
 /**
  * @author xgencsu@google.com (Xi Ge)
