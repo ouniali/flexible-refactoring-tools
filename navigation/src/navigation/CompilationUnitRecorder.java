@@ -3,16 +3,11 @@
 package navigation;
 
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
-
 import history.implementation.CompilationUnitHistoryRecord;
-
 import history.interfaces.ICompilationUnitHistoryRecord;
-
 import history.implementation.CompilationUnitHistoryCollector;
-
 import history.implementation.HistoryWorkQueue;
 
 /**
