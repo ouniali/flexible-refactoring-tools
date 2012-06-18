@@ -24,21 +24,30 @@ public class CompilationUnitHistory implements ICompilationUnitHistory{
   
   public static void addHistoryRecord(ICompilationUnitHistoryRecord record)
   {
+      ICompilationUnitHistory history;
+      String fPath = record.getFilePath();
+      if(hasHistoryForPath(fPath))
+        history = getHistoryByPath(fPath);
+      else
+      {
+        history = new CompilationUnitHistory(fPath, record.getCompilationUnitName());
+        histories.add(history);
+      }
+      
+      history.addRecord(record);
+      record.setHistory(history);
+   }
+  
+  public static boolean hasHistoryForPath(String fPath)
+  {
       for(ICompilationUnitHistory history : histories)
       {
-        if(history.checkBelonging(record))
-        {
-          record.setHistory(history);
-          history.addRecord(record);
-          return;
-        }
+        if(history.getFilePath().equals(fPath))
+          return true;
       }
-      ICompilationUnitHistory nHistory = new CompilationUnitHistory(record.getFilePath(),
-          record.getCompilationUnitName());
-      nHistory.addRecord(record);
-      record.setHistory(nHistory);
-      histories.add(nHistory);
+      return false;
   }
+  
   
   public static ICompilationUnitHistory getHistoryByPath(String fPath)
   {
@@ -47,7 +56,7 @@ public class CompilationUnitHistory implements ICompilationUnitHistory{
         if(history.getFilePath().equals(fPath))
           return history;
       }
-      return new NullCompilationUnitHistory();
+      return null;
   }
   
   
