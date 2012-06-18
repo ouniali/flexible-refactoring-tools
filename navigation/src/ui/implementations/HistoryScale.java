@@ -26,10 +26,10 @@ import ui.interfaces.IHistoryController;
 public class HistoryScale implements IHistoryController{
 
    ICompilationUnitHistory history;
-   internalScale scale;
+   internalScale inScale;
    
    private HistoryScale(){
-     scale = new internalScale();
+     inScale = new internalScale();
    }
   
    @Override
