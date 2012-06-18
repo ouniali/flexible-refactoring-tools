@@ -72,7 +72,7 @@ public class CompilationUnitHistoryRecord implements ICompilationUnitHistoryReco
 
   @Override
   public void open() throws Exception{
-    // TODO(xgencsu): Auto-generated method stub
+   
     
   }
 
