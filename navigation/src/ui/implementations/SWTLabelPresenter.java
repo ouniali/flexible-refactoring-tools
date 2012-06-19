@@ -18,11 +18,13 @@ import ui.interfaces.IRecordPresenter;
 public class SWTLabelPresenter implements IRecordPresenter, Runnable{
   
 
-	private static IRecordPresenter instance = new SWTLabelPresenter();
+	private static IRecordPresenter instance;
   
 	
 	public static IRecordPresenter getInstance()
 	{
+		if(instance == null)
+			instance = new SWTLabelPresenter();
 		return instance;
 	}
 	
@@ -62,9 +64,7 @@ public class SWTLabelPresenter implements IRecordPresenter, Runnable{
 			Label shadow_sep_v = new Label(shell, SWT.SEPARATOR | SWT.SHADOW_IN | SWT.VERTICAL);
 			shadow_sep_v.setBounds(50,100,5,100);
 		 
-		 
 			shell.setSize(300,300);
-			shell.setVisible(false);
 			shell.open ();
 			while (!shell.isDisposed ()) {
 				if (!display.readAndDispatch ()) display.sleep ();
@@ -74,8 +74,8 @@ public class SWTLabelPresenter implements IRecordPresenter, Runnable{
 		  
 		public static void main(String[] args)
 		{
-			SWTLabelPresenter presenter = new SWTLabelPresenter();
-			presenter.run();
+			/*SWTLabelPresenter presenter = new SWTLabelPresenter();
+			presenter.run();*/
 		}
 		  
   
