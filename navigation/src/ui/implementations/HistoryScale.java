@@ -77,30 +77,29 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
   
   @Override
   public void run() {
-    shell.setLayout(new GridLayout(1, true));
-    shell.setText("Show scale");
-    label = new Label(shell, SWT.HORIZONTAL);
-    label.setText("Speed:");
+      shell.setLayout(new GridLayout(1, true));
+      shell.setText("Show scale");
+      label = new Label(shell, SWT.HORIZONTAL);
+      label.setText("Speed:");
 
-    scale = new Scale(shell, SWT.HORIZONTAL);
-    scale.setMinimum(0);
-    scale.setMaximum(50);
-    scale.setIncrement(1);
-    scale.setPageIncrement(10);
+      scale = new Scale(shell, SWT.HORIZONTAL);
+      scale.setMinimum(0);
+      scale.setMaximum(50);
+      scale.setIncrement(1);
+      scale.setPageIncrement(10);
     
-    scale.addListener(SWT.Selection, this);
-    text = new Text(shell, SWT.BORDER | SWT.SINGLE);
-    text.setEditable(true);
-    scale.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER)); 
-    shell.pack();
-    shell.open();
+      scale.addListener(SWT.Selection, this);
+      text = new Text(shell, SWT.BORDER | SWT.SINGLE);
+      text.setEditable(true);
+      scale.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER)); 
+      shell.pack();
+      shell.open();
     
-    while (!shell.isDisposed()) {
-    if (!display.readAndDispatch()) {
-    display.sleep();
-   }
-    }
-    
+      while (!shell.isDisposed()) {
+         if (!display.readAndDispatch()) {
+           display.sleep();
+         }
+      }
   }
   
   public static void main(String arg[])
