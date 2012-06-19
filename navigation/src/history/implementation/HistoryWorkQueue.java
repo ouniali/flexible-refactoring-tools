@@ -31,7 +31,7 @@ public class HistoryWorkQueue implements IWorkQueue, Runnable{
             ICompilationUnitHistoryRecord record;
             try {
               record = CompilationUnitHistoryRecord.createCompilationUnitHistoryRecord(unit);
-              CompilationUnitHistory.addHistoryRecord(record);
+              CompilationUnitHistoryCollector.getInstance().addHistoryRecord(record);
             } catch (IOException e) {
               e.printStackTrace();
             }

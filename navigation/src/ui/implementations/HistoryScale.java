@@ -102,6 +102,11 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
     }
     
   }
+  
+  public static void main(String arg[])
+  {
+    Display.getDefault().syncExec(new HistoryScale());
+  }
 
   @Override
   public void handleEvent(Event event) {
