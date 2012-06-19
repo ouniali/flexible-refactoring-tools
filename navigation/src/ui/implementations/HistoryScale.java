@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import ui.interfaces.IRecordPresenter;
+
 import history.interfaces.ICompilationUnitHistoryRecord;
 
 import history.interfaces.ICompilationUnitHistory;
@@ -26,6 +28,7 @@ import ui.interfaces.IHistoryController;
 public class HistoryScale implements IHistoryController, Runnable, Listener{
 
    ICompilationUnitHistory history;
+   IRecordPresenter presenter = new JavaEditorPresenter();
      
    private Display display = new Display();
    private Shell shell = new Shell(display);
@@ -56,7 +59,7 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
 
   @Override
   public void navigateTo(double scale) {
-      openRecord(history.getRecordByScale(scale));
+      presenter.present(history.getRecordByScale(scale));
   }
 
   @Override
@@ -69,11 +72,7 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
     
   }
   
-  
-  private void openRecord(ICompilationUnitHistoryRecord record)
-  {
-    
-  }
+ 
   
   @Override
   public void run() {
