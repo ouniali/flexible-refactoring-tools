@@ -9,6 +9,6 @@ import history.interfaces.ICompilationUnitHistoryRecord;
  *
  */
 public interface IRecordPresenter {
-  void present(ICompilationUnitHistoryRecord record);
+  void present(ICompilationUnitHistoryRecord record) throws Exception;
   void close();
 }

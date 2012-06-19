@@ -12,7 +12,7 @@ import history.interfaces.ICompilationUnitHistory;
 public interface IHistoryController{
   void setHistory(ICompilationUnitHistory history);
   ICompilationUnitHistory getHistory();
-  void navigateTo(double scale);
+  void navigateTo(double scale) throws Exception;
   void dismiss();
   void show();
 }

@@ -28,7 +28,7 @@ import ui.interfaces.IHistoryController;
 public class HistoryScale implements IHistoryController, Runnable, Listener{
 
    ICompilationUnitHistory history;
-   IRecordPresenter presenter = new JavaEditorPresenter();
+   IRecordPresenter presenter = SWTLabelPresenter.getInstance();
      
    private Display display = new Display();
    private Shell shell = new Shell(display);
@@ -58,7 +58,7 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
   }
 
   @Override
-  public void navigateTo(double scale) {
+  public void navigateTo(double scale) throws Exception {
       presenter.present(history.getRecordByScale(scale));
   }
 
@@ -103,7 +103,7 @@ public class HistoryScale implements IHistoryController, Runnable, Listener{
   
   public static void main(String arg[])
   {
-    Display.getDefault().syncExec(new HistoryScale());
+    new HistoryScale().run();
   }
 
   @Override
