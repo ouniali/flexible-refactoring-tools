@@ -35,7 +35,8 @@ public class SWTLabelPresenter implements IRecordPresenter, Runnable{
 	  
 	  private Shell shell;
 	  private Label label;
-	   
+	  private int width = 400;
+	  
 	  @Override
 	  public void close() {
 	    shell.setVisible(false);
@@ -54,18 +55,13 @@ public class SWTLabelPresenter implements IRecordPresenter, Runnable{
 			shell = new Shell(display);
 		 
 			label = new Label(shell, SWT.BORDER);
-			label.setSize(100,30);
-			label.setLocation(50, 50);
-			label.setText("I am a Label");
-		 
-			Label shadow_sep_h = new Label(shell, SWT.SEPARATOR | SWT.SHADOW_OUT | SWT.HORIZONTAL);
-			shadow_sep_h.setBounds(50,80,100,50);
-		 
-			Label shadow_sep_v = new Label(shell, SWT.SEPARATOR | SWT.SHADOW_IN | SWT.VERTICAL);
-			shadow_sep_v.setBounds(50,100,5,100);
-		 
-			shell.setSize(300,300);
+			label.setSize(width, width);
+			label.setLocation(0, 0);
+			
+			shell.setSize(width, width);
 			shell.open ();
+			shell.setVisible(false);
+
 			while (!shell.isDisposed ()) {
 				if (!display.readAndDispatch ()) display.sleep ();
 			}
@@ -76,6 +72,7 @@ public class SWTLabelPresenter implements IRecordPresenter, Runnable{
 		{
 			/*SWTLabelPresenter presenter = new SWTLabelPresenter();
 			presenter.run();*/
+			SWTLabelPresenter.getInstance();
 		}
 		  
   
